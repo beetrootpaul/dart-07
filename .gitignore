@@ -1,0 +1,8 @@
+# minified Lua files
+/build/
+
+# Node.js dependencnies
+/node_modules/
+
+# playground etc.
+/tmp/
