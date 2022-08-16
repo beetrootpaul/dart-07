@@ -11,7 +11,19 @@ __lua__
 -->8
 -- misc
 
-#include build/src/colors.lua
+#include build/src/misc/buttons.lua
+#include build/src/misc/colors.lua
+
+-->8
+-- gameplay
+
+#include build/src/gameplay/gameplay.lua
+
+-->8
+-- screens
+
+#include build/src/screens/screen_gameplay.lua
+#include build/src/screens/screen_title.lua
 
 -->8
 -- glyphs for copy-paste
