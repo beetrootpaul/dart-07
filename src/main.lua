@@ -8,7 +8,7 @@ function _init()
     next_screen = new_screen_title()
 end
 
-function _update60()
+function _update()
     current_screen = next_screen
     next_screen = current_screen.update()
 end
