@@ -11,10 +11,11 @@
   "scripts": {
     "clear": "rimraf build/**/*",
     "build:create-dirs": "run-for-every-file --src \"src/\" --dest \"build/src/\" --file \"**/*.lua\" --run \"mkdirp build/src/{{file-path}}/\"",
+    "build:copy-as-is": "run-for-every-file --src \"src/\" --dest \"build/src/\" --file \"**/*.lua\" --run-js \"var fs = require(\\\"fs\\\"); fs.writeFileSync(\\\"{{dest-file}}\\\", fs.readFileSync(\\\"{{src-file}}\\\", {encoding: \\\"utf8\\\"}));\"",
     "build:copy-minified": "run-for-every-file --src \"src/\" --dest \"build/src/\" --file \"**/*.lua\" --run-js \"var fs = require(\\\"fs\\\"); fs.writeFileSync(\\\"{{dest-file}}\\\", require(\\\"luamin\\\").minify(fs.readFileSync(\\\"{{src-file}}\\\", {encoding: \\\"utf8\\\"})));\"",
-    "build": "run-s -l clear build:create-dirs build:copy-minified",
-    "prewatch-and-build": "run-s -l clear build:create-dirs build:copy-minified",
-    "watch-and-build": "chokidar \"src/**/*.lua\" -c \"run-s -l build:create-dirs build:copy-minified\"",
+    "build": "run-s --print-label clear build:create-dirs build:copy-minified",
+    "prewatch-and-build": "npm run clear",
+    "watch-and-build": "chokidar \"src/**/*.lua\" --initial --command \"run-s --print-label build:create-dirs build:copy-minified\"",
     "start": "npm run watch-and-build"
   },
   "devDependencies": {

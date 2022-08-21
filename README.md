@@ -37,3 +37,7 @@ Development:
 5. Run `npm start` to start a watcher which generates minified Lua sources for
    the game every time a file is changed. Please be aware all files has to be
    included (`#include`) manually in the cart's Lua itself.
+
+Optionally, to build without minification (and w/o watch):
+
+`npm run clear && npm run build:create-dirs && npm run build:copy-as-is`
