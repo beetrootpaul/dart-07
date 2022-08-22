@@ -18,7 +18,8 @@ function new_level()
     local tiles = {}
     local enemies = {}
 
-    -- TODO: 2nd row from the sprite sheet
+    local max_distance = -1
+
     local distance = 1
     for sx = 0, 127 do
         tiles[distance] = {}
@@ -31,10 +32,10 @@ function new_level()
             local c = sget(sx, sy)
             if c == _color_lavender then
                 -- TODO: corner tiles
-                tiles[distance][lane] = 160
-                tiles[distance][lane + 1] = 160
-                tiles[distance + 1][lane] = 160
-                tiles[distance + 1][lane + 1] = 160
+                tiles[distance][lane] = 192
+                tiles[distance][lane + 1] = 192
+                tiles[distance + 1][lane] = 192
+                tiles[distance + 1][lane + 1] = 192
             end
             if c == _color_dark_purple then
                 enemies[distance][lane] = 3
@@ -48,6 +49,44 @@ function new_level()
             if c == _color_white then
                 enemies[distance][lane] = 51
             end
+            if max_distance < 0 and c == _color_red then
+                max_distance = distance
+            end
+            lane = lane + 2
+        end
+        distance = distance + 2
+    end
+    for sx = 0, 127 do
+        tiles[distance] = {}
+        tiles[distance + 1] = {}
+        enemies[distance] = {}
+        enemies[distance + 1] = {}
+
+        local lane = 1
+        for sy = 73, 78 do
+            local c = sget(sx, sy)
+            if c == _color_lavender then
+                -- TODO: corner tiles
+                tiles[distance][lane] = 192
+                tiles[distance][lane + 1] = 192
+                tiles[distance + 1][lane] = 192
+                tiles[distance + 1][lane + 1] = 192
+            end
+            if c == _color_dark_purple then
+                enemies[distance][lane] = 3
+            end
+            if c == _color_blue then
+                enemies[distance][lane] = 19
+            end
+            if c == _color_green then
+                enemies[distance][lane] = 35
+            end
+            if c == _color_white then
+                enemies[distance][lane] = 51
+            end
+            if max_distance < 0 and c == _color_red then
+                max_distance = distance
+            end
             lane = lane + 2
         end
         distance = distance + 2
@@ -56,6 +95,9 @@ function new_level()
     return {
         update = function()
             current_distance = current_distance + 2 / 8
+        end,
+        has_finished = function()
+            return current_distance >= max_distance
         end,
         draw = function()
             for star in all(stars) do

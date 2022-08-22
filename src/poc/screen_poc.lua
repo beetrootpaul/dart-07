@@ -9,6 +9,10 @@ function new_screen_poc()
     local screen = {}
 
     function screen.update()
+        if level.has_finished() then
+            level = new_level()
+        end
+        
         level.update()
         player.update()
         return screen
