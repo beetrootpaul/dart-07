@@ -5,7 +5,9 @@
 local current_screen, next_screen
 
 function _init()
-    next_screen = new_screen_title()
+    -- TODO: ???
+    --next_screen = new_screen_title()
+    next_screen = new_screen_poc()
 end
 
 function _update()
@@ -14,6 +16,7 @@ function _update()
 end
 
 function _draw()
-    cls(_color_dark_grey)
+    -- TODO: ???
+    cls(_color_dark_blue)
     current_screen.draw()
 end
