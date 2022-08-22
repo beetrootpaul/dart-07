@@ -10,7 +10,7 @@ function new_level()
     for _ = 1, 100 do
         add(stars, {
             x = flr(rnd(128)),
-            y = flr(rnd(128)),
+            y = flr(16 + rnd(128 - 32)),
             speed = 1,
         })
     end
@@ -27,7 +27,7 @@ function new_level()
         enemies[distance + 1] = {}
 
         local lane = 1
-        for sy = 64, 71 do
+        for sy = 65, 70 do
             local c = sget(sx, sy)
             if c == _color_lavender then
                 -- TODO: corner tiles
@@ -55,7 +55,7 @@ function new_level()
 
     return {
         update = function()
-            current_distance = current_distance + 2/8
+            current_distance = current_distance + 2 / 8
         end,
         draw = function()
             for star in all(stars) do
@@ -65,17 +65,17 @@ function new_level()
                 end
                 pset(star.x, star.y, _color_light_grey)
             end
-            --rectfill(0, 0, 127, 31, _color_dark_grey)
-            --rectfill(0, 95, 127, 127, _color_dark_grey)
+            rectfill(0, 0, 127, 15, _color_dark_grey)
+            rectfill(0, 111, 127, 127, _color_dark_grey)
             for distance = flr(current_distance), flr(current_distance + 17) do
                 for lane = 1, 16 do
                     local t = tiles[distance][lane]
                     if t then
-                        spr(t, flr((distance - current_distance) * 8 - 8), lane * 8 - 8)
+                        spr(t, flr((distance - current_distance) * 8 - 8), lane * 8 + 8)
                     end
                     local e = enemies[distance][lane]
                     if e then
-                        spr(e, flr((distance - current_distance) * 8 - 4), lane * 8 - 4)
+                        spr(e, flr((distance - current_distance) * 8 - 4), lane * 8 + 12)
                     end
                 end
             end
