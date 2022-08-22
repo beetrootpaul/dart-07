@@ -13,10 +13,10 @@ function new_screen_poc()
         if level.has_finished() then
             level_number = level_number + 1
             if level_number == 2 then
-                reload(0x1000, 0x1000, 0x1000, "lvl2.P8")
+                reload(0x1000, 0x1000, 0x1000, "lvl2.p8")
             end
             if level_number == 3 then
-                reload(0x1000, 0x1000, 0x1000, "lvl3.P8")
+                reload(0x1000, 0x1000, 0x1000, "lvl3.p8")
             end
             level = new_level(level_number)
         end
