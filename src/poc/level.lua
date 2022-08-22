@@ -2,7 +2,7 @@
 -- poc/level.lua  --
 -- -- -- -- -- -- --
 
-function new_level()
+function new_level(level_number)
     local stars = {}
 
     local current_distance = 1
@@ -20,6 +20,18 @@ function new_level()
 
     local max_distance = -1
 
+    local bg_tile
+    if level_number == 1 then
+        bg_tile = 192
+    end
+    if level_number == 2 then
+        bg_tile = 230
+    end
+    if level_number == 3 then
+        bg_tile = 211
+    end
+    printh(bg_tile)
+
     local distance = 1
     for sx = 0, 127 do
         tiles[distance] = {}
@@ -32,10 +44,10 @@ function new_level()
             local c = sget(sx, sy)
             if c == _color_lavender then
                 -- TODO: corner tiles
-                tiles[distance][lane] = 192
-                tiles[distance][lane + 1] = 192
-                tiles[distance + 1][lane] = 192
-                tiles[distance + 1][lane + 1] = 192
+                tiles[distance][lane] = bg_tile
+                tiles[distance][lane + 1] = bg_tile
+                tiles[distance + 1][lane] = bg_tile
+                tiles[distance + 1][lane + 1] = bg_tile
             end
             if c == _color_dark_purple then
                 enemies[distance][lane] = 3
@@ -67,10 +79,10 @@ function new_level()
             local c = sget(sx, sy)
             if c == _color_lavender then
                 -- TODO: corner tiles
-                tiles[distance][lane] = 192
-                tiles[distance][lane + 1] = 192
-                tiles[distance + 1][lane] = 192
-                tiles[distance + 1][lane + 1] = 192
+                tiles[distance][lane] = bg_tile
+                tiles[distance][lane + 1] = bg_tile
+                tiles[distance + 1][lane] = bg_tile
+                tiles[distance + 1][lane + 1] = bg_tile
             end
             if c == _color_dark_purple then
                 enemies[distance][lane] = 3
@@ -100,6 +112,16 @@ function new_level()
             return current_distance >= max_distance
         end,
         draw = function()
+            if level_number == 1 then
+                cls(_color_dark_blue)
+            end
+            if level_number == 2 then
+                cls(_color_dark_purple)
+            end
+            if level_number == 3 then
+                cls(_color_dark_grey)
+            end
+
             for star in all(stars) do
                 star.x = star.x - star.speed
                 if star.x < 0 then
@@ -107,8 +129,10 @@ function new_level()
                 end
                 pset(star.x, star.y, _color_light_grey)
             end
+
             rectfill(0, 0, 127, 15, _color_dark_grey)
             rectfill(0, 111, 127, 127, _color_dark_grey)
+
             for distance = flr(current_distance), flr(current_distance + 17) do
                 for lane = 1, 16 do
                     local t = tiles[distance][lane]

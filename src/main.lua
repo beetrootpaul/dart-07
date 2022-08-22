@@ -17,6 +17,6 @@ end
 
 function _draw()
     -- TODO: ???
-    cls(_color_dark_blue)
+    --cls(_color_dark_blue)
     current_screen.draw()
 end
