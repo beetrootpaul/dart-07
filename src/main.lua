@@ -19,4 +19,5 @@ function _draw()
     -- TODO: ???
     --cls(_color_dark_blue)
     current_screen.draw()
+    print("stat(102)=\"" .. stat(102) .. "\"", 1, 2, _color_yellow)
 end

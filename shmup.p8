@@ -18,6 +18,7 @@ __lua__
 -- TODO: ???
 -->8
 -- poc
+__level_number = 1
 #include build/src/poc/screen_poc.lua
 #include build/src/poc/level.lua
 #include build/src/poc/player.lua

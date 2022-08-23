@@ -3,24 +3,30 @@
 -- -- -- -- -- -- -- -- --
 
 function new_screen_poc()
-    local level_number = 1
+    local level_number = __level_number
     local level = new_level(level_number)
     local player = new_player()
-    
+
     local screen = {}
 
     function screen.update()
         if level.has_finished() then
-            level_number = level_number + 1
+            if level_number == 1 then
+                if stat(102) == "www.lexaloffle.com" then
+                    load("#tmp_multicart_lvl2")
+                else
+                    load("lvl2.p8")
+                end
+            end
             if level_number == 2 then
-                reload(0x1000, 0x1000, 0x1000, "lvl2.p8")
+                if stat(102) == "www.lexaloffle.com" then
+                    load("#tmp_multicart_lvl3")
+                else
+                    load("lvl3.p8")
+                end
             end
-            if level_number == 3 then
-                reload(0x1000, 0x1000, 0x1000, "lvl3.p8")
-            end
-            level = new_level(level_number)
         end
-        
+
         level.update()
         player.update()
         return screen
