@@ -20,4 +20,6 @@ end
 
 function _draw()
     current_screen.draw()
+
+    _remap_display_colors()
 end

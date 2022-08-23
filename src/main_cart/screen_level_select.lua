@@ -11,7 +11,7 @@ function new_screen_level_select(score, number)
     local level = 1
 
     function screen.init()
-        music(10)
+        --music(10)
     end
 
     function screen.update()
@@ -36,7 +36,7 @@ function new_screen_level_select(score, number)
             end
         end
         if btnp(_button_o) then
-            sfx(10)
+            --sfx(10)
             score = score + 10
         end
         if btnp(_button_x) then
@@ -47,9 +47,9 @@ function new_screen_level_select(score, number)
             local dest_addr = 0x4300
             memcpy(dest_addr, 0x0, 0x1000) -- copy sprite sheet, sections 1 and 2
             dest_addr = dest_addr + 0x1000
-            memcpy(dest_addr, 0x3200, 0x44 * 5) -- copy SFXs 0-5
+            --memcpy(dest_addr, 0x3200, 0x44 * 5) -- copy SFXs 0-5
             dest_addr = dest_addr + 0x44 * 5
-            memcpy(dest_addr, 0x3200 + 0x44 * 20, 0x44 * 5) -- copy SFXs 20-25
+            --memcpy(dest_addr, 0x3200 + 0x44 * 20, 0x44 * 5) -- copy SFXs 20-25
             dest_addr = dest_addr + 0x44 * 5
             assert(expected_max_addr == dest_addr, "should be equal")
 
@@ -63,12 +63,12 @@ function new_screen_level_select(score, number)
     end
 
     function screen.draw()
-        cls(_color_lavender)
-        print("score  : " .. score, 10, 10, _color_blue)
-        print("number : " .. number, 10, 16, _color_blue)
-        print("level 1", 30, 30, level == 1 and _color_red or _color_brown)
-        print("level 2", 30, 50, level == 2 and _color_red or _color_brown)
-        print("level 3", 30, 70, level == 3 and _color_red or _color_brown)
+        cls(_color_0_black)
+        print("score  : " .. score, 10, 10, _color_12_true_blue)
+        print("number : " .. number, 10, 16, _color_12_true_blue)
+        print("level 1", 30, 30, level == 1 and _color_12_true_blue or _color_1_dark_blue)
+        print("level 2", 30, 50, level == 2 and _color_12_true_blue or _color_1_dark_blue)
+        print("level 3", 30, 70, level == 3 and _color_12_true_blue or _color_1_dark_blue)
     end
 
     return screen

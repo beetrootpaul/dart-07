@@ -16,7 +16,7 @@ function new_screen_get_ready(score, number)
     end
 
     function screen.init()
-        music(0)
+        --music(0)
     end
 
     function screen.update()
@@ -29,7 +29,7 @@ function new_screen_get_ready(score, number)
             number = number + 1
         end
         if btnp(_button_o) then
-            sfx(0)
+            --sfx(0)
             score = score + 10
         end
         if btnp(_button_x) then
@@ -41,9 +41,9 @@ function new_screen_get_ready(score, number)
 
     function screen.draw()
         cls(_bg_color)
-        print("score  : " .. score, 10, 10, _color_blue)
-        print("number : " .. number, 10, 16, _color_blue)
-        print("get ready for level " .. _lvl_number, 20, 50, _color_orange)
+        print("score  : " .. score, 10, 10, _color_12_true_blue)
+        print("number : " .. number, 10, 16, _color_12_true_blue)
+        print("get ready for level " .. _lvl_number, 20, 50, _color_2_darker_purple)
     end
 
     return screen
