@@ -39,3 +39,5 @@ Development:
    included (`#include`) manually in the cart's Lua itself.
 
 Optionally, to build without minification: `npm run watch-and-build-as-is`
+
+To build dist packages: `npm run dist`

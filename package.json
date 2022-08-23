@@ -16,12 +16,23 @@
     "prewatch-and-build-minified": "npm run clear",
     "watch-and-build-as-is": "chokidar \"src/**/*.lua\" --initial --command \"npm run build-as-is\"",
     "watch-and-build-minified": "chokidar \"src/**/*.lua\" --initial --command \"npm run build-minified\"",
-    "start": "npm run watch-and-build-minified"
+    "start": "npm run watch-and-build-minified",
+    "dist-bbs-main": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup.p8 -export dist/bbs/shmup.p8.png",
+    "dist-bbs-lvl1": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-level-1.p8 -export \"dist/bbs/shmup-level-1.p8.png\"",
+    "dist-bbs-lvl2": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-level-2.p8 -export \"dist/bbs/shmup-level-2.p8.png\"",
+    "dist-bbs-lvl3": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-level-3.p8 -export \"dist/bbs/shmup-level-3.p8.png\"",
+    "predist-bbs": "mkdirp dist/bbs/",
+    "predist-itch": "mkdirp dist/itch/",
+    "dist-bbs": "run-s --print-label dist-bbs-main dist-bbs-lvl*",
+    "dist-itch": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup.p8 -export \"dist/itch/shmup.html shmup-level-1.p8 shmup-level-2.p8 shmup-level-3.p8\"",
+    "postdist-itch": "mv dist/itch/shmup.html dist/itch/index.html && cd dist/itch/ && zip shmup-itch.zip index.html shmup.js",
+    "dist": "run-s --print-label clear build-minified dist-bbs dist-itch"
   },
   "devDependencies": {
     "chokidar-cli": "3.0.0",
     "luamin": "github:beetrootpaul/luamin#f3da7f4d2bd410fef39d30a6c2e74a3e754f7767",
     "mkdirp": "1.0.4",
+    "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
     "run-for-every-file": "1.1.0"
   }
