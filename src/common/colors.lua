@@ -63,7 +63,7 @@ _color_3_blue_green = 3
 
 -- 4
 -- 5
--- 6
+_color_6_light_grey = 6
 -- 7
 
 -- 8
@@ -72,9 +72,9 @@ _color_3_blue_green = 3
 -- 11
 
 _color_12_true_blue = 12
--- 13
+_color_13_mauve = 13
 -- 14
--- 15
+_color_15_light_peach = 15
 
 -- -- -- -- -- -- --
 -- color re-mapping
@@ -84,12 +84,12 @@ function _remap_display_colors()
     local palette = {
         [_color_0_black] = _palette_color_black,
         [_color_1_dark_blue] = _palette_color_dark_blue,
-        [_color_2_darker_purple] = _palette_color_dark_purple,
+        [_color_2_darker_purple] = _palette_color_darker_purple,
         [_color_3_blue_green] = _palette_color_blue_green,
         --
         [4] = _palette_color_black,
         [5] = _palette_color_black,
-        [6] = _palette_color_black,
+        [_color_6_light_grey] = _palette_color_light_grey,
         [7] = _palette_color_black,
         --
         [8] = _palette_color_black,
@@ -98,9 +98,9 @@ function _remap_display_colors()
         [11] = _palette_color_black,
         --
         [_color_12_true_blue] = _palette_color_true_blue,
-        [9] = _palette_color_black,
+        [_color_13_mauve] = _palette_color_mauve,
         [10] = _palette_color_black,
-        [11] = _palette_color_black,
+        [11] = _palette_color_light_peach,
     }
     pal(palette, 1)
 end

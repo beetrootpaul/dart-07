@@ -33,7 +33,7 @@ function new_screen_level(score, number)
         bg_tile = 211
     end
 
-    local c_bg_tile = 14
+    local c_bg_tile = 13
     local c_end = 8
     local c_enemy_1 = 2
     local c_enemy_2 = 11
@@ -141,7 +141,7 @@ function new_screen_level(score, number)
         --end
 
         rectfill(0, 0, 127, 15, _color_0_black)
-        rectfill(0, 111, 127, 127, _color_0_black)
+        rectfill(0, 112, 127, 127, _color_0_black)
 
         for distance = flr(current_distance), flr(current_distance + 17) do
             for lane = 1, 12 do
