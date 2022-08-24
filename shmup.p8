@@ -1,12 +1,15 @@
 pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
--- todo shmup game title
+-- TODO shmup game title
 -- by beetroot paul
 
+-- common code
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
+#include build/src/common/multicart.lua
 
+-- cart specific code
 #include build/src/main_cart/main_cart.lua
 #include build/src/main_cart/screen_level_select.lua
 #include build/src/main_cart/screen_title.lua

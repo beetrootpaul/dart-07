@@ -2,26 +2,34 @@
 -- level_carts/screen_level.lua  --
 -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_level(score, number)
-    local score = score
-    local number = number
+-- TODO: ?
+--function new_screen_level(score, number)
+function new_screen_level()
+    -- TODO: ?
+    --local score = score
+    --local number = number
 
     local player = new_player()
 
+    -- TODO: encapsulate and rework level deserialization
     local current_distance = 1
     local max_distance = -1
 
-    for _ = 1, 100 do
-        add(stars, {
-            x = flr(rnd(128)),
-            y = flr(16 + rnd(128 - 32)),
-            speed = 1,
-        })
-    end
+    -- TODO: ?
+    --for _ = 1, 100 do
+    --    add(stars, {
+    --        x = flr(rnd(128)),
+    --        y = flr(16 + rnd(128 - 32)),
+    --        speed = 1,
+    --    })
+    --end
 
+    -- TODO: encapsulate and rework level deserialization
     local tiles = {}
     local enemies = {}
 
+    -- TODO: encapsulate and rework level deserialization
+    -- TODO: externalize BG tile number to cart itself
     local bg_tile
     if _lvl_number == 1 then
         bg_tile = 192
@@ -33,13 +41,15 @@ function new_screen_level(score, number)
         bg_tile = 211
     end
 
+    -- TODO: encapsulate and rework level deserialization
     local c_bg_tile = 13
     local c_end = 8
     local c_enemy_1 = 2
     local c_enemy_2 = 11
     local c_enemy_3 = 12
     local c_enemy_4 = 7
-    
+
+    -- TODO: encapsulate and rework level deserialization
     local distance = 1
     for level_descriptor_row = 0, 3 do
         for sx = 0, 127 do
@@ -77,21 +87,23 @@ function new_screen_level(score, number)
             distance = distance + 2
         end
     end
-    for offset_x = 1,17 do
+    for offset_x = 1, 17 do
         tiles[max_distance + offset_x] = {}
         enemies[max_distance + offset_x] = {}
     end
 
     local screen = {}
 
-    function screen.score()
-        return score
-    end
-    function screen.number()
-        return number
-    end
+    -- TODO: ?
+    --function screen.score()
+    --    return score
+    --end
+    --function screen.number()
+    --    return number
+    --end
 
     function screen.init()
+        -- TODO: ?
         --music(10)
     end
 
@@ -102,27 +114,25 @@ function new_screen_level(score, number)
 
         player.update()
 
-        if btnp(_button_left) then
-            number = number - 1
-        end
-        if btnp(_button_right) then
-            number = number + 1
-        end
-        if btnp(_button_o) then
-            --sfx(10)
-            score = score + 10
-        end
+        -- TODO: ?
+        --if btnp(_button_left) then
+        --    number = number - 1
+        --end
+        --if btnp(_button_right) then
+        --    number = number + 1
+        --end
+        --if btnp(_button_o) then
+        --sfx(10)
+        --score = score + 10
+        --end
+
+        -- TODO: finish level on conditions different than a button press
         if btnp(_button_x) or current_distance >= max_distance then
+            -- TODO: externalize knowledge about amount of available levels
             if _lvl_number < 3 then
-                local params = score .. "," .. number
-                load("shmup-level-" .. (_lvl_number + 1) .. ".p8", nil, params)
-                load("shmup/shmup-level-" .. (_lvl_number + 1) .. ".p8", nil, params)
-                load("#tmp_multicart_lvl" .. (_lvl_number + 1), nil, params)
+                _load_level_cart(_lvl_number + 1)
             else
-                local params = score .. "," .. number
-                load("shmup.p8", nil, params)
-                load("shmup/shmup.p8", nil, params)
-                load("#tmp_multicart_main", nil, params)
+                _load_main_cart()
             end
         end
 
@@ -132,6 +142,7 @@ function new_screen_level(score, number)
     function screen.draw()
         cls(_bg_color)
 
+        -- TODO: ?
         --for star in all(stars) do
         --    star.x = star.x - star.speed
         --    if star.x < 0 then
@@ -140,9 +151,11 @@ function new_screen_level(score, number)
         --    pset(star.x, star.y, _color_light_grey)
         --end
 
+        -- TODO: encapsulate GUI code, make it look good
         rectfill(0, 0, 127, 15, _color_0_black)
         rectfill(0, 112, 127, 127, _color_0_black)
 
+        -- TODO: encapsulate and rework level drawing
         for distance = flr(current_distance), flr(current_distance + 17) do
             for lane = 1, 12 do
                 local t = tiles[distance][lane]
@@ -158,8 +171,9 @@ function new_screen_level(score, number)
 
         player.draw()
 
-        print("score  : " .. score, 10, 10, _color_12_true_blue)
-        print("number : " .. number, 10, 16, _color_12_true_blue)
+        -- TODO: ?
+        --print("score  : " .. score, 10, 10, _color_12_true_blue)
+        --print("number : " .. number, 10, 16, _color_12_true_blue)
     end
 
     return screen

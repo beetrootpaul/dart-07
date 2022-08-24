@@ -1,5 +1,5 @@
 -- -- -- -- -- -- -- --
--- misc/colors.lua   --
+-- common/colors.lua --
 -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- -- -- --
@@ -61,11 +61,14 @@ _color_1_dark_blue = 1
 _color_2_darker_purple = 2
 _color_3_blue_green = 3
 
+-- TODO: finalize custom palette
 -- 4
 -- 5
 _color_6_light_grey = 6
+-- TODO: finalize custom palette
 -- 7
 
+-- TODO: finalize custom palette
 -- 8
 -- 9
 -- 10
@@ -87,11 +90,14 @@ function _remap_display_colors()
         [_color_2_darker_purple] = _palette_color_darker_purple,
         [_color_3_blue_green] = _palette_color_blue_green,
         --
+        -- TODO: finalize custom palette
         [4] = _palette_color_black,
         [5] = _palette_color_black,
         [_color_6_light_grey] = _palette_color_light_grey,
+        -- TODO: finalize custom palette
         [7] = _palette_color_black,
         --
+        -- TODO: finalize custom palette
         [8] = _palette_color_black,
         [9] = _palette_color_black,
         [10] = _palette_color_black,
@@ -99,6 +105,7 @@ function _remap_display_colors()
         --
         [_color_12_true_blue] = _palette_color_true_blue,
         [_color_13_mauve] = _palette_color_mauve,
+        -- TODO: finalize custom palette
         [10] = _palette_color_black,
         [11] = _palette_color_light_peach,
     }

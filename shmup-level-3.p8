@@ -1,16 +1,21 @@
 pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
--- todo shmup level 2
+-- TODO shmup level 3
 -- by beetroot paul
 
+-- common code
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
+#include build/src/common/multicart.lua
 
-_bg_color = _palette_color_dark_blue
-_lvl_number = 3
+-- level specific values
+_bg_color        = _palette_color_dark_blue
+_lvl_number      = 3
+-- TODO: consider defining it as number of scrolled pixels instead of fraction of scrolled tile
 _scrolling_speed = 3/8
 
+-- level specific code
 #include build/src/level_carts/level_cart.lua
 #include build/src/level_carts/player.lua
 #include build/src/level_carts/screen_get_ready.lua

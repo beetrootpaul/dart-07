@@ -5,23 +5,24 @@
 local current_screen, next_screen
 
 function _init()
-    local score = tonum(split(stat(6))[1]) or 0
-    local number = tonum(split(stat(6))[2]) or 0
+    -- TODO: ?
+    --local score = tonum(split(stat(6))[1]) or 0
+    --local number = tonum(split(stat(6))[2]) or 0
 
-    local src_addr = 0x4300
-    memcpy(0x0, src_addr, 0x1000) -- copy sprite sheet, sections 1 and 2
-    src_addr = src_addr + 0x1000
-    --memcpy(0x3200, src_addr, 0x44 * 5) -- copy SFXs 0-5
-    src_addr = src_addr + 0x44 * 5
-    --memcpy(0x3200 + 0x44 * 20, src_addr, 0x44 * 5) -- copy SFXs 20-29
+    _copy_shared_assets_to_transferable_ram()
 
+    -- TODO: decent polished menu item
     menuitem(1, "-> to main <-", function()
-        local params = current_screen.score() .. "," .. current_screen.number()
         load("shmup.p8", nil, params)
         load("shmup/shmup.p8", nil, params)
         load("#tmp_multicart_main", nil, params)
     end)
-    next_screen = new_screen_get_ready(score, number)
+
+    -- TODO: ?
+    --next_screen = new_screen_get_ready(score, number)
+
+    -- TODO: start with get ready screen
+    next_screen = new_screen_level()
 end
 
 function _update()

@@ -1,13 +1,15 @@
--- -- -- -- -- -- --
--- poc/player.lua --
--- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- --
+-- level_carts/player.lua  --
+-- -- -- -- -- -- -- -- -- --
 
 function new_player()
+    -- TODO: calculate proper centered position
     local x = 20
     local y = 60
 
     return {
         update = function()
+            -- TODO: rework movement, externalize speed
             if btn(_button_left) then
                 x = x - 2
             end
@@ -21,7 +23,10 @@ function new_player()
                 y = y + 2
             end
         end,
+        
         draw = function()
+            -- TODO: make it animated
+            -- TODO: externalize sprite number
             spr(1, x, y)
         end,
     }
