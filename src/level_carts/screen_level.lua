@@ -29,25 +29,33 @@ function new_screen_level()
     local enemies = {}
 
     -- TODO: encapsulate and rework level deserialization
-    -- TODO: externalize BG tile number to cart itself
-    local bg_tile
-    if _lvl_number == 1 then
-        bg_tile = 192
-    end
-    if _lvl_number == 2 then
-        bg_tile = 230
-    end
-    if _lvl_number == 3 then
-        bg_tile = 211
-    end
-
-    -- TODO: encapsulate and rework level deserialization
     local c_bg_tile = 13
     local c_end = 8
     local c_enemy_1 = 2
     local c_enemy_2 = 11
     local c_enemy_3 = 12
     local c_enemy_4 = 7
+    
+    -- TODO: encapsulate and rework level deserialization
+    local bg_tiles = {
+        center = 209,
+        edge_left = 208,
+        edge_right = 210,
+        edge_top = 193,
+        edge_bottom = 225,
+        outside_left_top = 192,
+        outside_left_bottom = 224,
+        outside_right_top = 194,
+        outside_right_bottom = 226,
+        inner_left_top = 211,
+        inner_left_bottom = 227,
+        inner_right_top = 212,
+        inner_right_bottom = 228,
+        filler_left_top = 244,
+        filler_left_bottom = 196,
+        filler_right_top = 243,
+        filler_right_bottom = 195,
+    }
 
     -- TODO: encapsulate and rework level deserialization
     local distance = 1
@@ -62,10 +70,10 @@ function new_screen_level()
             for sy = 65 + level_descriptor_row * 8, 70 + level_descriptor_row * 8 do
                 local c = sget(sx, sy)
                 if c == c_bg_tile then
-                    tiles[distance][lane] = bg_tile
-                    tiles[distance][lane + 1] = bg_tile
-                    tiles[distance + 1][lane] = bg_tile
-                    tiles[distance + 1][lane + 1] = bg_tile
+                    tiles[distance][lane] = bg_tiles.center
+                    tiles[distance][lane + 1] = bg_tiles.center
+                    tiles[distance + 1][lane] = bg_tiles.center
+                    tiles[distance + 1][lane + 1] = bg_tiles.center
                 end
                 if c == c_enemy_1 then
                     enemies[distance][lane] = 3
