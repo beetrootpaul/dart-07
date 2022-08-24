@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- --
--- misc/buttons.lua  --
--- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- --
+-- common/buttons.lua   --
+-- -- -- -- -- -- -- -- --
 
 _button_left = 0
 _button_right = 1

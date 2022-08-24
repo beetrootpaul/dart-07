@@ -22,6 +22,12 @@ TODO longer description
 
 TODO any other info, i.e. about being a PICO-8 game
 
+TODO PICO-8 version
+
+TODO mention multi-cart setup and that it's maybe not necessary, but wanted to have it for learning purposes
+
+TODO mention cross-cart data graphics and SFX copying as well
+
 ---
 
 TODO screenshots

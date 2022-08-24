@@ -5,9 +5,13 @@
 local current_screen, next_screen
 
 function _init()
-    local score = tonum(split(stat(6))[1]) or 2
-    local number = tonum(split(stat(6))[2]) or -3
-    next_screen = new_screen_title(score, number)
+    -- TODO: ?
+    --local score = tonum(split(stat(6))[1]) or 2
+    --local number = tonum(split(stat(6))[2]) or -3
+    --next_screen = new_screen_title(score, number)
+
+    -- TODO: start with a title screen
+    next_screen = new_screen_level_select()
 end
 
 function _update()
@@ -20,4 +24,15 @@ end
 
 function _draw()
     current_screen.draw()
+
+    _remap_display_colors()
 end
+
+-- TODO: remove unused sprites
+-- TODO: remove unused SFXs
+-- TODO: remove unused music
+
+-- TODO: consider license other than MIT
+
+-- TODO: for archive purposes: add native build to dist script, and write down in README what PICO-8 version was used to create this game
+
