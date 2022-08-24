@@ -46,7 +46,7 @@
 --    cls(_bg_color)
 --    print("score  : " .. score, 10, 10, _color_12_true_blue)
 --    print("number : " .. number, 10, 16, _color_12_true_blue)
---    print("get ready for level " .. _lvl_number, 20, 50, _color_2_darker_purple)
+--    print("get ready for level " .. _mission_number, 20, 50, _color_2_darker_purple)
 --end
 --
 --return screen

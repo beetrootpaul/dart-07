@@ -8,18 +8,20 @@ __lua__
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
 #include build/src/common/multicart.lua
+#include build/src/common/viewport.lua
 
 -- level specific values
-_bg_color        = _color_3_blue_green
-_lvl_number      = 2
--- TODO: consider defining it as number of scrolled pixels instead of fraction of scrolled tile
-_scrolling_speed = 2/8
+_mission_number            = 2
+_distance_scroll_per_frame = 2/8
+_bg_color                  = _color_3_blue_green
 
 -- level specific code
+#include build/src/level_carts/level.lua
 #include build/src/level_carts/level_cart.lua
+#include build/src/level_carts/level_descriptor.lua
 #include build/src/level_carts/player.lua
 #include build/src/level_carts/screen_get_ready.lua
-#include build/src/level_carts/screen_level.lua
+#include build/src/level_carts/screen_mission_in_progress.lua
 
 __gfx__
 000000000000aa000000aa0000000000000000000000aa000000aa00000000000000000000000000000000000000000000000000000000000000000000000000

@@ -2,6 +2,10 @@
 -- level_carts/level_cart.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: rename level_carts dir to mission_carts
+-- TODO: rename p8 projects to be about missions, not levels
+-- TODO: rename this file to mission_cart.lua
+
 local current_screen, next_screen
 
 function _init()
@@ -22,7 +26,7 @@ function _init()
     --next_screen = new_screen_get_ready(score, number)
 
     -- TODO: start with get ready screen
-    next_screen = new_screen_level()
+    next_screen = new_screen_mission_in_progress()
 end
 
 function _update()

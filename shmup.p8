@@ -8,6 +8,7 @@ __lua__
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
 #include build/src/common/multicart.lua
+#include build/src/common/viewport.lua
 
 -- cart specific code
 #include build/src/main_cart/main_cart.lua
