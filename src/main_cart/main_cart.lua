@@ -28,6 +28,47 @@ function _draw()
     _remap_display_colors()
 end
 
+-- TODO: player: movement animation (up/down)
+-- TODO: player: boundaries
+-- TODO: player: invincibility on being shot
+-- TODO: player: invincibility VFX
+
+-- TODO: player: shooting
+-- TODO: player: shooting SFX
+-- TODO: player: shooting interval on a constant or repeated button press
+-- TODO: player being hit (lose live?) on collision with an enemy
+
+-- TODO: lives 
+-- TODO: live lost SFX
+
+-- TODO: pickups 
+-- TODO: pickups retrieval after live lost
+
+-- TODO: enemies: enemy flying on sine path and shooting  
+-- TODO: enemies: enemy staying in place then flying fast  
+-- TODO: enemies: enemy shooting a lot  
+
+-- TODO: score items with magnet?
+
+-- TODO: enemy being hit VFX 
+-- TODO: enemy destroyed VFX
+
+-- TODO: level ends on finish region reached + no more enemies? Or rather: introduce boss and finish after boss?
+
+-- TODO: boss mechanic
+
+-- TODO: screen shake?
+
+-- TODO: "hit stop"?
+
+-- TODO: lighten/darken transition between screens? Or dithered "fillp" one?
+
+-- TODO: "mission"? "level"? "stage"?
+
+-- TODO: menu music
+-- TODO: music per stage
+-- TODO: music per boss stage
+
 -- TODO: remove unused sprites
 -- TODO: remove unused SFXs
 -- TODO: remove unused music
