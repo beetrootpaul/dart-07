@@ -3,14 +3,14 @@
 -- -- -- -- -- -- -- -- -- --
 
 function new_player()
-    -- TODO: calculate proper centered position
-    local x = 20
-    local y = 60
+    local w = 10
+    local h = 10
+    local x = 12
+    local y = _gaoy + flr((_gah - h) / 2)
     local speed = 2
 
     return {
         update = function()
-            -- TODO: rework movement, externalize speed
             if btn(_button_left) then
                 x = x - speed
             end
@@ -27,8 +27,11 @@ function new_player()
 
         draw = function()
             -- TODO: make it animated
-            -- TODO: externalize sprite number
-            spr(1, x, y)
+            palt(_color_0_black, false)
+            palt(_color_11_dark_green, true)
+            sspr(8, 10, w, h, x, y)
+            palt()
+            sspr(4, 8, 4, 4, x - 5, y + 3)
         end,
     }
 end
