@@ -2,6 +2,11 @@
 -- level_carts/level_descriptor.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: consider moving level definition from sprite sheet to map, since it would fit (and would occupy the whole available space),
+--       and we could use more of the sprite sheet for other things
+
+-- TODO: animated structure tiles (i.e. waves around islands)
+
 function new_level_descriptor()
     -- TODO: do we still need all 4 enemies? Do we want to rename them?
     local marker_types = {

@@ -66,9 +66,9 @@ function new_screen_level_select()
 
         -- TODO: decent mission selection
         -- TODO: externalize knowledge about amount of available levels
-        print("mission 1", 30, 30, chosen_level == 1 and _color_15_light_peach or _color_13_mauve)
-        print("mission 2", 30, 50, chosen_level == 2 and _color_15_light_peach or _color_13_mauve)
-        print("mission 3", 30, 70, chosen_level == 3 and _color_15_light_peach or _color_13_mauve)
+        print("mission 1", 30, 30, chosen_level == 1 and _color_6_light_grey or _color_13_mauve)
+        print("mission 2", 30, 50, chosen_level == 2 and _color_6_light_grey or _color_13_mauve)
+        print("mission 3", 30, 70, chosen_level == 3 and _color_6_light_grey or _color_13_mauve)
         -- TODO: add mission 4
     end
 

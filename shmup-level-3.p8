@@ -13,7 +13,7 @@ __lua__
 -- level specific values
 _mission_number            = 3
 _distance_scroll_per_frame = 3/8
-_bg_color                  = _palette_color_dark_blue
+_bg_color                  = _color_1_dark_blue
 
 -- level specific code
 #include build/src/level_carts/level.lua
