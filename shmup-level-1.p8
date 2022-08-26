@@ -9,6 +9,7 @@ __lua__
 #include build/src/common/colors.lua
 #include build/src/common/gameplay_area.lua
 #include build/src/common/multicart.lua
+#include build/src/common/tables.lua
 #include build/src/common/viewport.lua
 
 -- level specific values
@@ -17,12 +18,15 @@ _distance_scroll_per_frame = 1/8
 _bg_color                  = _color_12_true_blue
 
 -- level specific code
+#include build/src/level_carts/animated_sprite.lua
+#include build/src/level_carts/fake_sprite.lua
 #include build/src/level_carts/level.lua
 #include build/src/level_carts/level_cart.lua
 #include build/src/level_carts/level_descriptor.lua
 #include build/src/level_carts/player.lua
 #include build/src/level_carts/screen_get_ready.lua
 #include build/src/level_carts/screen_mission_in_progress.lua
+#include build/src/level_carts/static_sprite.lua
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

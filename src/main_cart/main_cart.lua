@@ -28,8 +28,6 @@ function _draw()
     _remap_display_colors()
 end
 
--- TODO: player: movement animation (up/down)
--- TODO: player: boundaries
 -- TODO: player: invincibility on being shot
 -- TODO: player: invincibility VFX
 

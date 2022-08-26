@@ -9,6 +9,7 @@ __lua__
 #include build/src/common/colors.lua
 #include build/src/common/gameplay_area.lua
 #include build/src/common/multicart.lua
+#include build/src/common/tables.lua
 #include build/src/common/viewport.lua
 
 -- cart specific code
