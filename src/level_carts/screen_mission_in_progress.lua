@@ -18,9 +18,8 @@ function new_screen_mission_in_progress()
     function screen.update()
         local next = screen
 
-        for _, enemy in pairs(enemies) do
+        for index, enemy in pairs(enemies) do
             if enemy.has_finished() then
-                -- TODO: is it OK to delete during iteration over pairs(…)?
                 del(enemies, enemy)
             end
         end
@@ -45,11 +44,10 @@ function new_screen_mission_in_progress()
 
         local enemies_to_spawn = level.enemies_to_spawn()
         for _, enemy_to_spawn in pairs(enemies_to_spawn) do
-            -- TODO: reconsider naming and what arugments to pass where
             add(enemies, new_enemy {
                 enemy_type = enemy_to_spawn.enemy_type,
-                center_x = enemy_to_spawn.center_x,
-                center_y = enemy_to_spawn.center_y,
+                x = enemy_to_spawn.x,
+                y = enemy_to_spawn.y,
             })
         end
 
@@ -59,17 +57,17 @@ function new_screen_mission_in_progress()
     function screen.draw()
         cls(_bg_color)
 
-        -- TODO: encapsulate GUI code, make it look good
-        rectfill(0, 0, 127, 15, _color_0_black)
-        rectfill(0, 112, 127, 127, _color_0_black)
-
+        clip(0, _gaoy, _gaw, _gah)
         level.draw()
-
         player.draw()
-
         for _, enemy in pairs(enemies) do
             enemy.draw()
         end
+        clip()
+
+        -- TODO: encapsulate GUI code, make it look good
+        rectfill(0, 0, 127, 15, _color_0_black)
+        rectfill(0, 112, 127, 127, _color_0_black)
     end
 
     return screen

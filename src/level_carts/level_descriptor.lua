@@ -13,6 +13,7 @@ function new_level_descriptor()
         structure = 13,
         enemy_sinusoidal = 12,
         enemy_wait_then_charge = 10,
+        enemy_stationary = 7,
         level_end = 8,
     }
 
@@ -79,6 +80,8 @@ function new_level_descriptor()
                 enemies[distance][lane] = "sinusoidal"
             elseif marker == marker_types.enemy_wait_then_charge then
                 enemies[distance][lane] = "wait_then_charge"
+            elseif marker == marker_types.enemy_stationary then
+                enemies[distance][lane] = "stationary"
             elseif marker == marker_types.structure then
                 structures_occupied[distance][lane] = true
                 structures_occupied[distance][lane + 1] = true
@@ -91,23 +94,11 @@ function new_level_descriptor()
                     structures_occupied[distance][0] = true
                     structures_occupied[distance + 1][-1] = true
                     structures_occupied[distance + 1][0] = true
-                    --if distance == 1 then
-                    --    structures_occupied[-1][-1] = true
-                    --    structures_occupied[-1][0] = true
-                    --    structures_occupied[0][-1] = true
-                    --    structures_occupied[0][0] = true
-                    --end
                 elseif lane + 1 == 12 then
                     structures_occupied[distance][13] = true
                     structures_occupied[distance][14] = true
                     structures_occupied[distance + 1][13] = true
                     structures_occupied[distance + 1][14] = true
-                    --if distance == 1 then
-                    --    structures_occupied[-1][13] = true
-                    --    structures_occupied[-1][14] = true
-                    --    structures_occupied[0][13] = true
-                    --    structures_occupied[0][14] = true
-                    --end
                 end
                 if distance == 1 then
                     structures_occupied[-1][lane] = true
