@@ -8,13 +8,11 @@
 -- TODO: animated structure tiles (i.e. waves around islands)
 
 function new_level_descriptor()
-    -- TODO: do we still need all 4 enemies? Do we want to rename them?
+    -- numbers below are colors in the sprite sheet
     local marker_types = {
         structure = 13,
-        enemy_1 = 2,
-        enemy_2 = 11,
-        enemy_3 = 12,
-        enemy_4 = 7,
+        enemy_sinusoidal = 12,
+        enemy_wait_then_charge = 10,
         level_end = 8,
     }
 
@@ -77,18 +75,10 @@ function new_level_descriptor()
             if marker == marker_types.level_end then
                 max_defined_distance = distance - 1
                 break
-            elseif marker == marker_types.enemy_1 then
-                -- TODO: define enemy sprite numbers somewhere else above
-                enemies[distance][lane] = 3
-            elseif marker == marker_types.enemy_2 then
-                -- TODO: define enemy sprite numbers somewhere else above
-                enemies[distance][lane] = 35
-            elseif marker == marker_types.enemy_3 then
-                -- TODO: define enemy sprite numbers somewhere else above
-                enemies[distance][lane] = 19
-            elseif marker == marker_types.enemy_4 then
-                -- TODO: define enemy sprite numbers somewhere else above
-                enemies[distance][lane] = 51
+            elseif marker == marker_types.enemy_sinusoidal then
+                enemies[distance][lane] = "sinusoidal"
+            elseif marker == marker_types.enemy_wait_then_charge then
+                enemies[distance][lane] = "wait_then_charge"
             elseif marker == marker_types.structure then
                 structures_occupied[distance][lane] = true
                 structures_occupied[distance][lane + 1] = true
@@ -186,9 +176,6 @@ function new_level_descriptor()
                 elseif srm and smb then
                     structures[distance - 1][lane] = structure_tiles.inner_right_bottom
                 end
-
-                -- revert fillers where needed
-
             end
         end
     end

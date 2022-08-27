@@ -46,7 +46,6 @@ function new_player()
     local jet_sprite = jet_sprite_visible
 
     return {
-        -- TODO: boundaries
         update = function()
             if btn(_button_left) then
                 x = max(x - speed, min_x)

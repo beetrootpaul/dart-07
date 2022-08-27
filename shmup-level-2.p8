@@ -19,6 +19,7 @@ _bg_color                  = _color_3_blue_green
 
 -- level specific code
 #include build/src/level_carts/animated_sprite.lua
+#include build/src/level_carts/enemy.lua
 #include build/src/level_carts/fake_sprite.lua
 #include build/src/level_carts/level.lua
 #include build/src/level_carts/level_cart.lua
