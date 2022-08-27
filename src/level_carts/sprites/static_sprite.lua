@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- --
--- level_carts/static_sprite.lua --
--- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- level_carts/sprites/static_sprite.lua  --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_static_sprite(params)
     local sprite_w = params.sprite_w
@@ -12,7 +12,11 @@ function new_static_sprite(params)
         draw = function(x, y)
             palt(_color_0_black, false)
             palt(_color_11_dark_green, true)
-            sspr(sprite_x, sprite_y, sprite_w, sprite_h, x, y)
+            sspr(
+                sprite_x, sprite_y,
+                sprite_w, sprite_h,
+                x - sprite_w / 2, y - sprite_h / 2
+            )
             palt()
         end,
     }

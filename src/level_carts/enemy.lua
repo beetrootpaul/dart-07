@@ -5,25 +5,21 @@
 function new_enemy(params)
     local enemy_type = params.enemy_type
 
-    local x, y, w, h, ship_sprite
+    local x, y = params.center_x, params.center_y
 
-    -- TODO: REVISIT XY SETTING
     -- TODO: split enemy-specific code into separate files
+    local ship_sprite
     if enemy_type == "sinusoidal" then
-        w, h = 7, 6
-        x, y = params.center_x - w / 2, params.center_y - h / 2
         ship_sprite = new_static_sprite({
-            sprite_w = w,
-            sprite_h = h,
+            sprite_w = 7,
+            sprite_h = 8,
             sprite_x = 18,
             sprite_y = 8,
         })
     elseif enemy_type == "wait_then_charge" then
-        w, h = 10, 8
-        x, y = params.center_x - w / 2, params.center_y - h / 2
         ship_sprite = new_static_sprite({
-            sprite_w = w,
-            sprite_h = h,
+            sprite_w = 10,
+            sprite_h = 8,
             sprite_x = 18,
             sprite_y = 0,
         })
@@ -56,7 +52,7 @@ function new_enemy(params)
         end,
 
         draw = function()
-            ship_sprite.draw(x, flr(y))
+            ship_sprite.draw(x, y)
         end,
     }
 end

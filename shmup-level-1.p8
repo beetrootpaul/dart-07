@@ -18,16 +18,16 @@ _distance_scroll_per_frame = 1/8
 _bg_color                  = _color_12_true_blue
 
 -- level specific code
-#include build/src/level_carts/animated_sprite.lua
+#include build/src/level_carts/sprites/animated_sprite.lua
+#include build/src/level_carts/sprites/fake_sprite.lua
+#include build/src/level_carts/sprites/static_sprite.lua
 #include build/src/level_carts/enemy.lua
-#include build/src/level_carts/fake_sprite.lua
 #include build/src/level_carts/level.lua
 #include build/src/level_carts/level_cart.lua
 #include build/src/level_carts/level_descriptor.lua
 #include build/src/level_carts/player.lua
 #include build/src/level_carts/screen_get_ready.lua
 #include build/src/level_carts/screen_mission_in_progress.lua
-#include build/src/level_carts/static_sprite.lua
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

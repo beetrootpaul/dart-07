@@ -8,13 +8,13 @@ function new_player()
     local w = 10
     local h = 10
     local x = 12
-    local y = _gaoy + flr((_gah - h) / 2)
+    local y = _gaoy + _gah / 2
     local speed = 2
 
-    local min_x = 1
-    local max_x = _gaw - w - 1
-    local min_y = _gaoy + 1
-    local max_y = _gaoy + _gah - h - 1
+    local min_x = w / 2 + 1
+    local max_x = _gaw - w / 2 - 1
+    local min_y = _gaoy + h / 2 + 1
+    local max_y = _gaoy + _gah - h / 2 - 1
 
     local ship_sprite_neutral = new_static_sprite({
         sprite_w = 10,
@@ -72,7 +72,7 @@ function new_player()
 
         draw = function()
             ship_sprite_current.draw(x, y)
-            jet_sprite.draw(x - 5, y + 3)
+            jet_sprite.draw(x - 8, y)
         end,
     }
 end
