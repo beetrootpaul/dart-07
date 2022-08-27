@@ -7,9 +7,11 @@ __lua__
 -- common code
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
+#include build/src/common/font_4px.lua
 #include build/src/common/gameplay_area.lua
 #include build/src/common/multicart.lua
 #include build/src/common/tables.lua
+#include build/src/common/text_4px.lua
 #include build/src/common/viewport.lua
 
 -- level specific values
@@ -25,6 +27,7 @@ _bg_color                  = _color_3_blue_green
 #include build/src/level_carts/sprites/animated_sprite.lua
 #include build/src/level_carts/sprites/fake_sprite.lua
 #include build/src/level_carts/sprites/static_sprite.lua
+#include build/src/level_carts/gui.lua
 #include build/src/level_carts/level.lua
 #include build/src/level_carts/level_cart.lua
 #include build/src/level_carts/level_descriptor.lua

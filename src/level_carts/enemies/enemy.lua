@@ -10,7 +10,7 @@ function new_enemy(enemy_type, start_x, start_y)
         movement = new_movement_sinusoidal(start_x, start_y)
         ship_sprite = new_static_sprite({
             sprite_x = 18,
-            sprite_y = 8,
+            sprite_y = 12,
             sprite_w = 7,
             sprite_h = 8,
         })
@@ -20,7 +20,7 @@ function new_enemy(enemy_type, start_x, start_y)
             sprite_x = 18,
             sprite_y = 0,
             sprite_w = 10,
-            sprite_h = 8,
+            sprite_h = 12,
         })
     elseif enemy_type == "stationary" then
         movement = new_movement_stationary(start_x, start_y)

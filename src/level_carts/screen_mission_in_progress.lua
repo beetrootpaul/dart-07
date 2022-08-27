@@ -9,7 +9,14 @@ function new_screen_mission_in_progress()
     local player = new_player()
 
     local enemies = {}
+    
+    -- TODO: deduct armor on collision
+    local armor = 3
+    
+    local gui = new_gui()
 
+    --
+    
     local screen = {}
 
     function screen.init()
@@ -54,15 +61,13 @@ function new_screen_mission_in_progress()
         clip(0, _gaoy, _gaw, _gah)
         rectfill(0, _gaoy, _gaw - 1, _gaoy + _gah - 1, _bg_color)
         level.draw()
-        player.draw()
         for _, enemy in pairs(enemies) do
             enemy.draw()
         end
+        player.draw()
         clip()
 
-        -- TODO: encapsulate GUI code, make it look good
-        rectfill(0, 0, 127, 15, _color_0_black)
-        rectfill(0, 112, 127, 127, _color_0_black)
+        gui.draw(armor)
     end
 
     return screen
