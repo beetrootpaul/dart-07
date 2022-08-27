@@ -82,6 +82,7 @@ function new_level_descriptor()
                 enemies[distance][lane] = "wait_then_charge"
             elseif marker == marker_types.enemy_stationary then
                 enemies[distance][lane] = "stationary"
+                -- TODO: make tile non-empty if would be if only not the enemy marker was there
             elseif marker == marker_types.structure then
                 structures_occupied[distance][lane] = true
                 structures_occupied[distance][lane + 1] = true
