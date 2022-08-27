@@ -55,9 +55,8 @@ function new_screen_mission_in_progress()
     end
 
     function screen.draw()
-        cls(_bg_color)
-
         clip(0, _gaoy, _gaw, _gah)
+        rectfill(0, _gaoy, _gaw - 1, _gaoy + _gah - 1, _bg_color)
         level.draw()
         player.draw()
         for _, enemy in pairs(enemies) do
