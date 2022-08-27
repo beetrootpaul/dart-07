@@ -11,6 +11,11 @@ function new_player()
     local y = _gaoy + flr((_gah - h) / 2)
     local speed = 2
 
+    local min_x = 1
+    local max_x = _gaw - w - 1
+    local min_y = _gaoy + 1
+    local max_y = _gaoy + _gah - h - 1
+
     local ship_sprite_neutral = new_static_sprite({
         sprite_w = 10,
         sprite_h = 10,
@@ -44,20 +49,20 @@ function new_player()
         -- TODO: boundaries
         update = function()
             if btn(_button_left) then
-                x = x - speed
+                x = max(x - speed, min_x)
                 jet_sprite = jet_sprite_hidden
             elseif btn(_button_right) then
-                x = x + speed
+                x = min(x + speed, max_x)
                 jet_sprite = jet_sprite_visible
             else
                 jet_sprite = jet_sprite_visible
             end
 
             if btn(_button_up) then
-                y = y - speed
+                y = max(y - speed, min_y)
                 ship_sprite_current = ship_sprite_flying_left
             elseif btn(_button_down) then
-                y = y + speed
+                y = min(y + speed, max_y)
                 ship_sprite_current = ship_sprite_flying_right
             else
                 ship_sprite_current = ship_sprite_neutral
