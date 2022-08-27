@@ -18,10 +18,13 @@ _distance_scroll_per_frame = 2/8
 _bg_color                  = _color_3_blue_green
 
 -- level specific code
+#include build/src/level_carts/enemies/enemy.lua
+#include build/src/level_carts/enemies/movement_sinusoidal.lua
+#include build/src/level_carts/enemies/movement_stationary.lua
+#include build/src/level_carts/enemies/movement_wait_then_charge.lua
 #include build/src/level_carts/sprites/animated_sprite.lua
 #include build/src/level_carts/sprites/fake_sprite.lua
 #include build/src/level_carts/sprites/static_sprite.lua
-#include build/src/level_carts/enemy.lua
 #include build/src/level_carts/level.lua
 #include build/src/level_carts/level_cart.lua
 #include build/src/level_carts/level_descriptor.lua

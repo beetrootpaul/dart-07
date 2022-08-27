@@ -44,11 +44,7 @@ function new_screen_mission_in_progress()
 
         local enemies_to_spawn = level.enemies_to_spawn()
         for _, enemy_to_spawn in pairs(enemies_to_spawn) do
-            add(enemies, new_enemy {
-                enemy_type = enemy_to_spawn.enemy_type,
-                x = enemy_to_spawn.x,
-                y = enemy_to_spawn.y,
-            })
+            add(enemies, new_enemy(enemy_to_spawn.enemy_type, enemy_to_spawn.x, enemy_to_spawn.y))
         end
 
         return next
