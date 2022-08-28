@@ -5,9 +5,7 @@
 function new_text_4px(text)
     local sprites = {}
     for i = 1, #text do
-        -- TODO: is a new PICO-8 with text[i] syntax available yet?
-        local char = sub(text, i, i)
-        local sprite = _font_4px_sprites[char]
+        local sprite = _font_4px_sprites[text[i]]
         add(sprites, { x = sprite[1], y = sprite[2], w = sprite[3] or 3 })
     end
 
