@@ -69,7 +69,13 @@ function new_screen_mission_in_progress()
                 if _collisions.are_colliding(player_cc, enemy.collision_circle()) then
                     -- TODO: SFX
                     armor = armor - 1
-                    player.start_invincibility_after_damage()
+                    if armor > 0 then
+                        player.start_invincibility_after_damage()
+                    else
+                        -- TODO: game over
+                        -- TODO: wait a moment after death
+                        _load_main_cart()
+                    end
                 end
             end
         end
