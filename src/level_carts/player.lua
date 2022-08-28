@@ -45,6 +45,8 @@ function new_player()
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
+    local invincible_after_damage_timer
+
     return {
         set_horizontal_movement = function(direction)
             if direction == "l" then
@@ -78,13 +80,41 @@ function new_player()
             }
         end,
 
+        is_invincible_after_damage = function()
+            return invincible_after_damage_timer ~= nil
+        end,
+        start_invincibility_after_damage = function()
+            invincible_after_damage_timer = new_timer(30)
+        end,
+
+        advance_timers = function()
+            if invincible_after_damage_timer then
+                if invincible_after_damage_timer.ttl <= 0 then
+                    invincible_after_damage_timer = nil
+                else
+                    invincible_after_damage_timer.advance()
+                end
+            end
+        end,
+
         animate = function()
             jet_sprite.animate()
         end,
 
         draw = function()
-            ship_sprite_current.draw(x, y)
-            jet_sprite.draw(x - 8, y)
+            if invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1 then
+                ship_sprite_current.draw(x, y, {
+                    -- TODO: make it pure white?
+                    flash_color = _color_6_light_grey,
+                })
+                jet_sprite.draw(x - 8, y, {
+                    -- TODO: make it pure white?
+                    flash_color = _color_6_light_grey,
+                })
+            else
+                ship_sprite_current.draw(x, y)
+                jet_sprite.draw(x - 8, y)
+            end
         end,
     }
 end

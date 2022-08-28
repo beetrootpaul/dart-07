@@ -12,6 +12,7 @@ __lua__
 #include build/src/common/multicart.lua
 #include build/src/common/tables.lua
 #include build/src/common/text_4px.lua
+#include build/src/common/timer.lua
 #include build/src/common/viewport.lua
 
 -- cart specific code
