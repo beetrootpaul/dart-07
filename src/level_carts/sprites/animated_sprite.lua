@@ -12,7 +12,7 @@ function new_animated_sprite(params)
     local max_frame = #sprite_xs
 
     return {
-        update = function()
+        animate = function()
             frame = _tni(frame, max_frame)
         end,
 

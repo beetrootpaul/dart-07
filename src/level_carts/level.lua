@@ -43,7 +43,7 @@ function new_level(descriptor)
             return result
         end,
 
-        update = function()
+        scroll = function()
             min_visible_distance = min_visible_distance + _distance_scroll_per_frame
             max_visible_distance = min_visible_distance + _vst - 1
         end,

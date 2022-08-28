@@ -9,14 +9,14 @@ function new_screen_mission_in_progress()
     local player = new_player()
 
     local enemies = {}
-    
+
     -- TODO: deduct armor on collision
     local armor = 3
-    
+
     local gui = new_gui()
 
     --
-    
+
     local screen = {}
 
     function screen.init()
@@ -41,13 +41,34 @@ function new_screen_mission_in_progress()
             end
         end
 
-        level.update()
+        level.scroll()
 
-        for _, enemy in pairs(enemies) do
-            enemy.update()
+        if btn(_button_left) then
+            player.set_horizontal_movement("l")
+        elseif btn(_button_right) then
+            player.set_horizontal_movement("r")
+        else
+            player.set_horizontal_movement("-")
         end
 
-        player.update()
+        if btn(_button_up) then
+            player.set_vertical_movement("u")
+        elseif btn(_button_down) then
+            player.set_vertical_movement("d")
+        else
+            player.set_vertical_movement("-")
+        end
+
+        local player_cc = player.collision_circle()
+        for _, enemy in pairs(enemies) do
+            enemy.move()
+            if _collisions.are_colliding(player_cc, enemy.collision_circle()) then
+                -- TODO: SFX
+                armor = armor - 1
+            end
+        end
+
+        player.animate()
 
         local enemies_to_spawn = level.enemies_to_spawn()
         for _, enemy_to_spawn in pairs(enemies_to_spawn) do
@@ -68,6 +89,14 @@ function new_screen_mission_in_progress()
         clip()
 
         gui.draw(armor)
+
+        -- DEBUG:
+        local player_cc = player.collision_circle()
+        oval(player_cc.x - (player_cc.r - .5), player_cc.y - (player_cc.r - .5), player_cc.x + (player_cc.r - .5), player_cc.y + (player_cc.r - .5), _color_11_dark_green)
+        for _, enemy in pairs(enemies) do
+            local enemy_cc = enemy.collision_circle()
+            oval(enemy_cc.x - (enemy_cc.r - .5), enemy_cc.y - (enemy_cc.r - .5), enemy_cc.x + (enemy_cc.r - .5), enemy_cc.y + (enemy_cc.r - .5), _color_11_dark_green)
+        end
     end
 
     return screen

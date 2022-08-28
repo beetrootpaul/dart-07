@@ -4,7 +4,7 @@
 
 function new_fake_sprite()
     return {
-        update = function()
+        animate = function()
         end,
         draw = function()
         end,

@@ -46,28 +46,40 @@ function new_player()
     local jet_sprite = jet_sprite_visible
 
     return {
-        update = function()
-            if btn(_button_left) then
+        set_horizontal_movement = function(direction)
+            if direction == "l" then
                 x = max(x - speed, min_x)
                 jet_sprite = jet_sprite_hidden
-            elseif btn(_button_right) then
+            elseif direction == "r" then
                 x = min(x + speed, max_x)
                 jet_sprite = jet_sprite_visible
             else
                 jet_sprite = jet_sprite_visible
             end
+        end,
 
-            if btn(_button_up) then
+        set_vertical_movement = function(direction)
+            if direction == "u" then
                 y = max(y - speed, min_y)
                 ship_sprite_current = ship_sprite_flying_left
-            elseif btn(_button_down) then
+            elseif direction == "d" then
                 y = min(y + speed, max_y)
                 ship_sprite_current = ship_sprite_flying_right
             else
                 ship_sprite_current = ship_sprite_neutral
             end
+        end,
 
-            jet_sprite.update()
+        collision_circle = function()
+            return {
+                x = x - 1.5,
+                y = y - .5,
+                r = 4,
+            }
+        end,
+
+        animate = function()
+            jet_sprite.animate()
         end,
 
         draw = function()

@@ -10,7 +10,7 @@ function new_movement_wait_then_charge(start_x, start_y)
         y = start_y,
     }
 
-    function movement.update()
+    function movement.move()
         if age < 40 then
             movement.x = movement.x - 1
         else
