@@ -21,12 +21,15 @@
     "dist-bbs-lvl1": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-level-1.p8 -export \"dist/bbs/shmup-level-1.p8.png\"",
     "dist-bbs-lvl2": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-level-2.p8 -export \"dist/bbs/shmup-level-2.p8.png\"",
     "dist-bbs-lvl3": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-level-3.p8 -export \"dist/bbs/shmup-level-3.p8.png\"",
-    "predist-bbs": "mkdirp dist/bbs/",
-    "predist-itch": "mkdirp dist/itch/",
+    "predist-bbs": "rimraf dist/bbs/ && mkdirp dist/bbs/",
+    "predist-bin": "rimraf dist/bin/",
+    "predist-itch": "rimraf dist/itch/ && mkdirp dist/itch/",
     "dist-bbs": "run-s --print-label dist-bbs-main dist-bbs-lvl*",
+    "dist-bin": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup.p8 -export \"dist/shmup.bin shmup-level-1.p8 shmup-level-2.p8 shmup-level-3.p8\"",
     "dist-itch": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup.p8 -export \"dist/itch/shmup.html shmup-level-1.p8 shmup-level-2.p8 shmup-level-3.p8\"",
+    "postdist-bin": "mv dist/shmup.bin dist/bin",
     "postdist-itch": "mv dist/itch/shmup.html dist/itch/index.html && cd dist/itch/ && zip shmup-itch.zip index.html shmup.js",
-    "dist": "run-s --print-label clear build-minified dist-bbs dist-itch"
+    "dist": "run-s --print-label clear build-minified dist-bbs dist-bin dist-itch"
   },
   "devDependencies": {
     "chokidar-cli": "3.0.0",

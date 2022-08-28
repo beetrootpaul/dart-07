@@ -2,7 +2,9 @@
 -- main_cart/screen_level_select.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: create a decent level select screen
+-- TODO: rename this file to screen_mission_choice.lua
+
+-- TODO: create a decent mission choice screen
 
 -- TODO: ?
 --function new_screen_level_select(score, number)
@@ -12,6 +14,8 @@ function new_screen_level_select()
     --local number = number
 
     local chosen_level = 1
+
+    --
 
     local screen = {}
 
@@ -37,7 +41,7 @@ function new_screen_level_select()
         if btnp(_button_down) then
             chosen_level = chosen_level + 1
         end
-        -- TODO: externalize knowledge about amount of available levels
+        -- TODO: externalize knowledge about amount of available missions
         chosen_level = (chosen_level - 1) % 3 + 1
 
         -- TODO: ?
@@ -62,11 +66,12 @@ function new_screen_level_select()
         --print("score  : " .. score, 10, 10, _color_12_true_blue)
         --print("number : " .. number, 10, 16, _color_12_true_blue)
 
-        -- TODO: decent level selection
+        -- TODO: decent mission selection
         -- TODO: externalize knowledge about amount of available levels
-        print("level 1", 30, 30, chosen_level == 1 and _color_15_light_peach or _color_13_mauve)
-        print("level 2", 30, 50, chosen_level == 2 and _color_15_light_peach or _color_13_mauve)
-        print("level 3", 30, 70, chosen_level == 3 and _color_15_light_peach or _color_13_mauve)
+        print("mission 1", 30, 30, chosen_level == 1 and _color_6_light_grey or _color_13_mauve)
+        print("mission 2", 30, 50, chosen_level == 2 and _color_6_light_grey or _color_13_mauve)
+        print("mission 3", 30, 70, chosen_level == 3 and _color_6_light_grey or _color_13_mauve)
+        -- TODO: add mission 4
     end
 
     return screen
