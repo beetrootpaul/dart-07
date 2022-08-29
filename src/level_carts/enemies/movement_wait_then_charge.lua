@@ -8,14 +8,14 @@ function new_movement_wait_then_charge(start_x, start_y)
     local movement = {
         x = start_x,
         y = start_y,
+        base_speed_x = -1,
     }
 
     function movement.move()
-        if age < 40 then
-            movement.x = movement.x - 1
-        else
-            movement.x = movement.x - 3
+        if age >= 40 then
+            movement.base_speed_x = -3
         end
+        movement.x = movement.x + movement.base_speed_x
         age = age + 1
     end
 

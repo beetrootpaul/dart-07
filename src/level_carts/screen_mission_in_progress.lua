@@ -5,21 +5,30 @@
 function new_screen_mission_in_progress()
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
-
     local player = new_player()
-
     local enemies = {}
-
     local player_bullets = {}
+    local enemy_bullets = {}
+    local gui = new_gui()
 
     local armor = 3
-
-    local gui = new_gui()
 
     local throttled_fire_player_bullet = new_throttle(6, function()
         -- TODO: SFX
         add(player_bullets, new_player_bullet(player.x + 4, player.y))
     end)
+
+    local function handle_player_damage()
+        -- TODO: SFX
+        armor = armor - 1
+        if armor > 0 then
+            player.start_invincibility_after_damage()
+        else
+            -- TODO: game over
+            -- TODO: wait a moment after death
+            _load_main_cart()
+        end
+    end
 
     --
 
@@ -39,6 +48,11 @@ function new_screen_mission_in_progress()
         for index, player_bullet in pairs(player_bullets) do
             if player_bullet.has_finished() then
                 del(player_bullets, player_bullet)
+            end
+        end
+        for index, enemy_bullet in pairs(enemy_bullets) do
+            if enemy_bullet.has_finished() then
+                del(enemy_bullets, enemy_bullet)
             end
         end
 
@@ -84,6 +98,13 @@ function new_screen_mission_in_progress()
         for _, player_bullet in pairs(player_bullets) do
             player_bullet.move()
         end
+        for _, enemy_bullet in pairs(enemy_bullets) do
+            enemy_bullet.move()
+        end
+
+        for _, enemy in pairs(enemies) do
+            enemy.advance_timers()
+        end
 
         local player_cc = player.collision_circle()
         for _, enemy in pairs(enemies) do
@@ -101,22 +122,28 @@ function new_screen_mission_in_progress()
             end
             if not enemy.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, enemy_cc) then
-                    -- TODO: SFX
-                    armor = armor - 1
-                    if armor > 0 then
-                        player.start_invincibility_after_damage()
-                    else
-                        -- TODO: game over
-                        -- TODO: wait a moment after death
-                        _load_main_cart()
-                    end
+                    handle_player_damage()
+                end
+            end
+        end
+        for _, enemy_bullet in pairs(enemy_bullets) do
+            if not player.is_invincible_after_damage() then
+                if _collisions.are_colliding(enemy_bullet.collision_circle(), player_cc) then
+                    handle_player_damage()
                 end
             end
         end
 
         local enemies_to_spawn = level.enemies_to_spawn()
         for _, enemy_to_spawn in pairs(enemies_to_spawn) do
-            add(enemies, new_enemy(enemy_to_spawn.enemy_type, enemy_to_spawn.x, enemy_to_spawn.y))
+            add(enemies, new_enemy {
+                enemy_type = enemy_to_spawn.enemy_type,
+                start_x = enemy_to_spawn.x,
+                start_y = enemy_to_spawn.y,
+                on_bullet_fired = function(enemy_bullet)
+                    add(enemy_bullets, enemy_bullet)
+                end,
+            })
         end
 
         player.animate()
@@ -134,6 +161,10 @@ function new_screen_mission_in_progress()
             rectfill(0, _gaoy, _gaw - 1, _gaoy + _gah - 1, _bg_color)
 
             level.draw()
+
+            for _, enemy_bullet in pairs(enemy_bullets) do
+                enemy_bullet.draw()
+            end
 
             for _, player_bullet in pairs(player_bullets) do
                 player_bullet.draw()
@@ -159,6 +190,10 @@ function new_screen_mission_in_progress()
         --for _, player_bullet in pairs(player_bullets) do
         --    local player_bullet_cc = player_bullet.collision_circle()
         --    oval(player_bullet_cc.x - (player_bullet_cc.r - .5), player_bullet_cc.y - (player_bullet_cc.r - .5), player_bullet_cc.x + (player_bullet_cc.r - .5), player_bullet_cc.y + (player_bullet_cc.r - .5), _color_11_dark_green)
+        --end
+        --for _, enemy_bullet in pairs(enemy_bullets) do
+        --    local enemy_bullet_cc = enemy_bullet.collision_circle()
+        --    oval(enemy_bullet_cc.x - (enemy_bullet_cc.r - .5), enemy_bullet_cc.y - (enemy_bullet_cc.r - .5), enemy_bullet_cc.x + (enemy_bullet_cc.r - .5), enemy_bullet_cc.y + (enemy_bullet_cc.r - .5), _color_11_dark_green)
         --end
     end
 

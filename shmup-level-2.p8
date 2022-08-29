@@ -5,6 +5,8 @@ __lua__
 -- by beetroot paul
 
 -- common code
+#include build/src/common/timer/fake_timer.lua
+#include build/src/common/timer/timer.lua
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
 #include build/src/common/font_4px.lua
@@ -13,7 +15,6 @@ __lua__
 #include build/src/common/tables.lua
 #include build/src/common/text_4px.lua
 #include build/src/common/throttle.lua
-#include build/src/common/timer.lua
 #include build/src/common/viewport.lua
 
 -- level specific values
@@ -22,6 +23,7 @@ _scroll_per_frame = 2/8
 _bg_color         = _color_3_blue_green
 
 -- level specific code
+#include build/src/level_carts/bullets/enemy_bullet.lua
 #include build/src/level_carts/bullets/player_bullet.lua
 #include build/src/level_carts/enemies/enemy.lua
 #include build/src/level_carts/enemies/movement_sinusoidal.lua

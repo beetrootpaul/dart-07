@@ -180,7 +180,7 @@ end
 --- @param y number optional in set with x, w, h
 --- @param w number optional in set with x, y, h
 --- @param h number optional in set with x, y, w
---- @param clip_previous boolean, optional
+--- @param clip_previous boolean optional
 function clip(x, y, w, h, clip_previous)
 end
 
@@ -700,8 +700,8 @@ end
 --- - Wiki: https://pico-8.fandom.com/wiki/Split
 ---
 --- @param str string
---- @param separator string, optional, default: ","
---- @param convert_numbers boolean, optional, default: true
+--- @param separator string optional, default: ","
+--- @param convert_numbers boolean optional, default: true
 --- @return table
 function split(str, separator, convert_numbers)
 end
