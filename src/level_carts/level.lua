@@ -3,6 +3,7 @@
 -- -- -- -- -- -- -- -- -- --
 
 -- TODO: add level particles like sea waves, stars, floating corrupted matter
+-- TODO: animated tiles (waves near shores)
 
 -- to avoid thinking in x and y we talk here about
 --   - distance = how many tiles we have scrolled forward (can be fraction)
@@ -44,7 +45,7 @@ function new_level(descriptor)
         end,
 
         scroll = function()
-            min_visible_distance = min_visible_distance + _distance_scroll_per_frame
+            min_visible_distance = min_visible_distance + _scroll_per_frame / _ts
             max_visible_distance = min_visible_distance + _vst - 1
         end,
 

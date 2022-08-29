@@ -9,7 +9,7 @@ function new_movement_stationary(start_x, start_y)
     }
 
     function movement.move()
-        movement.x = movement.x - _ts * _distance_scroll_per_frame
+        movement.x = movement.x - _scroll_per_frame
     end
 
     return movement

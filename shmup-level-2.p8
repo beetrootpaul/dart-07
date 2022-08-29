@@ -17,9 +17,9 @@ __lua__
 #include build/src/common/viewport.lua
 
 -- level specific values
-_mission_number            = 2
-_distance_scroll_per_frame = 2/8
-_bg_color                  = _color_3_blue_green
+_mission_number   = 2
+_scroll_per_frame = 2/8
+_bg_color         = _color_3_blue_green
 
 -- level specific code
 #include build/src/level_carts/bullets/player_bullet.lua
