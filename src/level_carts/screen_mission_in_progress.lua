@@ -27,6 +27,7 @@ function new_screen_mission_in_progress()
 
     local function handle_player_damage()
         -- TODO: SFX
+        is_triple_shot_enabled = false
         armor = armor - 1
         if armor > 0 then
             player.start_invincibility_after_damage()

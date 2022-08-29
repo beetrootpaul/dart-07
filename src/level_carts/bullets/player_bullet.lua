@@ -26,7 +26,7 @@ function new_player_bullet(x, y)
         end,
 
         move = function()
-            x = x + 3
+            x = x + 5
         end,
 
         destroy = function()

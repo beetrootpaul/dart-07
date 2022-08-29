@@ -19,7 +19,7 @@ __lua__
 
 -- level specific values
 _mission_number   = 2
-_scroll_per_frame = 2/8
+_scroll_per_frame = 2
 _bg_color         = _color_3_blue_green
 
 -- level specific code
