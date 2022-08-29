@@ -13,6 +13,7 @@ function new_enemy(params)
     local ship_sprite
     local collision_circle_r, collision_circle_offset_x
     local bullet_fire_timer, fire_bullets
+    local powerups_distribution
 
     local is_destroyed = false
 
@@ -39,6 +40,7 @@ function new_enemy(params)
                 }
             )
         end
+        powerups_distribution = "-,-,-,-,-,-,-,-,-,-,a,a,t"
     elseif enemy_type == "wait_then_charge" then
         armor = 3
         movement = new_movement_wait_then_charge(start_x, start_y)
@@ -54,6 +56,7 @@ function new_enemy(params)
         bullet_fire_timer = new_fake_timer()
         fire_bullets = function()
         end
+        powerups_distribution = "-,-,-,-,-,-,a,a,t"
     elseif enemy_type == "stationary" then
         armor = 6
         movement = new_movement_stationary(start_x, start_y)
@@ -79,6 +82,7 @@ function new_enemy(params)
                 )
             end
         end
+        powerups_distribution = "-,-,-,a,t,t"
     end
 
     -- TODO: make collision detection work only if at least 1px of the enemy is visible, not before
@@ -99,8 +103,7 @@ function new_enemy(params)
             armor = armor - 1
             if armor < 1 then
                 is_destroyed = true
-                -- TODO: make random powerups more clever, i.e. higher chance if enemy was tougher to destroy
-                local powerup_type = rnd { "-", "-", "-", "-", "a", "a", "t", "t", "t" }
+                local powerup_type = rnd(split(powerups_distribution))
                 if powerup_type ~= "-" then
                     on_powerup_spawned(new_powerup {
                         x = movement.x,
