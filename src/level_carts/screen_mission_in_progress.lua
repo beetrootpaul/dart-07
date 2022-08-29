@@ -9,6 +9,7 @@ function new_screen_mission_in_progress()
     local enemies = {}
     local player_bullets = {}
     local enemy_bullets = {}
+    local powerups = {}
     local gui = new_gui()
 
     local armor = 3
@@ -43,6 +44,11 @@ function new_screen_mission_in_progress()
         for index, enemy in pairs(enemies) do
             if enemy.has_finished() then
                 del(enemies, enemy)
+            end
+        end
+        for index, powerup in pairs(powerups) do
+            if powerup.has_finished() then
+                del(powerups, powerup)
             end
         end
         for index, player_bullet in pairs(player_bullets) do
@@ -95,6 +101,9 @@ function new_screen_mission_in_progress()
             enemy.move()
         end
 
+        for _, powerup in pairs(powerups) do
+            powerup.move()
+        end
         for _, player_bullet in pairs(player_bullets) do
             player_bullet.move()
         end
@@ -107,6 +116,7 @@ function new_screen_mission_in_progress()
         end
 
         local player_cc = player.collision_circle()
+        -- TODO: powerup collisions and actions in return
         for _, enemy in pairs(enemies) do
             local enemy_cc = enemy.collision_circle()
             for __, player_bullet in pairs(player_bullets) do
@@ -143,6 +153,9 @@ function new_screen_mission_in_progress()
                 on_bullet_fired = function(enemy_bullet)
                     add(enemy_bullets, enemy_bullet)
                 end,
+                on_powerup_spawned = function(powerup)
+                    add(powerups, powerup)
+                end,
             })
         end
 
@@ -174,6 +187,10 @@ function new_screen_mission_in_progress()
                 enemy.draw()
             end
 
+            for _, powerup in pairs(powerups) do
+                powerup.draw()
+            end
+
             player.draw()
         end
         clip()
@@ -194,6 +211,11 @@ function new_screen_mission_in_progress()
         --for _, enemy_bullet in pairs(enemy_bullets) do
         --    local enemy_bullet_cc = enemy_bullet.collision_circle()
         --    oval(enemy_bullet_cc.x - (enemy_bullet_cc.r - .5), enemy_bullet_cc.y - (enemy_bullet_cc.r - .5), enemy_bullet_cc.x + (enemy_bullet_cc.r - .5), enemy_bullet_cc.y + (enemy_bullet_cc.r - .5), _color_11_dark_green)
+        --end
+        -- TODO: test if it works
+        --for _, powerup in pairs(powerups) do
+        --    local powerup_cc = powerup.collision_circle()
+        --    oval(powerup_cc.x - (powerup_cc.r - .5), powerup_cc.y - (powerup_cc.r - .5), powerup_cc.x + (powerup_cc.r - .5), powerup_cc.y + (powerup_cc.r - .5), _color_11_dark_green)
         --end
     end
 

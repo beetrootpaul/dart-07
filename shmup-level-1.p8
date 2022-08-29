@@ -38,6 +38,7 @@ _bg_color         = _color_12_true_blue
 #include build/src/level_carts/level_cart.lua
 #include build/src/level_carts/level_descriptor.lua
 #include build/src/level_carts/player.lua
+#include build/src/level_carts/powerup.lua
 #include build/src/level_carts/screen_get_ready.lua
 #include build/src/level_carts/screen_mission_in_progress.lua
 

@@ -18,7 +18,6 @@ function new_enemy_bullet(params)
 
     return {
         has_finished = function()
-            -- TODO: will it work for a bullet flying slower than level scrolls? Or will it disappear too early for an enemy close to the right level's edge?
             return is_destroyed or x < 0 - _ts or x > _gaw + _ts or y < _gaoy - _ts or y > _gaoy + _gah + _ts
         end,
 
