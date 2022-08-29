@@ -7,18 +7,23 @@ function new_static_sprite(params)
     local sprite_h = params.sprite_h
     local sprite_x = params.sprite_x
     local sprite_y = params.sprite_y
+    
+    local from_left_top_corner = params.from_left_top_corner
+    local transparent_color = params.transparent_color
 
     return {
         draw = function(x, y, opts)
             opts = opts or {}
-            
-            if not opts.from_left_top_corner then
+
+            if not from_left_top_corner then
                 x = x - sprite_w / 2
                 y = y - sprite_h / 2
             end
 
-            palt(_color_0_black, false)
-            palt(_color_11_dark_green, true)
+            if transparent_color then
+                palt(_color_0_black, false)
+                palt(transparent_color, true)
+            end
 
             if opts.flash_color then
                 for c = 0, 15 do
@@ -35,7 +40,10 @@ function new_static_sprite(params)
             if opts.flash_color then
                 pal(0)
             end
-            palt()
+            
+            if transparent_color then
+                palt()
+            end
         end,
     }
 end

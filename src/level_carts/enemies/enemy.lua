@@ -14,6 +14,7 @@ function new_enemy(enemy_type, start_x, start_y)
             sprite_y = 12,
             sprite_w = 7,
             sprite_h = 6,
+            transparent_color = _color_11_dark_green,
         })
         collision_circle_offset_x = -1
         collision_circle_r = 3
@@ -24,6 +25,7 @@ function new_enemy(enemy_type, start_x, start_y)
             sprite_y = 0,
             sprite_w = 10,
             sprite_h = 12,
+            transparent_color = _color_11_dark_green,
         })
         collision_circle_offset_x = 1
         collision_circle_r = 5
@@ -34,6 +36,7 @@ function new_enemy(enemy_type, start_x, start_y)
             sprite_y = 0,
             sprite_w = 16,
             sprite_h = 16,
+            transparent_color = _color_11_dark_green,
         })
         collision_circle_offset_x = 0
         collision_circle_r = 8

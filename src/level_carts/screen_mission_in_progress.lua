@@ -10,10 +10,16 @@ function new_screen_mission_in_progress()
 
     local enemies = {}
 
-    -- TODO: deduct armor on collision
+    local player_bullets = {}
+
     local armor = 3
 
     local gui = new_gui()
+
+    local throttled_fire_player_bullet = new_throttle(6, function()
+        -- TODO: SFX
+        add(player_bullets, new_player_bullet(player.x + 4, player.y))
+    end)
 
     --
 
@@ -30,9 +36,14 @@ function new_screen_mission_in_progress()
                 del(enemies, enemy)
             end
         end
+        for index, player_bullet in pairs(player_bullets) do
+            if player_bullet.has_finished() then
+                del(player_bullets, player_bullet)
+            end
+        end
 
         -- TODO: finish level on conditions different than a button press
-        if btnp(_button_x) or level.has_reached_end() then
+        if btnp(_button_o) or level.has_reached_end() then
             -- TODO: externalize knowledge about amount of available missions
             if _mission_number < 3 then
                 _load_level_cart(_mission_number + 1)
@@ -59,8 +70,19 @@ function new_screen_mission_in_progress()
             player.set_vertical_movement("-")
         end
 
+        -- TODO: make it decrease enemy's health
+        if btn(_button_x) then
+            throttled_fire_player_bullet.invoke()
+        else
+            -- TODO: ? reset interval ?
+        end
+
         for _, enemy in pairs(enemies) do
             enemy.move()
+        end
+
+        for _, player_bullet in pairs(player_bullets) do
+            player_bullet.move()
         end
 
         local player_cc = player.collision_circle()
@@ -89,17 +111,28 @@ function new_screen_mission_in_progress()
 
         player.advance_timers()
 
+        throttled_fire_player_bullet.advance_timer()
+
         return next
     end
 
     function screen.draw()
         clip(0, _gaoy, _gaw, _gah)
-        rectfill(0, _gaoy, _gaw - 1, _gaoy + _gah - 1, _bg_color)
-        level.draw()
-        for _, enemy in pairs(enemies) do
-            enemy.draw()
+        do
+            rectfill(0, _gaoy, _gaw - 1, _gaoy + _gah - 1, _bg_color)
+
+            level.draw()
+
+            for _, player_bullet in pairs(player_bullets) do
+                player_bullet.draw()
+            end
+
+            for _, enemy in pairs(enemies) do
+                enemy.draw()
+            end
+
+            player.draw()
         end
-        player.draw()
         clip()
 
         gui.draw(armor)

@@ -2,6 +2,7 @@
 -- common/timer.lua  --
 -- -- -- -- -- -- -- --
 
+-- ttl = amount of frames to count towards 0
 function new_timer(ttl)
     local timer = {
         ttl = ttl,
