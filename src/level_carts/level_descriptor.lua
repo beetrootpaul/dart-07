@@ -130,45 +130,47 @@ function new_level_descriptor()
             local srrt, srrb = structures_occupied[distance + 1][lane - 1], structures_occupied[distance + 1][lane + 1]
             local sltt, srtt = structures_occupied[distance - 2][lane - 2], structures_occupied[distance][lane - 2]
             local slbb, srbb = structures_occupied[distance - 2][lane + 2], structures_occupied[distance][lane + 2]
+            local tile_to_set
             if smm then
                 if not slm and not smt then
-                    structures[distance - 1][lane] = structure_tiles.outside_left_top
+                    tile_to_set = structure_tiles.outside_left_top
                 elseif not slm and not smb then
-                    structures[distance - 1][lane] = structure_tiles.outside_left_bottom
+                    tile_to_set = structure_tiles.outside_left_bottom
                 elseif not srm and not smt then
-                    structures[distance - 1][lane] = structure_tiles.outside_right_top
+                    tile_to_set = structure_tiles.outside_right_top
                 elseif not srm and not smb then
-                    structures[distance - 1][lane] = structure_tiles.outside_right_bottom
+                    tile_to_set = structure_tiles.outside_right_bottom
                 elseif not slm and not slt and not slb then
-                    structures[distance - 1][lane] = structure_tiles.edge_left
+                    tile_to_set = structure_tiles.edge_left
                 elseif not srm and not srt and not srb then
-                    structures[distance - 1][lane] = structure_tiles.edge_right
+                    tile_to_set = structure_tiles.edge_right
                 elseif not smt and not slt and not srt then
-                    structures[distance - 1][lane] = structure_tiles.edge_top
+                    tile_to_set = structure_tiles.edge_top
                 elseif not smb and not slb and not srb then
-                    structures[distance - 1][lane] = structure_tiles.edge_bottom
+                    tile_to_set = structure_tiles.edge_bottom
                 elseif (not sllt and slm and not smt and srt) or (not sltt and smt and not slm and slb) then
-                    structures[distance - 1][lane] = structure_tiles.filler_left_top
+                    tile_to_set = structure_tiles.filler_left_top
                 elseif (not sllb and slm and not smb and srb) or (not slbb and smb and not slm and slt) then
-                    structures[distance - 1][lane] = structure_tiles.filler_left_bottom
+                    tile_to_set = structure_tiles.filler_left_bottom
                 elseif (not srrt and srm and not smt and slt) or (not srtt and smt and not srm and srb) then
-                    structures[distance - 1][lane] = structure_tiles.filler_right_top
+                    tile_to_set = structure_tiles.filler_right_top
                 elseif (not srrb and srm and not smb and slb) or (not srbb and smb and not srm and srt) then
-                    structures[distance - 1][lane] = structure_tiles.filler_right_bottom
+                    tile_to_set = structure_tiles.filler_right_bottom
                 else
-                    structures[distance - 1][lane] = structure_tiles.center
+                    tile_to_set = structure_tiles.center
                 end
             else
                 if slm and smt then
-                    structures[distance - 1][lane] = structure_tiles.inner_left_top
+                    tile_to_set = structure_tiles.inner_left_top
                 elseif slm and smb then
-                    structures[distance - 1][lane] = structure_tiles.inner_left_bottom
+                    tile_to_set = structure_tiles.inner_left_bottom
                 elseif srm and smt then
-                    structures[distance - 1][lane] = structure_tiles.inner_right_top
+                    tile_to_set = structure_tiles.inner_right_top
                 elseif srm and smb then
-                    structures[distance - 1][lane] = structure_tiles.inner_right_bottom
+                    tile_to_set = structure_tiles.inner_right_bottom
                 end
             end
+            structures[distance - 1][lane] = tile_to_set
         end
     end
 

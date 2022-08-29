@@ -5,6 +5,8 @@ __lua__
 -- by beetroot paul
 
 -- common code
+#include build/src/common/timer/fake_timer.lua
+#include build/src/common/timer/timer.lua
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
 #include build/src/common/font_4px.lua
@@ -12,15 +14,17 @@ __lua__
 #include build/src/common/multicart.lua
 #include build/src/common/tables.lua
 #include build/src/common/text_4px.lua
-#include build/src/common/timer.lua
+#include build/src/common/throttle.lua
 #include build/src/common/viewport.lua
 
 -- level specific values
-_mission_number            = 3
-_distance_scroll_per_frame = 3/8
-_bg_color                  = _color_1_dark_blue
+_mission_number   = 3
+_scroll_per_frame = 3
+_bg_color         = _color_1_dark_blue
 
 -- level specific code
+#include build/src/level_carts/bullets/enemy_bullet.lua
+#include build/src/level_carts/bullets/player_bullet.lua
 #include build/src/level_carts/enemies/enemy.lua
 #include build/src/level_carts/enemies/movement_sinusoidal.lua
 #include build/src/level_carts/enemies/movement_stationary.lua
@@ -34,6 +38,7 @@ _bg_color                  = _color_1_dark_blue
 #include build/src/level_carts/level_cart.lua
 #include build/src/level_carts/level_descriptor.lua
 #include build/src/level_carts/player.lua
+#include build/src/level_carts/powerup.lua
 #include build/src/level_carts/screen_get_ready.lua
 #include build/src/level_carts/screen_mission_in_progress.lua
 
