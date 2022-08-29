@@ -40,7 +40,7 @@ function new_enemy(params)
                 }
             )
         end
-        powerups_distribution = "-,-,-,-,-,-,-,-,-,-,a,a,t"
+        powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,-,-,a,a,t"
     elseif enemy_type == "wait_then_charge" then
         armor = 3
         movement = new_movement_wait_then_charge(start_x, start_y)
@@ -56,7 +56,7 @@ function new_enemy(params)
         bullet_fire_timer = new_fake_timer()
         fire_bullets = function()
         end
-        powerups_distribution = "-,-,-,-,-,-,a,a,t"
+        powerups_distribution = "-,-,-,-,-,-,-,-,-,a,a,t"
     elseif enemy_type == "stationary" then
         armor = 6
         movement = new_movement_stationary(start_x, start_y)
@@ -82,7 +82,7 @@ function new_enemy(params)
                 )
             end
         end
-        powerups_distribution = "-,-,-,a,t,t"
+        powerups_distribution = "-,-,-,a,a,t"
     end
 
     -- TODO: make collision detection work only if at least 1px of the enemy is visible, not before

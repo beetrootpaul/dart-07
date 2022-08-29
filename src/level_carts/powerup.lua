@@ -10,6 +10,8 @@ function new_powerup(params)
     local powerup_type = params.powerup_type
     local x, y = params.x, params.y
 
+    local is_picked = false
+
     local sprite
 
     if powerup_type == "a" then
@@ -30,19 +32,34 @@ function new_powerup(params)
         }
     end
 
-    return {
-        has_finished = function()
-            -- TODO: support picked up powerup as well 
-            return x < 0 - _ts or x > _gaw + _ts or y < _gaoy - _ts or y > _gaoy + _gah + _ts
-        end,
-
-        move = function()
-            x = x - 1
-        end,
-
-        draw = function()
-            sprite.draw(x, y)
-        end
+    local powerup = {
+        powerup_type = powerup_type,
     }
+
+    function powerup.has_finished()
+        return is_picked or x < 0 - _ts or x > _gaw + _ts or y < _gaoy - _ts or y > _gaoy + _gah + _ts
+    end
+
+    function powerup.collision_circle()
+        return {
+            x = x - .5,
+            y = y - .5,
+            r = 5,
+        }
+    end
+
+    function powerup.pick()
+        is_picked = true
+    end
+
+    function powerup.move()
+        x = x - 1
+    end
+
+    function powerup.draw()
+        sprite.draw(x, y)
+    end
+
+    return powerup
 end
 
