@@ -3,6 +3,8 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_player_bullet(x, y)
+    local is_destroyed = false
+
     local bullet_sprites = new_static_sprite {
         sprite_w = 6,
         sprite_h = 4,
@@ -12,11 +14,23 @@ function new_player_bullet(x, y)
 
     return {
         has_finished = function()
-            return x > _gaw + _ts
+            return is_destroyed or x > _gaw + _ts
+        end,
+
+        collision_circle = function()
+            return {
+                x = x + .5,
+                y = y - .5,
+                r = 2,
+            }
         end,
 
         move = function()
             x = x + 3
+        end,
+
+        destroy = function()
+            is_destroyed = true
         end,
 
         draw = function()

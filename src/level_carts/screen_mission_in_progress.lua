@@ -87,8 +87,20 @@ function new_screen_mission_in_progress()
 
         local player_cc = player.collision_circle()
         for _, enemy in pairs(enemies) do
-            if not player.is_invincible_after_damage() then
-                if _collisions.are_colliding(player_cc, enemy.collision_circle()) then
+            local enemy_cc = enemy.collision_circle()
+            for __, player_bullet in pairs(player_bullets) do
+                if not enemy.has_finished() then
+                    if _collisions.are_colliding(player_bullet.collision_circle(), enemy_cc) then
+                        -- TODO: SFX
+                        -- TODO: blinking enemy if still alive
+                        -- TODO: explosion if no longer alive
+                        enemy.take_damage()
+                        player_bullet.destroy()
+                    end
+                end
+            end
+            if not enemy.has_finished() and not player.is_invincible_after_damage() then
+                if _collisions.are_colliding(player_cc, enemy_cc) then
                     -- TODO: SFX
                     armor = armor - 1
                     if armor > 0 then
@@ -143,6 +155,10 @@ function new_screen_mission_in_progress()
         --for _, enemy in pairs(enemies) do
         --    local enemy_cc = enemy.collision_circle()
         --    oval(enemy_cc.x - (enemy_cc.r - .5), enemy_cc.y - (enemy_cc.r - .5), enemy_cc.x + (enemy_cc.r - .5), enemy_cc.y + (enemy_cc.r - .5), _color_11_dark_green)
+        --end
+        --for _, player_bullet in pairs(player_bullets) do
+        --    local player_bullet_cc = player_bullet.collision_circle()
+        --    oval(player_bullet_cc.x - (player_bullet_cc.r - .5), player_bullet_cc.y - (player_bullet_cc.r - .5), player_bullet_cc.x + (player_bullet_cc.r - .5), player_bullet_cc.y + (player_bullet_cc.r - .5), _color_11_dark_green)
         --end
     end
 
