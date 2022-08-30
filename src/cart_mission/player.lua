@@ -58,10 +58,10 @@ function new_player()
     function player.set_vertical_movement(direction)
         if direction == "u" then
             player.y = max(player.y - speed, min_y)
-            jet_sprite = jet_sprite_hidden
+            jet_sprite = jet_sprite_visible
         elseif direction == "d" then
             player.y = min(player.y + speed, max_y)
-            jet_sprite = jet_sprite_visible
+            jet_sprite = jet_sprite_hidden
         else
             jet_sprite = jet_sprite_visible
         end
