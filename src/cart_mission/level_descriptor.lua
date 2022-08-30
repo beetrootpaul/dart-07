@@ -36,10 +36,6 @@ function new_level_descriptor()
         filler_left_bottom = 196,
         filler_right_top = 243,
         filler_right_bottom = 195,
-        exterior_1 = 197,
-        exterior_2 = 213,
-        exterior_3 = 229,
-        exterior_4 = 245,
     }
 
     -- markers from all 4 rows of 3rd sprite sheet tab, combined into a single long 2D array
@@ -134,54 +130,47 @@ function new_level_descriptor()
             local srrt, srrb = structures_occupied[distance][lane + 2], structures_occupied[distance - 2][lane + 2]
             local sltt, srtt = structures_occupied[distance + 1][lane - 1], structures_occupied[distance + 1][lane + 1]
             local slbb, srbb = structures_occupied[distance - 3][lane - 1], structures_occupied[distance - 3][lane + 1]
-            local tiles_to_set
+            local tile_to_set
             if smm then
                 if not slm and not smt then
-                    tiles_to_set = structure_tiles.outside_left_top
+                    tile_to_set = structure_tiles.outside_left_top
                 elseif not slm and not smb then
-                    tiles_to_set = structure_tiles.outside_left_bottom
+                    tile_to_set = structure_tiles.outside_left_bottom
                 elseif not srm and not smt then
-                    tiles_to_set = structure_tiles.outside_right_top
+                    tile_to_set = structure_tiles.outside_right_top
                 elseif not srm and not smb then
-                    tiles_to_set = structure_tiles.outside_right_bottom
+                    tile_to_set = structure_tiles.outside_right_bottom
                 elseif not slm and not slt and not slb then
-                    tiles_to_set = structure_tiles.edge_left
+                    tile_to_set = structure_tiles.edge_left
                 elseif not srm and not srt and not srb then
-                    tiles_to_set = structure_tiles.edge_right
+                    tile_to_set = structure_tiles.edge_right
                 elseif not smt and not slt and not srt then
-                    tiles_to_set = structure_tiles.edge_top
+                    tile_to_set = structure_tiles.edge_top
                 elseif not smb and not slb and not srb then
-                    tiles_to_set = structure_tiles.edge_bottom
+                    tile_to_set = structure_tiles.edge_bottom
                 elseif (not sllt and slm and not smt and srt) or (not sltt and smt and not slm and slb) then
-                    tiles_to_set = structure_tiles.filler_left_top
+                    tile_to_set = structure_tiles.filler_left_top
                 elseif (not sllb and slm and not smb and srb) or (not slbb and smb and not slm and slt) then
-                    tiles_to_set = structure_tiles.filler_left_bottom
+                    tile_to_set = structure_tiles.filler_left_bottom
                 elseif (not srrt and srm and not smt and slt) or (not srtt and smt and not srm and srb) then
-                    tiles_to_set = structure_tiles.filler_right_top
+                    tile_to_set = structure_tiles.filler_right_top
                 elseif (not srrb and srm and not smb and slb) or (not srbb and smb and not srm and srt) then
-                    tiles_to_set = structure_tiles.filler_right_bottom
+                    tile_to_set = structure_tiles.filler_right_bottom
                 else
-                    tiles_to_set = structure_tiles.center
+                    tile_to_set = structure_tiles.center
                 end
             else
                 if slm and smt then
-                    tiles_to_set = structure_tiles.inner_left_top
+                    tile_to_set = structure_tiles.inner_left_top
                 elseif slm and smb then
-                    tiles_to_set = structure_tiles.inner_left_bottom
+                    tile_to_set = structure_tiles.inner_left_bottom
                 elseif srm and smt then
-                    tiles_to_set = structure_tiles.inner_right_top
+                    tile_to_set = structure_tiles.inner_right_top
                 elseif srm and smb then
-                    tiles_to_set = structure_tiles.inner_right_bottom
-                else
-                    tiles_to_set = {
-                        structure_tiles.exterior_1,
-                        structure_tiles.exterior_2,
-                        structure_tiles.exterior_3,
-                        structure_tiles.exterior_4,
-                    }
+                    tile_to_set = structure_tiles.inner_right_bottom
                 end
             end
-            structures[distance - 1][lane] = tiles_to_set
+            structures[distance - 1][lane] = tile_to_set
         end
     end
 

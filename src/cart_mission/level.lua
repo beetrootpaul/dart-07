@@ -23,6 +23,7 @@ function new_level(descriptor)
     local animation_frame = 0
     local animation_steps = 4
     local animation_step_length = 12
+    local animated_bg_tiles = { 197, 213, 229, 245 }
 
     return {
         has_reached_end = function()
@@ -57,17 +58,17 @@ function new_level(descriptor)
         end,
 
         draw = function()
+            local bg_tile = animated_bg_tiles[flr(animation_frame / animation_step_length) + 1]
             for distance = flr(min_visible_distance), ceil(max_visible_distance) do
                 for lane = 1, 12 do
-                    local tiles = structures[distance][lane]
-                    local tile = type(tiles) == "table" and tiles[flr(animation_frame / animation_step_length) + 1] or tiles
-                    if type(tiles) == "table" then
-                        printh(tile)
-                    end
-                    if tile then
-                        local x = _gaox + (lane - 1) * _ts
-                        local y = _vs - _ts - flr((distance - min_visible_distance) * _ts)
-                        spr(tile, x, y)
+                    local x = _gaox + (lane - 1) * _ts
+                    local y = _vs - _ts - flr((distance - min_visible_distance) * _ts)
+
+                    spr(bg_tile, x, y)
+
+                    local fg_tile = structures[distance][lane]
+                    if fg_tile then
+                        spr(fg_tile, x, y)
                     end
                 end
             end
