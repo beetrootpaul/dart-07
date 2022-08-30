@@ -75,8 +75,7 @@ _color_11_dark_green = 11
 
 _color_12_true_blue = 12
 _color_13_mauve = 13
--- TODO: finalize custom palette
--- 14
+_color_14_lavender = 14
 _color_15_peach = 15
 
 -- -- -- -- -- -- --
@@ -104,8 +103,7 @@ function _remap_display_colors()
         --
         [_color_12_true_blue] = _palette_color_true_blue,
         [_color_13_mauve] = _palette_color_mauve,
-        -- TODO: finalize custom palette
-        [14] = _palette_color_black,
+        [_color_14_lavender] = _palette_color_lavender,
         [_color_15_peach] = _palette_color_peach,
     }
     pal(palette, 1)

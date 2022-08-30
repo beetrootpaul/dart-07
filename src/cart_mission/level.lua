@@ -19,6 +19,11 @@ function new_level(descriptor)
     local min_visible_distance = 1
     local max_visible_distance = min_visible_distance + _vst - 1
 
+    -- TODO: externalize animated/static tile to its own file, create it in level descriptor
+    local animation_frame = 0
+    local animation_steps = 4
+    local animation_step_length = 12
+
     return {
         has_reached_end = function()
             return min_visible_distance + _vst >= max_defined_distance
@@ -47,16 +52,22 @@ function new_level(descriptor)
         scroll = function()
             min_visible_distance = min_visible_distance + _scroll_per_frame / _ts
             max_visible_distance = min_visible_distance + _vst - 1
+
+            animation_frame = (animation_frame + 1) % (animation_steps * animation_step_length)
         end,
 
         draw = function()
             for distance = flr(min_visible_distance), ceil(max_visible_distance) do
                 for lane = 1, 12 do
-                    local structures_tile = structures[distance][lane]
-                    if structures_tile then
+                    local tiles = structures[distance][lane]
+                    local tile = type(tiles) == "table" and tiles[flr(animation_frame / animation_step_length) + 1] or tiles
+                    if type(tiles) == "table" then
+                        printh(tile)
+                    end
+                    if tile then
                         local x = _gaox + (lane - 1) * _ts
                         local y = _vs - _ts - flr((distance - min_visible_distance) * _ts)
-                        spr(structures_tile, x, y)
+                        spr(tile, x, y)
                     end
                 end
             end
