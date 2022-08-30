@@ -196,6 +196,8 @@ function new_screen_mission()
 
         throttled_fire_player_bullet.advance_timer()
 
+        gui.animate()
+
         return next
     end
 

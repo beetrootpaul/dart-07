@@ -4,6 +4,8 @@ __lua__
 -- TODO shmup mission 3 title
 -- by beetroot paul
 
+#include build/src/third_party/easingcheatsheet.lua
+
 #include build/src/common/timer/fake_timer.lua
 #include build/src/common/timer/timer.lua
 #include build/src/common/buttons.lua
