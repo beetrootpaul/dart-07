@@ -12,16 +12,16 @@ function new_screen_mission()
     local powerups = {}
     local gui = new_gui()
 
-    local armor = 3
+    local health = 5
     local is_triple_shot_enabled = false
 
     local throttled_fire_player_bullet = new_throttle(6, function()
         -- TODO: SFX
-        add(player_bullets, new_player_bullet(player.x + 4, player.y))
+        add(player_bullets, new_player_bullet(player.x, player.y - 4))
         if is_triple_shot_enabled then
             -- TODO: different SFX
-            add(player_bullets, new_player_bullet(player.x + 2, player.y - 5))
-            add(player_bullets, new_player_bullet(player.x + 2, player.y + 5))
+            add(player_bullets, new_player_bullet(player.x - 5, player.y - 2))
+            add(player_bullets, new_player_bullet(player.x + 5, player.y - 2))
         end
     end)
 
@@ -29,8 +29,9 @@ function new_screen_mission()
         -- TODO: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
-        armor = armor - 1
-        if armor > 0 then
+        -- TODO: VFX of disappearing health segment
+        health = health - 1
+        if health > 0 then
             player.start_invincibility_after_damage()
         else
             -- TODO: game over
@@ -39,8 +40,8 @@ function new_screen_mission()
         end
     end
 
-    local function increase_armor()
-        armor = armor + 1
+    local function increase_health()
+        health = health + 1
     end
 
     local function enable_triple_shot()
@@ -90,20 +91,20 @@ function new_screen_mission()
 
         level.scroll()
 
+        if btn(_button_down) then
+            player.set_vertical_movement("d")
+        elseif btn(_button_up) then
+            player.set_vertical_movement("u")
+        else
+            player.set_vertical_movement("-")
+        end
+
         if btn(_button_left) then
             player.set_horizontal_movement("l")
         elseif btn(_button_right) then
             player.set_horizontal_movement("r")
         else
             player.set_horizontal_movement("-")
-        end
-
-        if btn(_button_up) then
-            player.set_vertical_movement("u")
-        elseif btn(_button_down) then
-            player.set_vertical_movement("d")
-        else
-            player.set_vertical_movement("-")
         end
 
         -- TODO: make it decrease enemy's health
@@ -137,10 +138,10 @@ function new_screen_mission()
             if _collisions.are_colliding(player_cc, powerup.collision_circle()) then
                 -- TODO: SFX
                 -- TODO: VFX on player
-                -- TODO: VFX on armor status
+                -- TODO: VFX on health status
                 powerup.pick()
                 if powerup.powerup_type == "a" then
-                    increase_armor()
+                    increase_health()
                 elseif powerup.powerup_type == "t" then
                     enable_triple_shot()
                 end
@@ -199,9 +200,9 @@ function new_screen_mission()
     end
 
     function screen.draw()
-        clip(0, _gaoy, _gaw, _gah)
+        clip(_gaox, 0, _gaw, _gah)
         do
-            rectfill(0, _gaoy, _gaw - 1, _gaoy + _gah - 1, _bg_color)
+            rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _bg_color)
 
             level.draw()
 
@@ -225,7 +226,7 @@ function new_screen_mission()
         end
         clip()
 
-        gui.draw(armor)
+        gui.draw(health)
 
         -- DEBUG:
         --local player_cc = player.collision_circle()

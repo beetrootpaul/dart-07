@@ -16,18 +16,18 @@ function new_powerup(params)
 
     if powerup_type == "a" then
         sprite = new_static_sprite {
-            sprite_x = 121,
-            sprite_y = 0,
             sprite_w = 7,
             sprite_h = 8,
+            sprite_x = 121,
+            sprite_y = 0,
             transparent_color = _color_11_dark_green,
         }
     elseif powerup_type == "t" then
         sprite = new_static_sprite {
-            sprite_x = 113,
-            sprite_y = 0,
             sprite_w = 7,
             sprite_h = 8,
+            sprite_x = 113,
+            sprite_y = 0,
             transparent_color = _color_11_dark_green,
         }
     end
@@ -37,7 +37,11 @@ function new_powerup(params)
     }
 
     function powerup.has_finished()
-        return is_picked or x < 0 - _ts or x > _gaw + _ts or y < _gaoy - _ts or y > _gaoy + _gah + _ts
+        return is_picked or
+            x < _gaox - _ts or
+            x > _gaox + _gaw + _ts or
+            y < -_ts or
+            y > _gah + _ts
     end
 
     function powerup.collision_circle()
@@ -53,7 +57,7 @@ function new_powerup(params)
     end
 
     function powerup.move()
-        x = x - 1
+        y = y + 1
     end
 
     function powerup.draw()

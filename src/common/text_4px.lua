@@ -2,6 +2,8 @@
 -- common/text_4px.lua  --
 -- -- -- -- -- -- -- -- --
 
+-- TODO: still used ???
+
 function new_text_4px(text)
     local sprites = {}
     for i = 1, #text do

@@ -31,8 +31,8 @@ function new_level(descriptor)
                 for lane = 1, 12 do
                     local enemy_type = enemies[spawn_distance] and enemies[spawn_distance][lane] or nil
                     if enemy_type then
-                        local x = (spawn_distance - min_visible_distance + .5) * _ts + enemy_offset_x
-                        local y = _gaoy + (lane - .5) * _ts + enemy_offset_y
+                        local x = _gaox + (lane - .5) * _ts + enemy_offset_x
+                        local y = _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts + enemy_offset_y
                         add(result, {
                             enemy_type = enemy_type,
                             x = x,
@@ -54,8 +54,8 @@ function new_level(descriptor)
                 for lane = 1, 12 do
                     local structures_tile = structures[distance][lane]
                     if structures_tile then
-                        local x = flr((distance - min_visible_distance) * _ts)
-                        local y = _gaoy + (lane - 1) * _ts
+                        local x = _gaox + (lane - 1) * _ts
+                        local y = _vs - _ts - flr((distance - min_visible_distance) * _ts)
                         spr(structures_tile, x, y)
                     end
                 end

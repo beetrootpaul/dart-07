@@ -8,26 +8,26 @@ function new_enemy(params)
     local on_bullet_fired = params.on_bullet_fired
     local on_powerup_spawned = params.on_powerup_spawned
 
-    local armor
+    local health
     local movement
     local ship_sprite
-    local collision_circle_r, collision_circle_offset_x
+    local collision_circle_r, collision_circle_offset_y
     local bullet_fire_timer, fire_bullets
     local powerups_distribution
 
     local is_destroyed = false
 
     if enemy_type == "sinusoidal" then
-        armor = 1
+        health = 1
         movement = new_movement_sinusoidal(start_x, start_y)
         ship_sprite = new_static_sprite {
-            sprite_x = 18,
-            sprite_y = 12,
-            sprite_w = 7,
-            sprite_h = 6,
+            sprite_w = 6,
+            sprite_h = 7,
+            sprite_x = 20,
+            sprite_y = 10,
             transparent_color = _color_11_dark_green,
         }
-        collision_circle_offset_x = -1
+        collision_circle_offset_y = 0
         collision_circle_r = 3
         bullet_fire_timer = new_timer(20)
         fire_bullets = function()
@@ -35,39 +35,39 @@ function new_enemy(params)
                 new_enemy_bullet {
                     x = movement.x,
                     y = movement.y,
-                    angle = .5,
-                    base_speed_x = movement.base_speed_x,
+                    angle = .75,
+                    base_speed_y = movement.base_speed_y,
                 }
             )
         end
         powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,-,-,a,a,t"
     elseif enemy_type == "wait_then_charge" then
-        armor = 3
+        health = 3
         movement = new_movement_wait_then_charge(start_x, start_y)
         ship_sprite = new_static_sprite {
-            sprite_x = 18,
-            sprite_y = 0,
-            sprite_w = 10,
-            sprite_h = 12,
+            sprite_w = 12,
+            sprite_h = 9,
+            sprite_x = 8,
+            sprite_y = 10,
             transparent_color = _color_11_dark_green,
         }
-        collision_circle_offset_x = 1
+        collision_circle_offset_y = -1
         collision_circle_r = 5
         bullet_fire_timer = new_fake_timer()
         fire_bullets = function()
         end
         powerups_distribution = "-,-,-,-,-,-,-,-,-,a,a,t"
     elseif enemy_type == "stationary" then
-        armor = 6
+        health = 6
         movement = new_movement_stationary(start_x, start_y)
         ship_sprite = new_static_sprite {
-            sprite_x = 32,
-            sprite_y = 0,
             sprite_w = 16,
             sprite_h = 16,
+            sprite_x = 38,
+            sprite_y = 0,
             transparent_color = _color_11_dark_green,
         }
-        collision_circle_offset_x = 0
+        collision_circle_offset_y = 0
         collision_circle_r = 8
         bullet_fire_timer = new_timer(30)
         fire_bullets = function()
@@ -76,8 +76,8 @@ function new_enemy(params)
                     new_enemy_bullet {
                         x = movement.x,
                         y = movement.y,
-                        angle = i / 8,
-                        base_speed_x = movement.base_speed_x,
+                        angle = .25 + i / 8,
+                        base_speed_y = movement.base_speed_y,
                     }
                 )
             end
@@ -88,20 +88,20 @@ function new_enemy(params)
     -- TODO: make collision detection work only if at least 1px of the enemy is visible, not before
     return {
         has_finished = function()
-            return is_destroyed or movement.x < -_ts
+            return is_destroyed or movement.y > _gah + _ts
         end,
 
         collision_circle = function()
             return {
-                x = movement.x - .5 + collision_circle_offset_x,
-                y = movement.y - .5,
+                x = movement.x - .5,
+                y = movement.y - .5 + collision_circle_offset_y,
                 r = collision_circle_r,
             }
         end,
 
         take_damage = function()
-            armor = armor - 1
-            if armor < 1 then
+            health = health - 1
+            if health < 1 then
                 is_destroyed = true
                 local powerup_type = rnd(split(powerups_distribution))
                 if powerup_type ~= "-" then

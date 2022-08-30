@@ -123,13 +123,13 @@ function new_level_descriptor()
             --  - t = top
             --  - b = bottom
             --  - m = middle
-            local slt, smt, srt = structures_occupied[distance - 2][lane - 1], structures_occupied[distance - 1][lane - 1], structures_occupied[distance][lane - 1]
-            local slm, smm, srm = structures_occupied[distance - 2][lane], structures_occupied[distance - 1][lane], structures_occupied[distance][lane]
-            local slb, smb, srb = structures_occupied[distance - 2][lane + 1], structures_occupied[distance - 1][lane + 1], structures_occupied[distance][lane + 1]
-            local sllt, sllb = structures_occupied[distance - 3][lane - 1], structures_occupied[distance - 3][lane + 1]
-            local srrt, srrb = structures_occupied[distance + 1][lane - 1], structures_occupied[distance + 1][lane + 1]
-            local sltt, srtt = structures_occupied[distance - 2][lane - 2], structures_occupied[distance][lane - 2]
-            local slbb, srbb = structures_occupied[distance - 2][lane + 2], structures_occupied[distance][lane + 2]
+            local slt, smt, srt = structures_occupied[distance][lane - 1], structures_occupied[distance][lane], structures_occupied[distance][lane + 1]
+            local slm, smm, srm = structures_occupied[distance - 1][lane - 1], structures_occupied[distance - 1][lane], structures_occupied[distance - 1][lane + 1]
+            local slb, smb, srb = structures_occupied[distance - 2][lane - 1], structures_occupied[distance - 2][lane], structures_occupied[distance - 2][lane + 1]
+            local sllt, sllb = structures_occupied[distance][lane - 2], structures_occupied[distance - 2][lane - 2]
+            local srrt, srrb = structures_occupied[distance][lane + 2], structures_occupied[distance - 2][lane + 2]
+            local sltt, srtt = structures_occupied[distance + 1][lane - 1], structures_occupied[distance + 1][lane + 1]
+            local slbb, srbb = structures_occupied[distance - 3][lane - 1], structures_occupied[distance - 3][lane + 1]
             local tile_to_set
             if smm then
                 if not slm and not smt then
