@@ -4,5 +4,8 @@
 # Node.js dependencnies
 /node_modules/
 
+# OS files
+.DS_Store
+
 # playground etc.
 /tmp/
