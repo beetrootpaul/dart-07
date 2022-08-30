@@ -4,7 +4,6 @@ __lua__
 -- TODO shmup game title
 -- by beetroot paul
 
--- common code
 #include build/src/common/timer/fake_timer.lua
 #include build/src/common/timer/timer.lua
 #include build/src/common/buttons.lua
@@ -17,10 +16,10 @@ __lua__
 #include build/src/common/throttle.lua
 #include build/src/common/viewport.lua
 
--- cart specific code
-#include build/src/main_cart/main_cart.lua
-#include build/src/main_cart/screen_level_select.lua
-#include build/src/main_cart/screen_title.lua
+#include build/src/cart_main/screen_mission_select.lua
+#include build/src/cart_main/screen_title.lua
+
+#include build/src/cart_main.lua
 
 __gfx__
 00000000bbbbbbbbbbbbbbb000bbbbbbbbbb88888888bbbb0000000000000000000000000000000000000000000000000000000000000000bbb000bbbbb000bb

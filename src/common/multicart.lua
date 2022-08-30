@@ -2,6 +2,46 @@
 -- common/multicart.lua --
 -- -- -- -- -- -- -- -- --
 
+_max_mission_number = 3
+
+function _load_main_cart()
+    -- TODO: ?
+    --local params = current_screen.score() .. "," .. current_screen.number()
+    --load("shmup.p8", nil, params)
+
+    -- "load(…)" returns "false" if not failed and doesn't allow execution 
+    -- of any further instruction if succeeded. This means we can safely
+    -- try to load a cart under one of many possible file paths or BBS IDs.
+    -- Please remember to load by BBS ID last, because we don't want online
+    -- published version win with the locally developed one. Regarding local
+    -- file paths, we use two variants here: one if we navigate in SPLORE to 
+    -- inside of this game's directory and one if we started the game in 
+    -- SPLORE from favorites tab (outside game's directory).
+    load("shmup.p8")
+    load("shmup/shmup.p8")
+    -- TODO: use a nice final BBS cart ID here
+    load("#tmp_multicart_main")
+end
+
+function _load_mission_cart(mission)
+    -- TODO: ?
+    --local params = score .. "," .. number
+    --load("shmup-mission-" .. chosen_mission .. ".p8", nil, params)
+
+    -- "load(…)" returns "false" if not failed and doesn't allow execution 
+    -- of any further instruction if succeeded. This means we can safely
+    -- try to load a cart under one of many possible file paths or BBS IDs.
+    -- Please remember to load by BBS ID last, because we don't want online
+    -- published version win with the locally developed one. Regarding local
+    -- file paths, we use two variants here: one if we navigate in SPLORE to 
+    -- inside of this game's directory and one if we started the game in 
+    -- SPLORE from favorites tab (outside game's directory).
+    load("shmup-mission-" .. mission .. ".p8")
+    load("shmup/shmup-mission-" .. mission .. ".p8")
+    -- TODO: use a nice final BBS cart ID here
+    load("#tmp_multicart_lvl" .. mission)
+end
+
 function _copy_shared_assets_to_transferable_ram()
     -- TODO: ?
     --local src_addr = 0x4300
@@ -33,43 +73,4 @@ function _copy_shared_assets_from_transferable_ram()
     -- TODO: assert if within ranges on both sides
     -- TODO: explain thoroughly in a comment
     memcpy(0x4300, 0x0, 0x1000)
-end
-
-function _load_main_cart()
-    -- TODO: ?
-    --local params = current_screen.score() .. "," .. current_screen.number()
-    --load("shmup.p8", nil, params)
-
-    -- "load(…)" returns "false" if not failed and doesn't allow execution 
-    -- of any further instruction if succeeded. This means we can safely
-    -- try to load a cart under one of many possible file paths or BBS IDs.
-    -- Please remember to load by BBS ID last, because we don't want online
-    -- published version win with the locally developed one. Regarding local
-    -- file paths, we use two variants here: one if we navigate in SPLORE to 
-    -- inside of this game's directory and one if we started the game in 
-    -- SPLORE from favorites tab (outside game's directory).
-    load("shmup.p8")
-    load("shmup/shmup.p8")
-    -- TODO: use a nice final BBS cart ID here
-    load("#tmp_multicart_main")
-
-end
-
-function _load_level_cart(level)
-    -- TODO: ?
-    --local params = score .. "," .. number
-    --load("shmup-level-" .. chosen_level .. ".p8", nil, params)
-
-    -- "load(…)" returns "false" if not failed and doesn't allow execution 
-    -- of any further instruction if succeeded. This means we can safely
-    -- try to load a cart under one of many possible file paths or BBS IDs.
-    -- Please remember to load by BBS ID last, because we don't want online
-    -- published version win with the locally developed one. Regarding local
-    -- file paths, we use two variants here: one if we navigate in SPLORE to 
-    -- inside of this game's directory and one if we started the game in 
-    -- SPLORE from favorites tab (outside game's directory).
-    load("shmup-level-" .. level .. ".p8")
-    load("shmup/shmup-level-" .. level .. ".p8")
-    -- TODO: use a nice final BBS cart ID here
-    load("#tmp_multicart_lvl" .. level)
 end
