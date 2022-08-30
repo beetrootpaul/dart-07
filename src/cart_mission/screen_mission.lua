@@ -2,17 +2,17 @@
 -- cart_mission/screen_mission.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_mission()
-    local level_descriptor = new_level_descriptor()
-    local level = new_level(level_descriptor)
-    local player = new_player()
+function new_screen_mission(params)
+    local level = params.level
+    local player = params.player
+    local health = params.health
+    local hud = params.hud
+
     local enemies = {}
     local player_bullets = {}
     local enemy_bullets = {}
     local powerups = {}
-    local gui = new_gui()
 
-    local health = 5
     local is_triple_shot_enabled = false
 
     local throttled_fire_player_bullet = new_throttle(6, function()
@@ -53,10 +53,11 @@ function new_screen_mission()
     local screen = {}
 
     function screen.init()
+        level.enter_phase_main()
     end
 
     function screen.update()
-        local next = screen
+        local next_screen = screen
 
         for index, enemy in pairs(enemies) do
             if enemy.has_finished() then
@@ -196,39 +197,32 @@ function new_screen_mission()
 
         throttled_fire_player_bullet.advance_timer()
 
-        gui.animate()
+        hud.animate()
 
-        return next
+        return next_screen
     end
 
     function screen.draw()
-        clip(_gaox, 0, _gaw, _gah)
-        do
-            rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _bg_color)
+        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _bg_color)
+        level.draw {
+            draw_within_level_bounds = function()
+                for _, enemy_bullet in pairs(enemy_bullets) do
+                    enemy_bullet.draw()
+                end
+                for _, player_bullet in pairs(player_bullets) do
+                    player_bullet.draw()
+                end
+                for _, enemy in pairs(enemies) do
+                    enemy.draw()
+                end
+                for _, powerup in pairs(powerups) do
+                    powerup.draw()
+                end
+                player.draw()
+            end,
+        }
 
-            level.draw()
-
-            for _, enemy_bullet in pairs(enemy_bullets) do
-                enemy_bullet.draw()
-            end
-
-            for _, player_bullet in pairs(player_bullets) do
-                player_bullet.draw()
-            end
-
-            for _, enemy in pairs(enemies) do
-                enemy.draw()
-            end
-
-            for _, powerup in pairs(powerups) do
-                powerup.draw()
-            end
-
-            player.draw()
-        end
-        clip()
-
-        gui.draw(health)
+        hud.draw(health)
 
         -- DEBUG:
         --local player_cc = player.collision_circle()

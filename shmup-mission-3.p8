@@ -24,16 +24,17 @@ __lua__
 #include build/src/cart_mission/enemies/movement_sinusoidal.lua
 #include build/src/cart_mission/enemies/movement_stationary.lua
 #include build/src/cart_mission/enemies/movement_wait_then_charge.lua
+#include build/src/cart_mission/gui/hud.lua
+#include build/src/cart_mission/gui/mission_info.lua
 #include build/src/cart_mission/sprites/animated_sprite.lua
 #include build/src/cart_mission/sprites/fake_sprite.lua
 #include build/src/cart_mission/sprites/static_sprite.lua
 #include build/src/cart_mission/collisions.lua
-#include build/src/cart_mission/gui.lua
 #include build/src/cart_mission/level.lua
 #include build/src/cart_mission/level_descriptor.lua
 #include build/src/cart_mission/player.lua
 #include build/src/cart_mission/powerup.lua
-#include build/src/cart_mission/screen_get_ready.lua
+#include build/src/cart_mission/screen_intro.lua
 #include build/src/cart_mission/screen_mission.lua
 
 #include build/src/cart_mission.lua

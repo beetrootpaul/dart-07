@@ -2,18 +2,21 @@
 -- common/timer/timer.lua  --
 -- -- -- -- -- -- -- -- -- --
 
--- ttl = amount of frames to count towards 0
-function new_timer(initial_ttl)
+function new_timer(frames)
     local timer = {
-        ttl = initial_ttl,
+        ttl = frames,
     }
 
     function timer.advance()
-        timer.ttl = timer.ttl - 1
+        timer.ttl = max(timer.ttl - 1, 0)
+    end
+
+    function timer.passed_ratio()
+        return 1 - timer.ttl / (frames - 1)
     end
 
     function timer.restart()
-        timer.ttl = initial_ttl
+        timer.ttl = frames
     end
 
     return timer

@@ -41,19 +41,29 @@ function new_level_descriptor()
     -- markers from all 4 rows of 3rd sprite sheet tab, combined into a single long 2D array
     -- and extended by several extra columns in order to make further computations easier
     local markers = {}
-    local sprite_sheet_tab = 2
-    for sprite_sheet_tab_row = 0, 3 do
-        for sprite_sheet_x = 0, 127 do
-            local x = 1 + sprite_sheet_tab_row * 128 + sprite_sheet_x
-            markers[x] = {}
-            local sprites_sheet_row_y = sprite_sheet_tab * 32 + sprite_sheet_tab_row * 8
-            for y = 1, 6 do
-                markers[x][y] = sget(sprite_sheet_x, sprites_sheet_row_y + y)
+    do
+        local sprite_sheet_tab = 2
+        local markers_per_screen_w = 8
+        local x = 1
+        for initial_buffer_x = 1, markers_per_screen_w + 1 do
+            markers[x] = { {}, {}, {}, {}, {}, {} }
+            x = x + 1
+        end
+        for sprite_sheet_tab_row = 0, 3 do
+            for sprite_sheet_x = 0, 127 do
+                markers[x] = { {}, {}, {}, {}, {}, {} }
+                local sprites_sheet_row_y = sprite_sheet_tab * 32 + sprite_sheet_tab_row * 8
+                for y = 1, 6 do
+                    markers[x][y] = sget(sprite_sheet_x, sprites_sheet_row_y + y)
+                end
+                x = x + 1
             end
         end
-    end
-    for buffer_x = 1, _vst + 1 do
-        add(markers, { {}, {}, {}, {}, {}, {} })
+        -- TODO: still needed?
+        --for final_buffer_x = 1, markers_per_screen_w + 1 do
+        --    markers[x] = { {}, {}, {}, {}, {}, {} }
+        --    x = x + 1
+        --end
     end
 
     -- conversion from markers to level descriptor

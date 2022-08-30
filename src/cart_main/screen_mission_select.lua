@@ -17,7 +17,7 @@ function new_screen_mission_select()
     end
 
     function screen.update()
-        local next = screen
+        local next_screen = screen
 
         if btnp(_button_up) then
             selected_mission = selected_mission - 1
@@ -33,7 +33,7 @@ function new_screen_mission_select()
             _load_mission_cart(selected_mission)
         end
 
-        return next
+        return next_screen
     end
 
     function screen.draw()

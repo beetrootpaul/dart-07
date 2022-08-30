@@ -52,7 +52,7 @@ function new_player()
 
     local player = {
         x = _gaox + _gaw / 2,
-        y = _gah - 12,
+        y = _gah - 28,
     }
 
     function player.set_vertical_movement(direction)
