@@ -30,7 +30,10 @@ function new_screen_mission_select()
         -- TODO: make it clear for the user which button is to be pressed
         if btnp(_button_x) then
             _copy_shared_assets_from_transferable_ram()
-            _load_mission_cart(selected_mission)
+            _load_mission_cart {
+                mission_number = selected_mission,
+                health = 5,
+            }
         end
 
         return next_screen

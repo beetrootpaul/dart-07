@@ -5,6 +5,8 @@
 local current_screen, next_screen
 
 function _init()
+    -- TODO: "assert(…)" value is there?
+    local health = tonum(stat(6))
     -- TODO: ?
     --local score = tonum(split(stat(6))[1]) or 0
     --local number = tonum(split(stat(6))[2]) or 0
@@ -16,7 +18,9 @@ function _init()
         _load_main_cart()
     end)
 
-    next_screen = new_screen_intro()
+    next_screen = new_screen_intro {
+        health = health,
+    }
 end
 
 function _update()

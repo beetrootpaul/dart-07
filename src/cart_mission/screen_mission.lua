@@ -96,7 +96,10 @@ function new_screen_mission(params)
         -- TODO: remove this ability to skip a mission with a button press
         if btnp(_button_o) then
             if _m.mission_number < _max_mission_number then
-                _load_mission_cart(_m.mission_number + 1)
+                _load_mission_cart {
+                    mission_number = _m.mission_number + 1,
+                    health = health,
+                }
             else
                 _load_main_cart()
             end

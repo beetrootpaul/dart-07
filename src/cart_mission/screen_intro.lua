@@ -4,7 +4,9 @@
 
 -- TODO: polish it
 
-function new_screen_intro()
+function new_screen_intro(params)
+    local health = params.health
+
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
     local player = new_player()
@@ -19,8 +21,6 @@ function new_screen_intro()
         slide_out_frames = 25,
     }
     local screen_timer = new_timer(90)
-
-    local health = 5
 
     --
 
