@@ -22,7 +22,7 @@ function new_level(descriptor)
     local animation_frame = 0
     local animation_steps = 4
     local animation_step_length = 12
-    local animated_bg_tiles = { 197, 213, 229, 245 }
+    local animated_bg_tiles = { 69, 85, 101, 117 }
 
     -- TODO: boss phase
     -- phase: intro -> main -> boss 
@@ -50,12 +50,12 @@ function new_level(descriptor)
                 local spawn_distance = max_visible_distance == ceil(max_visible_distance) and max_visible_distance + 1 or nil
                 if spawn_distance then
                     for lane = 1, 12 do
-                        local enemy_type = enemies[spawn_distance] and enemies[spawn_distance][lane] or nil
-                        if enemy_type then
+                        local enemy_map_marker = enemies[spawn_distance] and enemies[spawn_distance][lane] or nil
+                        if enemy_map_marker then
                             local x = _gaox + (lane - .5) * _ts + enemy_offset_x
                             local y = _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts + enemy_offset_y
                             add(result, {
-                                enemy_type = enemy_type,
+                                enemy_map_marker = enemy_map_marker,
                                 x = x,
                                 y = y,
                             })
@@ -68,7 +68,7 @@ function new_level(descriptor)
 
         scroll = function()
             animation_frame = (animation_frame + 1) % (animation_steps * animation_step_length)
-            min_visible_distance = min_visible_distance + _scroll_per_frame / _ts
+            min_visible_distance = min_visible_distance + _m.scroll_per_frame / _ts
 
             if phase == "intro" then
                 -- loop infinitely
@@ -80,7 +80,7 @@ function new_level(descriptor)
             local draw_within_level_bounds = opts.draw_within_level_bounds
 
             local max_visible_distance = min_visible_distance + _vst - 1
-            local bg_tile = animated_bg_tiles[flr(animation_frame / animation_step_length) + 1]
+            local bg_tile = _m.has_bg_tiles and animated_bg_tiles[flr(animation_frame / animation_step_length) + 1] or nil
 
             clip(_gaox, 0, _gaw, _gah)
 
@@ -89,8 +89,10 @@ function new_level(descriptor)
                     local x = _gaox + (lane - 1) * _ts
                     local y = _vs - flr((distance - min_visible_distance + 1) * _ts)
 
-                    spr(bg_tile, x, y)
-
+                    if bg_tile then
+                        spr(bg_tile, x, y)
+                    end
+                    
                     if phase == "main" then
                         local fg_tile = structures[distance][lane]
                         if fg_tile then
@@ -101,7 +103,7 @@ function new_level(descriptor)
             end
 
             draw_within_level_bounds()
-            
+
             clip()
         end,
     }

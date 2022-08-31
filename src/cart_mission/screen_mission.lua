@@ -17,11 +17,11 @@ function new_screen_mission(params)
 
     local throttled_fire_player_bullet = new_throttle(6, function()
         -- TODO: SFX
-        add(player_bullets, new_player_bullet(player.x, player.y - 4))
+        add(player_bullets, new_player_bullet { start_x = player.x, start_y = player.y - 4 })
         if is_triple_shot_enabled then
             -- TODO: different SFX
-            add(player_bullets, new_player_bullet(player.x - 5, player.y - 2))
-            add(player_bullets, new_player_bullet(player.x + 5, player.y - 2))
+            add(player_bullets, new_player_bullet { start_x = player.x - 5, start_y = player.y - 2 })
+            add(player_bullets, new_player_bullet { start_x = player.x + 5, start_y = player.y - 2 })
         end
     end)
 
@@ -83,8 +83,8 @@ function new_screen_mission(params)
         -- TODO: finish level on conditions different than a button press
         if btnp(_button_o) or level.has_reached_end() then
             -- TODO: externalize knowledge about amount of available missions
-            if _mission_number < _max_mission_number then
-                _load_mission_cart(_mission_number + 1)
+            if _m.mission_number < _max_mission_number then
+                _load_mission_cart(_m.mission_number + 1)
             else
                 _load_main_cart()
             end
@@ -179,11 +179,11 @@ function new_screen_mission(params)
         local enemies_to_spawn = level.enemies_to_spawn()
         for _, enemy_to_spawn in pairs(enemies_to_spawn) do
             add(enemies, new_enemy {
-                enemy_type = enemy_to_spawn.enemy_type,
-                start_x = enemy_to_spawn.x,
-                start_y = enemy_to_spawn.y,
-                on_bullet_fired = function(enemy_bullet)
-                    add(enemy_bullets, enemy_bullet)
+                enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker, enemy_to_spawn.x, enemy_to_spawn.y),
+                on_bullets_spawned = function(spawned_enemy_bullets)
+                    for _, seb in pairs(spawned_enemy_bullets) do
+                        add(enemy_bullets, seb)
+                    end
                 end,
                 on_powerup_spawned = function(powerup)
                     add(powerups, powerup)
@@ -203,7 +203,7 @@ function new_screen_mission(params)
     end
 
     function screen.draw()
-        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _bg_color)
+        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level.draw {
             draw_within_level_bounds = function()
                 for _, enemy_bullet in pairs(enemy_bullets) do

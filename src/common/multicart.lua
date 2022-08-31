@@ -53,7 +53,7 @@ function _copy_shared_assets_to_transferable_ram()
 
     -- TODO: assert if within ranges on both sides
     -- TODO: explain thoroughly in a comment
-    memcpy(0x0, 0x4300, 0x1000)
+    memcpy(0x0, 0x4300, 0x0800) -- copy first sprite sheet tab
 end
 
 function _copy_shared_assets_from_transferable_ram()
@@ -72,5 +72,5 @@ function _copy_shared_assets_from_transferable_ram()
 
     -- TODO: assert if within ranges on both sides
     -- TODO: explain thoroughly in a comment
-    memcpy(0x4300, 0x0, 0x1000)
+    memcpy(0x4300, 0x0, 0x0800) -- copy first sprite sheet tab
 end

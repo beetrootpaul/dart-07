@@ -3,10 +3,12 @@
 -- -- -- -- -- -- -- -- --
 
 -- TODO: still used ???
+-- TODO: fix coords
 
 -- TODO: consider usage of a custom font added as it is described in docs
 -- TODO: remove unused custom glyphs from here and from the sprite sheet
 
+--[[
 -- format: { x, y, width = 3 }
 _font_4px_sprites = {
     ["a"] = { 0, 32 },
@@ -57,3 +59,4 @@ _font_4px_sprites = {
     -- back arrow:
     ["<"] = { 121, 32, 4 },
 }
+]]--

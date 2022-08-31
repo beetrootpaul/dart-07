@@ -66,10 +66,10 @@ function new_mission_info(params)
 
             for dx = -1, 1 do
                 for dy = -1, 1 do
-                    print("mission " .. _mission_number, _gaox + 10 + dx, y - 7 + dy, _color_8_red)
+                    print("mission " .. _m.mission_number, _gaox + 10 + dx, y - 7 + dy, _color_8_red)
                 end
             end
-            print("mission " .. _mission_number, _gaox + 10, y - 7, _bg_color)
+            print("mission " .. _m.mission_number, _gaox + 10, y - 7, _m.bg_color)
             rectfill(_gaox, y, _gaox + _gaw - 1, y, _color_8_red)
 
             clip()

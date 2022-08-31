@@ -55,7 +55,7 @@ function new_screen_intro()
     end
 
     function screen.draw()
-        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _bg_color)
+        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level.draw {
             draw_within_level_bounds = function()
                 player.draw()

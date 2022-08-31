@@ -18,22 +18,22 @@ function new_hud(params)
     local hearth = new_static_sprite {
         sprite_w = 6,
         sprite_h = 5,
-        sprite_x = 0,
-        sprite_y = 53,
+        sprite_x = 40,
+        sprite_y = 12,
         from_left_top_corner = true,
     }
     local health_bar_start = new_static_sprite {
         sprite_w = 8,
         sprite_h = 5,
-        sprite_x = 0,
-        sprite_y = 48,
+        sprite_x = 40,
+        sprite_y = 7,
         from_left_top_corner = true,
     }
     local health_bar_segment = new_static_sprite {
         sprite_w = 8,
         sprite_h = 7,
-        sprite_x = 0,
-        sprite_y = 41,
+        sprite_x = 40,
+        sprite_y = 0,
         from_left_top_corner = true,
     }
 
