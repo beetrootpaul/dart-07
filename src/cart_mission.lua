@@ -16,8 +16,7 @@ function _init()
         _load_main_cart()
     end)
 
-    -- TODO: start with get ready screen
-    next_screen = new_screen_mission()
+    next_screen = new_screen_intro()
 end
 
 function _update()

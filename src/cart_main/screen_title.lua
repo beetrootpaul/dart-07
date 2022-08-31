@@ -19,7 +19,7 @@
 --end
 --
 --function screen.update()
---    local next = screen
+--    local next_screen = screen
 --
 --if btnp(_button_left) then
 --    number = number - 1
@@ -33,10 +33,10 @@
 --end
 --
 --if btnp(_button_x) then
---next = new_screen_mission_select(score, number)
+--next_screen = new_screen_mission_select(score, number)
 --end
 --
---return next
+--return next_screen
 --end
 --
 --function screen.draw()

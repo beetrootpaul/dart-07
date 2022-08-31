@@ -2,58 +2,61 @@
 -- cart_mission/level_descriptor.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider moving level definition from sprite sheet to map, since it would fit (and would occupy the whole available space),
---       and we could use more of the sprite sheet for other things
-
--- TODO: animated structure tiles (i.e. waves around islands)
+-- TODO: polished waves on level 1
+-- TODO: polished islands on level 1
+-- TODO: fg and bg for level 2
+-- TODO: fg and bg for level 3
 
 function new_level_descriptor()
-    -- numbers below are colors in the sprite sheet
-    local marker_types = {
-        structure = 13,
-        enemy_sinusoidal = 12,
-        enemy_wait_then_charge = 10,
-        enemy_stationary = 7,
-        level_end = 8,
-    }
-
-    -- TODO: draw all tiles for all levels
+    -- number below are sprites in the sprite sheet
+    local end_tile = 112
     local structure_tiles = {
-        center = 209,
-        edge_left = 208,
-        edge_right = 210,
-        edge_top = 193,
-        edge_bottom = 225,
-        outside_left_top = 192,
-        outside_left_bottom = 224,
-        outside_right_top = 194,
-        outside_right_bottom = 226,
-        inner_left_top = 211,
-        inner_left_bottom = 227,
-        inner_right_top = 212,
-        inner_right_bottom = 228,
-        filler_left_top = 244,
-        filler_left_bottom = 196,
-        filler_right_top = 243,
-        filler_right_bottom = 195,
+        center = 81,
+        edge_left = 80,
+        edge_right = 82,
+        edge_top = 65,
+        edge_bottom = 97,
+        outside_left_top = 64,
+        outside_left_bottom = 96,
+        outside_right_top = 66,
+        outside_right_bottom = 98,
+        inner_left_top = 83,
+        inner_left_bottom = 99,
+        inner_right_top = 84,
+        inner_right_bottom = 100,
+        filler_left_top = 116,
+        filler_left_bottom = 68,
+        filler_right_top = 115,
+        filler_right_bottom = 67,
     }
 
-    -- markers from all 4 rows of 3rd sprite sheet tab, combined into a single long 2D array
-    -- and extended by several extra columns in order to make further computations easier
+    -- TODO: handle structure markers in places where enemies are instead
+
+    -- markers from the map, combined into a single long 2D array and extended by several 
+    -- extra columns on both sides in -- order to make further computations easier
     local markers = {}
-    local sprite_sheet_tab = 2
-    for sprite_sheet_tab_row = 0, 3 do
-        for sprite_sheet_x = 0, 127 do
-            local x = 1 + sprite_sheet_tab_row * 128 + sprite_sheet_x
-            markers[x] = {}
-            local sprites_sheet_row_y = sprite_sheet_tab * 32 + sprite_sheet_tab_row * 8
-            for y = 1, 6 do
-                markers[x][y] = sget(sprite_sheet_x, sprites_sheet_row_y + y)
+    do
+        local markers_per_screen_w = 8
+        local x = 1
+        for initial_buffer_x = 1, markers_per_screen_w + 1 do
+            markers[x] = { nil, nil, nil, nil, nil, nil }
+            x = x + 1
+        end
+        for level_descriptor_row = 0, 3 do
+            for map_x = 0, 127 do
+                markers[x] = { nil, nil, nil, nil, nil, nil }
+                local map_y = level_descriptor_row * 8
+                for y = 1, 6 do
+                    markers[x][y] = mget(map_x, map_y + y)
+                end
+                x = x + 1
             end
         end
-    end
-    for buffer_x = 1, _vst + 1 do
-        add(markers, { {}, {}, {}, {}, {}, {} })
+        -- TODO: still needed?
+        --for final_buffer_x = 1, markers_per_screen_w + 1 do
+        --    markers[x] = { nil, nil, nil, nil, nil, nil }
+        --    x = x + 1
+        --end
     end
 
     -- conversion from markers to level descriptor
@@ -73,17 +76,10 @@ function new_level_descriptor()
             local lane = y * 2 - 1
 
             local marker = markers[x][y]
-            if marker == marker_types.level_end then
+            if marker == end_tile then
                 max_defined_distance = distance - 1
                 break
-            elseif marker == marker_types.enemy_sinusoidal then
-                enemies[distance][lane] = "sinusoidal"
-            elseif marker == marker_types.enemy_wait_then_charge then
-                enemies[distance][lane] = "wait_then_charge"
-            elseif marker == marker_types.enemy_stationary then
-                enemies[distance][lane] = "stationary"
-                -- TODO: make tile non-empty if would be if only not the enemy marker was there
-            elseif marker == marker_types.structure then
+            elseif marker == structure_tiles.center then
                 structures_occupied[distance][lane] = true
                 structures_occupied[distance][lane + 1] = true
                 structures_occupied[distance + 1][lane] = true
@@ -107,6 +103,8 @@ function new_level_descriptor()
                     structures_occupied[0][lane] = true
                     structures_occupied[0][lane + 1] = true
                 end
+            elseif marker ~= 0 then
+                enemies[distance][lane] = marker
             end
         end
         if max_defined_distance > 0 then
