@@ -2,6 +2,8 @@
 -- cart_mission/gui/hud.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: score
+
 function new_hud(params)
     local wait_frames = params.wait_frames
     local slide_in_frames = params.slide_in_frames

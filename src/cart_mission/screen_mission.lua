@@ -12,8 +12,7 @@ function new_screen_mission(params)
     local player_bullets = {}
     local enemy_bullets = {}
     local powerups = {}
-
-    local __tmp_boss
+    local boss
 
     local is_triple_shot_enabled = false
 
@@ -50,6 +49,17 @@ function new_screen_mission(params)
         is_triple_shot_enabled = true
     end
 
+    local function load_next_cart()
+        if _m.mission_number < _max_mission_number then
+            _load_mission_cart {
+                mission_number = _m.mission_number + 1,
+                health = health,
+            }
+        else
+            _load_main_cart()
+        end
+    end
+
     --
 
     local screen = {}
@@ -61,6 +71,13 @@ function new_screen_mission(params)
     function screen.update()
         local next_screen = screen
 
+        if boss and boss.has_finished() then
+            -- TODO: nice post-boss-destroy visuals before transitioning to the next cart
+            -- TODO: fade screen out
+            -- TODO: fade next screen in
+            load_next_cart()
+        end
+        
         for index, enemy in pairs(enemies) do
             if enemy.has_finished() then
                 del(enemies, enemy)
@@ -82,27 +99,24 @@ function new_screen_mission(params)
             end
         end
 
-        -- TODO: finish level on conditions different than a button press
-        if level.has_scrolled_to_end() and #enemies <= 0 then
-            __tmp_boss = new_static_sprite {
-                sprite_w = 56,
-                sprite_h = 26,
-                sprite_x = 4,
-                sprite_y = 98,
-                transparent_color = _color_11_dark_green,
+        if not boss and level.has_scrolled_to_end() and #enemies <= 0 and #enemy_bullets <= 0 then
+            -- TODO: boss slide in
+            -- TODO: boss health bar
+            -- TODO: boss spectacular destroy VFX and SFX
+            -- TODO: win screen after all 3 levels
+            boss = new_boss {
+                boss_properties = _m.boss_properties(),
+                on_bullets_spawned = function(spawned_enemy_bullets)
+                    for _, seb in pairs(spawned_enemy_bullets) do
+                        add(enemy_bullets, seb)
+                    end
+                end,
             }
         end
 
         -- TODO: remove this ability to skip a mission with a button press
         if btnp(_button_o) then
-            if _m.mission_number < _max_mission_number then
-                _load_mission_cart {
-                    mission_number = _m.mission_number + 1,
-                    health = health,
-                }
-            else
-                _load_main_cart()
-            end
+            load_next_cart()
         end
 
         level.scroll()
@@ -127,6 +141,9 @@ function new_screen_mission(params)
             throttled_fire_player_bullet.invoke()
         end
 
+        if boss then
+            boss.move()
+        end
         for _, enemy in pairs(enemies) do
             enemy.move()
         end
@@ -141,49 +158,78 @@ function new_screen_mission(params)
             enemy_bullet.move()
         end
 
+        if boss then
+            boss.advance_timers()
+        end
         for _, enemy in pairs(enemies) do
             enemy.advance_timers()
         end
 
-        local player_cc = player.collision_circle()
-        for _, powerup in pairs(powerups) do
-            -- TODO: magnet?
-            if _collisions.are_colliding(player_cc, powerup.collision_circle()) then
-                -- TODO: SFX
-                -- TODO: VFX on player
-                -- TODO: VFX on health status
-                powerup.pick()
-                if powerup.powerup_type == "a" then
-                    increase_health()
-                elseif powerup.powerup_type == "t" then
-                    enable_triple_shot()
-                end
-            end
-        end
-        for _, enemy in pairs(enemies) do
-            local enemy_cc = enemy.collision_circle()
-            for __, player_bullet in pairs(player_bullets) do
-                if not enemy.has_finished() then
-                    if _collisions.are_colliding(player_bullet.collision_circle(), enemy_cc) then
-                        -- TODO: SFX
-                        -- TODO: blinking enemy if still alive
-                        -- TODO: explosion if no longer alive
-                        enemy.take_damage()
-                        player_bullet.destroy()
-                        -- TODO: magnetised score items?
+        do
+            local player_cc = player.collision_circle()
+
+            for _, powerup in pairs(powerups) do
+                -- TODO: magnet?
+                if _collisions.are_colliding(player_cc, powerup.collision_circle()) then
+                    -- TODO: SFX
+                    -- TODO: VFX on player
+                    -- TODO: VFX on health status
+                    powerup.pick()
+                    if powerup.powerup_type == "a" then
+                        increase_health()
+                    elseif powerup.powerup_type == "t" then
+                        enable_triple_shot()
                     end
                 end
             end
-            if not enemy.has_finished() and not player.is_invincible_after_damage() then
-                if _collisions.are_colliding(player_cc, enemy_cc) then
-                    handle_player_damage()
+
+            if boss then
+                local boss_cc = boss.collision_circle()
+                for __, player_bullet in pairs(player_bullets) do
+                    if not boss.has_finished() then
+                        if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
+                            -- TODO: SFX
+                            -- TODO: blinking boss if still alive
+                            -- TODO: big explosion if no longer alive
+                            boss.take_damage()
+                            player_bullet.destroy()
+                            -- TODO: magnetised score items?
+                        end
+                    end
+                end
+                if not boss.has_finished() and not player.is_invincible_after_damage() then
+                    if _collisions.are_colliding(player_cc, boss_cc) then
+                        handle_player_damage()
+                    end
                 end
             end
-        end
-        for _, enemy_bullet in pairs(enemy_bullets) do
-            if not player.is_invincible_after_damage() then
-                if _collisions.are_colliding(enemy_bullet.collision_circle(), player_cc) then
-                    handle_player_damage()
+
+            for _, enemy in pairs(enemies) do
+                local enemy_cc = enemy.collision_circle()
+                for __, player_bullet in pairs(player_bullets) do
+                    if not enemy.has_finished() then
+                        if _collisions.are_colliding(player_bullet.collision_circle(), enemy_cc) then
+                            -- TODO: SFX
+                            -- TODO: blinking enemy if still alive
+                            -- TODO: explosion if no longer alive
+                            enemy.take_damage()
+                            player_bullet.destroy()
+                            -- TODO: magnetised score items?
+                        end
+                    end
+                end
+                if not enemy.has_finished() and not player.is_invincible_after_damage() then
+                    if _collisions.are_colliding(player_cc, enemy_cc) then
+                        handle_player_damage()
+                    end
+                end
+            end
+
+            for _, enemy_bullet in pairs(enemy_bullets) do
+                if not player.is_invincible_after_damage() then
+                    if _collisions.are_colliding(enemy_bullet.collision_circle(), player_cc) then
+                        handle_player_damage()
+                    end
                 end
             end
         end
@@ -224,8 +270,8 @@ function new_screen_mission(params)
                 for _, player_bullet in pairs(player_bullets) do
                     player_bullet.draw()
                 end
-                if __tmp_boss then
-                    __tmp_boss.draw(_gaox + _gaw / 2, 20)
+                if boss then
+                    boss.draw()
                 end
                 for _, enemy in pairs(enemies) do
                     enemy.draw()
@@ -240,24 +286,28 @@ function new_screen_mission(params)
         hud.draw(health)
 
         -- DEBUG:
-        --local player_cc = player.collision_circle()
-        --oval(player_cc.x - (player_cc.r - .5), player_cc.y - (player_cc.r - .5), player_cc.x + (player_cc.r - .5), player_cc.y + (player_cc.r - .5), _color_11_dark_green)
-        --for _, enemy in pairs(enemies) do
-        --    local enemy_cc = enemy.collision_circle()
-        --    oval(enemy_cc.x - (enemy_cc.r - .5), enemy_cc.y - (enemy_cc.r - .5), enemy_cc.x + (enemy_cc.r - .5), enemy_cc.y + (enemy_cc.r - .5), _color_11_dark_green)
-        --end
-        --for _, player_bullet in pairs(player_bullets) do
-        --    local player_bullet_cc = player_bullet.collision_circle()
-        --    oval(player_bullet_cc.x - (player_bullet_cc.r - .5), player_bullet_cc.y - (player_bullet_cc.r - .5), player_bullet_cc.x + (player_bullet_cc.r - .5), player_bullet_cc.y + (player_bullet_cc.r - .5), _color_11_dark_green)
-        --end
-        --for _, enemy_bullet in pairs(enemy_bullets) do
-        --    local enemy_bullet_cc = enemy_bullet.collision_circle()
-        --    oval(enemy_bullet_cc.x - (enemy_bullet_cc.r - .5), enemy_bullet_cc.y - (enemy_bullet_cc.r - .5), enemy_bullet_cc.x + (enemy_bullet_cc.r - .5), enemy_bullet_cc.y + (enemy_bullet_cc.r - .5), _color_11_dark_green)
-        --end
-        --for _, powerup in pairs(powerups) do
-        --    local powerup_cc = powerup.collision_circle()
-        --    oval(powerup_cc.x - (powerup_cc.r - .5), powerup_cc.y - (powerup_cc.r - .5), powerup_cc.x + (powerup_cc.r - .5), powerup_cc.y + (powerup_cc.r - .5), _color_11_dark_green)
-        --end
+        local player_cc = player.collision_circle()
+        oval(player_cc.x - (player_cc.r - .5), player_cc.y - (player_cc.r - .5), player_cc.x + (player_cc.r - .5), player_cc.y + (player_cc.r - .5), _color_11_dark_green)
+        if boss then
+            local boss_cc = boss.collision_circle()
+            oval(boss_cc.x - (boss_cc.r - .5), boss_cc.y - (boss_cc.r - .5), boss_cc.x + (boss_cc.r - .5), boss_cc.y + (boss_cc.r - .5), _color_11_dark_green)
+        end
+        for _, enemy in pairs(enemies) do
+            local enemy_cc = enemy.collision_circle()
+            oval(enemy_cc.x - (enemy_cc.r - .5), enemy_cc.y - (enemy_cc.r - .5), enemy_cc.x + (enemy_cc.r - .5), enemy_cc.y + (enemy_cc.r - .5), _color_11_dark_green)
+        end
+        for _, player_bullet in pairs(player_bullets) do
+            local player_bullet_cc = player_bullet.collision_circle()
+            oval(player_bullet_cc.x - (player_bullet_cc.r - .5), player_bullet_cc.y - (player_bullet_cc.r - .5), player_bullet_cc.x + (player_bullet_cc.r - .5), player_bullet_cc.y + (player_bullet_cc.r - .5), _color_11_dark_green)
+        end
+        for _, enemy_bullet in pairs(enemy_bullets) do
+            local enemy_bullet_cc = enemy_bullet.collision_circle()
+            oval(enemy_bullet_cc.x - (enemy_bullet_cc.r - .5), enemy_bullet_cc.y - (enemy_bullet_cc.r - .5), enemy_bullet_cc.x + (enemy_bullet_cc.r - .5), enemy_bullet_cc.y + (enemy_bullet_cc.r - .5), _color_11_dark_green)
+        end
+        for _, powerup in pairs(powerups) do
+            local powerup_cc = powerup.collision_circle()
+            oval(powerup_cc.x - (powerup_cc.r - .5), powerup_cc.y - (powerup_cc.r - .5), powerup_cc.x + (powerup_cc.r - .5), powerup_cc.y + (powerup_cc.r - .5), _color_11_dark_green)
+        end
     end
 
     return screen

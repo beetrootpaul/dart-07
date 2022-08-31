@@ -12,6 +12,7 @@ __lua__
 #include build/src/common/colors.lua
 #include build/src/common/font_4px.lua
 #include build/src/common/gameplay_area.lua
+#include build/src/common/health.lua
 #include build/src/common/multicart.lua
 #include build/src/common/tables.lua
 #include build/src/common/text_4px.lua
@@ -21,12 +22,14 @@ __lua__
 #include build/src/cart_mission/gui/hud.lua
 #include build/src/cart_mission/gui/mission_info.lua
 #include build/src/cart_mission/movement/movement_angled_line.lua
+#include build/src/cart_mission/movement/movement_fixed.lua
 #include build/src/cart_mission/movement/movement_sinusoidal.lua
 #include build/src/cart_mission/movement/movement_stationary.lua
 #include build/src/cart_mission/movement/movement_wait_then_charge.lua
 #include build/src/cart_mission/sprites/animated_sprite.lua
 #include build/src/cart_mission/sprites/fake_sprite.lua
 #include build/src/cart_mission/sprites/static_sprite.lua
+#include build/src/cart_mission/boss.lua
 #include build/src/cart_mission/collisions.lua
 #include build/src/cart_mission/enemy.lua
 #include build/src/cart_mission/enemy_bullet.lua

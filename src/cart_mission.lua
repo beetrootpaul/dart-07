@@ -5,8 +5,7 @@
 local current_screen, next_screen
 
 function _init()
-    -- TODO: "assert(…)" value is there?
-    local health = tonum(stat(6))
+    local health = tonum(stat(6)) or _health_default
     -- TODO: ?
     --local score = tonum(split(stat(6))[1]) or 0
     --local number = tonum(split(stat(6))[2]) or 0

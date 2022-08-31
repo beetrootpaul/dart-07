@@ -32,7 +32,7 @@ function new_screen_mission_select()
             _copy_shared_assets_from_transferable_ram()
             _load_mission_cart {
                 mission_number = selected_mission,
-                health = 5,
+                health = _health_default,
             }
         end
 

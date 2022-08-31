@@ -10,6 +10,7 @@ __lua__
 #include build/src/common/colors.lua
 #include build/src/common/font_4px.lua
 #include build/src/common/gameplay_area.lua
+#include build/src/common/health.lua
 #include build/src/common/multicart.lua
 #include build/src/common/tables.lua
 #include build/src/common/text_4px.lua
