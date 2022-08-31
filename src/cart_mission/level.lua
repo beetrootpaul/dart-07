@@ -17,6 +17,11 @@ function new_level(descriptor)
     local enemy_offset_x, enemy_offset_y = _ts / 2, _ts / 2
 
     local min_visible_distance = 1
+    local max_visible_distance = min_visible_distance + _vst - 1
+
+    local prev_spawn_distance = max_visible_distance
+    local spawn_distance_offset = 1
+    local spawn_distance = max_visible_distance + spawn_distance_offset
 
     -- TODO: externalize animated/static tile to its own file, create it in level descriptor
     local animation_frame = 0
@@ -37,7 +42,7 @@ function new_level(descriptor)
             if phase == "intro" then
                 return false
             else
-                return min_visible_distance + _vst >= max_defined_distance
+                return max_visible_distance >= max_defined_distance
             end
         end,
 
@@ -46,9 +51,8 @@ function new_level(descriptor)
                 return {}
             else
                 local result = {}
-                local max_visible_distance = min_visible_distance + _vst - 1
-                local spawn_distance = max_visible_distance == ceil(max_visible_distance) and max_visible_distance + 1 or nil
-                if spawn_distance then
+                if spawn_distance > prev_spawn_distance then
+                    prev_spawn_distance = spawn_distance
                     for lane = 1, 12 do
                         local enemy_map_marker = enemies[spawn_distance] and enemies[spawn_distance][lane] or nil
                         if enemy_map_marker then
@@ -69,17 +73,21 @@ function new_level(descriptor)
         scroll = function()
             animation_frame = (animation_frame + 1) % (animation_steps * animation_step_length)
             min_visible_distance = min_visible_distance + _m.scroll_per_frame / _ts
+            max_visible_distance = min_visible_distance + _vst - 1
+            if spawn_distance < flr(max_visible_distance) + spawn_distance_offset then
+                spawn_distance = flr(max_visible_distance) + spawn_distance_offset
+            end
 
             if phase == "intro" then
                 -- loop infinitely
                 min_visible_distance = min_visible_distance % 1 + 1
+                max_visible_distance = min_visible_distance + _vst - 1
             end
         end,
 
         draw = function(opts)
             local draw_within_level_bounds = opts.draw_within_level_bounds
 
-            local max_visible_distance = min_visible_distance + _vst - 1
             local bg_tile = _m.has_bg_tiles and animated_bg_tiles[flr(animation_frame / animation_step_length) + 1] or nil
 
             clip(_gaox, 0, _gaw, _gah)
@@ -92,7 +100,7 @@ function new_level(descriptor)
                     if bg_tile then
                         spr(bg_tile, x, y)
                     end
-                    
+
                     if phase == "main" then
                         local fg_tile = structures[distance][lane]
                         if fg_tile then

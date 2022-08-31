@@ -39,12 +39,12 @@ function new_level_descriptor()
         local markers_per_screen_w = 8
         local x = 1
         for initial_buffer_x = 1, markers_per_screen_w + 1 do
-            markers[x] = { {}, {}, {}, {}, {}, {} }
+            markers[x] = { nil, nil, nil, nil, nil, nil }
             x = x + 1
         end
         for level_descriptor_row = 0, 3 do
             for map_x = 0, 127 do
-                markers[x] = { {}, {}, {}, {}, {}, {} }
+                markers[x] = { nil, nil, nil, nil, nil, nil }
                 local map_y = level_descriptor_row * 8
                 for y = 1, 6 do
                     markers[x][y] = mget(map_x, map_y + y)
@@ -54,7 +54,7 @@ function new_level_descriptor()
         end
         -- TODO: still needed?
         --for final_buffer_x = 1, markers_per_screen_w + 1 do
-        --    markers[x] = { {}, {}, {}, {}, {}, {} }
+        --    markers[x] = { nil, nil, nil, nil, nil, nil }
         --    x = x + 1
         --end
     end
