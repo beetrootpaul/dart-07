@@ -2,10 +2,12 @@
 -- cart_mission/level_descriptor.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider moving level definition from sprite sheet to map, since it would fit (and would occupy the whole available space),
---       and we could use more of the sprite sheet for other things
+-- TODO: consider moving level definition from sprite sheet to map, since it would fit (and would occupy the whole available space), and we could use more of the sprite sheet for other things
 
--- TODO: animated structure tiles (i.e. waves around islands)
+-- TODO: polished waves on level 1
+-- TODO: polished islands on level 1
+-- TODO: fg and bg for level 2
+-- TODO: fg and bg for level 3
 
 function new_level_descriptor()
     -- numbers below are colors in the sprite sheet
@@ -17,7 +19,6 @@ function new_level_descriptor()
         level_end = 8,
     }
 
-    -- TODO: draw all tiles for all levels
     local structure_tiles = {
         center = 209,
         edge_left = 208,
@@ -38,6 +39,8 @@ function new_level_descriptor()
         filler_right_bottom = 195,
     }
 
+    -- TODO: handle structure markers in places where enemies are instead
+    
     -- markers from all 4 rows of 3rd sprite sheet tab, combined into a single long 2D array
     -- and extended by several extra columns in order to make further computations easier
     local markers = {}
@@ -92,7 +95,6 @@ function new_level_descriptor()
                 enemies[distance][lane] = "wait_then_charge"
             elseif marker == marker_types.enemy_stationary then
                 enemies[distance][lane] = "stationary"
-                -- TODO: make tile non-empty if would be if only not the enemy marker was there
             elseif marker == marker_types.structure then
                 structures_occupied[distance][lane] = true
                 structures_occupied[distance][lane + 1] = true
