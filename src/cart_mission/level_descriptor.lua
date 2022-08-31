@@ -32,13 +32,15 @@ function new_level_descriptor()
 
     -- TODO: handle structure markers in places where enemies are instead
 
+    local max_defined_distance
+
     -- markers from the map, combined into a single long 2D array and extended by several 
     -- extra columns on both sides in -- order to make further computations easier
     local markers = {}
     do
         local markers_per_screen_w = 8
         local x = 1
-        for initial_buffer_x = 1, markers_per_screen_w + 1 do
+        for intro_infinite_scroll_x = 1, markers_per_screen_w + 1 do
             markers[x] = { nil, nil, nil, nil, nil, nil }
             x = x + 1
         end
@@ -47,23 +49,32 @@ function new_level_descriptor()
                 markers[x] = { nil, nil, nil, nil, nil, nil }
                 local map_y = level_descriptor_row * 8
                 for y = 1, 6 do
-                    markers[x][y] = mget(map_x, map_y + y)
+                    local marker = mget(map_x, map_y + y)
+                    markers[x][y] = marker
+                    if marker == end_tile then
+                        max_defined_distance = (x - 1) * 2
+                        break
+                    end
                 end
                 x = x + 1
+                if max_defined_distance then
+                    break
+                end
+            end
+            if max_defined_distance then
+                break
             end
         end
-        -- TODO: still needed?
-        --for final_buffer_x = 1, markers_per_screen_w + 1 do
-        --    markers[x] = { nil, nil, nil, nil, nil, nil }
-        --    x = x + 1
-        --end
+        for outro_infinite_scroll_x = 1, markers_per_screen_w + 1 do
+            markers[x] = { nil, nil, nil, nil, nil, nil }
+            x = x + 1
+        end
     end
 
     -- conversion from markers to level descriptor
     local structures_occupied = { [-1] = {}, [0] = {} }
     local structures = {}
     local enemies = {}
-    local max_defined_distance = 0
     for x = 1, #markers do
         local distance = x * 2 - 1
         structures_occupied[distance] = {}
@@ -76,10 +87,7 @@ function new_level_descriptor()
             local lane = y * 2 - 1
 
             local marker = markers[x][y]
-            if marker == end_tile then
-                max_defined_distance = distance - 1
-                break
-            elseif marker == structure_tiles.center then
+            if marker == structure_tiles.center then
                 structures_occupied[distance][lane] = true
                 structures_occupied[distance][lane + 1] = true
                 structures_occupied[distance + 1][lane] = true
@@ -103,12 +111,9 @@ function new_level_descriptor()
                     structures_occupied[0][lane] = true
                     structures_occupied[0][lane + 1] = true
                 end
-            elseif marker ~= 0 then
+            elseif marker ~= 0 and marker ~= end_tile then
                 enemies[distance][lane] = marker
             end
-        end
-        if max_defined_distance > 0 then
-            break
         end
     end
 

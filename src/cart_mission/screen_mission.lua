@@ -13,6 +13,8 @@ function new_screen_mission(params)
     local enemy_bullets = {}
     local powerups = {}
 
+    local __tmp_boss
+
     local is_triple_shot_enabled = false
 
     local throttled_fire_player_bullet = new_throttle(6, function()
@@ -81,8 +83,18 @@ function new_screen_mission(params)
         end
 
         -- TODO: finish level on conditions different than a button press
-        if btnp(_button_o) or level.has_reached_end() then
-            -- TODO: externalize knowledge about amount of available missions
+        if level.has_scrolled_to_end() and #enemies <= 0 then
+            __tmp_boss = new_static_sprite {
+                sprite_w = 56,
+                sprite_h = 26,
+                sprite_x = 4,
+                sprite_y = 98,
+                transparent_color = _color_11_dark_green,
+            }
+        end
+
+        -- TODO: remove this ability to skip a mission with a button press
+        if btnp(_button_o) then
             if _m.mission_number < _max_mission_number then
                 _load_mission_cart(_m.mission_number + 1)
             else
@@ -108,11 +120,8 @@ function new_screen_mission(params)
             player.set_horizontal_movement("-")
         end
 
-        -- TODO: make it decrease enemy's health
         if btn(_button_x) then
             throttled_fire_player_bullet.invoke()
-        else
-            -- TODO: ? reset interval ?
         end
 
         for _, enemy in pairs(enemies) do
@@ -211,6 +220,9 @@ function new_screen_mission(params)
                 end
                 for _, player_bullet in pairs(player_bullets) do
                     player_bullet.draw()
+                end
+                if __tmp_boss then
+                    __tmp_boss.draw(_gaox + _gaw / 2, 20)
                 end
                 for _, enemy in pairs(enemies) do
                     enemy.draw()

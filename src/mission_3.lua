@@ -58,6 +58,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             powerups_distribution = "t",
         }
     end
+    assert(false, "unexpected enemy_map_marker = " .. enemy_map_marker)
 end
 
 
