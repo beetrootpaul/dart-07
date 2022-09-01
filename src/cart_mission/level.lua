@@ -2,8 +2,7 @@
 -- cart_mission/level.lua  --
 -- -- -- -- -- -- -- -- -- --
 
--- TODO: add level particles like sea waves, stars, floating corrupted matter
--- TODO: animated tiles (waves near shores)
+-- TODO: add level particles like stars or floating corrupted matter
 
 -- to avoid thinking in x and y we talk here about
 --   - distance = how many tiles we have scrolled forward (can be fraction)
@@ -29,8 +28,7 @@ function new_level(descriptor)
     local animation_step_length = 12
     local animated_bg_tiles = { 69, 85, 101, 117 }
 
-    -- TODO: boss phase
-    -- phase: intro -> main -> boss 
+    -- phase: intro -> main -> outro 
     local phase = "intro"
 
     return {
@@ -38,18 +36,20 @@ function new_level(descriptor)
             phase = "main"
         end,
 
-        has_reached_end = function()
+        has_scrolled_to_end = function()
             if phase == "intro" then
                 return false
-            else
-                return max_visible_distance >= max_defined_distance
+            elseif phase == "main" then
+                return min_visible_distance >= max_defined_distance + 1
+            elseif phase == "outro" then
+                return true
             end
         end,
 
         enemies_to_spawn = function()
             if phase == "intro" then
                 return {}
-            else
+            elseif phase == "main" then
                 local result = {}
                 if spawn_distance > prev_spawn_distance then
                     prev_spawn_distance = spawn_distance
@@ -67,22 +67,32 @@ function new_level(descriptor)
                     end
                 end
                 return result
+            elseif phase == "outro" then
+                return {}
             end
         end,
 
         scroll = function()
             animation_frame = (animation_frame + 1) % (animation_steps * animation_step_length)
-            min_visible_distance = min_visible_distance + _m.scroll_per_frame / _ts
-            max_visible_distance = min_visible_distance + _vst - 1
-            if spawn_distance < flr(max_visible_distance) + spawn_distance_offset then
-                spawn_distance = flr(max_visible_distance) + spawn_distance_offset
+
+            if phase ~= "outro" and min_visible_distance >= max_defined_distance + 1 then
+                phase = "outro"
             end
 
+            min_visible_distance = min_visible_distance + _m.scroll_per_frame / _ts
             if phase == "intro" then
                 -- loop infinitely
                 min_visible_distance = min_visible_distance % 1 + 1
-                max_visible_distance = min_visible_distance + _vst - 1
+            elseif phase == "main" then
+                if spawn_distance < flr(max_visible_distance) + spawn_distance_offset then
+                    spawn_distance = flr(max_visible_distance) + spawn_distance_offset
+                end
+            elseif phase == "outro" then
+                -- loop infinitely
+                local distance_fraction = min_visible_distance - flr(min_visible_distance)
+                min_visible_distance = max_defined_distance + distance_fraction
             end
+            max_visible_distance = min_visible_distance + _vst - 1
         end,
 
         draw = function(opts)

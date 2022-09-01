@@ -16,6 +16,7 @@ function new_enemy(params)
     local spawn_bullets = enemy_properties.spawn_bullets
     local powerups_distribution = enemy_properties.powerups_distribution
 
+    local is_flashing_from_damage = false
     local is_destroyed = false
 
     -- TODO: make collision detection work only if at least 1px of the enemy is visible, not before
@@ -34,7 +35,9 @@ function new_enemy(params)
 
         take_damage = function()
             health = health - 1
-            if health < 1 then
+            if health > 0 then
+                is_flashing_from_damage = true
+            else
                 is_destroyed = true
                 local powerup_type = rnd(split(powerups_distribution))
                 if powerup_type ~= "-" then
@@ -57,10 +60,15 @@ function new_enemy(params)
                 bullet_fire_timer.restart()
                 on_bullets_spawned(spawn_bullets())
             end
+
+            is_flashing_from_damage = false
         end,
 
         draw = function()
-            ship_sprite.draw(movement.x, movement.y)
+            ship_sprite.draw(movement.x, movement.y, {
+                -- TODO: make it pure white?
+                flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
+            })
         end,
     }
 end

@@ -118,4 +118,101 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             powerups_distribution = "-,-,-,a,a,t",
         }
     end
+    assert(false, "unexpected enemy_map_marker = " .. enemy_map_marker)
+end
+
+function _m.boss_properties()
+    local movement = new_movement_fixed {
+        start_x = _gaox + _gaw / 2,
+        start_y = 20,
+    }
+    return {
+        health = 20,
+        sprite = new_static_sprite {
+            sprite_w = 56,
+            sprite_h = 26,
+            sprite_x = 4,
+            sprite_y = 98,
+            transparent_color = _color_11_dark_green,
+        },
+        collision_circles = function()
+            return {
+                {
+                    x = movement.x - .5,
+                    y = movement.y - .5 + 3,
+                    r = 5,
+                },
+                {
+                    x = movement.x - .5,
+                    y = movement.y - .5 - 5,
+                    r = 7,
+                },
+                {
+                    x = movement.x - .5 - 11,
+                    y = movement.y - .5 - 6,
+                    r = 5,
+                },
+                {
+                    x = movement.x - .5 + 11,
+                    y = movement.y - .5 - 6,
+                    r = 5,
+                },
+                {
+                    x = movement.x - .5 - 21,
+                    y = movement.y - .5 + 3,
+                    r = 7,
+                },
+                {
+                    x = movement.x - .5 + 21,
+                    y = movement.y - .5 + 3,
+                    r = 7,
+                },
+            }
+        end,
+        movement = movement,
+        bullet_fire_timer = new_timer(20),
+        spawn_bullets = function()
+            local bullets = {}
+            for i = 3, 5 do
+                add(bullets, new_enemy_bullet {
+                    bullet_sprite = _m.bullet_orb.sprite,
+                    collision_circle_r = _m.bullet_orb.collision_circle_r,
+                    movement = new_movement_angled_line {
+                        start_x = movement.x - 21,
+                        start_y = movement.y + 3,
+                        base_speed_y = movement.speed_y,
+                        angle = .25 + i / 8,
+                        angled_speed = 2,
+                    },
+                })
+            end
+            for i = 3, 5 do
+                add(bullets, new_enemy_bullet {
+                    bullet_sprite = _m.bullet_orb.sprite,
+                    collision_circle_r = _m.bullet_orb.collision_circle_r,
+                    movement = new_movement_angled_line {
+                        start_x = movement.x + 21,
+                        start_y = movement.y + 3,
+                        base_speed_y = movement.speed_y,
+                        angle = .25 + i / 8,
+                        angled_speed = 2,
+                    },
+                })
+            end
+            for i = 3, 5 do
+                add(bullets, new_enemy_bullet {
+                    bullet_sprite = _m.bullet_orb.sprite,
+                    collision_circle_r = _m.bullet_orb.collision_circle_r,
+                    movement = new_movement_angled_line {
+                        start_x = movement.x,
+                        start_y = movement.y + 3,
+                        base_speed_y = movement.speed_y,
+                        angle = .25 + i / 8,
+                        angled_speed = 2,
+                    },
+                })
+            end
+            return bullets
+        end,
+    }
 end

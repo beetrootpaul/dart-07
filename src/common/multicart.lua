@@ -23,10 +23,11 @@ function _load_main_cart()
     load("#tmp_multicart_main")
 end
 
-function _load_mission_cart(mission)
-    -- TODO: ?
-    --local params = score .. "," .. number
-    --load("shmup-mission-" .. chosen_mission .. ".p8", nil, params)
+function _load_mission_cart(params)
+    local mission_number = params.mission_number
+    local health = params.health
+
+    local cart_params = health
 
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
     -- of any further instruction if succeeded. This means we can safely
@@ -36,10 +37,11 @@ function _load_mission_cart(mission)
     -- file paths, we use two variants here: one if we navigate in SPLORE to 
     -- inside of this game's directory and one if we started the game in 
     -- SPLORE from favorites tab (outside game's directory).
-    load("shmup-mission-" .. mission .. ".p8")
-    load("shmup/shmup-mission-" .. mission .. ".p8")
+    -- TODO: add to PICO-8 API file
+    load("shmup-mission-" .. mission_number .. ".p8", nil, cart_params)
+    load("shmup/shmup-mission-" .. mission_number .. ".p8", nil, cart_params)
     -- TODO: use a nice final BBS cart ID here
-    load("#tmp_multicart_lvl" .. mission)
+    load("#tmp_multicart_lvl" .. mission_number, nil, cart_params)
 end
 
 function _copy_shared_assets_to_transferable_ram()
@@ -53,6 +55,7 @@ function _copy_shared_assets_to_transferable_ram()
 
     -- TODO: assert if within ranges on both sides
     -- TODO: explain thoroughly in a comment
+    -- TODO: add to PICO-8 API file
     memcpy(0x0, 0x4300, 0x0800) -- copy first sprite sheet tab
 end
 
