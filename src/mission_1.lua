@@ -173,13 +173,39 @@ function _m.boss_properties()
         bullet_fire_timer = new_timer(20),
         spawn_bullets = function()
             local bullets = {}
-            for i = 1, 7 do
+            for i = 3, 5 do
+                add(bullets, new_enemy_bullet {
+                    bullet_sprite = _m.bullet_orb.sprite,
+                    collision_circle_r = _m.bullet_orb.collision_circle_r,
+                    movement = new_movement_angled_line {
+                        start_x = movement.x - 21,
+                        start_y = movement.y + 3,
+                        base_speed_y = movement.speed_y,
+                        angle = .25 + i / 8,
+                        angled_speed = 2,
+                    },
+                })
+            end
+            for i = 3, 5 do
+                add(bullets, new_enemy_bullet {
+                    bullet_sprite = _m.bullet_orb.sprite,
+                    collision_circle_r = _m.bullet_orb.collision_circle_r,
+                    movement = new_movement_angled_line {
+                        start_x = movement.x + 21,
+                        start_y = movement.y + 3,
+                        base_speed_y = movement.speed_y,
+                        angle = .25 + i / 8,
+                        angled_speed = 2,
+                    },
+                })
+            end
+            for i = 3, 5 do
                 add(bullets, new_enemy_bullet {
                     bullet_sprite = _m.bullet_orb.sprite,
                     collision_circle_r = _m.bullet_orb.collision_circle_r,
                     movement = new_movement_angled_line {
                         start_x = movement.x,
-                        start_y = movement.y,
+                        start_y = movement.y + 3,
                         base_speed_y = movement.speed_y,
                         angle = .25 + i / 8,
                         angled_speed = 2,
