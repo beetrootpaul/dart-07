@@ -14,6 +14,7 @@ function new_boss(params)
     local bullet_fire_timer = boss_properties.bullet_fire_timer
     local spawn_bullets = boss_properties.spawn_bullets
 
+    local is_flashing_from_damage = false
     local is_destroyed = false
 
     -- TODO: make collision detection work only if at least 1px of the enemy is visible, not before
@@ -28,7 +29,9 @@ function new_boss(params)
 
         take_damage = function()
             health = health - 1
-            if health < 1 then
+            if health > 0 then
+                is_flashing_from_damage = true
+            else
                 is_destroyed = true
             end
         end,
@@ -43,11 +46,16 @@ function new_boss(params)
                 bullet_fire_timer.restart()
                 on_bullets_spawned(spawn_bullets())
             end
+
+            is_flashing_from_damage = false
         end,
 
+        -- TODO: multiple sprites with their own slight movement 
         draw = function()
-            -- TODO: multiple sprites with their own slight movement 
-            sprite.draw(movement.x, movement.y)
+            sprite.draw(movement.x, movement.y, {
+                -- TODO: make it pure white?
+                flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
+            })
         end,
     }
 end
