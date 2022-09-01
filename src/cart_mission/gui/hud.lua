@@ -16,6 +16,7 @@ function new_hud(params)
     local slide_in_x_target = 4
 
     local bar_w = 16
+    local boss_health_bar_margin = 2
 
     local hearth = new_static_sprite {
         sprite_w = 6,
@@ -57,7 +58,11 @@ function new_hud(params)
             end
         end,
 
-        draw = function(health)
+        draw = function(params)
+            local player_health = params.player_health
+            local boss_health = params.boss_health
+            local boss_health_max = params.boss_health_max
+
             rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
 
@@ -69,9 +74,21 @@ function new_hud(params)
                 ))
                 hearth.draw(x + 1, _vs - 10)
                 health_bar_start.draw(x, _vs - 20)
-                for i = 1, health do
+                for i = 1, player_health do
                     health_bar_segment.draw(x, _vs - 20 - i * 4)
                 end
+            end
+
+            -- TODO: polish it, add boss name above the bar
+            if boss_health and boss_health_max then
+                local health_ratio = boss_health / boss_health_max
+                rectfill(
+                    _gaox + boss_health_bar_margin,
+                    2,
+                    _gaox + boss_health_bar_margin + ceil(health_ratio * (_gaw - 2 * boss_health_bar_margin)) - 1,
+                    4,
+                    _color_8_red
+                )
             end
         end,
     }

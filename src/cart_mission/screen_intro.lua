@@ -62,7 +62,9 @@ function new_screen_intro(params)
             end,
         }
 
-        hud.draw(health)
+        hud.draw {
+            player_health = health,
+        }
 
         mission_info.draw()
     end

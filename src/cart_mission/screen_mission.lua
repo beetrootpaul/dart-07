@@ -100,8 +100,8 @@ function new_screen_mission(params)
         end
 
         if not boss and level.has_scrolled_to_end() and #enemies <= 0 and #enemy_bullets <= 0 then
+            -- TODO: GUI boss announcement
             -- TODO: boss slide in
-            -- TODO: boss health bar
             -- TODO: boss spectacular destroy VFX and SFX
             -- TODO: win screen after all 3 levels
             boss = new_boss {
@@ -284,7 +284,11 @@ function new_screen_mission(params)
             end,
         }
 
-        hud.draw(health)
+        hud.draw {
+            player_health = health,
+            boss_health = boss and boss.health or nil,
+            boss_health_max = boss and boss.health_max or nil,
+        }
 
         -- DEBUG:
         local player_cc = player.collision_circle()
