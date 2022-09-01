@@ -77,7 +77,7 @@ function new_screen_mission(params)
             -- TODO: fade next screen in
             load_next_cart()
         end
-        
+
         for index, enemy in pairs(enemies) do
             if enemy.has_finished() then
                 del(enemies, enemy)
@@ -184,22 +184,23 @@ function new_screen_mission(params)
             end
 
             if boss then
-                local boss_cc = boss.collision_circle()
-                for __, player_bullet in pairs(player_bullets) do
-                    if not boss.has_finished() then
-                        if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
-                            -- TODO: SFX
-                            -- TODO: blinking boss if still alive
-                            -- TODO: big explosion if no longer alive
-                            boss.take_damage()
-                            player_bullet.destroy()
-                            -- TODO: magnetised score items?
+                for _, boss_cc in pairs(boss.collision_circles()) do
+                    for __, player_bullet in pairs(player_bullets) do
+                        if not boss.has_finished() then
+                            if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
+                                -- TODO: SFX
+                                -- TODO: blinking boss if still alive
+                                -- TODO: big explosion if no longer alive
+                                boss.take_damage()
+                                player_bullet.destroy()
+                                -- TODO: magnetised score items?
+                            end
                         end
                     end
-                end
-                if not boss.has_finished() and not player.is_invincible_after_damage() then
-                    if _collisions.are_colliding(player_cc, boss_cc) then
-                        handle_player_damage()
+                    if not boss.has_finished() and not player.is_invincible_after_damage() then
+                        if _collisions.are_colliding(player_cc, boss_cc) then
+                            handle_player_damage()
+                        end
                     end
                 end
             end
@@ -289,8 +290,9 @@ function new_screen_mission(params)
         local player_cc = player.collision_circle()
         oval(player_cc.x - (player_cc.r - .5), player_cc.y - (player_cc.r - .5), player_cc.x + (player_cc.r - .5), player_cc.y + (player_cc.r - .5), _color_11_dark_green)
         if boss then
-            local boss_cc = boss.collision_circle()
-            oval(boss_cc.x - (boss_cc.r - .5), boss_cc.y - (boss_cc.r - .5), boss_cc.x + (boss_cc.r - .5), boss_cc.y + (boss_cc.r - .5), _color_11_dark_green)
+            for _, boss_cc in pairs(boss.collision_circles()) do
+                oval(boss_cc.x - (boss_cc.r - .5), boss_cc.y - (boss_cc.r - .5), boss_cc.x + (boss_cc.r - .5), boss_cc.y + (boss_cc.r - .5), _color_11_dark_green)
+            end
         end
         for _, enemy in pairs(enemies) do
             local enemy_cc = enemy.collision_circle()

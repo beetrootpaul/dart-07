@@ -135,8 +135,40 @@ function _m.boss_properties()
             sprite_y = 98,
             transparent_color = _color_11_dark_green,
         },
-        collision_circle_r = 30,
-        collision_circle_offset_y = 3,
+        collision_circles = function()
+            return {
+                {
+                    x = movement.x - .5,
+                    y = movement.y - .5 + 3,
+                    r = 5,
+                },
+                {
+                    x = movement.x - .5,
+                    y = movement.y - .5 - 5,
+                    r = 7,
+                },
+                {
+                    x = movement.x - .5 - 11,
+                    y = movement.y - .5 - 6,
+                    r = 5,
+                },
+                {
+                    x = movement.x - .5 + 11,
+                    y = movement.y - .5 - 6,
+                    r = 5,
+                },
+                {
+                    x = movement.x - .5 - 21,
+                    y = movement.y - .5 + 3,
+                    r = 7,
+                },
+                {
+                    x = movement.x - .5 + 21,
+                    y = movement.y - .5 + 3,
+                    r = 7,
+                },
+            }
+        end,
         movement = movement,
         bullet_fire_timer = new_timer(20),
         spawn_bullets = function()

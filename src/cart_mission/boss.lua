@@ -8,9 +8,8 @@ function new_boss(params)
 
     local health = boss_properties.health
     local sprite = boss_properties.sprite
-    local collision_circle_r = boss_properties.collision_circle_r
-    local collision_circle_offset_y = boss_properties.collision_circle_offset_y
-    -- TODO: mnultiple complex movements
+    local collision_circles = boss_properties.collision_circles
+    -- TODO: multiple complex movements
     local movement = boss_properties.movement
     local bullet_fire_timer = boss_properties.bullet_fire_timer
     local spawn_bullets = boss_properties.spawn_bullets
@@ -23,13 +22,8 @@ function new_boss(params)
             return is_destroyed
         end,
 
-        -- TODO: multiple smaller collision circles 
-        collision_circle = function()
-            return {
-                x = movement.x - .5,
-                y = movement.y - .5 + collision_circle_offset_y,
-                r = collision_circle_r,
-            }
+        collision_circles = function()
+            return collision_circles()
         end,
 
         take_damage = function()
