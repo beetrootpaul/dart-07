@@ -21,10 +21,6 @@ _m.bullet_orb = {
 
 function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
     if enemy_map_marker == 77 then
-        local movement = new_movement_sinusoidal {
-            start_x = start_x,
-            start_y = start_y,
-        }
         return {
             health = 1,
             ship_sprite = new_static_sprite {
@@ -36,9 +32,12 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             },
             collision_circle_r = 3,
             collision_circle_offset_y = 0,
-            movement = movement,
+            movement = new_movement_sinusoidal {
+                start_x = start_x,
+                start_y = start_y,
+            },
             bullet_fire_timer = new_timer(20),
-            spawn_bullets = function()
+            spawn_bullets = function(movement)
                 return {
                     new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
@@ -57,10 +56,6 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
         }
     end
     if enemy_map_marker == 78 then
-        local movement = new_movement_wait_then_charge {
-            start_x = start_x,
-            start_y = start_y,
-        }
         return {
             health = 3,
             ship_sprite = new_static_sprite {
@@ -72,19 +67,16 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             },
             collision_circle_r = 5,
             collision_circle_offset_y = -1,
-            movement = movement,
+            movement = new_movement_wait_then_charge {
+                start_x = start_x,
+                start_y = start_y,
+            },
             bullet_fire_timer = new_fake_timer(),
-            spawn_bullets = function()
-                return {}
-            end,
+            spawn_bullets = _noop,
             powerups_distribution = "-,-,-,-,-,-,-,-,-,a,a,t",
         }
     end
     if enemy_map_marker == 79 then
-        local movement = new_movement_stationary {
-            start_x = start_x,
-            start_y = start_y,
-        }
         return {
             health = 6,
             ship_sprite = new_static_sprite {
@@ -96,9 +88,12 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             },
             collision_circle_r = 8,
             collision_circle_offset_y = 0,
-            movement = movement,
+            movement = new_movement_stationary {
+                start_x = start_x,
+                start_y = start_y,
+            },
             bullet_fire_timer = new_timer(30),
-            spawn_bullets = function()
+            spawn_bullets = function(movement)
                 local bullets = {}
                 for i = 1, 7 do
                     add(bullets, new_enemy_bullet {
@@ -122,10 +117,6 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
 end
 
 function _m.boss_properties(start_x, start_y)
-    local movement = new_movement_fixed {
-        start_x = start_x,
-        start_y = start_y,
-    }
     return {
         health = 20,
         sprite = new_static_sprite {
@@ -135,43 +126,22 @@ function _m.boss_properties(start_x, start_y)
             sprite_y = 98,
             transparent_color = _color_11_dark_green,
         },
-        collision_circles = function()
+        collision_circles = function(movement)
             return {
-                {
-                    x = movement.x - .5,
-                    y = movement.y - .5 + 3,
-                    r = 5,
-                },
-                {
-                    x = movement.x - .5,
-                    y = movement.y - .5 - 5,
-                    r = 7,
-                },
-                {
-                    x = movement.x - .5 - 11,
-                    y = movement.y - .5 - 6,
-                    r = 5,
-                },
-                {
-                    x = movement.x - .5 + 11,
-                    y = movement.y - .5 - 6,
-                    r = 5,
-                },
-                {
-                    x = movement.x - .5 - 21,
-                    y = movement.y - .5 + 3,
-                    r = 7,
-                },
-                {
-                    x = movement.x - .5 + 21,
-                    y = movement.y - .5 + 3,
-                    r = 7,
-                },
+                { x = movement.x - .5, y = movement.y - .5 + 3, r = 5 },
+                { x = movement.x - .5, y = movement.y - .5 - 5, r = 7 },
+                { x = movement.x - .5 - 11, y = movement.y - .5 - 6, r = 5 },
+                { x = movement.x - .5 + 11, y = movement.y - .5 - 6, r = 5 },
+                { x = movement.x - .5 - 21, y = movement.y - .5 + 3, r = 7 },
+                { x = movement.x - .5 + 21, y = movement.y - .5 + 3, r = 7 },
             }
         end,
-        movement = movement,
+        movement = new_movement_fixed {
+            start_x = start_x,
+            start_y = start_y,
+        },
         bullet_fire_timer = new_timer(20),
-        spawn_bullets = function()
+        spawn_bullets = function(movement)
             local bullets = {}
             for i = 3, 5 do
                 add(bullets, new_enemy_bullet {

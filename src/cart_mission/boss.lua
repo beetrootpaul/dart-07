@@ -50,7 +50,7 @@ function new_boss(params)
     end
 
     function boss.collision_circles()
-        return collision_circles()
+        return collision_circles(movement)
     end
 
     function boss.take_damage()
@@ -71,7 +71,7 @@ function new_boss(params)
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
-                on_bullets_spawned(spawn_bullets())
+                on_bullets_spawned(spawn_bullets(movement))
             end
         end
 

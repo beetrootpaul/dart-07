@@ -21,10 +21,6 @@ _m.bullet_orb = {
 
 function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
     if enemy_map_marker == 79 then
-        local movement = new_movement_wait_then_charge {
-            start_x = start_x,
-            start_y = start_y,
-        }
         return {
             health = 1,
             ship_sprite = new_static_sprite {
@@ -34,11 +30,15 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
                 sprite_y = 64,
                 transparent_color = _color_11_dark_green,
             },
+            -- TODO: consider unifying the way collision circles are defined for enemies, player, boss, bullets
             collision_circle_r = 4,
             collision_circle_offset_y = 0,
-            movement = movement,
+            movement = new_movement_wait_then_charge {
+                start_x = start_x,
+                start_y = start_y,
+            },
             bullet_fire_timer = new_timer(15),
-            spawn_bullets = function()
+            spawn_bullets = function(movement)
                 local bullets = {}
                 for i = 3, 5 do
                     add(bullets, new_enemy_bullet {
@@ -62,10 +62,6 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
 end
 
 function _m.boss_properties(start_x, start_y)
-    local movement = new_movement_fixed {
-        start_x = start_x,
-        start_y = start_y,
-    }
     return {
         health = 20,
         sprite = new_static_sprite {
@@ -75,18 +71,17 @@ function _m.boss_properties(start_x, start_y)
             sprite_y = 98,
             transparent_color = _color_11_dark_green,
         },
-        collision_circles = function()
+        collision_circles = function(movement)
             return {
-                {
-                    x = movement.x - .5,
-                    y = movement.y - .5 + 3,
-                    r = 5,
-                },
+                { x = movement.x - .5, y = movement.y - .5 + 3, r = 5 },
             }
         end,
-        movement = movement,
+        movement = new_movement_fixed {
+            start_x = start_x,
+            start_y = start_y,
+        },
         bullet_fire_timer = new_timer(20),
-        spawn_bullets = function()
+        spawn_bullets = function(movement)
             local bullets = {}
             for i = 1, 7 do
                 add(bullets, new_enemy_bullet {
@@ -105,6 +100,3 @@ function _m.boss_properties(start_x, start_y)
         end,
     }
 end
-
-
-

@@ -56,7 +56,7 @@ function new_enemy(params)
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
-                on_bullets_spawned(spawn_bullets())
+                on_bullets_spawned(spawn_bullets(movement))
             end
 
             is_flashing_from_damage = false
