@@ -3,6 +3,8 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: score
+-- TODO: edge case of a single frame of 0 hearths and strange bar initial line, during next cart loading
+-- TODO: indicate acquired powerups, i.e. triple shot
 
 function new_hud(params)
     local wait_frames = params.wait_frames

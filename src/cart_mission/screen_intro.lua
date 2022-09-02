@@ -6,6 +6,7 @@
 
 function new_screen_intro(params)
     local health = params.health
+    local is_triple_shot_enabled = params.is_triple_shot_enabled
 
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
@@ -72,6 +73,7 @@ function new_screen_intro(params)
                 level = level,
                 player = player,
                 health = health,
+                is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,
             }
         end

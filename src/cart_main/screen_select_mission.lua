@@ -48,6 +48,7 @@ function new_screen_select_mission()
             _load_mission_cart {
                 mission_number = selected_mission,
                 health = _health_default,
+                is_triple_shot_enabled = false,
             }
         end
     end

@@ -91,6 +91,7 @@ function new_screen_boss_fight(params)
                 _load_mission_cart {
                     mission_number = _m.mission_number + 1,
                     health = health,
+                    is_triple_shot_enabled = is_triple_shot_enabled,
                 }
             else
                 _load_main_cart()
@@ -183,6 +184,7 @@ function new_screen_boss_fight(params)
                 level = level,
                 player = player,
                 health = health,
+                is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,
             }
         end

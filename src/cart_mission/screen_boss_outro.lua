@@ -9,6 +9,7 @@ function new_screen_boss_outro(params)
     local level = params.level
     local player = params.player
     local health = params.health
+    local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
     local screen_timer = new_timer(90)
@@ -47,6 +48,7 @@ function new_screen_boss_outro(params)
                 _load_mission_cart {
                     mission_number = _m.mission_number + 1,
                     health = health,
+                    is_triple_shot_enabled = is_triple_shot_enabled,
                 }
             else
                 _load_main_cart()

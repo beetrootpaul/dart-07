@@ -6,14 +6,13 @@ function new_screen_enemies(params)
     local level = params.level
     local player = params.player
     local health = params.health
+    local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
     local enemies = {}
     local player_bullets = {}
     local enemy_bullets = {}
     local powerups = {}
-
-    local is_triple_shot_enabled = false
 
     -- TODO: duplicated code
     local throttled_fire_player_bullet = new_throttle(6, function()
@@ -97,7 +96,7 @@ function new_screen_enemies(params)
             end
         end
     end
-    
+
     --
 
     local screen = {}
@@ -114,6 +113,7 @@ function new_screen_enemies(params)
                 _load_mission_cart {
                     mission_number = _m.mission_number + 1,
                     health = health,
+                    is_triple_shot_enabled = is_triple_shot_enabled,
                 }
             else
                 _load_main_cart()
