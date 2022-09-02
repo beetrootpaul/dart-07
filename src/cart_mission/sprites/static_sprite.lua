@@ -12,7 +12,7 @@ function new_static_sprite(params)
     local transparent_color = params.transparent_color
 
     return {
-        draw = function(x, y, opts)
+        _draw = function(x, y, opts)
             opts = opts or {}
 
             if not from_left_top_corner then

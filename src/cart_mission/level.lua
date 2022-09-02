@@ -72,7 +72,7 @@ function new_level(descriptor)
             end
         end,
 
-        scroll = function()
+        _update = function()
             animation_frame = (animation_frame + 1) % (animation_steps * animation_step_length)
 
             if phase ~= "outro" and min_visible_distance >= max_defined_distance + 1 then
@@ -95,7 +95,7 @@ function new_level(descriptor)
             max_visible_distance = min_visible_distance + _vst - 1
         end,
 
-        draw = function(opts)
+        _draw = function(opts)
             local draw_within_level_bounds = opts.draw_within_level_bounds
 
             local bg_tile = _m.has_bg_tiles and animated_bg_tiles[flr(animation_frame / animation_step_length) + 1] or nil

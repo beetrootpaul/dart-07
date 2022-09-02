@@ -44,24 +44,24 @@ function new_hud(params)
     local phase = "wait"
 
     return {
-        animate = function()
+        _update = function()
             if phase == "wait" then
                 if wait_timer.ttl > 0 then
-                    wait_timer.advance()
+                    wait_timer._update()
                 else
                     phase = "slide_in"
                 end
             elseif phase == "slide_in" then
                 if slide_in_timer.ttl > 0 then
-                    slide_in_timer.advance()
+                    slide_in_timer._update()
                 end
             end
         end,
 
-        draw = function(params)
-            local player_health = params.player_health
-            local boss_health = params.boss_health
-            local boss_health_max = params.boss_health_max
+        _draw = function(p)
+            local player_health = p.player_health
+            local boss_health = p.boss_health
+            local boss_health_max = p.boss_health_max
 
             rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
@@ -72,10 +72,10 @@ function new_hud(params)
                     slide_in_x_target,
                     _easing_easeoutquart(slide_in_timer.passed_ratio())
                 ))
-                hearth.draw(x + 1, _vs - 10)
-                health_bar_start.draw(x, _vs - 20)
+                hearth._draw(x + 1, _vs - 10)
+                health_bar_start._draw(x, _vs - 20)
                 for i = 1, player_health do
-                    health_bar_segment.draw(x, _vs - 20 - i * 4)
+                    health_bar_segment._draw(x, _vs - 20 - i * 4)
                 end
             end
 

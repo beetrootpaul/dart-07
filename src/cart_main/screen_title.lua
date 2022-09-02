@@ -4,47 +4,35 @@
 
 -- TODO: create a decent title screen
 
--- TODO: ?
---function new_screen_title(score, number)
---function new_screen_title()
---local score = score
---local number = number
---
--- --
---
---local screen = {}
---
---function screen.init()
---music(0)
---end
---
---function screen.update()
---    local next_screen = screen
---
---if btnp(_button_left) then
---    number = number - 1
---end
---if btnp(_button_right) then
---    number = number + 1
---end
---if btnp(_button_o) then
---sfx(0)
---score = score + 10
---end
---
---if btnp(_button_x) then
---next_screen = new_screen_mission_select(score, number)
---end
---
---return next_screen
---end
---
---function screen.draw()
---    cls(_color_0_black)
---print("score  : " .. score, 10, 10, _color_12_true_blue)
---print("number : " .. number, 10, 16, _color_12_true_blue)
---print("title screen", 40, 40, _color_12_true_blue)
---end
---
---return screen
---end
+function new_screen_title()
+    local should_go_to_mission_selection = false
+
+    --
+
+    local screen = {}
+
+    function screen._init()
+        -- TODO: music
+    end
+
+    function screen._update()
+        -- TODO: make it clear for the user which button is to be pressed
+        if btnp(_button_x) then
+            should_go_to_mission_selection = true
+        end
+    end
+
+    function screen._draw()
+        cls(_color_0_black)
+
+        print("todo shmup", 34, 50, _color_12_true_blue)
+    end
+
+    function screen._post_draw()
+        if should_go_to_mission_selection then
+            return new_screen_select_mission()
+        end
+    end
+
+    return screen
+end

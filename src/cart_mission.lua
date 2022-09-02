@@ -17,21 +17,24 @@ function _init()
         _load_main_cart()
     end)
 
-    next_screen = new_screen_intro {
+    current_screen = new_screen_intro {
         health = health,
     }
 end
 
 function _update()
-    if current_screen ~= next_screen then
-        next_screen.init()
+    next_screen = current_screen._post_draw()
+
+    if next_screen then
+        current_screen = next_screen
+        current_screen._init()
     end
-    current_screen = next_screen
-    next_screen = current_screen.update()
+
+    current_screen._update()
 end
 
 function _draw()
-    current_screen.draw()
+    current_screen._draw()
 
     _remap_display_colors()
 end

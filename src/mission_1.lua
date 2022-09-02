@@ -124,6 +124,7 @@ end
 function _m.boss_properties()
     local movement = new_movement_fixed {
         start_x = _gaox + _gaw / 2,
+        -- TODO: make y dependant on the current position
         start_y = 20,
     }
     return {
@@ -169,6 +170,14 @@ function _m.boss_properties()
                 },
             }
         end,
+        -- TODO: make intro eased out
+        intro_movement = new_movement_angled_line {
+            start_x = _gaox + _gaw / 2,
+            start_y = -70,
+            base_speed_y = 0,
+            angle = .75,
+            angled_speed = 1,
+        },
         movement = movement,
         bullet_fire_timer = new_timer(20),
         spawn_bullets = function()

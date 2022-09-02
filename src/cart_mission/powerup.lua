@@ -8,7 +8,7 @@
 
 function new_powerup(params)
     local powerup_type = params.powerup_type
-    local x, y = params.x, params.y
+    local start_x, start_y = params.start_x, params.start_y
 
     local is_picked = false
 
@@ -32,22 +32,30 @@ function new_powerup(params)
         }
     end
 
+    local movement = new_movement_angled_line {
+        start_x = start_x,
+        start_y = start_y,
+        base_speed_y = 0,
+        angle = .75,
+        angled_speed = 1,
+    }
+
     local powerup = {
         powerup_type = powerup_type,
     }
 
     function powerup.has_finished()
         return is_picked or
-            x < _gaox - _ts or
-            x > _gaox + _gaw + _ts or
-            y < -_ts or
-            y > _gah + _ts
+            movement.x < _gaox - _ts or
+            movement.x > _gaox + _gaw + _ts or
+            movement.y < -_ts or
+            movement.y > _gah + _ts
     end
 
     function powerup.collision_circle()
         return {
-            x = x - .5,
-            y = y - .5,
+            x = movement.x - .5,
+            y = movement.y - .5,
             r = 5,
         }
     end
@@ -56,12 +64,12 @@ function new_powerup(params)
         is_picked = true
     end
 
-    function powerup.move()
-        y = y + 1
+    function powerup._update()
+        movement._update()
     end
 
-    function powerup.draw()
-        sprite.draw(x, y)
+    function powerup._draw()
+        sprite._draw(movement.x, movement.y)
     end
 
     return powerup

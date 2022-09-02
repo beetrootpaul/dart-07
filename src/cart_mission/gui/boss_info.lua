@@ -1,10 +1,10 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/gui/mission_info.lua   --
--- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/gui/boss_info.lua   --
+-- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: better mission info GUI
+-- TODO: better boss info GUI
 
-function new_mission_info(params)
+function new_boss_info(params)
     local slide_in_frames = params.slide_in_frames
     local present_frames = params.present_frames
     local slide_out_frames = params.slide_out_frames
@@ -68,10 +68,10 @@ function new_mission_info(params)
 
             for dx = -1, 1 do
                 for dy = -1, 1 do
-                    print("mission " .. _m.mission_number, _gaox + 10 + dx, y - 7 + dy, _color_8_red)
+                    print("boss", _gaox + 10 + dx, y - 7 + dy, _color_8_red)
                 end
             end
-            print("mission " .. _m.mission_number, _gaox + 10, y - 7, _m.bg_color)
+            print("boss", _gaox + 10, y - 7, _m.bg_color)
             rectfill(_gaox, y, _gaox + _gaw - 1, y, _color_8_red)
 
             clip()

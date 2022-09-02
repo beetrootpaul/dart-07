@@ -39,17 +39,16 @@ function new_player_bullet(params)
             }
         end,
 
-        move = function()
-            movement.move()
-            --y = y - 5
-        end,
-
         destroy = function()
             is_destroyed = true
         end,
 
-        draw = function()
-            bullet_sprite.draw(movement.x, movement.y)
+        _update = function()
+            movement._update()
+        end,
+
+        _draw = function()
+            bullet_sprite._draw(movement.x, movement.y)
         end,
     }
 end

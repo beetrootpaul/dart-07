@@ -13,7 +13,7 @@ function new_movement_stationary(params)
         speed_y = _m.scroll_per_frame,
     }
 
-    function movement.move()
+    function movement._update()
         movement.y = movement.y + movement.speed_y
     end
 

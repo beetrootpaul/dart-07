@@ -7,7 +7,7 @@ function new_timer(frames)
         ttl = frames,
     }
 
-    function timer.advance()
+    function timer._update()
         timer.ttl = max(timer.ttl - 1, 0)
     end
 

@@ -12,11 +12,11 @@ function new_animated_sprite(params)
     local max_frame = #sprite_xs
 
     return {
-        animate = function()
+        _update = function()
             frame = _tni(frame, max_frame)
         end,
 
-        draw = function(x, y, opts)
+        _draw = function(x, y, opts)
             opts = opts or {}
             
             if opts.flash_color then

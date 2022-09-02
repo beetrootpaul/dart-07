@@ -96,27 +96,25 @@ function new_player()
         invincible_after_damage_timer = new_timer(30)
     end
 
-    function player.advance_timers()
+    function player._update()
         if invincible_after_damage_timer then
             if invincible_after_damage_timer.ttl <= 0 then
                 invincible_after_damage_timer = nil
             else
-                invincible_after_damage_timer.advance()
+                invincible_after_damage_timer._update()
             end
         end
+        
+        jet_sprite._update()
     end
 
-    function player.animate()
-        jet_sprite.animate()
-    end
-
-    function player.draw()
+    function player._draw()
         local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
-        ship_sprite_current.draw(player.x, player.y, {
+        ship_sprite_current._draw(player.x, player.y, {
             -- TODO: make it pure white?
             flash_color = flash and _color_6_light_grey or nil,
         })
-        jet_sprite.draw(player.x, player.y + 8, {
+        jet_sprite._draw(player.x, player.y + 8, {
             -- TODO: make it pure white?
             flash_color = flash and _color_6_light_grey or nil,
         })

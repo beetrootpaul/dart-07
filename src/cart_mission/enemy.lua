@@ -42,20 +42,18 @@ function new_enemy(params)
                 local powerup_type = rnd(split(powerups_distribution))
                 if powerup_type ~= "-" then
                     on_powerup_spawned(new_powerup {
-                        x = movement.x,
-                        y = movement.y,
+                        start_x = movement.x,
+                        start_y = movement.y,
                         powerup_type = powerup_type,
                     })
                 end
             end
         end,
 
-        move = function()
-            movement.move()
-        end,
+        _update = function()
+            movement._update()
 
-        advance_timers = function()
-            bullet_fire_timer.advance()
+            bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
                 on_bullets_spawned(spawn_bullets())
@@ -64,8 +62,8 @@ function new_enemy(params)
             is_flashing_from_damage = false
         end,
 
-        draw = function()
-            ship_sprite.draw(movement.x, movement.y, {
+        _draw = function()
+            ship_sprite._draw(movement.x, movement.y, {
                 -- TODO: make it pure white?
                 flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
             })

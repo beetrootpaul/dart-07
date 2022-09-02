@@ -26,16 +26,16 @@ function new_enemy_bullet(bullet_properties)
             }
         end,
 
-        move = function()
-            movement.move()
-        end,
-
         destroy = function()
             is_destroyed = true
         end,
 
-        draw = function()
-            bullet_sprite.draw(movement.x, movement.y)
+        _update = function()
+            movement._update()
+        end,
+
+        _draw = function()
+            bullet_sprite._draw(movement.x, movement.y)
         end,
     }
 end

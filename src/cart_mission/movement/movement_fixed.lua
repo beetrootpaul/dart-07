@@ -13,7 +13,7 @@ function new_movement_fixed(params)
         speed_y = 0,
     }
 
-    function movement.move()
+    function movement._update()
         -- do nothing
     end
 

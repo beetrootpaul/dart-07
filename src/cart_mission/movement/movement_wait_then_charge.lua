@@ -15,7 +15,7 @@ function new_movement_wait_then_charge(params)
         speed_y = 1,
     }
 
-    function movement.move()
+    function movement._update()
         if age >= 40 then
             movement.speed_y = 3
         end

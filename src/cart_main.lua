@@ -8,31 +8,32 @@ function _init()
     -- TODO: ?
     --local score = tonum(split(stat(6))[1]) or 2
     --local number = tonum(split(stat(6))[2]) or -3
-    --next_screen = new_screen_title(score, number)
 
-    -- TODO: start with a title screen
-    next_screen = new_screen_mission_select()
+    current_screen = new_screen_title()
 end
 
 function _update()
-    if current_screen ~= next_screen then
-        next_screen.init()
+    next_screen = current_screen._post_draw()
+
+    if next_screen then
+        current_screen = next_screen
+        current_screen._init()
     end
-    current_screen = next_screen
-    next_screen = current_screen.update()
+
+    current_screen._update()
 end
 
 function _draw()
-    current_screen.draw()
+    current_screen._draw()
 
     _remap_display_colors()
 end
 
--- TODO: boss mechanic
-
 -- TODO: screen shake?
 
 -- TODO: "hit stop"?
+
+-- TODO: push enemies and boss on damage?
 
 -- TODO: lighten/darken transition between screens? Or dithered "fillp" one?
 
