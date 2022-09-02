@@ -14,9 +14,11 @@ function new_screen_boss_intro(params)
     local hud = params.hud
 
     local boss = new_boss {
-        boss_properties = _m.boss_properties(),
+        boss_properties = _m.boss_properties(_gaox + _gaw / 2, 20),
+        intro_frames = 90,
+        intro_start_y = -120,
     }
-    
+
     local boss_info = new_boss_info {
         slide_in_frames = 25,
         present_frames = 40,
@@ -83,7 +85,7 @@ function new_screen_boss_intro(params)
                 del(player_bullets, player_bullet)
             end
         end
-        
+
         if screen_timer.ttl <= 0 then
             return new_screen_boss_fight {
                 level = level,

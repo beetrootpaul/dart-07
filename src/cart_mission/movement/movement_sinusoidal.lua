@@ -22,8 +22,10 @@ function new_movement_sinusoidal(params)
     -- TODO: make sure enemy cannot shoot when off screen
     function movement._update()
         movement.speed_x = x() - movement.x
+
         movement.x = movement.x + movement.speed_x
         movement.y = movement.y + movement.speed_y
+
         age = age + 1
     end
 

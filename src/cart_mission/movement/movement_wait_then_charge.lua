@@ -6,6 +6,7 @@ function new_movement_wait_then_charge(params)
     local start_x = params.start_x
     local start_y = params.start_y
 
+    -- TODO: use timer instead
     local age = 0
 
     local movement = {

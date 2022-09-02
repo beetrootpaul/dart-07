@@ -26,6 +26,7 @@ __lua__
 #include build/src/cart_mission/movement/movement_fixed.lua
 #include build/src/cart_mission/movement/movement_sinusoidal.lua
 #include build/src/cart_mission/movement/movement_stationary.lua
+#include build/src/cart_mission/movement/movement_to_target.lua
 #include build/src/cart_mission/movement/movement_wait_then_charge.lua
 #include build/src/cart_mission/sprites/animated_sprite.lua
 #include build/src/cart_mission/sprites/fake_sprite.lua

@@ -53,7 +53,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
                     }
                 }
             end,
-            powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,-,-,a,a,t",
+            powerups_distribution = "t",
         }
     end
     if enemy_map_marker == 78 then
@@ -121,11 +121,10 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
     assert(false, "unexpected enemy_map_marker = " .. enemy_map_marker)
 end
 
-function _m.boss_properties()
+function _m.boss_properties(start_x, start_y)
     local movement = new_movement_fixed {
-        start_x = _gaox + _gaw / 2,
-        -- TODO: make y dependant on the current position
-        start_y = 20,
+        start_x = start_x,
+        start_y = start_y,
     }
     return {
         health = 20,
@@ -170,14 +169,6 @@ function _m.boss_properties()
                 },
             }
         end,
-        -- TODO: make intro eased out
-        intro_movement = new_movement_angled_line {
-            start_x = _gaox + _gaw / 2,
-            start_y = -70,
-            base_speed_y = 0,
-            angle = .75,
-            angled_speed = 1,
-        },
         movement = movement,
         bullet_fire_timer = new_timer(20),
         spawn_bullets = function()

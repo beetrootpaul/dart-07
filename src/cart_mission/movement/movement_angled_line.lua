@@ -2,6 +2,8 @@
 -- cart_mission/movement/movement_angled_line.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: replace some usages with simple linear y movement
+
 -- angle: 0 = right, .25 = up, .5 = left, .75 = down
 function new_movement_angled_line(params)
     local start_x = params.start_x

@@ -41,8 +41,15 @@ end
 -- TODO: music per stage
 -- TODO: music per boss stage
 
--- TODO: remove unused sprites
--- TODO: remove unused SFXs
--- TODO: remove unused music
+-- TODO: balancing: powerup distributions 
+-- TODO: balancing: enemy speed 
+-- TODO: balancing: enemy bullet timer 
+-- TODO: balancing: enemy bullet movement 
+-- TODO: balancing: enemy movement 
+-- TODO: balancing: player bullet timer 
+-- TODO: balancing: player bullet movement 
+-- TODO: balancing: boss movement, including easing fns
+-- TODO: balancing: boss bullet timer
+-- TODO: balancing: boss bullet movement
 
 -- TODO: consider license other than MIT

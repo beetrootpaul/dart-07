@@ -111,9 +111,9 @@ function new_screen_enemies(params)
         if btnp(_button_o) then
             if _m.mission_number < _max_mission_number then
                 _load_mission_cart {
-                    mission_number = _m.mission_number + 1,
-                    health = health,
-                    is_triple_shot_enabled = is_triple_shot_enabled,
+                    mission_number = _m.mission_number,
+                    health = _health_default,
+                    is_triple_shot_enabled = false
                 }
             else
                 _load_main_cart()
@@ -169,6 +169,8 @@ function new_screen_enemies(params)
                     end
                 end,
                 on_powerup_spawned = function(powerup)
+                    -- TODO: implement more powerup types
+                    -- TODO: indicate powerups in hud
                     add(powerups, powerup)
                 end,
             })
