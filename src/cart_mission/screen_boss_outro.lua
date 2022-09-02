@@ -4,10 +4,13 @@
 
 -- TODO: boss spectacular destroy VFX and SFX
 -- TODO: win screen after all 3 levels
+-- TODO: is it OK to render boss bullets but not make them harm player?
 
 function new_screen_boss_outro(params)
     local level = params.level
     local player = params.player
+    local player_bullets = params.player_bullets
+    local boss_bullets = params.boss_bullets
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
@@ -24,6 +27,12 @@ function new_screen_boss_outro(params)
     function screen._update()
         level._update()
         player._update()
+        for _, player_bullet in pairs(player_bullets) do
+            player_bullet._update()
+        end
+        for _, boss_bullet in pairs(boss_bullets) do
+            boss_bullet._update()
+        end
         hud._update()
         screen_timer._update()
     end
@@ -32,6 +41,12 @@ function new_screen_boss_outro(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
+                for _, player_bullet in pairs(player_bullets) do
+                    player_bullet._draw()
+                end
+                for _, boss_bullet in pairs(boss_bullets) do
+                    boss_bullet._draw()
+                end
                 player._draw()
             end,
         }
@@ -41,6 +56,17 @@ function new_screen_boss_outro(params)
     end
 
     function screen._post_draw()
+        for index, player_bullet in pairs(player_bullets) do
+            if player_bullet.has_finished() then
+                del(player_bullets, player_bullet)
+            end
+        end
+        for index, boss_bullet in pairs(boss_bullets) do
+            if boss_bullet.has_finished() then
+                del(boss_bullets, boss_bullet)
+            end
+        end
+        
         -- TODO: fade screen out
         -- TODO: fade next screen in
         if screen_timer.ttl <= 0 then

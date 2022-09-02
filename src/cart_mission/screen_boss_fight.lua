@@ -137,11 +137,11 @@ function new_screen_boss_fight(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                for _, boss_bullet in pairs(boss_bullets) do
-                    boss_bullet._draw()
-                end
                 for _, player_bullet in pairs(player_bullets) do
                     player_bullet._draw()
+                end
+                for _, boss_bullet in pairs(boss_bullets) do
+                    boss_bullet._draw()
                 end
                 boss._draw()
                 player._draw()
@@ -183,6 +183,8 @@ function new_screen_boss_fight(params)
             return new_screen_boss_outro {
                 level = level,
                 player = player,
+                player_bullets = player_bullets,
+                boss_bullets = boss_bullets,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,

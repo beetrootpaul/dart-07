@@ -46,10 +46,22 @@ function _load_mission_cart(params)
 end
 
 function _parse_mission_cart_params()
-    local cart_params = stat(6)
+    local cart_params = split(stat(6), ",", false)
+
+    local function get_cart_param_at(index)
+        if #cart_params < index then
+            return false
+        end
+        local p = cart_params[index]
+        return #p > 0 and p or nil
+    end
+
+    local health_param = get_cart_param_at(1)
+    local is_triple_shot_enabled_param = get_cart_param_at(2)
+
     return {
-        health = tonum(split(cart_params)[1] or tostr(_health_default)),
-        is_triple_shot_enabled = split(cart_params)[2] == "true",
+        health = health_param and tonum(health_param) or _health_default,
+        is_triple_shot_enabled = is_triple_shot_enabled_param == "true",
     }
 end
 
