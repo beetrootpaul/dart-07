@@ -17,11 +17,11 @@ function new_screen_enemies(params)
     -- TODO: duplicated code
     local throttled_fire_player_bullet = new_throttle(6, function()
         -- TODO: SFX
-        add(player_bullets, new_player_bullet { start_x = player.x, start_y = player.y - 4 })
+        add(player_bullets, new_player_bullet { start_xy = player.xy.plus(0, -4) })
         if is_triple_shot_enabled then
             -- TODO: different SFX
-            add(player_bullets, new_player_bullet { start_x = player.x - 5, start_y = player.y - 2 })
-            add(player_bullets, new_player_bullet { start_x = player.x + 5, start_y = player.y - 2 })
+            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(-5, -2) })
+            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(5, -2) })
         end
     end)
 
@@ -162,7 +162,7 @@ function new_screen_enemies(params)
         local enemies_to_spawn = level.enemies_to_spawn()
         for _, enemy_to_spawn in pairs(enemies_to_spawn) do
             add(enemies, new_enemy {
-                enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker, enemy_to_spawn.x, enemy_to_spawn.y),
+                enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker, enemy_to_spawn.xy),
                 on_bullets_spawned = function(spawned_enemy_bullets)
                     for _, seb in pairs(spawned_enemy_bullets) do
                         add(enemy_bullets, seb)

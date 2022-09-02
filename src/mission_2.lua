@@ -24,8 +24,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             collision_circle_r = 4,
             collision_circle_offset_y = 0,
             movement = new_movement_wait_then_charge {
-                start_x = start_x,
-                start_y = start_y,
+                start_xy = start_xy,
             },
             bullet_fire_timer = new_timer(15),
             spawn_bullets = function(movement)
@@ -34,10 +33,9 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x,
-                            start_y = movement.y,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy,
+                            base_speed_y = movement.speed_xy.y,
                             angle = .5 + i / 16,
                             angled_speed = 4,
                         },
@@ -59,7 +57,7 @@ function _m.boss_properties()
         }),
         collision_circles = function(movement)
             return {
-                { x = movement.x - .5, y = movement.y - .5 + 3, r = 5 },
+                { xy = movement.xy.plus(-.5, -.5 + 3), r = 5 },
             }
         end,
         phases = {
@@ -72,10 +70,9 @@ function _m.boss_properties()
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x,
-                            start_y = movement.y + 3,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy.plus(0, 3),
+                            base_speed_y = movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 1,
                         },
@@ -85,8 +82,7 @@ function _m.boss_properties()
                 movement_cycle = {
                     function(movement)
                         return new_movement_fixed {
-                            start_x = movement.x,
-                            start_y = movement.y,
+                            start_xy = movement.xy,
                         }
                     end,
                 },

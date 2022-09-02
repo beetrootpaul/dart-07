@@ -3,15 +3,14 @@
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_player_bullet(params)
-    local start_x, start_y = params.start_x, params.start_y
+    local start_xy = params.start_xy
 
     local is_destroyed = false
 
     local bullet_sprite = new_static_sprite(4, 6, 4, 12)
 
-    local movement = new_movement_angled_line {
-        start_x = start_x,
-        start_y = start_y,
+    local movement = new_movement_line {
+        start_xy = start_xy,
         base_speed_y = 0,
         angle = .25,
         angled_speed = 5,
@@ -20,16 +19,15 @@ function new_player_bullet(params)
     return {
         has_finished = function()
             return is_destroyed or
-                movement.x < _gaox - _ts or
-                movement.x > _gaox + _gaw + _ts or
-                movement.y < -_ts or
-                movement.y > _gah + _ts
+                movement.xy.x < _gaox - _ts or
+                movement.xy.x > _gaox + _gaw + _ts or
+                movement.xy.y < -_ts or
+                movement.xy.y > _gah + _ts
         end,
 
         collision_circle = function()
             return {
-                x = movement.x - .5,
-                y = movement.y - 1.5,
+                xy = movement.xy.plus(-.5, -1.5),
                 r = 2,
             }
         end,
@@ -43,7 +41,7 @@ function new_player_bullet(params)
         end,
 
         _draw = function()
-            bullet_sprite._draw(movement.x, movement.y)
+            bullet_sprite._draw(movement.xy)
         end,
     }
 end

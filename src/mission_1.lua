@@ -14,7 +14,7 @@ _m.bullet_orb = {
     collision_circle_r = 2,
 }
 
-function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
+function _m.enemy_properties_for(enemy_map_marker, start_xy)
     if enemy_map_marker == 77 then
         return {
             health = 1,
@@ -24,8 +24,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             collision_circle_r = 3,
             collision_circle_offset_y = 0,
             movement = new_movement_sinusoidal {
-                start_x = start_x,
-                start_y = start_y,
+                start_xy = start_xy,
             },
             bullet_fire_timer = new_timer(20),
             spawn_bullets = function(movement)
@@ -33,10 +32,9 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
                     new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x,
-                            start_y = movement.y,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy,
+                            base_speed_y = movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
                         },
@@ -55,8 +53,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             collision_circle_r = 5,
             collision_circle_offset_y = -1,
             movement = new_movement_wait_then_charge {
-                start_x = start_x,
-                start_y = start_y,
+                start_xy = start_xy,
             },
             bullet_fire_timer = new_fake_timer(),
             spawn_bullets = _noop,
@@ -72,8 +69,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             collision_circle_r = 8,
             collision_circle_offset_y = 0,
             movement = new_movement_stationary {
-                start_x = start_x,
-                start_y = start_y,
+                start_xy = start_xy,
             },
             bullet_fire_timer = new_timer(30),
             spawn_bullets = function(movement)
@@ -82,10 +78,9 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x,
-                            start_y = movement.y,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy,
+                            base_speed_y = movement.speed_xy.y,
                             angle = .25 + i / 8,
                             angled_speed = 2,
                         },
@@ -106,15 +101,14 @@ function _m.boss_properties()
             transparent_color = _color_11_dark_green,
         }),
         collision_circles = function(movement)
-            local adjusted_x = movement.x - .5
-            local adjusted_y = movement.y - .5
+            local adjusted_xy = movement.xy.plus(-.5, -.5)
             return {
-                { x = adjusted_x, y = adjusted_y + 3, r = 5 },
-                { x = adjusted_x, y = adjusted_y - 5, r = 7 },
-                { x = adjusted_x - 11, y = adjusted_y - 6, r = 5 },
-                { x = adjusted_x + 11, y = adjusted_y - 6, r = 5 },
-                { x = adjusted_x - 21, y = adjusted_y + 3, r = 7 },
-                { x = adjusted_x + 21, y = adjusted_y + 3, r = 7 },
+                { xy = adjusted_xy.plus(0, 3), r = 5 },
+                { xy = adjusted_xy.plus(0, -5), r = 7 },
+                { xy = adjusted_xy.plus(-11, -6), r = 5 },
+                { xy = adjusted_xy.plus(11, -6), r = 5 },
+                { xy = adjusted_xy.plus(-21, 3), r = 7 },
+                { xy = adjusted_xy.plus(21, 3), r = 7 },
             }
         end,
         phases = {
@@ -127,10 +121,9 @@ function _m.boss_properties()
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x,
-                            start_y = movement.y + 3,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy.plus(0, 3),
+                            base_speed_y = movement.speed_xy.y,
                             angle = .75 - 1 / 8,
                             angled_speed = 2,
                         },
@@ -138,10 +131,9 @@ function _m.boss_properties()
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x,
-                            start_y = movement.y + 3,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy.plus(0, 3),
+                            base_speed_y = movement.speed_xy.y,
                             angle = .75 + 1 / 8,
                             angled_speed = 2,
                         },
@@ -152,8 +144,7 @@ function _m.boss_properties()
                 movement_cycle = {
                     function(movement)
                         return new_movement_fixed {
-                            start_x = movement.x,
-                            start_y = movement.y,
+                            start_xy = movement.xy,
                         }
                     end,
                 },
@@ -167,10 +158,9 @@ function _m.boss_properties()
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x - 21,
-                            start_y = movement.y + 3,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy.plus(-21, 3),
+                            base_speed_y = movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
                         },
@@ -178,10 +168,9 @@ function _m.boss_properties()
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x + 21,
-                            start_y = movement.y + 3,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy.plus(21, 3),
+                            base_speed_y = movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
                         },
@@ -189,10 +178,9 @@ function _m.boss_properties()
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_angled_line {
-                            start_x = movement.x,
-                            start_y = movement.y + 3,
-                            base_speed_y = movement.speed_y,
+                        movement = new_movement_line {
+                            start_xy = movement.xy.plus(0, 3),
+                            base_speed_y = movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
                         },
@@ -203,18 +191,15 @@ function _m.boss_properties()
                 movement_cycle = {
                     function(movement)
                         return new_movement_fixed {
-                            start_x = movement.x,
-                            start_y = movement.y,
+                            start_xy = movement.xy,
                             frames = 90,
                         }
                     end,
                     function(movement)
                         return {
                             movement = new_movement_to_target {
-                                start_x = movement.x,
-                                start_y = movement.y,
-                                target_x = _gaox + 30,
-                                target_y = movement.y,
+                                start_xy = movement.xy,
+                                target_xy = movement.xy.set_x(_gaox + 30),
                                 frames = 30,
                             },
                         }
@@ -222,10 +207,8 @@ function _m.boss_properties()
                     function(movement)
                         return {
                             movement = new_movement_to_target {
-                                start_x = movement.x,
-                                start_y = movement.y,
-                                target_x = _gaox + _gaw - 30,
-                                target_y = movement.y,
+                                start_xy = movement.xy,
+                                target_xy = movement.xy.set_x(_gaox + _gaw - 30),
                                 frames = 60,
                             },
                         }
@@ -233,10 +216,8 @@ function _m.boss_properties()
                     function(movement)
                         return {
                             movement = new_movement_to_target {
-                                start_x = movement.x,
-                                start_y = movement.y,
-                                target_x = _gaox + _gaw / 2,
-                                target_y = movement.y,
+                                start_xy = movement.xy,
+                                target_xy = movement.xy.set_x(_gaox + _gaw / 2),
                                 frames = 30,
                             },
                         }
@@ -253,10 +234,9 @@ function _m.boss_properties()
                         add(bullets, new_enemy_bullet {
                             bullet_sprite = _m.bullet_orb.sprite,
                             collision_circle_r = _m.bullet_orb.collision_circle_r,
-                            movement = new_movement_angled_line {
-                                start_x = movement.x - 21,
-                                start_y = movement.y + 3,
-                                base_speed_y = movement.speed_y,
+                            movement = new_movement_line {
+                                start_xy = movement.xy.plus(-21, 3),
+                                base_speed_y = movement.speed_xy.y,
                                 angle = .25 + i / 8,
                                 angled_speed = 2,
                             },
@@ -266,10 +246,9 @@ function _m.boss_properties()
                         add(bullets, new_enemy_bullet {
                             bullet_sprite = _m.bullet_orb.sprite,
                             collision_circle_r = _m.bullet_orb.collision_circle_r,
-                            movement = new_movement_angled_line {
-                                start_x = movement.x + 21,
-                                start_y = movement.y + 3,
-                                base_speed_y = movement.speed_y,
+                            movement = new_movement_line {
+                                start_xy = movement.xy.plus(21, 3),
+                                base_speed_y = movement.speed_xy.y,
                                 angle = .25 + i / 8,
                                 angled_speed = 2,
                             },
@@ -279,10 +258,9 @@ function _m.boss_properties()
                         add(bullets, new_enemy_bullet {
                             bullet_sprite = _m.bullet_orb.sprite,
                             collision_circle_r = _m.bullet_orb.collision_circle_r,
-                            movement = new_movement_angled_line {
-                                start_x = movement.x,
-                                start_y = movement.y + 3,
-                                base_speed_y = movement.speed_y,
+                            movement = new_movement_line {
+                                start_xy = movement.xy.plus(0, 3),
+                                base_speed_y = movement.speed_xy.y,
                                 angle = .25 + i / 8,
                                 angled_speed = 2,
                             },
@@ -293,18 +271,15 @@ function _m.boss_properties()
                 movement_cycle = {
                     function(movement)
                         return new_movement_fixed {
-                            start_x = movement.x,
-                            start_y = movement.y,
+                            start_xy = movement.xy,
                             frames = 40,
                         }
                     end,
                     function(movement)
                         return {
                             movement = new_movement_to_target {
-                                start_x = movement.x,
-                                start_y = movement.y,
-                                target_x = _gaox + 30,
-                                target_y = movement.y,
+                                start_xy = movement.xy,
+                                target_xy = movement.xy.set_x(_gaox + 30),
                                 frames = 30,
                             },
                         }
@@ -312,10 +287,8 @@ function _m.boss_properties()
                     function(movement)
                         return {
                             movement = new_movement_to_target {
-                                start_x = movement.x,
-                                start_y = movement.y,
-                                target_x = _gaox + _gaw - 30,
-                                target_y = movement.y,
+                                start_xy = movement.xy,
+                                target_xy = movement.xy.set_x(_gaox + _gaw - 30),
                                 frames = 60,
                             },
                         }
@@ -323,10 +296,8 @@ function _m.boss_properties()
                     function(movement)
                         return {
                             movement = new_movement_to_target {
-                                start_x = movement.x,
-                                start_y = movement.y,
-                                target_x = _gaox + _gaw / 2,
-                                target_y = movement.y,
+                                start_xy = movement.xy,
+                                target_xy = movement.xy.set_x(_gaox + _gaw / 2),
                                 frames = 30,
                             },
                         }

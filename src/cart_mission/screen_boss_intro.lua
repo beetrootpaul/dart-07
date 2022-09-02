@@ -16,9 +16,8 @@ function new_screen_boss_intro(params)
     local boss = new_boss {
         boss_properties = _m.boss_properties(),
         intro_frames = 90,
-        intro_start_y = -120,
-        start_x = _gaox + _gaw / 2, 20,
-        start_y = 20
+        intro_start_xy = _xy(_gaox + _gaw / 2, 20, -120),
+        start_xy = _xy(_gaox + _gaw / 2, 20, 20),
     }
 
     local boss_info = new_boss_info {

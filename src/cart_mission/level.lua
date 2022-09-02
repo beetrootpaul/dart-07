@@ -13,7 +13,7 @@ function new_level(descriptor)
     local enemies = descriptor.enemies
 
     -- we draw enemy in center of block of 4 tiles, but store them in the top-left tile's position
-    local enemy_offset_x, enemy_offset_y = _ts / 2, _ts / 2
+    local enemy_offset = _xy(_ts / 2, _ts / 2)
 
     local min_visible_distance = 1
     local max_visible_distance = min_visible_distance + _vst - 1
@@ -56,12 +56,12 @@ function new_level(descriptor)
                     for lane = 1, 12 do
                         local enemy_map_marker = enemies[spawn_distance] and enemies[spawn_distance][lane] or nil
                         if enemy_map_marker then
-                            local x = _gaox + (lane - .5) * _ts + enemy_offset_x
-                            local y = _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts + enemy_offset_y
                             add(result, {
                                 enemy_map_marker = enemy_map_marker,
-                                x = x,
-                                y = y,
+                                xy = _xy(
+                                    _gaox + (lane - .5) * _ts,
+                                    _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts
+                                ).plus(enemy_offset),
                             })
                         end
                     end

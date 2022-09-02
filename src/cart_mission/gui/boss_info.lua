@@ -10,25 +10,20 @@ function new_boss_info(params)
     local slide_out_frames = params.slide_out_frames
 
     local slide_in_movement = new_movement_to_target {
-        start_x = _gaox,
-        start_y = -1,
-        target_x = _gaox,
-        target_y = _gah / 2,
+        start_xy = _xy(_gaox, -1),
+        target_xy = _xy(_gaox, _gah / 2),
         frames = slide_in_frames,
         easing_fn = _easing_easeoutquart,
     }
     local present_movement = new_movement_fixed {
-        start_x = _gaox,
-        start_y = _gah / 2,
+        start_xy = _xy(_gaox, _gah / 2),
         frames = present_frames,
     }
     local slide_out_movement = new_movement_to_target {
-        start_x = _gaox,
-        start_y = _gah / 2,
-        target_x = _gaox,
-        target_y = _gah + 1,
+        start_xy = _xy(_gaox, _gah / 2),
+        target_xy = _xy(_gaox, _gah + 1),
         frames = slide_out_frames,
-        easing_fn = _easing_easeoutquart,
+        easing_fn = _easing_easeinquart,
     }
 
     -- phase: slide_in -> present -> slide_out
@@ -61,25 +56,23 @@ function new_boss_info(params)
         _draw = function()
             clip(_gaox, 0, _gaw, _gah)
 
-            local x, y
+            -- TODO: make it a movement_sequence(cycle=false)
+            local xy
             if phase == "slide_in" then
-                x = ceil(slide_in_movement.x)
-                y = ceil(slide_in_movement.y)
+                xy = slide_in_movement.xy.ceil()
             elseif phase == "present" then
-                x = ceil(present_movement.x)
-                y = ceil(present_movement.y)
+                xy = present_movement.xy.ceil()
             elseif phase == "slide_out" then
-                x = flr(slide_out_movement.x)
-                y = flr(slide_out_movement.y)
+                xy = slide_out_movement.xy.flr()
             end
 
             for dx = -1, 1 do
                 for dy = -1, 1 do
-                    print("boss", x + 10 + dx, y - 7 + dy, _color_8_red)
+                    print("boss", xy.x + 10 + dx, xy.y - 7 + dy, _color_8_red)
                 end
             end
-            print("boss", x + 10, y - 7, _m.bg_color)
-            rectfill(x, y, x + _gaw - 1, y, _color_8_red)
+            print("boss", xy.x + 10, xy.y - 7, _m.bg_color)
+            rectfill(xy.x, xy.y, xy.x + _gaw - 1, xy.y, _color_8_red)
 
             clip()
         end,

@@ -3,15 +3,12 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_movement_fixed(params)
-    local start_x = params.start_x
-    local start_y = params.start_y
+    local start_xy = params.start_xy
     local timer = params.frames and new_timer(params.frames) or new_fake_timer()
 
     local movement = {
-        x = start_x,
-        y = start_y,
-        speed_x = 0,
-        speed_y = 0,
+        xy = start_xy,
+        speed_xy = _xy(0, 0),
     }
 
     function movement.has_reached_target()

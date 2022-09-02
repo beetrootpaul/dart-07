@@ -16,11 +16,11 @@ function new_screen_boss_fight(params)
     -- TODO: duplicated code
     local throttled_fire_player_bullet = new_throttle(6, function()
         -- TODO: SFX
-        add(player_bullets, new_player_bullet { start_x = player.x, start_y = player.y - 4 })
+        add(player_bullets, new_player_bullet { start_xy = player.xy.plus(0, -4) })
         if is_triple_shot_enabled then
             -- TODO: different SFX
-            add(player_bullets, new_player_bullet { start_x = player.x - 5, start_y = player.y - 2 })
-            add(player_bullets, new_player_bullet { start_x = player.x + 5, start_y = player.y - 2 })
+            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(-5, -2) })
+            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(5, -2) })
         end
     end)
 

@@ -4,10 +4,8 @@
 
 function new_movement_stationary(params)
     local movement = {
-        x = params.start_x,
-        y = params.start_y,
-        speed_x = 0,
-        speed_y = _m.scroll_per_frame,
+        xy = params.start_xy,
+        speed_xy = _xy(0, _m.scroll_per_frame),
     }
 
     function movement.has_reached_target()
@@ -15,7 +13,7 @@ function new_movement_stationary(params)
     end
 
     function movement._update()
-        movement.y = movement.y + movement.speed_y
+        movement.xy = movement.xy.plus(movement.speed_xy)
     end
 
     return movement

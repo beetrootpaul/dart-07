@@ -9,6 +9,7 @@ function new_mission_info(params)
     local present_frames = params.present_frames
     local slide_out_frames = params.slide_out_frames
 
+    -- TODO: use movement sequence and xy here
     local slide_in_timer = new_timer(slide_in_frames)
     -- TODO: externalize?
     local slide_in_y_initial = -1

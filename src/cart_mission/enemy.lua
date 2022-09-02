@@ -17,13 +17,12 @@ function new_enemy(params)
     -- TODO: make collision detection work only if at least 1px of the enemy is visible, not before
     return {
         has_finished = function()
-            return is_destroyed or movement.y > _gah + _ts
+            return is_destroyed or movement.xy.y > _gah + _ts
         end,
 
         collision_circle = function()
             return {
-                x = movement.x - .5,
-                y = movement.y - .5 + enemy_properties.collision_circle_offset_y,
+                xy = movement.xy.plus(-.5, -.5 + enemy_properties.collision_circle_offset_y),
                 r = enemy_properties.collision_circle_r,
             }
         end,
@@ -37,8 +36,7 @@ function new_enemy(params)
                 local powerup_type = rnd(split(enemy_properties.powerups_distribution))
                 if powerup_type ~= "-" then
                     on_powerup_spawned(new_powerup {
-                        start_x = movement.x,
-                        start_y = movement.y,
+                        start_xy = movement.xy,
                         powerup_type = powerup_type,
                     })
                 end
@@ -58,7 +56,7 @@ function new_enemy(params)
         end,
 
         _draw = function()
-            enemy_properties.ship_sprite._draw(movement.x, movement.y, {
+            enemy_properties.ship_sprite._draw(movement.xy, {
                 -- TODO: make it pure white?
                 flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
             })

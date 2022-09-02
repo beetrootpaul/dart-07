@@ -2,15 +2,14 @@
 -- cart_mission/movement/movement_wait_then_charge.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: replace with a sequence of movements
 function new_movement_wait_then_charge(params)
     -- TODO: use timer instead
     local age = 0
 
     local movement = {
-        x = params.start_x,
-        y = params.start_y,
-        speed_x = 0,
-        speed_y = 1,
+        xy = params.start_xy,
+        speed_xy = _xy(0, 1),
     }
 
     function movement.has_reached_target()
@@ -19,9 +18,9 @@ function new_movement_wait_then_charge(params)
 
     function movement._update()
         if age >= 40 then
-            movement.speed_y = 3
+            movement.speed_xy = movement.speed_xy.set_y(3)
         end
-        movement.y = movement.y + movement.speed_y
+        movement.xy = movement.xy.plus(movement.speed_xy)
         age = age + 1
     end
 

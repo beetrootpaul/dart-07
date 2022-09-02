@@ -7,17 +7,15 @@
 function new_boss(params)
     local boss_properties = params.boss_properties
     local intro_frames = params.intro_frames
-    local intro_start_y = params.intro_start_y
-    local start_x, start_y = params.start_x, params.start_y
+    local intro_start_xy = params.intro_start_xy
+    local start_xy = params.start_xy
     local on_bullets_spawned = params.on_bullets_spawned or _noop
 
     local phases = boss_properties.phases
 
     local movement = new_movement_to_target {
-        start_x = start_x,
-        start_y = intro_start_y,
-        target_x = start_x,
-        target_y = start_y,
+        start_xy = intro_start_xy,
+        target_xy = start_xy,
         frames = intro_frames,
         easing_fn = _easing_easeoutquart,
     }
@@ -86,7 +84,7 @@ function new_boss(params)
 
     -- TODO: multiple sprites with their own slight movement 
     function boss._draw()
-        boss_properties.sprite._draw(movement.x, movement.y, {
+        boss_properties.sprite._draw(movement.xy, {
             -- TODO: make it pure white?
             flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
         })

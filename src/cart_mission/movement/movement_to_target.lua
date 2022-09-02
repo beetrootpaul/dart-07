@@ -4,31 +4,29 @@
 
 -- TODO: use in hud
 function new_movement_to_target(params)
-    local start_x, start_y = params.start_x, params.start_y
-    local target_x, target_y = params.target_x, params.target_y
+    local start_xy = params.start_xy
+    local target_xy = params.target_xy
     local timer = new_timer(params.frames)
     local easing_fn = params.easing_fn or _easing_linear
 
-    local function x()
-        return ceil(_easing_lerp(
-            start_x,
-            target_x,
-            easing_fn(timer.passed_fraction())
-        ))
-    end
-    local function y()
-        return ceil(_easing_lerp(
-            start_y,
-            target_y,
-            easing_fn(timer.passed_fraction())
-        ))
+    local function xy()
+        return _xy(
+            ceil(_easing_lerp(
+                start_xy.x,
+                target_xy.x,
+                easing_fn(timer.passed_fraction())
+            )),
+            ceil(_easing_lerp(
+                start_xy.y,
+                target_xy.y,
+                easing_fn(timer.passed_fraction())
+            ))
+        )
     end
 
     local movement = {
-        x = start_x,
-        y = start_y,
-        speed_x = x() - start_x,
-        speed_y = y() - start_y,
+        xy = start_xy,
+        speed_xy = xy().minus(start_xy),
     }
 
     function movement.has_reached_target()
@@ -37,12 +35,8 @@ function new_movement_to_target(params)
 
     function movement._update()
         timer._update()
-
-        movement.speed_x = x() - movement.x
-        movement.speed_y = y() - movement.y
-
-        movement.x = movement.x + movement.speed_x
-        movement.y = movement.y + movement.speed_y
+        movement.speed_xy = xy().minus(movement.xy)
+        movement.xy = movement.xy.plus(movement.speed_xy)
     end
 
     return movement

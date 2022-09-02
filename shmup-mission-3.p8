@@ -18,12 +18,13 @@ __lua__
 #include build/src/common/throttle.lua
 #include build/src/common/utils.lua
 #include build/src/common/viewport.lua
+#include build/src/common/xy.lua
 
 #include build/src/cart_mission/gui/boss_info.lua
 #include build/src/cart_mission/gui/hud.lua
 #include build/src/cart_mission/gui/mission_info.lua
-#include build/src/cart_mission/movement/movement_angled_line.lua
 #include build/src/cart_mission/movement/movement_fixed.lua
+#include build/src/cart_mission/movement/movement_line.lua
 #include build/src/cart_mission/movement/movement_sinusoidal.lua
 #include build/src/cart_mission/movement/movement_stationary.lua
 #include build/src/cart_mission/movement/movement_to_target.lua

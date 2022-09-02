@@ -39,16 +39,15 @@ function new_player()
     -- 
 
     local player = {
-        x = _gaox + _gaw / 2,
-        y = _gah - 28,
+        xy = _xy(_gaox + _gaw / 2, _gah - 28)
     }
 
     function player.set_vertical_movement(direction)
         if direction == "u" then
-            player.y = max(player.y - speed, min_y)
+            player.xy = player.xy.set_y(max(player.xy.y - speed, min_y))
             jet_sprite = jet_sprite_visible
         elseif direction == "d" then
-            player.y = min(player.y + speed, max_y)
+            player.xy = player.xy.set_y(min(player.xy.y + speed, max_y))
             jet_sprite = jet_sprite_hidden
         else
             jet_sprite = jet_sprite_visible
@@ -57,10 +56,10 @@ function new_player()
 
     function player.set_horizontal_movement(direction)
         if direction == "l" then
-            player.x = max(player.x - speed, min_x)
+            player.xy = player.xy.set_x(max(player.xy.x - speed, min_x))
             ship_sprite_current = ship_sprite_flying_left
         elseif direction == "r" then
-            player.x = min(player.x + speed, max_x)
+            player.xy = player.xy.set_x(min(player.xy.x + speed, max_x))
             ship_sprite_current = ship_sprite_flying_right
         else
             ship_sprite_current = ship_sprite_neutral
@@ -69,8 +68,7 @@ function new_player()
 
     function player.collision_circle()
         return {
-            x = player.x - .5,
-            y = player.y + .5,
+            xy = player.xy.plus(-.5, .5),
             r = 4,
         }
     end
@@ -98,11 +96,11 @@ function new_player()
 
     function player._draw()
         local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
-        ship_sprite_current._draw(player.x, player.y, {
+        ship_sprite_current._draw(player.xy, {
             -- TODO: make it pure white?
             flash_color = flash and _color_6_light_grey or nil,
         })
-        jet_sprite._draw(player.x, player.y + 8, {
+        jet_sprite._draw(player.xy.plus(0, 8), {
             -- TODO: make it pure white?
             flash_color = flash and _color_6_light_grey or nil,
         })

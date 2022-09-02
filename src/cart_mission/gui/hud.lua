@@ -20,6 +20,7 @@ function new_hud(params)
     local bar_w = 16
     local boss_health_bar_margin = 2
 
+    -- TODO: use movement sequence and xy here
     local hearth = new_static_sprite(6, 5, 40, 12, {
         from_left_top_corner = true,
     })
@@ -62,10 +63,10 @@ function new_hud(params)
                     slide_in_x_target,
                     _easing_easeoutquart(slide_in_timer.passed_fraction())
                 ))
-                hearth._draw(x + 1, _vs - 10)
-                health_bar_start._draw(x, _vs - 20)
+                hearth._draw(_xy(x + 1, _vs - 10))
+                health_bar_start._draw(_xy(x, _vs - 20))
                 for i = 1, player_health do
-                    health_bar_segment._draw(x, _vs - 20 - i * 4)
+                    health_bar_segment._draw(_xy(x, _vs - 20 - i * 4))
                 end
             end
 
