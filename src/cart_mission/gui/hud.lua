@@ -20,27 +20,15 @@ function new_hud(params)
     local bar_w = 16
     local boss_health_bar_margin = 2
 
-    local hearth = new_static_sprite {
-        sprite_w = 6,
-        sprite_h = 5,
-        sprite_x = 40,
-        sprite_y = 12,
+    local hearth = new_static_sprite(6, 5, 40, 12, {
         from_left_top_corner = true,
-    }
-    local health_bar_start = new_static_sprite {
-        sprite_w = 8,
-        sprite_h = 5,
-        sprite_x = 40,
-        sprite_y = 7,
+    })
+    local health_bar_start = new_static_sprite(8, 5, 40, 7, {
         from_left_top_corner = true,
-    }
-    local health_bar_segment = new_static_sprite {
-        sprite_w = 8,
-        sprite_h = 7,
-        sprite_x = 40,
-        sprite_y = 0,
+    })
+    local health_bar_segment = new_static_sprite(8, 7, 40, 0, {
         from_left_top_corner = true,
-    }
+    })
 
     -- phase: wait -> slide_in
     local phase = "wait"
@@ -72,7 +60,7 @@ function new_hud(params)
                 local x = ceil(_easing_lerp(
                     slide_in_x_initial,
                     slide_in_x_target,
-                    _easing_easeoutquart(slide_in_timer.passed_ratio())
+                    _easing_easeoutquart(slide_in_timer.passed_fraction())
                 ))
                 hearth._draw(x + 1, _vs - 10)
                 health_bar_start._draw(x, _vs - 20)
@@ -83,11 +71,12 @@ function new_hud(params)
 
             -- TODO: polish it, add boss name above the bar
             if boss_health and boss_health_max then
-                local health_ratio = boss_health / boss_health_max
+                -- TODO: encapsulate health and expose fraction method
+                local health_fraction = boss_health / boss_health_max
                 rectfill(
                     _gaox + boss_health_bar_margin,
                     2,
-                    _gaox + boss_health_bar_margin + ceil(health_ratio * (_gaw - 2 * boss_health_bar_margin)) - 1,
+                    _gaox + boss_health_bar_margin + ceil(health_fraction * (_gaw - 2 * boss_health_bar_margin)) - 1,
                     4,
                     _color_8_red
                 )

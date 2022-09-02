@@ -14,27 +14,15 @@ function new_player()
     local min_y = h / 2 + 1
     local max_y = _gah - h / 2 - 1
 
-    local ship_sprite_neutral = new_static_sprite {
-        sprite_w = 10,
-        sprite_h = 10,
-        sprite_x = 18,
-        sprite_y = 0,
+    local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0, {
         transparent_color = _color_11_dark_green,
-    }
-    local ship_sprite_flying_left = new_static_sprite {
-        sprite_w = 10,
-        sprite_h = 10,
-        sprite_x = 8,
-        sprite_y = 0,
+    })
+    local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0, {
         transparent_color = _color_11_dark_green,
-    }
-    local ship_sprite_flying_right = new_static_sprite {
-        sprite_w = 10,
-        sprite_h = 10,
-        sprite_x = 28,
-        sprite_y = 0,
+    })
+    local ship_sprite_flying_right = new_static_sprite(10, 10, 28, 0, {
         transparent_color = _color_11_dark_green,
-    }
+    })
     local ship_sprite_current = ship_sprite_neutral
 
     local jet_sprite_visible = new_animated_sprite {
@@ -104,7 +92,7 @@ function new_player()
                 invincible_after_damage_timer._update()
             end
         end
-        
+
         jet_sprite._update()
     end
 

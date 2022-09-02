@@ -2,14 +2,10 @@
 -- cart_mission/sprites/static_sprite.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_static_sprite(params)
-    local sprite_w = params.sprite_w
-    local sprite_h = params.sprite_h
-    local sprite_x = params.sprite_x
-    local sprite_y = params.sprite_y
-    
-    local from_left_top_corner = params.from_left_top_corner
-    local transparent_color = params.transparent_color
+function new_static_sprite(sprite_w, sprite_h, sprite_x, sprite_y, opts)
+    opts = opts or {}
+    local from_left_top_corner = opts.from_left_top_corner
+    local transparent_color = opts.transparent_color
 
     return {
         _draw = function(x, y, opts)
@@ -40,7 +36,7 @@ function new_static_sprite(params)
             if opts.flash_color then
                 pal(0)
             end
-            
+
             if transparent_color then
                 palt()
             end

@@ -14,9 +14,11 @@ function new_screen_boss_intro(params)
     local hud = params.hud
 
     local boss = new_boss {
-        boss_properties = _m.boss_properties(_gaox + _gaw / 2, 20),
+        boss_properties = _m.boss_properties(),
         intro_frames = 90,
         intro_start_y = -120,
+        start_x = _gaox + _gaw / 2, 20,
+        start_y = 20
     }
 
     local boss_info = new_boss_info {

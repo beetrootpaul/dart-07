@@ -3,8 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_animated_sprite(params)
-    local sprite_w = params.sprite_w
-    local sprite_h = params.sprite_h
+    local sprite_w, sprite_h = params.sprite_w, params.sprite_h
     local sprite_xs = params.sprite_xs
     local sprite_y = params.sprite_y
 

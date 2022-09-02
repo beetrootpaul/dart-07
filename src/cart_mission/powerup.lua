@@ -15,21 +15,13 @@ function new_powerup(params)
     local sprite
 
     if powerup_type == "a" then
-        sprite = new_static_sprite {
-            sprite_w = 7,
-            sprite_h = 8,
-            sprite_x = 121,
-            sprite_y = 0,
+        sprite = new_static_sprite(7, 8, 121, 0, {
             transparent_color = _color_11_dark_green,
-        }
+        })
     elseif powerup_type == "t" then
-        sprite = new_static_sprite {
-            sprite_w = 7,
-            sprite_h = 8,
-            sprite_x = 113,
-            sprite_y = 0,
+        sprite = new_static_sprite(7, 8, 113, 0, {
             transparent_color = _color_11_dark_green,
-        }
+        })
     end
 
     local movement = new_movement_angled_line {

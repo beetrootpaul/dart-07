@@ -54,7 +54,7 @@ function new_mission_info(params)
                 y = ceil(_easing_lerp(
                     slide_in_y_initial,
                     slide_in_y_target,
-                    _easing_easeoutquart(slide_in_timer.passed_ratio())
+                    _easing_easeoutquart(slide_in_timer.passed_fraction())
                 ))
             elseif phase == "present" then
                 y = slide_in_y_target
@@ -62,7 +62,7 @@ function new_mission_info(params)
                 y = flr(_easing_lerp(
                     slide_out_y_initial,
                     slide_out_y_target,
-                    _easing_easeinquart(slide_out_timer.passed_ratio())
+                    _easing_easeinquart(slide_out_timer.passed_fraction())
                 ))
             end
 

@@ -7,12 +7,7 @@ function new_player_bullet(params)
 
     local is_destroyed = false
 
-    local bullet_sprite = new_static_sprite {
-        sprite_w = 4,
-        sprite_h = 6,
-        sprite_x = 4,
-        sprite_y = 12,
-    }
+    local bullet_sprite = new_static_sprite(4, 6, 4, 12)
 
     local movement = new_movement_angled_line {
         start_x = start_x,

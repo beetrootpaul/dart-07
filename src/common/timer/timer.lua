@@ -11,7 +11,7 @@ function new_timer(frames)
         timer.ttl = max(timer.ttl - 1, 0)
     end
 
-    function timer.passed_ratio()
+    function timer.passed_fraction()
         return 1 - timer.ttl / (frames - 1)
     end
 

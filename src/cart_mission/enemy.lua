@@ -8,13 +8,8 @@ function new_enemy(params)
     local on_powerup_spawned = params.on_powerup_spawned
 
     local health = enemy_properties.health
-    local ship_sprite = enemy_properties.ship_sprite
-    local collision_circle_r = enemy_properties.collision_circle_r
-    local collision_circle_offset_y = enemy_properties.collision_circle_offset_y
     local movement = enemy_properties.movement
     local bullet_fire_timer = enemy_properties.bullet_fire_timer
-    local spawn_bullets = enemy_properties.spawn_bullets
-    local powerups_distribution = enemy_properties.powerups_distribution
 
     local is_flashing_from_damage = false
     local is_destroyed = false
@@ -28,8 +23,8 @@ function new_enemy(params)
         collision_circle = function()
             return {
                 x = movement.x - .5,
-                y = movement.y - .5 + collision_circle_offset_y,
-                r = collision_circle_r,
+                y = movement.y - .5 + enemy_properties.collision_circle_offset_y,
+                r = enemy_properties.collision_circle_r,
             }
         end,
 
@@ -39,7 +34,7 @@ function new_enemy(params)
                 is_flashing_from_damage = true
             else
                 is_destroyed = true
-                local powerup_type = rnd(split(powerups_distribution))
+                local powerup_type = rnd(split(enemy_properties.powerups_distribution))
                 if powerup_type ~= "-" then
                     on_powerup_spawned(new_powerup {
                         start_x = movement.x,
@@ -56,14 +51,14 @@ function new_enemy(params)
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
-                on_bullets_spawned(spawn_bullets(movement))
+                on_bullets_spawned(enemy_properties.spawn_bullets(movement))
             end
 
             is_flashing_from_damage = false
         end,
 
         _draw = function()
-            ship_sprite._draw(movement.x, movement.y, {
+            enemy_properties.ship_sprite._draw(movement.x, movement.y, {
                 -- TODO: make it pure white?
                 flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
             })

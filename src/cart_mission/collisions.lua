@@ -12,11 +12,12 @@ function _collisions.are_colliding(collision_circle_1, collision_circle_2)
 end
 
 function _collisions._debug_draw_collision_circle(collision_circle)
+    local adjusted_r = collision_circle.r - .5
     oval(
-        collision_circle.x - (collision_circle.r - .5),
-        collision_circle.y - (collision_circle.r - .5),
-        collision_circle.x + (collision_circle.r - .5),
-        collision_circle.y + (collision_circle.r - .5),
+        collision_circle.x - adjusted_r,
+        collision_circle.y - adjusted_r,
+        collision_circle.x + adjusted_r,
+        collision_circle.y + adjusted_r,
         _color_11_dark_green
     )
 end
