@@ -6,15 +6,21 @@
 
 function new_boss(params)
     local boss_properties = params.boss_properties
-    local on_bullets_spawned = params.on_bullets_spawned
+    local intro_frames = params.intro_frames
+    local intro_start_xy = params.intro_start_xy
+    local start_xy = params.start_xy
+    local on_bullets_spawned = params.on_bullets_spawned or _noop
 
-    local health = boss_properties.health
-    local sprite = boss_properties.sprite
-    local collision_circles = boss_properties.collision_circles
-    -- TODO: multiple complex movements
-    local movement = boss_properties.movement
-    local bullet_fire_timer = boss_properties.bullet_fire_timer
-    local spawn_bullets = boss_properties.spawn_bullets
+    local phases = boss_properties.phases
+
+    local movement = new_movement_to_target_factory {
+        target_x = start_xy.x,
+        target_y = start_xy.y,
+        frames = intro_frames,
+        easing_fn = _easing_easeoutquart,
+    }(intro_start_xy)
+
+    local current_phase_number = nil
 
     local is_flashing_from_damage = false
     local is_destroyed = false
@@ -22,16 +28,24 @@ function new_boss(params)
     --
 
     local boss = {
-        health_max = health,
-        health = health,
+        health_max = boss_properties.health,
+        health = boss_properties.health,
     }
+
+    function boss.set_on_bullets_spawned(callback)
+        on_bullets_spawned = callback
+    end
 
     function boss.has_finished()
         return is_destroyed
     end
 
+    function boss.enter_phase_main()
+        current_phase_number = 0
+    end
+
     function boss.collision_circles()
-        return collision_circles()
+        return boss_properties.collision_circles(movement)
     end
 
     function boss.take_damage()
@@ -43,23 +57,33 @@ function new_boss(params)
         end
     end
 
-    function boss.move()
-        movement.move()
-    end
+    function boss._update(p)
+        p = p or {}
 
-    function boss.advance_timers()
-        bullet_fire_timer.advance()
-        if bullet_fire_timer.ttl <= 0 then
-            bullet_fire_timer.restart()
-            on_bullets_spawned(spawn_bullets())
+        if current_phase_number and current_phase_number < #phases then
+            if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
+                current_phase_number = current_phase_number + 1
+                movement = phases[current_phase_number].movement_factory(movement.xy)
+            end
+        end
+
+        movement._update()
+
+        if not p.no_fight then
+            local current_phase = phases[current_phase_number]
+            current_phase.bullet_fire_timer._update()
+            if current_phase.bullet_fire_timer.ttl <= 0 then
+                current_phase.bullet_fire_timer.restart()
+                on_bullets_spawned(current_phase.spawn_bullets(movement))
+            end
         end
 
         is_flashing_from_damage = false
     end
 
     -- TODO: multiple sprites with their own slight movement 
-    function boss.draw()
-        sprite.draw(movement.x, movement.y, {
+    function boss._draw()
+        boss_properties.sprite._draw(movement.xy, {
             -- TODO: make it pure white?
             flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
         })

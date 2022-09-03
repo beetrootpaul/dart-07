@@ -2,22 +2,17 @@
 -- cart_mission/sprites/static_sprite.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_static_sprite(params)
-    local sprite_w = params.sprite_w
-    local sprite_h = params.sprite_h
-    local sprite_x = params.sprite_x
-    local sprite_y = params.sprite_y
-    
+function new_static_sprite(sprite_w, sprite_h, sprite_x, sprite_y, params)
+    params = params or {}
     local from_left_top_corner = params.from_left_top_corner
     local transparent_color = params.transparent_color
 
     return {
-        draw = function(x, y, opts)
+        _draw = function(xy, opts)
             opts = opts or {}
 
             if not from_left_top_corner then
-                x = x - sprite_w / 2
-                y = y - sprite_h / 2
+                xy = xy.minus(sprite_w / 2, sprite_h / 2)
             end
 
             if transparent_color then
@@ -34,13 +29,13 @@ function new_static_sprite(params)
             sspr(
                 sprite_x, sprite_y,
                 sprite_w, sprite_h,
-                x, y
+                xy.x, xy.y
             )
 
             if opts.flash_color then
                 pal(0)
             end
-            
+
             if transparent_color then
                 palt()
             end

@@ -12,30 +12,29 @@ function new_enemy_bullet(bullet_properties)
     return {
         has_finished = function()
             return is_destroyed or
-                movement.x < _gaox - _ts or
-                movement.x > _gaox + _gaw + _ts or
-                movement.y < -_ts or
-                movement.y > _gah + _ts
+                movement.xy.x < _gaox - _ts or
+                movement.xy.x > _gaox + _gaw + _ts or
+                movement.xy.y < -_ts or
+                movement.xy.y > _gah + _ts
         end,
 
         collision_circle = function()
             return {
-                x = movement.x - .5,
-                y = movement.y - .5,
+                xy = movement.xy.plus(-.5, -.5),
                 r = collision_circle_r,
             }
-        end,
-
-        move = function()
-            movement.move()
         end,
 
         destroy = function()
             is_destroyed = true
         end,
 
-        draw = function()
-            bullet_sprite.draw(movement.x, movement.y)
+        _update = function()
+            movement._update()
+        end,
+
+        _draw = function()
+            bullet_sprite._draw(movement.xy)
         end,
     }
 end

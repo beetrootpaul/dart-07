@@ -12,12 +12,13 @@ __lua__
 #include build/src/common/gameplay_area.lua
 #include build/src/common/health.lua
 #include build/src/common/multicart.lua
-#include build/src/common/tables.lua
 #include build/src/common/text_4px.lua
 #include build/src/common/throttle.lua
+#include build/src/common/utils.lua
 #include build/src/common/viewport.lua
+#include build/src/common/xy.lua
 
-#include build/src/cart_main/screen_mission_select.lua
+#include build/src/cart_main/screen_select_mission.lua
 #include build/src/cart_main/screen_title.lua
 
 #include build/src/cart_main.lua

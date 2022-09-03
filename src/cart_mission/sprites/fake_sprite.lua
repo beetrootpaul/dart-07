@@ -4,9 +4,7 @@
 
 function new_fake_sprite()
     return {
-        animate = function()
-        end,
-        draw = function()
-        end,
+        _update = _noop,
+        _draw = _noop,
     }
 end

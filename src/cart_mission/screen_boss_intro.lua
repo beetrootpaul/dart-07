@@ -1,21 +1,26 @@
--- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/screen_intro.lua --
--- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/screen_boss_intro.lua  --
+-- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: polish it
+-- TODO: GUI boss announcement
+-- TODO: boss slide in
 
-function new_screen_intro(params)
+function new_screen_boss_intro(params)
+    local level = params.level
+    local player = params.player
+    local player_bullets = params.player_bullets
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
+    local hud = params.hud
 
-    local level_descriptor = new_level_descriptor()
-    local level = new_level(level_descriptor)
-    local player = new_player()
-    local hud = new_hud {
-        wait_frames = 85,
-        slide_in_frames = 20,
+    local boss = new_boss {
+        boss_properties = _m.boss_properties(),
+        intro_frames = 90,
+        intro_start_xy = _xy(_gaox + _gaw / 2, -120),
+        start_xy = _xy(_gaox + _gaw / 2, 20, 20),
     }
-    local mission_info = new_mission_info {
+
+    local boss_info = new_boss_info {
         slide_in_frames = 25,
         present_frames = 40,
         slide_out_frames = 25,
@@ -27,7 +32,7 @@ function new_screen_intro(params)
     local screen = {}
 
     function screen._init()
-        -- TODO: music  
+        -- TODO: boss music
     end
 
     function screen._update()
@@ -48,9 +53,13 @@ function new_screen_intro(params)
         end
 
         level._update()
+        for _, player_bullet in pairs(player_bullets) do
+            player_bullet._update()
+        end
         player._update()
+        boss._update { no_fight = true }
         hud._update()
-        mission_info._update()
+        boss_info._update()
         screen_timer._update()
     end
 
@@ -58,20 +67,31 @@ function new_screen_intro(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
+                for _, player_bullet in pairs(player_bullets) do
+                    player_bullet._draw()
+                end
+                boss._draw()
                 player._draw()
             end,
         }
         hud._draw {
             player_health = health,
         }
-        mission_info._draw()
+        boss_info._draw()
     end
 
     function screen._post_draw()
+        for index, player_bullet in pairs(player_bullets) do
+            if player_bullet.has_finished() then
+                del(player_bullets, player_bullet)
+            end
+        end
+
         if screen_timer.ttl <= 0 then
-            return new_screen_enemies {
+            return new_screen_boss_fight {
                 level = level,
                 player = player,
+                boss = boss,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,

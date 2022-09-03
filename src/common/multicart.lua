@@ -26,8 +26,9 @@ end
 function _load_mission_cart(params)
     local mission_number = params.mission_number
     local health = params.health
+    local is_triple_shot_enabled = params.is_triple_shot_enabled
 
-    local cart_params = health
+    local cart_params = tostr(health) .. "," .. tostr(is_triple_shot_enabled)
 
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
     -- of any further instruction if succeeded. This means we can safely
@@ -42,6 +43,26 @@ function _load_mission_cart(params)
     load("shmup/shmup-mission-" .. mission_number .. ".p8", nil, cart_params)
     -- TODO: use a nice final BBS cart ID here
     load("#tmp_multicart_lvl" .. mission_number, nil, cart_params)
+end
+
+function _parse_mission_cart_params()
+    local cart_params = split(stat(6), ",", false)
+
+    local function get_cart_param_at(index)
+        if #cart_params < index then
+            return false
+        end
+        local p = cart_params[index]
+        return #p > 0 and p or nil
+    end
+
+    local health_param = get_cart_param_at(1)
+    local is_triple_shot_enabled_param = get_cart_param_at(2)
+
+    return {
+        health = health_param and tonum(health_param) or _health_default,
+        is_triple_shot_enabled = is_triple_shot_enabled_param == "true",
+    }
 end
 
 function _copy_shared_assets_to_transferable_ram()

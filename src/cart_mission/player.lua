@@ -14,27 +14,15 @@ function new_player()
     local min_y = h / 2 + 1
     local max_y = _gah - h / 2 - 1
 
-    local ship_sprite_neutral = new_static_sprite {
-        sprite_w = 10,
-        sprite_h = 10,
-        sprite_x = 18,
-        sprite_y = 0,
+    local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0, {
         transparent_color = _color_11_dark_green,
-    }
-    local ship_sprite_flying_left = new_static_sprite {
-        sprite_w = 10,
-        sprite_h = 10,
-        sprite_x = 8,
-        sprite_y = 0,
+    })
+    local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0, {
         transparent_color = _color_11_dark_green,
-    }
-    local ship_sprite_flying_right = new_static_sprite {
-        sprite_w = 10,
-        sprite_h = 10,
-        sprite_x = 28,
-        sprite_y = 0,
+    })
+    local ship_sprite_flying_right = new_static_sprite(10, 10, 28, 0, {
         transparent_color = _color_11_dark_green,
-    }
+    })
     local ship_sprite_current = ship_sprite_neutral
 
     local jet_sprite_visible = new_animated_sprite {
@@ -51,16 +39,15 @@ function new_player()
     -- 
 
     local player = {
-        x = _gaox + _gaw / 2,
-        y = _gah - 28,
+        xy = _xy(_gaox + _gaw / 2, _gah - 28)
     }
 
     function player.set_vertical_movement(direction)
         if direction == "u" then
-            player.y = max(player.y - speed, min_y)
+            player.xy = player.xy.set_y(max(player.xy.y - speed, min_y))
             jet_sprite = jet_sprite_visible
         elseif direction == "d" then
-            player.y = min(player.y + speed, max_y)
+            player.xy = player.xy.set_y(min(player.xy.y + speed, max_y))
             jet_sprite = jet_sprite_hidden
         else
             jet_sprite = jet_sprite_visible
@@ -69,10 +56,10 @@ function new_player()
 
     function player.set_horizontal_movement(direction)
         if direction == "l" then
-            player.x = max(player.x - speed, min_x)
+            player.xy = player.xy.set_x(max(player.xy.x - speed, min_x))
             ship_sprite_current = ship_sprite_flying_left
         elseif direction == "r" then
-            player.x = min(player.x + speed, max_x)
+            player.xy = player.xy.set_x(min(player.xy.x + speed, max_x))
             ship_sprite_current = ship_sprite_flying_right
         else
             ship_sprite_current = ship_sprite_neutral
@@ -81,8 +68,7 @@ function new_player()
 
     function player.collision_circle()
         return {
-            x = player.x - .5,
-            y = player.y + .5,
+            xy = player.xy.plus(-.5, .5),
             r = 4,
         }
     end
@@ -96,27 +82,25 @@ function new_player()
         invincible_after_damage_timer = new_timer(30)
     end
 
-    function player.advance_timers()
+    function player._update()
         if invincible_after_damage_timer then
             if invincible_after_damage_timer.ttl <= 0 then
                 invincible_after_damage_timer = nil
             else
-                invincible_after_damage_timer.advance()
+                invincible_after_damage_timer._update()
             end
         end
+
+        jet_sprite._update()
     end
 
-    function player.animate()
-        jet_sprite.animate()
-    end
-
-    function player.draw()
+    function player._draw()
         local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
-        ship_sprite_current.draw(player.x, player.y, {
+        ship_sprite_current._draw(player.xy, {
             -- TODO: make it pure white?
             flash_color = flash and _color_6_light_grey or nil,
         })
-        jet_sprite.draw(player.x, player.y + 8, {
+        jet_sprite._draw(player.xy.plus(0, 8), {
             -- TODO: make it pure white?
             flash_color = flash and _color_6_light_grey or nil,
         })

@@ -1,6 +1,10 @@
 -- -- -- -- -- -- -- --
--- common/tables.lua --
+-- common/utils.lua  --
 -- -- -- -- -- -- -- --
+
+function _noop()
+    -- do nothing
+end
 
 -- next table index, where table is indexed from 1 and 
 -- we want to go back to 1 after table length is reached 
