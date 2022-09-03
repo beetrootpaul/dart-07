@@ -23,21 +23,18 @@ function _m.enemy_properties_for(enemy_map_marker, start_xy)
             }),
             collision_circle_r = 3,
             collision_circle_offset_y = 0,
-            movement = new_movement_sinusoidal {
-                start_xy = start_xy,
-            },
+            movement = new_movement_sinusoidal_factory()(start_xy),
             bullet_fire_timer = new_timer(20),
-            spawn_bullets = function(movement)
+            spawn_bullets = function(enemy_movement)
                 return {
                     new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line {
-                            start_xy = movement.xy,
-                            base_speed_y = movement.speed_xy.y,
+                        movement = new_movement_line_factory({
+                            base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
-                        },
+                        })(enemy_movement.xy),
                     }
                 }
             end,
@@ -52,9 +49,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_xy)
             }),
             collision_circle_r = 5,
             collision_circle_offset_y = -1,
-            movement = new_movement_wait_then_charge {
-                start_xy = start_xy,
-            },
+            movement = new_movement_wait_then_charge_factory()(start_xy),
             bullet_fire_timer = new_fake_timer(),
             spawn_bullets = _noop,
             powerups_distribution = "-,-,-,-,-,-,-,-,-,a,a,t",
@@ -68,22 +63,19 @@ function _m.enemy_properties_for(enemy_map_marker, start_xy)
             }),
             collision_circle_r = 8,
             collision_circle_offset_y = 0,
-            movement = new_movement_stationary {
-                start_xy = start_xy,
-            },
+            movement = new_movement_stationary_factory()(start_xy),
             bullet_fire_timer = new_timer(30),
-            spawn_bullets = function(movement)
+            spawn_bullets = function(enemy_movement)
                 local bullets = {}
                 for i = 1, 7 do
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line {
-                            start_xy = movement.xy,
-                            base_speed_y = movement.speed_xy.y,
+                        movement = new_movement_line_factory {
+                            base_speed_y = enemy_movement.speed_xy.y,
                             angle = .25 + i / 8,
                             angled_speed = 2,
-                        },
+                        }(enemy_movement.xy),
                     })
                 end
                 return bullets
@@ -116,36 +108,32 @@ function _m.boss_properties()
             {
                 triggering_health_fraction = 1,
                 bullet_fire_timer = new_timer(40),
-                spawn_bullets = function(movement)
+                spawn_bullets = function(enemy_movement)
                     local bullets = {}
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line {
-                            start_xy = movement.xy.plus(0, 3),
-                            base_speed_y = movement.speed_xy.y,
+                        movement = new_movement_line_factory {
+                            base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75 - 1 / 8,
                             angled_speed = 2,
-                        },
+                        }(enemy_movement.xy.plus(0, 3)),
                     })
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line {
-                            start_xy = movement.xy.plus(0, 3),
-                            base_speed_y = movement.speed_xy.y,
+                        movement = new_movement_line_factory {
+                            base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75 + 1 / 8,
                             angled_speed = 2,
-                        },
+                        }(enemy_movement.xy.plus(0, 3)),
                     })
                     return bullets
                 end,
                 -- TODO: refactor movements so they return a function which requires start_xy then inside boss file, not here
                 movement_cycle = {
                     function(movement)
-                        return new_movement_fixed {
-                            start_xy = movement.xy,
-                        }
+                        return new_movement_fixed_factory()(movement.xy)
                     end,
                 },
             },
@@ -153,73 +141,66 @@ function _m.boss_properties()
             {
                 triggering_health_fraction = .7,
                 bullet_fire_timer = new_timer(20),
-                spawn_bullets = function(movement)
+                spawn_bullets = function(enemy_movement)
                     local bullets = {}
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line {
-                            start_xy = movement.xy.plus(-21, 3),
-                            base_speed_y = movement.speed_xy.y,
+                        movement = new_movement_line_factory {
+                            base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
-                        },
+                        }(enemy_movement.xy.plus(-21, 3)),
                     })
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line {
-                            start_xy = movement.xy.plus(21, 3),
-                            base_speed_y = movement.speed_xy.y,
+                        movement = new_movement_line_factory {
+                            base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
-                        },
+                        }(enemy_movement.xy.plus(21, 3)),
                     })
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line {
-                            start_xy = movement.xy.plus(0, 3),
-                            base_speed_y = movement.speed_xy.y,
+                        movement = new_movement_line_factory {
+                            base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 2,
-                        },
+                        }(enemy_movement.xy.plus(0, 3)),
                     })
                     return bullets
                 end,
                 -- TODO: refactor movements so they return a function which requires start_xy then inside boss file, not here
                 movement_cycle = {
                     function(movement)
-                        return new_movement_fixed {
-                            start_xy = movement.xy,
+                        return new_movement_fixed_factory {
                             frames = 90,
-                        }
+                        }(movement.xy)
                     end,
                     function(movement)
                         return {
-                            movement = new_movement_to_target {
-                                start_xy = movement.xy,
+                            movement = new_movement_to_target_factory {
                                 target_xy = movement.xy.set_x(_gaox + 30),
                                 frames = 30,
-                            },
+                            }(movement.xy),
                         }
                     end,
                     function(movement)
                         return {
-                            movement = new_movement_to_target {
-                                start_xy = movement.xy,
+                            movement = new_movement_to_target_factory {
                                 target_xy = movement.xy.set_x(_gaox + _gaw - 30),
                                 frames = 60,
-                            },
+                            }(movement.xy),
                         }
                     end,
                     function(movement)
                         return {
-                            movement = new_movement_to_target {
-                                start_xy = movement.xy,
+                            movement = new_movement_to_target_factory {
                                 target_xy = movement.xy.set_x(_gaox + _gaw / 2),
                                 frames = 30,
-                            },
+                            }(movement.xy),
                         }
                     end,
                 },
@@ -228,78 +209,71 @@ function _m.boss_properties()
             {
                 triggering_health_fraction = .3,
                 bullet_fire_timer = new_timer(30),
-                spawn_bullets = function(movement)
+                spawn_bullets = function(enemy_movement)
                     local bullets = {}
                     for i = 3, 5 do
                         add(bullets, new_enemy_bullet {
                             bullet_sprite = _m.bullet_orb.sprite,
                             collision_circle_r = _m.bullet_orb.collision_circle_r,
-                            movement = new_movement_line {
-                                start_xy = movement.xy.plus(-21, 3),
-                                base_speed_y = movement.speed_xy.y,
+                            movement = new_movement_line_factory {
+                                base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .25 + i / 8,
                                 angled_speed = 2,
-                            },
+                            }(enemy_movement.xy.plus(-21, 3)),
                         })
                     end
                     for i = 3, 5 do
                         add(bullets, new_enemy_bullet {
                             bullet_sprite = _m.bullet_orb.sprite,
                             collision_circle_r = _m.bullet_orb.collision_circle_r,
-                            movement = new_movement_line {
-                                start_xy = movement.xy.plus(21, 3),
-                                base_speed_y = movement.speed_xy.y,
+                            movement = new_movement_line_factory {
+                                base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .25 + i / 8,
                                 angled_speed = 2,
-                            },
+                            }(enemy_movement.xy.plus(21, 3)),
                         })
                     end
                     for i = 3, 5 do
                         add(bullets, new_enemy_bullet {
                             bullet_sprite = _m.bullet_orb.sprite,
                             collision_circle_r = _m.bullet_orb.collision_circle_r,
-                            movement = new_movement_line {
-                                start_xy = movement.xy.plus(0, 3),
-                                base_speed_y = movement.speed_xy.y,
+                            movement = new_movement_line_factory {
+                                base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .25 + i / 8,
                                 angled_speed = 2,
-                            },
+                            }(enemy_movement.xy.plus(0, 3)),
                         })
                     end
                     return bullets
                 end,
                 movement_cycle = {
                     function(movement)
-                        return new_movement_fixed {
-                            start_xy = movement.xy,
+                        return new_movement_fixed_factory {
                             frames = 40,
-                        }
+                        }(movement.xy)
                     end,
                     function(movement)
                         return {
-                            movement = new_movement_to_target {
-                                start_xy = movement.xy,
+                            movement = new_movement_to_target_factory {
                                 target_xy = movement.xy.set_x(_gaox + 30),
                                 frames = 30,
-                            },
+                            }(movement.xy),
                         }
                     end,
                     function(movement)
                         return {
-                            movement = new_movement_to_target {
-                                start_xy = movement.xy,
+                            movement = new_movement_to_target_factory {
                                 target_xy = movement.xy.set_x(_gaox + _gaw - 30),
                                 frames = 60,
-                            },
+                            }(movement.xy),
                         }
                     end,
                     function(movement)
                         return {
-                            movement = new_movement_to_target {
-                                start_xy = movement.xy,
+                            movement = new_movement_to_target_factory {
                                 target_xy = movement.xy.set_x(_gaox + _gaw / 2),
                                 frames = 30,
-                            },
+                            }(movement.xy),
                         }
                     end,
                 },

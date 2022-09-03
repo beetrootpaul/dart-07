@@ -9,12 +9,11 @@ function new_player_bullet(params)
 
     local bullet_sprite = new_static_sprite(4, 6, 4, 12)
 
-    local movement = new_movement_line {
-        start_xy = start_xy,
+    local movement = new_movement_line_factory {
         base_speed_y = 0,
         angle = .25,
         angled_speed = 5,
-    }
+    }(start_xy)
 
     return {
         has_finished = function()

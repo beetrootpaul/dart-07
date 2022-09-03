@@ -24,12 +24,11 @@ function new_powerup(params)
         })
     end
 
-    local movement = new_movement_line {
-        start_xy = start_xy,
+    local movement = new_movement_line_factory {
         base_speed_y = 0,
         angle = .75,
         angled_speed = 1,
-    }
+    }(start_xy)
 
     local powerup = {
         powerup_type = powerup_type,

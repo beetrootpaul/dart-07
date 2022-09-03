@@ -9,22 +9,19 @@ function new_boss_info(params)
     local present_frames = params.present_frames
     local slide_out_frames = params.slide_out_frames
 
-    local slide_in_movement = new_movement_to_target {
-        start_xy = _xy(_gaox, -1),
+    local slide_in_movement = new_movement_to_target_factory {
         target_xy = _xy(_gaox, _gah / 2),
         frames = slide_in_frames,
         easing_fn = _easing_easeoutquart,
-    }
-    local present_movement = new_movement_fixed {
-        start_xy = _xy(_gaox, _gah / 2),
+    }(_xy(_gaox, -1))
+    local present_movement = new_movement_fixed_factory {
         frames = present_frames,
-    }
-    local slide_out_movement = new_movement_to_target {
-        start_xy = _xy(_gaox, _gah / 2),
+    }(_xy(_gaox, _gah / 2))
+    local slide_out_movement = new_movement_to_target_factory {
         target_xy = _xy(_gaox, _gah + 1),
         frames = slide_out_frames,
         easing_fn = _easing_easeinquart,
-    }
+    }(_xy(_gaox, _gah / 2))
 
     -- phase: slide_in -> present -> slide_out
     local phase = "slide_in"

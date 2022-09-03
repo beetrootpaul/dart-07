@@ -13,12 +13,11 @@ function new_boss(params)
 
     local phases = boss_properties.phases
 
-    local movement = new_movement_to_target {
-        start_xy = intro_start_xy,
+    local movement = new_movement_to_target_factory {
         target_xy = start_xy,
         frames = intro_frames,
         easing_fn = _easing_easeoutquart,
-    }
+    }(intro_start_xy)
 
     local current_phase_number = nil
 
