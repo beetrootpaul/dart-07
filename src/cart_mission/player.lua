@@ -7,9 +7,8 @@ function new_player()
     local h = 10
     local speed = 2
 
-    -- TODO NEXT: rework where to refer to _gaox?
-    local min_x = _gaox + w / 2 + 1
-    local max_x = _gaox + _gaw - w / 2 - 1
+    local min_x = w / 2 + 1
+    local max_x = _gaw - w / 2 - 1
     local min_y = h / 2 + 1
     local max_y = _gah - h / 2 - 1
 
@@ -24,12 +23,7 @@ function new_player()
     })
     local ship_sprite_current = ship_sprite_neutral
 
-    local jet_sprite_visible = new_animated_sprite {
-        sprite_w = 4,
-        sprite_h = 4,
-        sprite_xs = { 0, 0, 4, 4 },
-        sprite_y = 8,
-    }
+    local jet_sprite_visible = new_animated_sprite(4, 4, { 0, 0, 4, 4 }, 8)
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
@@ -38,7 +32,7 @@ function new_player()
     -- 
 
     local player = {
-        xy = _xy(_gaox + _gaw / 2, _gah - 28)
+        xy = _xy(_gaw / 2, _gah - 28)
     }
 
     function player.set_movement(left, right, up, down)

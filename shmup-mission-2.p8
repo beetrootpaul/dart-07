@@ -35,7 +35,7 @@ __lua__
 #include build/src/cart_mission/boss.lua
 #include build/src/cart_mission/collisions.lua
 #include build/src/cart_mission/enemy.lua
-#include build/src/cart_mission/enemy_bullet.lua
+#include build/src/cart_mission/enemy_bullet_factory.lua
 #include build/src/cart_mission/level.lua
 #include build/src/cart_mission/level_descriptor.lua
 #include build/src/cart_mission/player.lua

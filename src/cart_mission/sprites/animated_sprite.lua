@@ -2,10 +2,10 @@
 -- cart_mission/sprites/animated_sprite.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_animated_sprite(params)
-    local sprite_w, sprite_h = params.sprite_w, params.sprite_h
-    local sprite_xs = params.sprite_xs
-    local sprite_y = params.sprite_y
+-- TODO: consider consolidating with new_static_sprite
+function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
+    params = params or {}
+    local from_left_top_corner = params.from_left_top_corner
 
     local frame = 1
     local max_frame = #sprite_xs
@@ -18,6 +18,10 @@ function new_animated_sprite(params)
         _draw = function(xy, opts)
             opts = opts or {}
 
+            if not from_left_top_corner then
+                xy = xy.minus(sprite_w / 2, sprite_h / 2)
+            end
+
             if opts.flash_color then
                 for c = 0, 15 do
                     pal(c, opts.flash_color, 0)
@@ -27,7 +31,7 @@ function new_animated_sprite(params)
             sspr(
                 sprite_xs[frame], sprite_y,
                 sprite_w, sprite_h,
-                xy.x - sprite_w / 2, xy.y - sprite_h / 2
+                _gaox + xy.x, xy.y
             )
 
             if opts.flash_color then

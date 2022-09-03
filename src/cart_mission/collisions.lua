@@ -13,9 +13,9 @@ end
 function _collisions._debug_draw_collision_circle(collision_circle)
     local adjusted_r = collision_circle.r - .5
     oval(
-        collision_circle.xy.x - adjusted_r,
+        _gaox + collision_circle.xy.x - adjusted_r,
         collision_circle.xy.y - adjusted_r,
-        collision_circle.xy.x + adjusted_r,
+        _gaox + collision_circle.xy.x + adjusted_r,
         collision_circle.xy.y + adjusted_r,
         _color_11_dark_green
     )

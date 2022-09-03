@@ -50,10 +50,10 @@ function new_hud(params)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
 
             local xy = movement.xy.ceil()
-            hearth._draw(xy.minus(-1, 10))
-            health_bar_start._draw(xy.minus(0, 20))
+            hearth._draw(xy.minus(_gaox-1, 10))
+            health_bar_start._draw(xy.minus(_gaox, 20))
             for i = 1, player_health do
-                health_bar_segment._draw(xy.minus(0, 20 + i * 4))
+                health_bar_segment._draw(xy.minus(_gaox, 20 + i * 4))
             end
 
             -- TODO: polish it, add boss name above the bar
