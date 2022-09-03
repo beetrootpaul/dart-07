@@ -15,7 +15,6 @@ function new_enemy(params)
     local is_flashing_from_damage = false
     local is_destroyed = false
 
-    -- TODO NEXT: make collision detection work only if at least 1px of the enemy is visible, not before
     return {
         has_finished = function()
             return is_destroyed or movement.xy.y > _gah + _ts

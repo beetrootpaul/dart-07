@@ -2,8 +2,6 @@
 -- cart_mission/boss.lua   --
 -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: make collision detection work only if at least 1px of the enemy is visible, not before
-
 function new_boss(params)
     local boss_properties = params.boss_properties
     local intro_frames = params.intro_frames

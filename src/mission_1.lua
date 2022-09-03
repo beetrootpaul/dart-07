@@ -41,7 +41,7 @@ function _m.enemy_properties_for(enemy_map_marker)
     end
     if enemy_map_marker == 78 then
         return {
-            health = 3,
+            health = 1,
             ship_sprite = new_static_sprite(12, 9, 14, 64, {
                 transparent_color = _color_11_dark_green,
             }),
