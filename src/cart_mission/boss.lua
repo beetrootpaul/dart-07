@@ -14,7 +14,8 @@ function new_boss(params)
     local phases = boss_properties.phases
 
     local movement = new_movement_to_target_factory {
-        target_xy = start_xy,
+        target_x = start_xy.x,
+        target_y = start_xy.y,
         frames = intro_frames,
         easing_fn = _easing_easeoutquart,
     }(intro_start_xy)
@@ -62,8 +63,7 @@ function new_boss(params)
         if current_phase_number and current_phase_number < #phases then
             if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
                 current_phase_number = current_phase_number + 1
-                -- TODO: make it cycle through cycle steps!!!
-                movement = phases[current_phase_number].movement_cycle[1](movement)
+                movement = phases[current_phase_number].movement_factory(movement.xy)
             end
         end
 

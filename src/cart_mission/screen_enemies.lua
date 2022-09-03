@@ -163,6 +163,7 @@ function new_screen_enemies(params)
         for _, enemy_to_spawn in pairs(enemies_to_spawn) do
             add(enemies, new_enemy {
                 enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker, enemy_to_spawn.xy),
+                start_xy = enemy_to_spawn.xy,
                 on_bullets_spawned = function(spawned_enemy_bullets)
                     for _, seb in pairs(spawned_enemy_bullets) do
                         add(enemy_bullets, seb)

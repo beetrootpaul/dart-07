@@ -23,7 +23,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_xy)
             }),
             collision_circle_r = 3,
             collision_circle_offset_y = 0,
-            movement = new_movement_sinusoidal_factory()(start_xy),
+            movement_factory = new_movement_sinusoidal_factory(),
             bullet_fire_timer = new_timer(20),
             spawn_bullets = function(enemy_movement)
                 return {
@@ -49,7 +49,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_xy)
             }),
             collision_circle_r = 5,
             collision_circle_offset_y = -1,
-            movement = new_movement_wait_then_charge_factory()(start_xy),
+            movement_factory = new_movement_wait_then_charge_factory(),
             bullet_fire_timer = new_fake_timer(),
             spawn_bullets = _noop,
             powerups_distribution = "-,-,-,-,-,-,-,-,-,a,a,t",
@@ -63,7 +63,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_xy)
             }),
             collision_circle_r = 8,
             collision_circle_offset_y = 0,
-            movement = new_movement_stationary_factory()(start_xy),
+            movement_factory = new_movement_stationary_factory(),
             bullet_fire_timer = new_timer(30),
             spawn_bullets = function(enemy_movement)
                 local bullets = {}
@@ -130,16 +130,11 @@ function _m.boss_properties()
                     })
                     return bullets
                 end,
-                -- TODO: refactor movements so they return a function which requires start_xy then inside boss file, not here
-                movement_cycle = {
-                    function(movement)
-                        return new_movement_fixed_factory()(movement.xy)
-                    end,
-                },
+                movement_factory = new_movement_fixed_factory(),
             },
             -- phase 2:
             {
-                triggering_health_fraction = .7,
+                triggering_health_fraction = .85,
                 bullet_fire_timer = new_timer(20),
                 spawn_bullets = function(enemy_movement)
                     local bullets = {}
@@ -172,37 +167,25 @@ function _m.boss_properties()
                     })
                     return bullets
                 end,
-                -- TODO: refactor movements so they return a function which requires start_xy then inside boss file, not here
-                movement_cycle = {
-                    function(movement)
-                        return new_movement_fixed_factory {
-                            frames = 90,
-                        }(movement.xy)
-                    end,
-                    function(movement)
-                        return {
-                            movement = new_movement_to_target_factory {
-                                target_xy = movement.xy.set_x(_gaox + 30),
-                                frames = 30,
-                            }(movement.xy),
-                        }
-                    end,
-                    function(movement)
-                        return {
-                            movement = new_movement_to_target_factory {
-                                target_xy = movement.xy.set_x(_gaox + _gaw - 30),
-                                frames = 60,
-                            }(movement.xy),
-                        }
-                    end,
-                    function(movement)
-                        return {
-                            movement = new_movement_to_target_factory {
-                                target_xy = movement.xy.set_x(_gaox + _gaw / 2),
-                                frames = 30,
-                            }(movement.xy),
-                        }
-                    end,
+                movement_factory = new_movement_sequence_factory {
+                    loop = true,
+                    sequence = {
+                        new_movement_to_target_factory {
+                            target_x = _gaox + 30,
+                            frames = 30,
+                        },
+                        new_movement_to_target_factory {
+                            target_x = _gaox + _gaw - 30,
+                            frames = 60,
+                        },
+                        new_movement_to_target_factory {
+                            target_x = _gaox + _gaw / 2,
+                            frames = 30,
+                        },
+                        new_movement_fixed_factory {
+                            frames = 60,
+                        },
+                    },
                 },
             },
             -- phase 3:
@@ -246,36 +229,33 @@ function _m.boss_properties()
                     end
                     return bullets
                 end,
-                movement_cycle = {
-                    function(movement)
-                        return new_movement_fixed_factory {
-                            frames = 40,
-                        }(movement.xy)
-                    end,
-                    function(movement)
-                        return {
-                            movement = new_movement_to_target_factory {
-                                target_xy = movement.xy.set_x(_gaox + 30),
-                                frames = 30,
-                            }(movement.xy),
-                        }
-                    end,
-                    function(movement)
-                        return {
-                            movement = new_movement_to_target_factory {
-                                target_xy = movement.xy.set_x(_gaox + _gaw - 30),
-                                frames = 60,
-                            }(movement.xy),
-                        }
-                    end,
-                    function(movement)
-                        return {
-                            movement = new_movement_to_target_factory {
-                                target_xy = movement.xy.set_x(_gaox + _gaw / 2),
-                                frames = 30,
-                            }(movement.xy),
-                        }
-                    end,
+                movement_factory = new_movement_sequence_factory {
+                    sequence = {
+                        -- center it
+                        new_movement_to_target_factory {
+                            target_x = _gaox + _gaw / 2,
+                            frames = 20,
+                        },
+                        -- move to the left
+                        new_movement_to_target_factory {
+                            target_x = _gaox + 30,
+                            frames = 20,
+                        },
+                        -- move to the right and to the left in a loop
+                        new_movement_sequence_factory {
+                            loop = true,
+                            sequence = {
+                                new_movement_to_target_factory {
+                                    target_x = _gaox + _gaw - 30,
+                                    frames = 40,
+                                },
+                                new_movement_to_target_factory {
+                                    target_x = _gaox + 30,
+                                    frames = 40,
+                                },
+                            },
+                        },
+                    },
                 },
             }
         },

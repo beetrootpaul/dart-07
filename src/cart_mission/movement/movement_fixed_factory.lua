@@ -3,6 +3,8 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
 function new_movement_fixed_factory(params)
+    params = params or {}
+    
     return function(start_xy)
         local timer = params.frames and new_timer(params.frames) or new_fake_timer()
 

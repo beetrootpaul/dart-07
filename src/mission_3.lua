@@ -24,7 +24,7 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             -- TODO: consider unifying the way collision circles are defined for enemies, player, boss, bullets
             collision_circle_r = 4,
             collision_circle_offset_y = 0,
-            movement = new_movement_wait_then_charge_factory()(start_xy),
+            movement_factory = new_movement_wait_then_charge_factory(),
             bullet_fire_timer = new_timer(15),
             spawn_bullets = function(enemy_movement)
                 local bullets = {}
@@ -76,11 +76,7 @@ function _m.boss_properties()
                     })
                     return bullets
                 end,
-                movement_cycle = {
-                    function(movement)
-                        return new_movement_fixed_factory()(movement.xy)
-                    end,
-                },
+                movement_factory = new_movement_fixed_factory(),
             },
         },
     }

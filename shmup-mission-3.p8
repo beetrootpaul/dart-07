@@ -25,6 +25,7 @@ __lua__
 #include build/src/cart_mission/gui/mission_info.lua
 #include build/src/cart_mission/movement/movement_fixed_factory.lua
 #include build/src/cart_mission/movement/movement_line_factory.lua
+#include build/src/cart_mission/movement/movement_sequence_factory.lua
 #include build/src/cart_mission/movement/movement_sinusoidal_factory.lua
 #include build/src/cart_mission/movement/movement_stationary_factory.lua
 #include build/src/cart_mission/movement/movement_to_target_factory.lua

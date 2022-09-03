@@ -10,7 +10,7 @@ function new_boss_info(params)
     local slide_out_frames = params.slide_out_frames
 
     local slide_in_movement = new_movement_to_target_factory {
-        target_xy = _xy(_gaox, _gah / 2),
+        target_y = _gah / 2,
         frames = slide_in_frames,
         easing_fn = _easing_easeoutquart,
     }(_xy(_gaox, -1))
@@ -18,7 +18,7 @@ function new_boss_info(params)
         frames = present_frames,
     }(_xy(_gaox, _gah / 2))
     local slide_out_movement = new_movement_to_target_factory {
-        target_xy = _xy(_gaox, _gah + 1),
+        target_y = _gah + 1,
         frames = slide_out_frames,
         easing_fn = _easing_easeinquart,
     }(_xy(_gaox, _gah / 2))

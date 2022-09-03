@@ -4,11 +4,12 @@
 
 function new_enemy(params)
     local enemy_properties = params.enemy_properties
+    local start_xy = params.start_xy
     local on_bullets_spawned = params.on_bullets_spawned
     local on_powerup_spawned = params.on_powerup_spawned
 
     local health = enemy_properties.health
-    local movement = enemy_properties.movement
+    local movement = enemy_properties.movement_factory(start_xy)
     local bullet_fire_timer = enemy_properties.bullet_fire_timer
 
     local is_flashing_from_damage = false

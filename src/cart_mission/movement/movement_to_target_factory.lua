@@ -13,12 +13,12 @@ function new_movement_to_target_factory(params)
             return _xy(
                 ceil(_easing_lerp(
                     start_xy.x,
-                    params.target_xy.x,
+                    params.target_x or start_xy.x,
                     easing_fn(timer.passed_fraction())
                 )),
                 ceil(_easing_lerp(
                     start_xy.y,
-                    params.target_xy.y,
+                    params.target_y or start_xy.y,
                     easing_fn(timer.passed_fraction())
                 ))
             )
