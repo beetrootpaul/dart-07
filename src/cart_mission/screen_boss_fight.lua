@@ -184,7 +184,6 @@ function new_screen_boss_fight(params)
                 level = level,
                 player = player,
                 player_bullets = player_bullets,
-                boss_bullets = boss_bullets,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,
