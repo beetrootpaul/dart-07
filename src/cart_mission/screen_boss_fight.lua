@@ -14,6 +14,7 @@ function new_screen_boss_fight(params)
     local boss_bullets = {}
 
     -- TODO: duplicated code
+    -- TODO NEXT: move spawning to player?
     local throttled_fire_player_bullet = new_throttle(6, function()
         -- TODO: SFX
         add(player_bullets, new_player_bullet { start_xy = player.xy.plus(0, -4) })
@@ -26,7 +27,7 @@ function new_screen_boss_fight(params)
 
     -- TODO: duplicated code
     local function handle_player_damage()
-        -- TODO: powerups retrieval after live lost?
+        -- TODO NEXT: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
         -- TODO: VFX of disappearing health segment
@@ -46,7 +47,6 @@ function new_screen_boss_fight(params)
                 if not boss.has_finished() then
                     if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
                         -- TODO: SFX
-                        -- TODO: blinking boss if still alive
                         -- TODO: big explosion if no longer alive
                         boss.take_damage()
                         player_bullet.destroy()
@@ -98,21 +98,7 @@ function new_screen_boss_fight(params)
             end
         end
 
-        -- TODO: duplicated code
-        if btn(_button_down) then
-            player.set_vertical_movement("d")
-        elseif btn(_button_up) then
-            player.set_vertical_movement("u")
-        else
-            player.set_vertical_movement("-")
-        end
-        if btn(_button_left) then
-            player.set_horizontal_movement("l")
-        elseif btn(_button_right) then
-            player.set_horizontal_movement("r")
-        else
-            player.set_horizontal_movement("-")
-        end
+        player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         if btn(_button_x) then
             throttled_fire_player_bullet.invoke()
@@ -179,6 +165,7 @@ function new_screen_boss_fight(params)
         end
 
         if boss.has_finished() then
+            -- TODO NEXT: draft version of exploding enemies and boss
             -- TODO: nice post-boss-destroy visuals before transitioning to the next cart
             return new_screen_boss_outro {
                 level = level,
@@ -191,8 +178,8 @@ function new_screen_boss_fight(params)
         end
 
         if health <= 0 then
-            -- TODO: game over
-            -- TODO: wait a moment after death
+            -- TODO NEXT: game over
+            -- TODO NEXT: wait a moment after death
             _load_main_cart()
         end
     end

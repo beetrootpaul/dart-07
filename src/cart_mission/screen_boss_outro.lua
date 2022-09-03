@@ -4,7 +4,6 @@
 
 -- TODO: boss spectacular destroy VFX and SFX
 -- TODO: win screen after all 3 levels
--- TODO: is it OK to render boss bullets but not make them harm player?
 
 function new_screen_boss_outro(params)
     local level = params.level

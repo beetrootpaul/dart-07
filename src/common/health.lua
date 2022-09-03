@@ -3,5 +3,3 @@
 -- -- -- -- -- -- -- --
 
 _health_default = 5
-
--- TODO: move health code here

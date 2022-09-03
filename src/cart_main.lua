@@ -5,7 +5,7 @@
 local current_screen, next_screen
 
 function _init()
-    -- TODO: ?
+    -- -- TODO NEXT: game over screen here with score from the failed/succeeded mission?
     --local score = tonum(split(stat(6))[1]) or 2
     --local number = tonum(split(stat(6))[2]) or -3
 
@@ -29,13 +29,15 @@ function _draw()
     _remap_display_colors()
 end
 
--- TODO: screen shake?
+-- TODO NEXT: tutorial screen? press X to shoot, arrows to fly
+-- TODO NEXT: screen shake?
+-- TODO NEXT: menu item to disable screen shake?
 
--- TODO: "hit stop"?
+-- TODO NEXT: "hit stop"?
 
--- TODO: push enemies and boss on damage?
+-- TODO NEXT: push enemies and boss on damage?
 
--- TODO: lighten/darken transition between screens? Or dithered "fillp" one?
+-- TODO NEXT: lighten/darken transition between screens? Or dithered "fillp" one?
 
 -- TODO: menu music
 -- TODO: music per stage

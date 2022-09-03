@@ -9,7 +9,7 @@ function new_movement_stationary_factory()
             speed_xy = _xy(0, _m.scroll_per_frame),
         }
 
-        function movement.has_reached_target()
+        function movement.has_finished()
             return false
         end
 

@@ -2,13 +2,12 @@
 -- cart_mission/player.lua --
 -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider rotating the whole game to vertical scroller
-
 function new_player()
     local w = 10
     local h = 10
     local speed = 2
 
+    -- TODO NEXT: rework where to refer to _gaox?
     local min_x = _gaox + w / 2 + 1
     local max_x = _gaox + _gaw - w / 2 - 1
     local min_y = h / 2 + 1
@@ -42,28 +41,12 @@ function new_player()
         xy = _xy(_gaox + _gaw / 2, _gah - 28)
     }
 
-    function player.set_vertical_movement(direction)
-        if direction == "u" then
-            player.xy = player.xy.set_y(max(player.xy.y - speed, min_y))
-            jet_sprite = jet_sprite_visible
-        elseif direction == "d" then
-            player.xy = player.xy.set_y(min(player.xy.y + speed, max_y))
-            jet_sprite = jet_sprite_hidden
-        else
-            jet_sprite = jet_sprite_visible
-        end
-    end
-
-    function player.set_horizontal_movement(direction)
-        if direction == "l" then
-            player.xy = player.xy.set_x(max(player.xy.x - speed, min_x))
-            ship_sprite_current = ship_sprite_flying_left
-        elseif direction == "r" then
-            player.xy = player.xy.set_x(min(player.xy.x + speed, max_x))
-            ship_sprite_current = ship_sprite_flying_right
-        else
-            ship_sprite_current = ship_sprite_neutral
-        end
+    function player.set_movement(left, right, up, down)
+        jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
+        ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
+        player.xy = player.xy
+                          .set_x(mid(min_x, player.xy.x + (right and speed or (left and -speed or 0)), max_x))
+                          .set_y(mid(min_y, player.xy.y + (down and speed or (up and -speed or 0)), max_y))
     end
 
     function player.collision_circle()

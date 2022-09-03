@@ -29,7 +29,6 @@ __lua__
 #include build/src/cart_mission/movement/movement_sinusoidal_factory.lua
 #include build/src/cart_mission/movement/movement_stationary_factory.lua
 #include build/src/cart_mission/movement/movement_to_target_factory.lua
-#include build/src/cart_mission/movement/movement_wait_then_charge_factory.lua
 #include build/src/cart_mission/sprites/animated_sprite.lua
 #include build/src/cart_mission/sprites/fake_sprite.lua
 #include build/src/cart_mission/sprites/static_sprite.lua

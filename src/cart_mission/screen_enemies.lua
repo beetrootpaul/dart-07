@@ -14,7 +14,7 @@ function new_screen_enemies(params)
     local enemy_bullets = {}
     local powerups = {}
 
-    -- TODO: duplicated code
+    -- TODO NEXT: duplicated code
     local throttled_fire_player_bullet = new_throttle(6, function()
         -- TODO: SFX
         add(player_bullets, new_player_bullet { start_xy = player.xy.plus(0, -4) })
@@ -27,7 +27,7 @@ function new_screen_enemies(params)
 
     -- TODO: duplicated code
     local function handle_player_damage()
-        -- TODO: powerups retrieval after live lost?
+        -- TODO NEXT: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
         -- TODO: VFX of disappearing health segment
@@ -35,10 +35,6 @@ function new_screen_enemies(params)
         if health > 0 then
             player.start_invincibility_after_damage()
         end
-    end
-
-    local function increase_health()
-        health = health + 1
     end
 
     local function enable_triple_shot()
@@ -58,7 +54,7 @@ function new_screen_enemies(params)
                 -- TODO: VFX on health status
                 powerup.pick()
                 if powerup.powerup_type == "a" then
-                    increase_health()
+                    health = health + 1
                 elseif powerup.powerup_type == "t" then
                     enable_triple_shot()
                 end
@@ -72,8 +68,7 @@ function new_screen_enemies(params)
                 if not enemy.has_finished() then
                     if _collisions.are_colliding(player_bullet.collision_circle(), enemy_cc) then
                         -- TODO: SFX
-                        -- TODO: blinking enemy if still alive
-                        -- TODO: explosion if no longer alive
+                        -- TODO NEXT: explosion if no longer alive
                         enemy.take_damage()
                         player_bullet.destroy()
                         -- TODO: magnetised score items?
@@ -120,21 +115,7 @@ function new_screen_enemies(params)
             end
         end
 
-        -- TODO: duplicated code
-        if btn(_button_down) then
-            player.set_vertical_movement("d")
-        elseif btn(_button_up) then
-            player.set_vertical_movement("u")
-        else
-            player.set_vertical_movement("-")
-        end
-        if btn(_button_left) then
-            player.set_horizontal_movement("l")
-        elseif btn(_button_right) then
-            player.set_horizontal_movement("r")
-        else
-            player.set_horizontal_movement("-")
-        end
+        player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         if btn(_button_x) then
             throttled_fire_player_bullet.invoke()
@@ -170,7 +151,7 @@ function new_screen_enemies(params)
                     end
                 end,
                 on_powerup_spawned = function(powerup)
-                    -- TODO: implement more powerup types
+                    -- TODO: implement more powerup types: circling orb? diagonal shot? laser? power field?
                     -- TODO: indicate powerups in hud
                     add(powerups, powerup)
                 end,
@@ -218,6 +199,7 @@ function new_screen_enemies(params)
     end
 
     function screen._post_draw()
+        -- TODO NEXT: tokens: create a function to iterate over given table, check has_finished(), del from the table
         for index, enemy in pairs(enemies) do
             if enemy.has_finished() then
                 del(enemies, enemy)
@@ -251,8 +233,8 @@ function new_screen_enemies(params)
         end
 
         if health <= 0 then
-            -- TODO: game over
-            -- TODO: wait a moment after death
+            -- TODO NEXT: game over screen
+            -- TODO NEXT: wait a moment after death
             _load_main_cart()
         end
     end

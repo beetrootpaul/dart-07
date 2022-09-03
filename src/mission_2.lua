@@ -23,7 +23,19 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             }),
             collision_circle_r = 4,
             collision_circle_offset_y = 0,
-            movement_factory = new_movement_wait_then_charge_factory(),
+            movement_factory = new_movement_sequence_factory {
+                sequence = {
+                    new_movement_line_factory {
+                        frames = 40,
+                        angle = .75,
+                        angled_speed = 1,
+                    },
+                    new_movement_line_factory {
+                        angle = .75,
+                        angled_speed = 3,
+                    },
+                },
+            },
             bullet_fire_timer = new_timer(15),
             spawn_bullets = function(enemy_movement)
                 local bullets = {}

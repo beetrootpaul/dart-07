@@ -22,7 +22,7 @@ function new_level(descriptor)
     local spawn_distance_offset = 1
     local spawn_distance = max_visible_distance + spawn_distance_offset
 
-    -- TODO: externalize animated/static tile to its own file, create it in level descriptor
+    -- TODO NEXT: externalize animated/static tile to its own file, create it in level descriptor
     local animation_frame = 0
     local animation_steps = 4
     local animation_step_length = 12

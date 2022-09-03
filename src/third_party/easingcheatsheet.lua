@@ -6,6 +6,8 @@
 
 -- TODO: link to the source in README as well, since it will disappear from the codebase during minification
 
+-- TODO NEXT: tokens: comment out unused functions and mention it in the main comment above
+
 function _easing_linear(t)
     return t
 end

@@ -25,7 +25,6 @@ function new_powerup(params)
     end
 
     local movement = new_movement_line_factory {
-        base_speed_y = 0,
         angle = .75,
         angled_speed = 1,
     }(start_xy)
@@ -35,11 +34,7 @@ function new_powerup(params)
     }
 
     function powerup.has_finished()
-        return is_picked or
-            movement.xy.x < _gaox - _ts or
-            movement.xy.x > _gaox + _gaw + _ts or
-            movement.xy.y < -_ts or
-            movement.xy.y > _gah + _ts
+        return is_picked or _is_safely_outside_gameplay_area(movement.xy)
     end
 
     function powerup.collision_circle()

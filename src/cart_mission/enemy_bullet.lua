@@ -11,11 +11,7 @@ function new_enemy_bullet(bullet_properties)
 
     return {
         has_finished = function()
-            return is_destroyed or
-                movement.xy.x < _gaox - _ts or
-                movement.xy.x > _gaox + _gaw + _ts or
-                movement.xy.y < -_ts or
-                movement.xy.y > _gah + _ts
+            return is_destroyed or _is_safely_outside_gameplay_area(movement.xy)
         end,
 
         collision_circle = function()

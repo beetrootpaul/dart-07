@@ -7,6 +7,8 @@
 -- TODO: fg and bg for level 2
 -- TODO: fg and bg for level 3
 
+-- TODO NEXT: tokens: any way to optimize this file?
+
 function new_level_descriptor()
     -- number below are sprites in the sprite sheet
     local end_tile = 112
@@ -30,7 +32,7 @@ function new_level_descriptor()
         filler_right_bottom = 67,
     }
 
-    -- TODO: handle structure markers in places where enemies are instead
+    -- TODO NEXT: handle structure markers in places where enemies are instead or make two types of same enemy marker: w/ and w/o structure behind
 
     local max_defined_distance
 

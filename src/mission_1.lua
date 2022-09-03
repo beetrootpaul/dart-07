@@ -49,7 +49,19 @@ function _m.enemy_properties_for(enemy_map_marker, start_xy)
             }),
             collision_circle_r = 5,
             collision_circle_offset_y = -1,
-            movement_factory = new_movement_wait_then_charge_factory(),
+            movement_factory = new_movement_sequence_factory {
+                sequence = {
+                    new_movement_line_factory {
+                        frames = 40,
+                        angle = .75,
+                        angled_speed = 1,
+                    },
+                    new_movement_line_factory {
+                        angle = .75,
+                        angled_speed = 3,
+                    },
+                },
+            },
             bullet_fire_timer = new_fake_timer(),
             spawn_bullets = _noop,
             powerups_distribution = "-,-,-,-,-,-,-,-,-,a,a,t",
@@ -138,6 +150,7 @@ function _m.boss_properties()
                 bullet_fire_timer = new_timer(20),
                 spawn_bullets = function(enemy_movement)
                     local bullets = {}
+                    -- TODO NEXT: tokens: make it factory for all params but movement preset
                     add(bullets, new_enemy_bullet {
                         bullet_sprite = _m.bullet_orb.sprite,
                         collision_circle_r = _m.bullet_orb.collision_circle_r,
@@ -170,6 +183,7 @@ function _m.boss_properties()
                 movement_factory = new_movement_sequence_factory {
                     loop = true,
                     sequence = {
+                        -- TODO NEXT: tokens: refactor drawing to minimize "_gaox +" referencing
                         new_movement_to_target_factory {
                             target_x = _gaox + 30,
                             frames = 30,
