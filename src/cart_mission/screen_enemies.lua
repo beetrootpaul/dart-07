@@ -14,17 +14,6 @@ function new_screen_enemies(params)
     local enemy_bullets = {}
     local powerups = {}
 
-    -- TODO NEXT: duplicated code
-    local throttled_fire_player_bullet = new_throttle(6, function()
-        -- TODO: SFX
-        add(player_bullets, new_player_bullet { start_xy = player.xy.plus(0, -4) })
-        if is_triple_shot_enabled then
-            -- TODO: different SFX
-            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(-5, -2) })
-            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(5, -2) })
-        end
-    end)
-
     -- TODO: duplicated code
     local function handle_player_damage()
         -- TODO NEXT: powerups retrieval after live lost?
@@ -99,6 +88,11 @@ function new_screen_enemies(params)
     -- TODO: consider enabling extra layer of music
     function screen._init()
         level.enter_phase_main()
+        player.set_on_bullets_spawned(function(bullets)
+            for _, b in pairs(bullets) do
+                add(player_bullets, b)
+            end
+        end)
     end
 
     function screen._update()
@@ -118,7 +112,9 @@ function new_screen_enemies(params)
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         if btn(_button_x) then
-            throttled_fire_player_bullet.invoke()
+            player.fire {
+                is_triple_shot_enabled = is_triple_shot_enabled,
+            }
         end
 
         level._update()
@@ -135,7 +131,6 @@ function new_screen_enemies(params)
         for _, powerup in pairs(powerups) do
             powerup._update()
         end
-        throttled_fire_player_bullet._update()
         hud._update()
 
         handle_collisions()
@@ -199,27 +194,10 @@ function new_screen_enemies(params)
     end
 
     function screen._post_draw()
-        -- TODO NEXT: tokens: create a function to iterate over given table, check has_finished(), del from the table
-        for index, enemy in pairs(enemies) do
-            if enemy.has_finished() then
-                del(enemies, enemy)
-            end
-        end
-        for index, powerup in pairs(powerups) do
-            if powerup.has_finished() then
-                del(powerups, powerup)
-            end
-        end
-        for index, player_bullet in pairs(player_bullets) do
-            if player_bullet.has_finished() then
-                del(player_bullets, player_bullet)
-            end
-        end
-        for index, enemy_bullet in pairs(enemy_bullets) do
-            if enemy_bullet.has_finished() then
-                del(enemy_bullets, enemy_bullet)
-            end
-        end
+        _delete_finished_from(enemies)
+        _delete_finished_from(powerups)
+        _delete_finished_from(player_bullets)
+        _delete_finished_from(enemy_bullets)
 
         if level.has_scrolled_to_end() and #enemies <= 0 and #enemy_bullets <= 0 and #powerups <= 0 then
             return new_screen_boss_intro {

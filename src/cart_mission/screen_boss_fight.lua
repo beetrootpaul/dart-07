@@ -14,18 +14,6 @@ function new_screen_boss_fight(params)
     local boss_bullets = {}
 
     -- TODO: duplicated code
-    -- TODO NEXT: move spawning to player?
-    local throttled_fire_player_bullet = new_throttle(6, function()
-        -- TODO: SFX
-        add(player_bullets, new_player_bullet { start_xy = player.xy.plus(0, -4) })
-        if is_triple_shot_enabled then
-            -- TODO: different SFX
-            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(-5, -2) })
-            add(player_bullets, new_player_bullet { start_xy = player.xy.plus(5, -2) })
-        end
-    end)
-
-    -- TODO: duplicated code
     local function handle_player_damage()
         -- TODO NEXT: powerups retrieval after live lost?
         -- TODO: SFX
@@ -77,9 +65,14 @@ function new_screen_boss_fight(params)
 
     function screen._init()
         boss.enter_phase_main()
-        boss.set_on_bullets_spawned(function(spawned_boss_bullets)
-            for _, seb in pairs(spawned_boss_bullets) do
-                add(boss_bullets, seb)
+        boss.set_on_bullets_spawned(function(bullets)
+            for _, b in pairs(bullets) do
+                add(boss_bullets, b)
+            end
+        end)
+        player.set_on_bullets_spawned(function(bullets)
+            for _, b in pairs(bullets) do
+                add(player_bullets, b)
             end
         end)
     end
@@ -101,7 +94,9 @@ function new_screen_boss_fight(params)
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         if btn(_button_x) then
-            throttled_fire_player_bullet.invoke()
+            player.fire {
+                is_triple_shot_enabled = is_triple_shot_enabled,
+            }
         end
 
         level._update()
@@ -113,7 +108,6 @@ function new_screen_boss_fight(params)
         for _, boss_bullet in pairs(boss_bullets) do
             boss_bullet._update()
         end
-        throttled_fire_player_bullet._update()
         hud._update()
 
         handle_collisions()
@@ -153,16 +147,8 @@ function new_screen_boss_fight(params)
     end
 
     function screen._post_draw()
-        for index, player_bullet in pairs(player_bullets) do
-            if player_bullet.has_finished() then
-                del(player_bullets, player_bullet)
-            end
-        end
-        for index, boss_bullet in pairs(boss_bullets) do
-            if boss_bullet.has_finished() then
-                del(boss_bullets, boss_bullet)
-            end
-        end
+        _delete_finished_from(player_bullets)
+        _delete_finished_from(boss_bullets)
 
         if boss.has_finished() then
             -- TODO NEXT: draft version of exploding enemies and boss

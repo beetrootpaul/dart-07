@@ -2,6 +2,14 @@
 -- common/utils.lua  --
 -- -- -- -- -- -- -- --
 
+function _delete_finished_from(game_objects)
+    for index, game_object in pairs(game_objects) do
+        if game_object.has_finished() then
+            del(game_objects, game_object)
+        end
+    end
+end
+
 function _noop()
     -- do nothing
 end

@@ -3,7 +3,6 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: score
--- TODO NEXT: edge case of a single frame of 0 hearths and strange bar initial line, during next cart loading
 -- TODO: indicate acquired powerups, i.e. triple shot
 
 function new_hud(params)
@@ -50,8 +49,10 @@ function new_hud(params)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
 
             local xy = movement.xy.ceil()
-            hearth._draw(xy.minus(_gaox-1, 10))
-            health_bar_start._draw(xy.minus(_gaox, 20))
+            hearth._draw(xy.minus(_gaox - 1, 10))
+            if player_health > 0 then
+                health_bar_start._draw(xy.minus(_gaox, 20))
+            end
             for i = 1, player_health do
                 health_bar_segment._draw(xy.minus(_gaox, 20 + i * 4))
             end

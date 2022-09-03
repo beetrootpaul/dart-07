@@ -48,12 +48,8 @@ function new_screen_boss_outro(params)
     end
 
     function screen._post_draw()
-        for index, player_bullet in pairs(player_bullets) do
-            if player_bullet.has_finished() then
-                del(player_bullets, player_bullet)
-            end
-        end
-        
+        _delete_finished_from(player_bullets)
+
         -- TODO: fade screen out
         -- TODO: fade next screen in
         if screen_timer.ttl <= 0 then

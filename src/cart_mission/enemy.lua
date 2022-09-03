@@ -50,7 +50,6 @@ function new_enemy(params)
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
-                -- TODO NEXT: bullet factory
                 on_bullets_spawned(enemy_properties.spawn_bullets(movement))
             end
 

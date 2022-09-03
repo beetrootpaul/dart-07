@@ -9,7 +9,8 @@ function new_boss(params)
     local intro_frames = params.intro_frames
     local intro_start_xy = params.intro_start_xy
     local start_xy = params.start_xy
-    local on_bullets_spawned = params.on_bullets_spawned or _noop
+
+    local on_bullets_spawned = _noop
 
     local phases = boss_properties.phases
 
