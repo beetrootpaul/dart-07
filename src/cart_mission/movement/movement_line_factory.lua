@@ -19,7 +19,6 @@ function new_movement_line_factory(params)
             return timer.ttl <= 0
         end
 
-        -- TODO NEXT: make sure enemy cannot shoot when off screen
         function movement._update()
             timer._update()
             movement.xy = movement.xy.plus(movement.speed_xy)

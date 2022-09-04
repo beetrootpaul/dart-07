@@ -16,3 +16,9 @@ function _is_safely_outside_gameplay_area(xy)
         xy.y < -_ts or
         xy.y > _gah + _ts
 end
+
+function _is_y_not_within_gameplay_area(y)
+    -- 3 is an arbitrary chosen offset to increase a chance player will 
+    -- see what they hit before it disappears
+    return y < 3 or y > _gah - 3
+end
