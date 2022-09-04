@@ -15,7 +15,7 @@ _m.enemy_bullet_factory = new_enemy_bullet_factory {
 }
 
 function _m.enemy_properties_for(enemy_map_marker)
-    if enemy_map_marker == 79 then
+    if enemy_map_marker == 73 then
         return {
             health = 1,
             ship_sprite = new_static_sprite(8, 8, 0, 64, {
