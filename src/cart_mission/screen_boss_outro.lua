@@ -9,6 +9,7 @@ function new_screen_boss_outro(params)
     local level = params.level
     local player = params.player
     local player_bullets = params.player_bullets
+    local explosions = params.explosions
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
@@ -29,6 +30,9 @@ function new_screen_boss_outro(params)
         for _, player_bullet in pairs(player_bullets) do
             player_bullet._update()
         end
+        for _, explosion in pairs(explosions) do
+            explosion._update()
+        end
         hud._update()
 
         fade_out._update()
@@ -43,9 +47,12 @@ function new_screen_boss_outro(params)
                     player_bullet._draw()
                 end
                 player._draw()
+                for _, explosion in pairs(explosions) do
+                    explosion._draw()
+                end
             end,
         }
-        
+
         hud._draw {
             player_health = health,
         }
@@ -55,6 +62,7 @@ function new_screen_boss_outro(params)
 
     function screen._post_draw()
         _delete_finished_from(player_bullets)
+        _delete_finished_from(explosions)
 
         -- TODO: fade screen out
         -- TODO: fade next screen in

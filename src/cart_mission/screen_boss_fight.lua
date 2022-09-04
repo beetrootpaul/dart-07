@@ -6,11 +6,12 @@ function new_screen_boss_fight(params)
     local level = params.level
     local player = params.player
     local boss = params.boss
+    local player_bullets = params.player_bullets
+    local explosions = params.explosions
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
-    local player_bullets = {}
     local boss_bullets = {}
 
     -- TODO: duplicated code
@@ -108,6 +109,9 @@ function new_screen_boss_fight(params)
         for _, boss_bullet in pairs(boss_bullets) do
             boss_bullet._update()
         end
+        for _, explosion in pairs(explosions) do
+            explosion._update()
+        end
         hud._update()
 
         handle_collisions()
@@ -125,6 +129,9 @@ function new_screen_boss_fight(params)
                 end
                 boss._draw()
                 player._draw()
+                for _, explosion in pairs(explosions) do
+                    explosion._draw()
+                end
             end,
         }
         hud._draw {
@@ -149,6 +156,7 @@ function new_screen_boss_fight(params)
     function screen._post_draw()
         _delete_finished_from(player_bullets)
         _delete_finished_from(boss_bullets)
+        _delete_finished_from(explosions)
 
         if boss.has_finished() then
             -- TODO NEXT: draft version of exploding enemies and boss
@@ -157,6 +165,7 @@ function new_screen_boss_fight(params)
                 level = level,
                 player = player,
                 player_bullets = player_bullets,
+                explosions = explosions,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,

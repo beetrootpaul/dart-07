@@ -6,6 +6,7 @@ function new_screen_boss_intro(params)
     local level = params.level
     local player = params.player
     local player_bullets = params.player_bullets
+    local explosions = params.explosions
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
@@ -39,6 +40,9 @@ function new_screen_boss_intro(params)
         for _, player_bullet in pairs(player_bullets) do
             player_bullet._update()
         end
+        for _, explosion in pairs(explosions) do
+            explosion._update()
+        end
         player._update()
         boss._update { no_fight = true }
         hud._update()
@@ -55,6 +59,9 @@ function new_screen_boss_intro(params)
                 end
                 boss._draw()
                 player._draw()
+                for _, explosion in pairs(explosions) do
+                    explosion._draw()
+                end
             end,
         }
         hud._draw {
@@ -65,12 +72,15 @@ function new_screen_boss_intro(params)
 
     function screen._post_draw()
         _delete_finished_from(player_bullets)
+        _delete_finished_from(explosions)
 
         if screen_timer.ttl <= 0 then
             return new_screen_boss_fight {
                 level = level,
                 player = player,
                 boss = boss,
+                player_bullets = player_bullets,
+                explosions = explosions,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,

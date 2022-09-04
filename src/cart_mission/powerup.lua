@@ -6,10 +6,7 @@
 -- TODO: actions on pick up
 -- TODO: magnet for an easier pickup?
 
-function new_powerup(params)
-    local powerup_type = params.powerup_type
-    local start_xy = params.start_xy
-
+function new_powerup(start_xy, powerup_type)
     local is_picked = false
 
     local sprite
@@ -39,7 +36,7 @@ function new_powerup(params)
 
     function powerup.collision_circle()
         return {
-            xy = movement.xy.plus(-.5, -.5),
+            xy = movement.xy.minus(.5, .5),
             r = 5,
         }
     end

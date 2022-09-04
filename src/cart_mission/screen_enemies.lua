@@ -13,6 +13,7 @@ function new_screen_enemies(params)
     local player_bullets = {}
     local enemy_bullets = {}
     local powerups = {}
+    local explosions = {}
 
     -- TODO: duplicated code
     local function handle_player_damage()
@@ -131,6 +132,9 @@ function new_screen_enemies(params)
         for _, powerup in pairs(powerups) do
             powerup._update()
         end
+        for _, explosion in pairs(explosions) do
+            explosion._update()
+        end
         hud._update()
 
         handle_collisions()
@@ -149,6 +153,13 @@ function new_screen_enemies(params)
                     -- TODO: implement more powerup types: circling orb? diagonal shot? laser? power field?
                     -- TODO: indicate powerups in hud
                     add(powerups, powerup)
+                end,
+                on_destroyed = function(xy, powerup_type)
+                    -- TODO: explosion SFX
+                    add(explosions, new_explosion(xy))
+                    if powerup_type ~= "-" then
+                        add(powerups, new_powerup(xy, powerup_type))
+                    end
                 end,
             })
         end
@@ -171,6 +182,9 @@ function new_screen_enemies(params)
                     powerup._draw()
                 end
                 player._draw()
+                for _, explosion in pairs(explosions) do
+                    explosion._draw()
+                end
             end,
         }
         hud._draw {
@@ -198,12 +212,14 @@ function new_screen_enemies(params)
         _delete_finished_from(powerups)
         _delete_finished_from(player_bullets)
         _delete_finished_from(enemy_bullets)
+        _delete_finished_from(explosions)
 
         if level.has_scrolled_to_end() and #enemies <= 0 and #enemy_bullets <= 0 and #powerups <= 0 then
             return new_screen_boss_intro {
                 level = level,
                 player = player,
                 player_bullets = player_bullets,
+                explosions = explosions,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,
