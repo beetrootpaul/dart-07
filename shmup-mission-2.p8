@@ -29,14 +29,13 @@ __lua__
 #include build/src/cart_mission/movement/movement_sinusoidal_factory.lua
 #include build/src/cart_mission/movement/movement_stationary_factory.lua
 #include build/src/cart_mission/movement/movement_to_target_factory.lua
-#include build/src/cart_mission/movement/movement_wait_then_charge_factory.lua
 #include build/src/cart_mission/sprites/animated_sprite.lua
 #include build/src/cart_mission/sprites/fake_sprite.lua
 #include build/src/cart_mission/sprites/static_sprite.lua
 #include build/src/cart_mission/boss.lua
 #include build/src/cart_mission/collisions.lua
 #include build/src/cart_mission/enemy.lua
-#include build/src/cart_mission/enemy_bullet.lua
+#include build/src/cart_mission/enemy_bullet_factory.lua
 #include build/src/cart_mission/level.lua
 #include build/src/cart_mission/level_descriptor.lua
 #include build/src/cart_mission/player.lua

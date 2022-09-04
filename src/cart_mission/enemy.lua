@@ -15,18 +15,19 @@ function new_enemy(params)
     local is_flashing_from_damage = false
     local is_destroyed = false
 
-    -- TODO: make collision detection work only if at least 1px of the enemy is visible, not before
+    local function collision_circle()
+        return {
+            xy = movement.xy.plus(-.5, -.5 + enemy_properties.collision_circle_offset_y),
+            r = enemy_properties.collision_circle_r,
+        }
+    end
+
     return {
         has_finished = function()
             return is_destroyed or movement.xy.y > _gah + _ts
         end,
 
-        collision_circle = function()
-            return {
-                xy = movement.xy.plus(-.5, -.5 + enemy_properties.collision_circle_offset_y),
-                r = enemy_properties.collision_circle_r,
-            }
-        end,
+        collision_circle = collision_circle,
 
         take_damage = function()
             health = health - 1
@@ -50,7 +51,10 @@ function new_enemy(params)
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
-                on_bullets_spawned(enemy_properties.spawn_bullets(movement))
+                local cc = collision_circle()
+                if not _is_y_not_within_gameplay_area(cc.xy.y + cc.r) then
+                    on_bullets_spawned(enemy_properties.spawn_bullets(movement))
+                end
             end
 
             is_flashing_from_damage = false

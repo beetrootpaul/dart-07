@@ -10,18 +10,13 @@ function new_player_bullet(params)
     local bullet_sprite = new_static_sprite(4, 6, 4, 12)
 
     local movement = new_movement_line_factory {
-        base_speed_y = 0,
         angle = .25,
         angled_speed = 5,
     }(start_xy)
 
     return {
         has_finished = function()
-            return is_destroyed or
-                movement.xy.x < _gaox - _ts or
-                movement.xy.x > _gaox + _gaw + _ts or
-                movement.xy.y < -_ts or
-                movement.xy.y > _gah + _ts
+            return is_destroyed or _is_safely_outside_gameplay_area(movement.xy)
         end,
 
         collision_circle = function()

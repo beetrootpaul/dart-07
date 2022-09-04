@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- --
--- common/vectors.lua   --
--- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- --
+-- common/xy.lua  --
+-- -- -- -- -- -- --
 
 function _xy(x, y)
     return {

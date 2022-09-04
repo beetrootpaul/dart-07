@@ -2,6 +2,7 @@
 -- cart_mission/sprites/static_sprite.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: consider consolidating with new_animated_sprite
 function new_static_sprite(sprite_w, sprite_h, sprite_x, sprite_y, params)
     params = params or {}
     local from_left_top_corner = params.from_left_top_corner
@@ -29,7 +30,7 @@ function new_static_sprite(sprite_w, sprite_h, sprite_x, sprite_y, params)
             sspr(
                 sprite_x, sprite_y,
                 sprite_w, sprite_h,
-                xy.x, xy.y
+                _gaox + xy.x, xy.y
             )
 
             if opts.flash_color then

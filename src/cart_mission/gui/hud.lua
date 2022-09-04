@@ -3,24 +3,28 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: score
--- TODO: edge case of a single frame of 0 hearths and strange bar initial line, during next cart loading
 -- TODO: indicate acquired powerups, i.e. triple shot
 
 function new_hud(params)
     local wait_frames = params.wait_frames
     local slide_in_frames = params.slide_in_frames
 
-    local wait_timer = new_timer(wait_frames)
-
-    local slide_in_timer = new_timer(slide_in_frames)
-    -- TODO: externalize?
-    local slide_in_x_initial = -16
-    local slide_in_x_target = 4
+    local movement = new_movement_sequence_factory {
+        sequence = {
+            new_movement_fixed_factory {
+                frames = wait_frames,
+            },
+            new_movement_to_target_factory {
+                frames = slide_in_frames,
+                target_x = 4,
+                easing_fn = _easing_easeoutquart,
+            },
+        },
+    }(_xy(-16, _vs))
 
     local bar_w = 16
     local boss_health_bar_margin = 2
 
-    -- TODO: use movement sequence and xy here
     local hearth = new_static_sprite(6, 5, 40, 12, {
         from_left_top_corner = true,
     })
@@ -31,22 +35,9 @@ function new_hud(params)
         from_left_top_corner = true,
     })
 
-    -- phase: wait -> slide_in
-    local phase = "wait"
-
     return {
         _update = function()
-            if phase == "wait" then
-                if wait_timer.ttl > 0 then
-                    wait_timer._update()
-                else
-                    phase = "slide_in"
-                end
-            elseif phase == "slide_in" then
-                if slide_in_timer.ttl > 0 then
-                    slide_in_timer._update()
-                end
-            end
+            movement._update()
         end,
 
         _draw = function(p)
@@ -57,22 +48,17 @@ function new_hud(params)
             rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
 
-            if phase == "slide_in" then
-                local x = ceil(_easing_lerp(
-                    slide_in_x_initial,
-                    slide_in_x_target,
-                    _easing_easeoutquart(slide_in_timer.passed_fraction())
-                ))
-                hearth._draw(_xy(x + 1, _vs - 10))
-                health_bar_start._draw(_xy(x, _vs - 20))
-                for i = 1, player_health do
-                    health_bar_segment._draw(_xy(x, _vs - 20 - i * 4))
-                end
+            local xy = movement.xy.ceil()
+            hearth._draw(xy.minus(_gaox - 1, 10))
+            if player_health > 0 then
+                health_bar_start._draw(xy.minus(_gaox, 20))
+            end
+            for i = 1, player_health do
+                health_bar_segment._draw(xy.minus(_gaox, 20 + i * 4))
             end
 
             -- TODO: polish it, add boss name above the bar
             if boss_health and boss_health_max then
-                -- TODO: encapsulate health and expose fraction method
                 local health_fraction = boss_health / boss_health_max
                 rectfill(
                     _gaox + boss_health_bar_margin,

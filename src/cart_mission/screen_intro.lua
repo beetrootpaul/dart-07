@@ -31,21 +31,7 @@ function new_screen_intro(params)
     end
 
     function screen._update()
-        -- TODO: duplicated code
-        if btn(_button_down) then
-            player.set_vertical_movement("d")
-        elseif btn(_button_up) then
-            player.set_vertical_movement("u")
-        else
-            player.set_vertical_movement("-")
-        end
-        if btn(_button_left) then
-            player.set_horizontal_movement("l")
-        elseif btn(_button_right) then
-            player.set_horizontal_movement("r")
-        else
-            player.set_horizontal_movement("-")
-        end
+        player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         level._update()
         player._update()

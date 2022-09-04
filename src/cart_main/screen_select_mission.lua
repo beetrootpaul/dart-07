@@ -16,8 +16,6 @@ function new_screen_select_mission()
     end
 
     function screen._update()
-        local next_screen = screen
-
         if btnp(_button_up) then
             selected_mission = selected_mission - 1
         end
@@ -30,8 +28,6 @@ function new_screen_select_mission()
         if btnp(_button_x) then
             should_start_mission = true
         end
-
-        return next_screen
     end
 
     function screen._draw()

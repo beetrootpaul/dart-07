@@ -18,11 +18,10 @@ function new_movement_sinusoidal_factory()
             )
         }
 
-        function movement.has_reached_target()
+        function movement.has_finished()
             return false
         end
 
-        -- TODO: make sure enemy cannot shoot when off screen
         function movement._update()
             movement.speed_xy = movement.speed_xy.set_x(x() - movement.xy.x)
             movement.xy = movement.xy.plus(movement.speed_xy)

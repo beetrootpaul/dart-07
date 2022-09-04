@@ -2,14 +2,13 @@
 -- cart_mission/boss.lua   --
 -- -- -- -- -- -- -- -- -- --
 
--- TODO: make collision detection work only if at least 1px of the enemy is visible, not before
-
 function new_boss(params)
     local boss_properties = params.boss_properties
     local intro_frames = params.intro_frames
     local intro_start_xy = params.intro_start_xy
     local start_xy = params.start_xy
-    local on_bullets_spawned = params.on_bullets_spawned or _noop
+
+    local on_bullets_spawned = _noop
 
     local phases = boss_properties.phases
 
@@ -81,7 +80,6 @@ function new_boss(params)
         is_flashing_from_damage = false
     end
 
-    -- TODO: multiple sprites with their own slight movement 
     function boss._draw()
         boss_properties.sprite._draw(movement.xy, {
             -- TODO: make it pure white?

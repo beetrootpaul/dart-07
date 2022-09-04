@@ -13,7 +13,7 @@ function new_movement_fixed_factory(params)
             speed_xy = _xy(0, 0),
         }
 
-        function movement.has_reached_target()
+        function movement.has_finished()
             return timer.ttl <= 0
         end
 

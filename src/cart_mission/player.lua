@@ -2,15 +2,13 @@
 -- cart_mission/player.lua --
 -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider rotating the whole game to vertical scroller
-
 function new_player()
     local w = 10
     local h = 10
     local speed = 2
 
-    local min_x = _gaox + w / 2 + 1
-    local max_x = _gaox + _gaw - w / 2 - 1
+    local min_x = w / 2 + 1
+    local max_x = _gaw - w / 2 - 1
     local min_y = h / 2 + 1
     local max_y = _gah - h / 2 - 1
 
@@ -25,86 +23,86 @@ function new_player()
     })
     local ship_sprite_current = ship_sprite_neutral
 
-    local jet_sprite_visible = new_animated_sprite {
-        sprite_w = 4,
-        sprite_h = 4,
-        sprite_xs = { 0, 0, 4, 4 },
-        sprite_y = 8,
-    }
+    local jet_sprite_visible = new_animated_sprite(4, 4, { 0, 0, 4, 4 }, 8)
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
+    local on_bullets_spawned = new_throttle(6, _noop)
+
     local invincible_after_damage_timer
+
+    local xy = _xy(_gaw / 2, _gah - 28)
 
     -- 
 
-    local player = {
-        xy = _xy(_gaox + _gaw / 2, _gah - 28)
-    }
+    return {
 
-    function player.set_vertical_movement(direction)
-        if direction == "u" then
-            player.xy = player.xy.set_y(max(player.xy.y - speed, min_y))
-            jet_sprite = jet_sprite_visible
-        elseif direction == "d" then
-            player.xy = player.xy.set_y(min(player.xy.y + speed, max_y))
-            jet_sprite = jet_sprite_hidden
-        else
-            jet_sprite = jet_sprite_visible
-        end
-    end
+        set_movement = function(left, right, up, down)
+            jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
+            ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
+            xy = xy
+                .set_x(mid(min_x, xy.x + (right and speed or (left and -speed or 0)), max_x))
+                .set_y(mid(min_y, xy.y + (down and speed or (up and -speed or 0)), max_y))
+        end,
 
-    function player.set_horizontal_movement(direction)
-        if direction == "l" then
-            player.xy = player.xy.set_x(max(player.xy.x - speed, min_x))
-            ship_sprite_current = ship_sprite_flying_left
-        elseif direction == "r" then
-            player.xy = player.xy.set_x(min(player.xy.x + speed, max_x))
-            ship_sprite_current = ship_sprite_flying_right
-        else
-            ship_sprite_current = ship_sprite_neutral
-        end
-    end
+        set_on_bullets_spawned = function(callback)
+            on_bullets_spawned = new_throttle(6, callback)
+        end,
 
-    function player.collision_circle()
-        return {
-            xy = player.xy.plus(-.5, .5),
-            r = 4,
-        }
-    end
-
-    function player.is_invincible_after_damage()
-        return invincible_after_damage_timer ~= nil
-    end
-
-    function player.start_invincibility_after_damage()
-        -- TODO: SFX
-        invincible_after_damage_timer = new_timer(30)
-    end
-
-    function player._update()
-        if invincible_after_damage_timer then
-            if invincible_after_damage_timer.ttl <= 0 then
-                invincible_after_damage_timer = nil
-            else
-                invincible_after_damage_timer._update()
+        fire = function(p)
+            local bullets = {
+                -- TODO: SFX?
+                new_player_bullet { start_xy = xy.plus(0, -4) },
+            }
+            if p.is_triple_shot_enabled then
+                -- TODO: different SFX?
+                add(bullets, new_player_bullet { start_xy = xy.plus(-5, -2) })
+                add(bullets, new_player_bullet { start_xy = xy.plus(5, -2) })
             end
-        end
+            on_bullets_spawned.invoke(bullets)
+        end,
 
-        jet_sprite._update()
-    end
+        collision_circle = function()
+            return {
+                xy = xy.plus(-.5, .5),
+                r = 4,
+            }
+        end,
 
-    function player._draw()
-        local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
-        ship_sprite_current._draw(player.xy, {
-            -- TODO: make it pure white?
-            flash_color = flash and _color_6_light_grey or nil,
-        })
-        jet_sprite._draw(player.xy.plus(0, 8), {
-            -- TODO: make it pure white?
-            flash_color = flash and _color_6_light_grey or nil,
-        })
-    end
+        is_invincible_after_damage = function()
+            return invincible_after_damage_timer ~= nil
+        end,
 
-    return player
+        start_invincibility_after_damage = function()
+            -- TODO: SFX
+            invincible_after_damage_timer = new_timer(30)
+        end,
+
+        _update = function()
+            if invincible_after_damage_timer then
+                if invincible_after_damage_timer.ttl <= 0 then
+                    invincible_after_damage_timer = nil
+                else
+                    invincible_after_damage_timer._update()
+                end
+            end
+
+            on_bullets_spawned._update()
+
+            jet_sprite._update()
+        end,
+
+        _draw = function()
+            local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
+            ship_sprite_current._draw(xy, {
+                -- TODO: make it pure white?
+                flash_color = flash and _color_6_light_grey or nil,
+            })
+            jet_sprite._draw(xy.plus(0, 8), {
+                -- TODO: make it pure white?
+                flash_color = flash and _color_6_light_grey or nil,
+            })
+        end,
+
+    }
 end

@@ -22,11 +22,13 @@ function new_level(descriptor)
     local spawn_distance_offset = 1
     local spawn_distance = max_visible_distance + spawn_distance_offset
 
-    -- TODO: externalize animated/static tile to its own file, create it in level descriptor
-    local animation_frame = 0
-    local animation_steps = 4
-    local animation_step_length = 12
-    local animated_bg_tiles = { 69, 85, 101, 117 }
+    local bg_tile = new_animated_sprite(
+        8,
+        8,
+        split("40,40,40,40,40,40,40,40,40,40,40,40,48,48,48,48,48,48,48,48,48,48,48,48,56,56,56,56,56,56,56,56,56,56,56,56,64,64,64,64,64,64,64,64,64,64,64,64"),
+        32,
+        { from_left_top_corner = true }
+    )
 
     -- phase: intro -> main -> outro 
     local phase = "intro"
@@ -59,7 +61,7 @@ function new_level(descriptor)
                             add(result, {
                                 enemy_map_marker = enemy_map_marker,
                                 xy = _xy(
-                                    _gaox + (lane - .5) * _ts,
+                                    (lane - .5) * _ts,
                                     _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts
                                 ).plus(enemy_offset),
                             })
@@ -73,7 +75,7 @@ function new_level(descriptor)
         end,
 
         _update = function()
-            animation_frame = (animation_frame + 1) % (animation_steps * animation_step_length)
+            bg_tile._update()
 
             if phase ~= "outro" and min_visible_distance >= max_defined_distance + 1 then
                 phase = "outro"
@@ -98,23 +100,21 @@ function new_level(descriptor)
         _draw = function(opts)
             local draw_within_level_bounds = opts.draw_within_level_bounds
 
-            local bg_tile = _m.has_bg_tiles and animated_bg_tiles[flr(animation_frame / animation_step_length) + 1] or nil
-
             clip(_gaox, 0, _gaw, _gah)
 
             for distance = flr(min_visible_distance), ceil(max_visible_distance) do
                 for lane = 1, 12 do
-                    local x = _gaox + (lane - 1) * _ts
-                    local y = _vs - flr((distance - min_visible_distance + 1) * _ts)
-
-                    if bg_tile then
-                        spr(bg_tile, x, y)
+                    local xy = _xy(
+                        (lane - 1) * _ts,
+                        _vs - flr((distance - min_visible_distance + 1) * _ts)
+                    )
+                    if _m.has_bg_tiles then
+                        bg_tile._draw(xy)
                     end
-
                     if phase == "main" then
                         local fg_tile = structures[distance][lane]
                         if fg_tile then
-                            spr(fg_tile, x, y)
+                            spr(fg_tile, _gaox + xy.x, xy.y)
                         end
                     end
                 end

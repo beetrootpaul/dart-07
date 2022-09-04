@@ -9,12 +9,12 @@ _m = {
     has_bg_tiles = false,
 }
 
-_m.bullet_orb = {
-    sprite = new_static_sprite(4, 4, 124, 64),
+_m.enemy_bullet_factory = new_enemy_bullet_factory {
+    bullet_sprite = new_static_sprite(4, 4, 124, 64),
     collision_circle_r = 2,
 }
 
-function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
+function _m.enemy_properties_for(enemy_map_marker)
     if enemy_map_marker == 79 then
         return {
             health = 1,
@@ -23,20 +23,30 @@ function _m.enemy_properties_for(enemy_map_marker, start_x, start_y)
             }),
             collision_circle_r = 4,
             collision_circle_offset_y = 0,
-            movement_factory = new_movement_wait_then_charge_factory(),
+            movement_factory = new_movement_sequence_factory {
+                sequence = {
+                    new_movement_line_factory {
+                        frames = 40,
+                        angle = .75,
+                        angled_speed = 1,
+                    },
+                    new_movement_line_factory {
+                        angle = .75,
+                        angled_speed = 3,
+                    },
+                },
+            },
             bullet_fire_timer = new_timer(15),
             spawn_bullets = function(enemy_movement)
                 local bullets = {}
                 for i = 3, 5 do
-                    add(bullets, new_enemy_bullet {
-                        bullet_sprite = _m.bullet_orb.sprite,
-                        collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line_factory {
+                    add(bullets, _m.enemy_bullet_factory(
+                        new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .5 + i / 16,
                             angled_speed = 4,
-                        }(enemy_movement.xy),
-                    })
+                        }(enemy_movement.xy)
+                    ))
                 end
                 return bullets
             end,
@@ -64,15 +74,13 @@ function _m.boss_properties()
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement)
                     local bullets = {}
-                    add(bullets, new_enemy_bullet {
-                        bullet_sprite = _m.bullet_orb.sprite,
-                        collision_circle_r = _m.bullet_orb.collision_circle_r,
-                        movement = new_movement_line_factory {
+                    add(bullets, _m.enemy_bullet_factory(
+                        new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
                             angled_speed = 1,
-                        }(enemy_movement.xy.plus(0, 3)),
-                    })
+                        }(enemy_movement.xy.plus(0, 3))
+                    ))
                     return bullets
                 end,
                 movement_factory = new_movement_fixed_factory(),

@@ -2,9 +2,6 @@
 -- cart_mission/screen_boss_intro.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: GUI boss announcement
--- TODO: boss slide in
-
 function new_screen_boss_intro(params)
     local level = params.level
     local player = params.player
@@ -16,8 +13,8 @@ function new_screen_boss_intro(params)
     local boss = new_boss {
         boss_properties = _m.boss_properties(),
         intro_frames = 90,
-        intro_start_xy = _xy(_gaox + _gaw / 2, -120),
-        start_xy = _xy(_gaox + _gaw / 2, 20, 20),
+        intro_start_xy = _xy(_gaw / 2, -120),
+        start_xy = _xy(_gaw / 2, 20, 20),
     }
 
     local boss_info = new_boss_info {
@@ -36,21 +33,7 @@ function new_screen_boss_intro(params)
     end
 
     function screen._update()
-        -- TODO: duplicated code
-        if btn(_button_down) then
-            player.set_vertical_movement("d")
-        elseif btn(_button_up) then
-            player.set_vertical_movement("u")
-        else
-            player.set_vertical_movement("-")
-        end
-        if btn(_button_left) then
-            player.set_horizontal_movement("l")
-        elseif btn(_button_right) then
-            player.set_horizontal_movement("r")
-        else
-            player.set_horizontal_movement("-")
-        end
+        player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         level._update()
         for _, player_bullet in pairs(player_bullets) do
@@ -81,11 +64,7 @@ function new_screen_boss_intro(params)
     end
 
     function screen._post_draw()
-        for index, player_bullet in pairs(player_bullets) do
-            if player_bullet.has_finished() then
-                del(player_bullets, player_bullet)
-            end
-        end
+        _delete_finished_from(player_bullets)
 
         if screen_timer.ttl <= 0 then
             return new_screen_boss_fight {

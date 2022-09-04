@@ -15,17 +15,17 @@ function new_movement_sequence_factory(params)
             speed_xy = current_sub_movement.speed_xy,
         }
 
-        function movement.has_reached_target()
+        function movement.has_finished()
             if loop then
                 return false
             end
-            return sequence_index >= #sequence and current_sub_movement.has_reached_target()
+            return sequence_index >= #sequence and current_sub_movement.has_finished()
         end
 
         function movement._update()
             current_sub_movement._update()
 
-            if current_sub_movement.has_reached_target() then
+            if current_sub_movement.has_finished() then
                 if sequence_index < #sequence then
                     sequence_index = sequence_index + 1
                     current_sub_movement = sequence[sequence_index](current_sub_movement.xy)
