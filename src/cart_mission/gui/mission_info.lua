@@ -5,6 +5,7 @@
 -- TODO: better mission info GUI
 
 function new_mission_info(params)
+    local wait_frames = params.wait_frames
     local slide_in_frames = params.slide_in_frames
     local present_frames = params.present_frames
     local slide_out_frames = params.slide_out_frames
@@ -12,6 +13,9 @@ function new_mission_info(params)
     local rounding_fn = "ceil"
     local movement = new_movement_sequence_factory {
         sequence = {
+            new_movement_fixed_factory {
+                frames = wait_frames,
+            },
             new_movement_to_target_factory {
                 frames = slide_in_frames,
                 target_y = _gah / 2,

@@ -96,7 +96,9 @@ end
 
 function _m.boss_properties()
     return {
-        health = 50,
+        -- TODO: revert
+        health = 1,
+        --health = 50,
         sprite = new_static_sprite(56, 26, 4, 98, {
             transparent_color = _color_11_dark_green,
         }),

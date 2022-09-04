@@ -13,7 +13,8 @@ function new_screen_boss_outro(params)
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
-    local screen_timer = new_timer(90)
+    local fade_out = new_fade("out", 10, 50)
+    local screen_timer = new_timer(60)
 
     --
 
@@ -29,6 +30,8 @@ function new_screen_boss_outro(params)
             player_bullet._update()
         end
         hud._update()
+
+        fade_out._update()
         screen_timer._update()
     end
 
@@ -42,9 +45,12 @@ function new_screen_boss_outro(params)
                 player._draw()
             end,
         }
+        
         hud._draw {
             player_health = health,
         }
+
+        fade_out._draw()
     end
 
     function screen._post_draw()

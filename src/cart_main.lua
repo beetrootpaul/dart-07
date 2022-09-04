@@ -12,6 +12,7 @@ function _init()
     current_screen = new_screen_title()
 end
 
+-- TODO: change to 60 FPS if same decided for mission cart
 function _update()
     next_screen = current_screen._post_draw()
 
@@ -29,6 +30,8 @@ function _draw()
     _remap_display_colors()
 end
 
+-- TODO: texts shaded with 2 horizontal colors
+
 -- TODO NEXT: tutorial screen? press X to shoot, arrows to fly
 -- TODO NEXT: screen shake?
 -- TODO NEXT: menu item to disable screen shake?
@@ -36,8 +39,6 @@ end
 -- TODO NEXT: "hit stop"?
 
 -- TODO NEXT: push enemies and boss on damage?
-
--- TODO NEXT: lighten/darken transition between screens? Or dithered "fillp" one?
 
 -- TODO: menu music
 -- TODO: music per stage
@@ -55,3 +56,8 @@ end
 -- TODO: balancing: boss bullet movement
 
 -- TODO: consider license other than MIT
+
+-- TODO: itch.io: favicon
+
+-- TODO: GitHub repo: final name
+-- TODO: GitHub repo: description & website & topics
