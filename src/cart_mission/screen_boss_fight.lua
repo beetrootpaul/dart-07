@@ -2,6 +2,8 @@
 -- cart_mission/screen_boss_fight.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: consider some explosions along the fight
+
 function new_screen_boss_fight(params)
     local level = params.level
     local player = params.player
@@ -19,6 +21,7 @@ function new_screen_boss_fight(params)
         -- TODO NEXT: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
+        -- TODO NEXT: player defeat explosion
         -- TODO: VFX of disappearing health segment
         health = health - 1
         if health > 0 then
@@ -69,6 +72,18 @@ function new_screen_boss_fight(params)
         boss.set_on_bullets_spawned(function(bullets)
             for _, b in pairs(bullets) do
                 add(boss_bullets, b)
+            end
+        end)
+        boss.set_on_entered_next_phase(function(collision_circles)
+            -- TODO: small explosions SFX
+            for _, cc in pairs(collision_circles) do
+                add(explosions, new_explosion(cc.xy, .75 * cc.r))
+            end
+        end)
+        boss.set_on_destroyed(function(collision_circles)
+            -- TODO: explosions SFX
+            for _, cc in pairs(collision_circles) do
+                add(explosions, new_explosion(cc.xy, 3 * cc.r))
             end
         end)
         player.set_on_bullets_spawned(function(bullets)
@@ -129,12 +144,12 @@ function new_screen_boss_fight(params)
         }
 
         -- DEBUG:
-        _collisions._debug_draw_collision_circle(player.collision_circle())
-        for _, boss_cc in pairs(boss.collision_circles()) do
-            _collisions._debug_draw_collision_circle(boss_cc)
-        end
-        _go_draw_debug_collision_circles(player_bullets)
-        _go_draw_debug_collision_circles(boss_bullets)
+        --_collisions._debug_draw_collision_circle(player.collision_circle())
+        --for _, boss_cc in pairs(boss.collision_circles()) do
+        --    _collisions._debug_draw_collision_circle(boss_cc)
+        --end
+        --_go_draw_debug_collision_circles(player_bullets)
+        --_go_draw_debug_collision_circles(boss_bullets)
     end
 
     function screen._post_draw()

@@ -41,7 +41,7 @@ function _m.enemy_properties_for(enemy_map_marker)
     end
     if enemy_map_marker == 78 then
         return {
-            health = 1,
+            health = 3,
             ship_sprite = new_static_sprite(12, 9, 14, 64, {
                 transparent_color = _color_11_dark_green,
             }),
@@ -67,7 +67,7 @@ function _m.enemy_properties_for(enemy_map_marker)
     end
     if enemy_map_marker == 79 then
         return {
-            health = 6,
+            health = 7,
             ship_sprite = new_static_sprite(14, 16, 0, 64, {
                 transparent_color = _color_11_dark_green,
             }),
@@ -96,9 +96,7 @@ end
 
 function _m.boss_properties()
     return {
-        -- TODO: revert
-        health = 1,
-        --health = 50,
+        health = 7,
         sprite = new_static_sprite(56, 26, 4, 98, {
             transparent_color = _color_11_dark_green,
         }),

@@ -4,21 +4,64 @@
 
 -- TODO: polish it
 
-function new_explosion(start_xy)
+function new_explosion(start_xy, magnitude, wait_frames)
+    local particles = {}
+    for _ = 1, 9 do
+        add(particles, {
+            xy = start_xy.plus(
+                magnitude * (rnd() - .5),
+                magnitude * (rnd() - .5)
+            ),
+            r = magnitude / 2 + rnd(magnitude / 2),
+        })
+    end
+
+    local wait_timer = new_timer(wait_frames or 0)
+
     return {
         has_finished = function()
-            return false
+            for _, particle in pairs(particles) do
+                if particle.r > 0 then
+                    return false
+                end
+            end
+            return true
         end,
+
         _update = function()
-            -- TODO: ???
+            wait_timer._update()
+            if wait_timer.ttl <= 0 then
+                for _, particle in pairs(particles) do
+                    particle.xy = particle.xy.plus(
+                        3 * (rnd() - .5),
+                        3 * (rnd() - .5)
+                    )
+                    particle.r = max(0, particle.r - magnitude * rnd() / 40)
+                end
+            end
         end,
+
         _draw = function()
-            circ(
-                _gaox + start_xy.x,
-                start_xy.y,
-                6,
-                _color_8_red
-            )
+            if wait_timer.ttl <= 0 then
+                for _, particle in pairs(particles) do
+                    local color = _color_8_red
+                    if particle.r < magnitude * .2 then
+                        color = _color_13_mauve
+                    elseif particle.r < magnitude * .4 then
+                        color = _color_6_light_grey
+                    elseif particle.r < magnitude * .6 then
+                        color = _color_15_peach
+                    elseif particle.r < magnitude * .8 then
+                        color = _color_9_dark_orange
+                    end
+                    circfill(
+                        _gaox + particle.xy.x,
+                        particle.xy.y,
+                        particle.r,
+                        color
+                    )
+                end
+            end
         end,
     }
 end

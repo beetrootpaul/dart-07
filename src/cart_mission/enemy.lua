@@ -36,7 +36,7 @@ function new_enemy(params)
             else
                 is_destroyed = true
                 local powerup_type = rnd(split(enemy_properties.powerups_distribution))
-                on_destroyed(movement.xy, powerup_type)
+                on_destroyed(collision_circle(), powerup_type)
             end
         end,
 

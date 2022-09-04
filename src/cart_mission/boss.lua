@@ -8,7 +8,10 @@ function new_boss(params)
     local intro_start_xy = params.intro_start_xy
     local start_xy = params.start_xy
 
+    -- TODO: consider merging boss intro with boss fight? It would simplify callback setting logic
     local on_bullets_spawned = _noop
+    local on_entered_next_phase = _noop
+    local on_destroyed = _noop
 
     local phases = boss_properties.phases
 
@@ -34,6 +37,12 @@ function new_boss(params)
     function boss.set_on_bullets_spawned(callback)
         on_bullets_spawned = callback
     end
+    function boss.set_on_entered_next_phase(callback)
+        on_entered_next_phase = callback
+    end
+    function boss.set_on_destroyed(callback)
+        on_destroyed = callback
+    end
 
     function boss.has_finished()
         return is_destroyed
@@ -53,6 +62,7 @@ function new_boss(params)
             is_flashing_from_damage = true
         else
             is_destroyed = true
+            on_destroyed(boss_properties.collision_circles(movement))
         end
     end
 
@@ -62,6 +72,9 @@ function new_boss(params)
         if current_phase_number and current_phase_number < #phases then
             if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
                 current_phase_number = current_phase_number + 1
+                if current_phase_number > 1 then
+                    on_entered_next_phase(boss_properties.collision_circles(movement))
+                end
                 movement = phases[current_phase_number].movement_factory(movement.xy)
             end
         end

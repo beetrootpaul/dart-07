@@ -94,6 +94,7 @@ function new_player()
 
         _draw = function()
             local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
+            -- TODO: consider blinking instead of flashing
             ship_sprite_current._draw(xy, {
                 -- TODO: make it pure white?
                 flash_color = flash and _color_6_light_grey or nil,
