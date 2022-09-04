@@ -102,16 +102,10 @@ function new_screen_boss_fight(params)
 
         level._update()
         player._update()
-        for _, player_bullet in pairs(player_bullets) do
-            player_bullet._update()
-        end
+        _go_update(player_bullets)
         boss._update()
-        for _, boss_bullet in pairs(boss_bullets) do
-            boss_bullet._update()
-        end
-        for _, explosion in pairs(explosions) do
-            explosion._update()
-        end
+        _go_update(boss_bullets)
+        _go_update(explosions)
         hud._update()
 
         handle_collisions()
@@ -121,17 +115,11 @@ function new_screen_boss_fight(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                for _, player_bullet in pairs(player_bullets) do
-                    player_bullet._draw()
-                end
-                for _, boss_bullet in pairs(boss_bullets) do
-                    boss_bullet._draw()
-                end
+                _go_draw(player_bullets)
+                _go_draw(boss_bullets)
                 boss._draw()
                 player._draw()
-                for _, explosion in pairs(explosions) do
-                    explosion._draw()
-                end
+                _go_draw(explosions)
             end,
         }
         hud._draw {
@@ -145,18 +133,14 @@ function new_screen_boss_fight(params)
         for _, boss_cc in pairs(boss.collision_circles()) do
             _collisions._debug_draw_collision_circle(boss_cc)
         end
-        for _, player_bullet in pairs(player_bullets) do
-            _collisions._debug_draw_collision_circle(player_bullet.collision_circle())
-        end
-        for _, boss_bullet in pairs(boss_bullets) do
-            _collisions._debug_draw_collision_circle(boss_bullet.collision_circle())
-        end
+        _go_draw_debug_collision_circles(player_bullets)
+        _go_draw_debug_collision_circles(boss_bullets)
     end
 
     function screen._post_draw()
-        _delete_finished_from(player_bullets)
-        _delete_finished_from(boss_bullets)
-        _delete_finished_from(explosions)
+        _go_delete_finished(player_bullets)
+        _go_delete_finished(boss_bullets)
+        _go_delete_finished(explosions)
 
         if boss.has_finished() then
             -- TODO NEXT: draft version of exploding enemies and boss

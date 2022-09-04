@@ -120,21 +120,13 @@ function new_screen_enemies(params)
 
         level._update()
         player._update()
-        for _, enemy in pairs(enemies) do
-            enemy._update()
-        end
-        for _, player_bullet in pairs(player_bullets) do
-            player_bullet._update()
-        end
-        for _, enemy_bullet in pairs(enemy_bullets) do
-            enemy_bullet._update()
-        end
-        for _, powerup in pairs(powerups) do
-            powerup._update()
-        end
-        for _, explosion in pairs(explosions) do
-            explosion._update()
-        end
+
+        _go_update(enemies)
+        _go_update(player_bullets)
+        _go_update(enemy_bullets)
+        _go_update(powerups)
+        _go_update(explosions)
+
         hud._update()
 
         handle_collisions()
@@ -169,22 +161,12 @@ function new_screen_enemies(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                for _, enemy_bullet in pairs(enemy_bullets) do
-                    enemy_bullet._draw()
-                end
-                for _, player_bullet in pairs(player_bullets) do
-                    player_bullet._draw()
-                end
-                for _, enemy in pairs(enemies) do
-                    enemy._draw()
-                end
-                for _, powerup in pairs(powerups) do
-                    powerup._draw()
-                end
+                _go_draw(enemy_bullets)
+                _go_draw(player_bullets)
+                _go_draw(enemies)
+                _go_draw(powerups)
                 player._draw()
-                for _, explosion in pairs(explosions) do
-                    explosion._draw()
-                end
+                _go_draw(explosions)
             end,
         }
         hud._draw {
@@ -193,26 +175,18 @@ function new_screen_enemies(params)
 
         -- DEBUG:
         _collisions._debug_draw_collision_circle(player.collision_circle())
-        for _, enemy in pairs(enemies) do
-            _collisions._debug_draw_collision_circle(enemy.collision_circle())
-        end
-        for _, player_bullet in pairs(player_bullets) do
-            _collisions._debug_draw_collision_circle(player_bullet.collision_circle())
-        end
-        for _, enemy_bullet in pairs(enemy_bullets) do
-            _collisions._debug_draw_collision_circle(enemy_bullet.collision_circle())
-        end
-        for _, powerup in pairs(powerups) do
-            _collisions._debug_draw_collision_circle(powerup.collision_circle())
-        end
+        _go_draw_debug_collision_circles(enemies)
+        _go_draw_debug_collision_circles(player_bullets)
+        _go_draw_debug_collision_circles(enemy_bullets)
+        _go_draw_debug_collision_circles(powerups)
     end
 
     function screen._post_draw()
-        _delete_finished_from(enemies)
-        _delete_finished_from(powerups)
-        _delete_finished_from(player_bullets)
-        _delete_finished_from(enemy_bullets)
-        _delete_finished_from(explosions)
+        _go_delete_finished(enemies)
+        _go_delete_finished(powerups)
+        _go_delete_finished(player_bullets)
+        _go_delete_finished(enemy_bullets)
+        _go_delete_finished(explosions)
 
         if level.has_scrolled_to_end() and #enemies <= 0 and #enemy_bullets <= 0 and #powerups <= 0 then
             return new_screen_boss_intro {

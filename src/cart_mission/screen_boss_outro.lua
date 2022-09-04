@@ -27,12 +27,8 @@ function new_screen_boss_outro(params)
     function screen._update()
         level._update()
         player._update()
-        for _, player_bullet in pairs(player_bullets) do
-            player_bullet._update()
-        end
-        for _, explosion in pairs(explosions) do
-            explosion._update()
-        end
+        _go_update(player_bullets)
+        _go_update(explosions)
         hud._update()
 
         fade_out._update()
@@ -43,13 +39,9 @@ function new_screen_boss_outro(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                for _, player_bullet in pairs(player_bullets) do
-                    player_bullet._draw()
-                end
+                _go_draw(player_bullets)
                 player._draw()
-                for _, explosion in pairs(explosions) do
-                    explosion._draw()
-                end
+                _go_draw(explosions)
             end,
         }
 
@@ -61,8 +53,8 @@ function new_screen_boss_outro(params)
     end
 
     function screen._post_draw()
-        _delete_finished_from(player_bullets)
-        _delete_finished_from(explosions)
+        _go_delete_finished(player_bullets)
+        _go_delete_finished(explosions)
 
         -- TODO: fade screen out
         -- TODO: fade next screen in
