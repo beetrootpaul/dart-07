@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/movement/movement_stationary_factory.lua --
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- common/movement/movement_stationary_factory.lua --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_movement_stationary_factory()
     return function(start_xy)

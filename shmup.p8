@@ -4,10 +4,19 @@ __lua__
 -- TODO shmup game title
 -- by beetroot paul
 
+#include build/src/third_party/easingcheatsheet.lua
+
+#include build/src/common/movement/movement_fixed_factory.lua
+#include build/src/common/movement/movement_line_factory.lua
+#include build/src/common/movement/movement_sequence_factory.lua
+#include build/src/common/movement/movement_sinusoidal_factory.lua
+#include build/src/common/movement/movement_stationary_factory.lua
+#include build/src/common/movement/movement_to_target_factory.lua
 #include build/src/common/timer/fake_timer.lua
 #include build/src/common/timer/timer.lua
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
+#include build/src/common/fade.lua
 #include build/src/common/font_4px.lua
 #include build/src/common/gameplay_area.lua
 #include build/src/common/health.lua

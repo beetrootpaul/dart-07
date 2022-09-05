@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/movement/movement_sequence_factory.lua   --
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- common/movement/movement_sequence_factory.lua   --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_movement_sequence_factory(params)
     local loop = params.loop or false

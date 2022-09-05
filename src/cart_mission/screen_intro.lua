@@ -10,7 +10,7 @@ function new_screen_intro(params)
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
 
-    local fade_frames = 20
+    local fade_frames = 30
     local mission_info_slide_frames = 50
     local screen_frames = 200
 

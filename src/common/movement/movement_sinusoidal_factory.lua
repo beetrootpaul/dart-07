@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/movement/movement_sinusoidal_factory.lua --
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- common/movement/movement_sinusoidal_factory.lua --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_movement_sinusoidal_factory()
     return function(start_xy)

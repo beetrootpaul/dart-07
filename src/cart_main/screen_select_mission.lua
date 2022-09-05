@@ -35,7 +35,7 @@ function new_screen_select_mission()
     end
 
     function screen._draw()
-        cls(_color_0_black)
+        cls(_color_11_dark_green)
 
         print("mission 1", 30, 30, selected_mission == 1 and _color_6_light_grey or _color_13_mauve)
         print("mission 2", 30, 50, selected_mission == 2 and _color_6_light_grey or _color_13_mauve)

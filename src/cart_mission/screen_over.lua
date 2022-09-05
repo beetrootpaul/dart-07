@@ -32,7 +32,7 @@ function new_screen_over()
         cls(_color_0_black)
 
         print("try again (mission " .. _m.mission_number .. ")", 10, 40, retry and _color_6_light_grey or _color_13_mauve)
-        print("back to tile", 10, 60, retry and _color_13_mauve or _color_6_light_grey)
+        print("back to title", 10, 60, retry and _color_13_mauve or _color_6_light_grey)
         print("score: ", 10, 80, _color_3_blue_green)
         -- TODO: implement and show conditionally
         print("new high score!", 50, 100, _color_3_blue_green)
