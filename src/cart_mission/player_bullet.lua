@@ -14,6 +14,8 @@ function new_player_bullet(params)
     local movement = new_movement_line_factory {
         angle = .25,
         angled_speed = 5,
+        -- DEBUG:
+        --angled_speed = 1,
     }(start_xy)
 
     return {
@@ -23,8 +25,8 @@ function new_player_bullet(params)
 
         collision_circle = function()
             return {
-                xy = movement.xy.plus(-.5, -1.5),
-                r = 2,
+                xy = movement.xy.minus(0, -.5),
+                r = 1.5,
             }
         end,
 

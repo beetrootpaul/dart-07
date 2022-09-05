@@ -17,7 +17,7 @@ function new_enemy(params)
 
     local function collision_circle()
         return {
-            xy = movement.xy.plus(-.5, -.5 + enemy_properties.collision_circle_offset_y),
+            xy = movement.xy.plus(0, enemy_properties.collision_circle_offset_y),
             r = enemy_properties.collision_circle_r,
         }
     end

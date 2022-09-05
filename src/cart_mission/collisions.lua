@@ -20,13 +20,13 @@ function _collisions.are_colliding(collision_circle_1, collision_circle_2)
     return distance.x * distance.x + distance.y * distance.y <= r1r2 * r1r2
 end
 
+-- DEBUG:
 function _collisions._debug_draw_collision_circle(collision_circle)
-    local adjusted_r = collision_circle.r - .5
     oval(
-        _gaox + collision_circle.xy.x - adjusted_r,
-        collision_circle.xy.y - adjusted_r,
-        _gaox + collision_circle.xy.x + adjusted_r,
-        collision_circle.xy.y + adjusted_r,
+        _round(_gaox + collision_circle.xy.x - collision_circle.r),
+        _round(collision_circle.xy.y - collision_circle.r),
+        _round(_gaox + collision_circle.xy.x + collision_circle.r),
+        _round(collision_circle.xy.y + collision_circle.r),
         _color_11_dark_green
     )
 end

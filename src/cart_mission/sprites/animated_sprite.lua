@@ -19,7 +19,9 @@ function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
             opts = opts or {}
 
             if not from_left_top_corner then
-                xy = xy.minus(sprite_w / 2, sprite_h / 2)
+                xy = xy.minus(sprite_w / 2, sprite_h / 2).round()
+            else
+                xy = xy.round()
             end
 
             if opts.flash_color then

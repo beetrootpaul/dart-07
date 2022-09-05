@@ -13,7 +13,7 @@ function new_enemy_bullet_factory(bullet_properties)
 
             collision_circle = function()
                 return {
-                    xy = movement.xy.plus(-.5, -.5),
+                    xy = movement.xy,
                     r = bullet_properties.collision_circle_r,
                 }
             end,

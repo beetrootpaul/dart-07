@@ -5,7 +5,10 @@
 function new_player()
     local w = 10
     local h = 10
+    
     local speed = 2
+    -- DEBUG:
+    --local speed = 1
 
     local min_x = w / 2 + 1
     local max_x = _gaw - w / 2 - 1
@@ -65,7 +68,7 @@ function new_player()
 
         collision_circle = function()
             return {
-                xy = xy.plus(-.5, .5),
+                xy = xy,
                 r = 4,
             }
         end,

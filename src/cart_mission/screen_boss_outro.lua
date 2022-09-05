@@ -15,10 +15,10 @@ function new_screen_boss_outro(params)
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
-    local screen_frames = 120
+    local screen_frames = 60
     local fade_out_frames = 10
-    
-    local fade_out = new_fade("out", screen_frames, screen_frames - fade_out_frames)
+
+    local fade_out = new_fade("out", fade_out_frames, screen_frames - fade_out_frames)
     local screen_timer = new_timer(screen_frames)
 
     --
