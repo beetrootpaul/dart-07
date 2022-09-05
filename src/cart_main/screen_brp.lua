@@ -3,6 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: fade type: dark -> normal -> dark
+-- TODO: create a decent beetroot paul logo screen
 
 function new_screen_brp()
     local screen_timer = new_timer(60)

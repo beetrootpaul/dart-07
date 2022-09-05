@@ -19,6 +19,7 @@ function new_screen_select_mission()
     end
 
     function screen._update()
+        -- TODO: up/down SFX
         if btnp(_button_up) then
             selected_mission = selected_mission - 1
         end

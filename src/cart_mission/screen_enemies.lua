@@ -67,6 +67,7 @@ function new_screen_enemies(params)
             end
             if not enemy.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, enemy_cc) then
+                    -- TODO: make enemy damaged as well
                     handle_player_damage()
                 end
             end

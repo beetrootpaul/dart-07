@@ -49,6 +49,7 @@ __lua__
 #include build/src/cart_mission/screen_defeat.lua
 #include build/src/cart_mission/screen_enemies.lua
 #include build/src/cart_mission/screen_intro.lua
+#include build/src/cart_mission/screen_over.lua
 
 #include build/src/cart_mission.lua
 #include build/src/mission_3.lua

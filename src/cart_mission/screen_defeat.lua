@@ -80,8 +80,7 @@ function new_screen_defeat(params)
         )
 
         if screen_timer.ttl <= 0 then
-            -- TODO NEXT: game over screen
-            _load_main_cart()
+            return new_screen_over()
         end
     end
 
