@@ -12,8 +12,7 @@ function _init()
     current_screen = new_screen_title()
 end
 
--- TODO: change to 60 FPS if same decided for mission cart
-function _update()
+function _update60()
     next_screen = current_screen._post_draw()
 
     if next_screen then

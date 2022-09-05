@@ -23,7 +23,7 @@ function new_powerup(start_xy, powerup_type)
 
     local movement = new_movement_line_factory {
         angle = .75,
-        angled_speed = 1,
+        angled_speed = .5,
     }(start_xy)
 
     local powerup = {

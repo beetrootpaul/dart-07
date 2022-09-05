@@ -10,22 +10,25 @@ function new_screen_intro(params)
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
 
+    local fade_frames = 20
+    local mission_info_slide_frames = 50
+    local screen_frames = 200
+
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
     local player = new_player()
     local hud = new_hud {
-        wait_frames = 95,
-        slide_in_frames = 20,
+        wait_frames = 190,
+        slide_in_frames = 40,
     }
     local mission_info = new_mission_info {
-        wait_frames = 10,
-        slide_in_frames = 25,
-        present_frames = 40,
-        slide_out_frames = 25,
+        wait_frames = fade_frames,
+        slide_in_frames = mission_info_slide_frames,
+        present_frames = screen_frames - fade_frames - 2 * mission_info_slide_frames,
+        slide_out_frames = mission_info_slide_frames,
     }
-
-    local fade_in = new_fade("in", 10)
-    local screen_timer = new_timer(100)
+    local fade_in = new_fade("in", fade_frames)
+    local screen_timer = new_timer(screen_frames)
 
     --
 
@@ -57,7 +60,7 @@ function new_screen_intro(params)
         hud._draw {
             player_health = health,
         }
-        
+
         mission_info._draw()
 
         fade_in._draw()

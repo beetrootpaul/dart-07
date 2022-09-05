@@ -4,7 +4,7 @@
 
 _m = {
     mission_number = 2,
-    scroll_per_frame = 2,
+    scroll_per_frame = 1,
     bg_color = _color_1_dark_blue,
     has_bg_tiles = false,
 }
@@ -26,17 +26,17 @@ function _m.enemy_properties_for(enemy_map_marker)
             movement_factory = new_movement_sequence_factory {
                 sequence = {
                     new_movement_line_factory {
-                        frames = 40,
+                        frames = 80,
                         angle = .75,
-                        angled_speed = 1,
+                        angled_speed = .5,
                     },
                     new_movement_line_factory {
                         angle = .75,
-                        angled_speed = 3,
+                        angled_speed = 1.5,
                     },
                 },
             },
-            bullet_fire_timer = new_timer(15),
+            bullet_fire_timer = new_timer(30),
             spawn_bullets = function(enemy_movement)
                 local bullets = {}
                 for i = 3, 5 do
@@ -44,7 +44,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .5 + i / 16,
-                            angled_speed = 4,
+                            angled_speed = 2,
                         }(enemy_movement.xy)
                     ))
                 end
@@ -71,14 +71,14 @@ function _m.boss_properties()
             -- phase 1:
             {
                 triggering_health_fraction = 1,
-                bullet_fire_timer = new_timer(40),
+                bullet_fire_timer = new_timer(80),
                 spawn_bullets = function(enemy_movement)
                     local bullets = {}
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
-                            angled_speed = 1,
+                            angled_speed = .5,
                         }(enemy_movement.xy.plus(0, 3))
                     ))
                     return bullets

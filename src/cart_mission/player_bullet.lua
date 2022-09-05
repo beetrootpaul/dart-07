@@ -13,9 +13,9 @@ function new_player_bullet(params)
 
     local movement = new_movement_line_factory {
         angle = .25,
-        angled_speed = 5,
+        angled_speed = 2.5,
         -- DEBUG:
-        --angled_speed = 1,
+        --angled_speed = .5,
     }(start_xy)
 
     return {

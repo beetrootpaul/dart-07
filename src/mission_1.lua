@@ -4,7 +4,7 @@
 
 _m = {
     mission_number = 1,
-    scroll_per_frame = 1,
+    scroll_per_frame = .5,
     bg_color = _color_12_true_blue,
     has_bg_tiles = true,
 }
@@ -25,14 +25,14 @@ function _m.enemy_properties_for(enemy_map_marker)
             collision_circle_r = 3,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_sinusoidal_factory(),
-            bullet_fire_timer = new_timer(20),
+            bullet_fire_timer = new_timer(40),
             spawn_bullets = function(enemy_movement)
                 return {
                     _m.enemy_bullet_factory(
                         new_movement_line_factory({
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
-                            angled_speed = 2,
+                            angled_speed = 1,
                         })(enemy_movement.xy)
                     )
                 }
@@ -45,9 +45,9 @@ function _m.enemy_properties_for(enemy_map_marker)
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {
             --        new_movement_line_factory {
-            --            frames = 80,
+            --            frames = 160,
             --            angle = .75,
-            --            angled_speed = 1,
+            --            angled_speed = .5,
             --        },
             --        new_movement_fixed_factory(),
             --    },
@@ -67,13 +67,13 @@ function _m.enemy_properties_for(enemy_map_marker)
             movement_factory = new_movement_sequence_factory {
                 sequence = {
                     new_movement_line_factory {
-                        frames = 40,
+                        frames = 80,
                         angle = .75,
-                        angled_speed = 1,
+                        angled_speed = .5,
                     },
                     new_movement_line_factory {
                         angle = .75,
-                        angled_speed = 3,
+                        angled_speed = 1.5,
                     },
                 },
             },
@@ -87,9 +87,9 @@ function _m.enemy_properties_for(enemy_map_marker)
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {
             --        new_movement_line_factory {
-            --            frames = 50,
+            --            frames = 100,
             --            angle = .75,
-            --            angled_speed = 1,
+            --            angled_speed = .5,
             --        },
             --        new_movement_fixed_factory(),
             --    },
@@ -107,7 +107,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             collision_circle_r = 7,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_stationary_factory(),
-            bullet_fire_timer = new_timer(30),
+            bullet_fire_timer = new_timer(60),
             spawn_bullets = function(enemy_movement)
                 local bullets = {}
                 for i = 1, 7 do
@@ -115,7 +115,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .25 + i / 8,
-                            angled_speed = 2,
+                            angled_speed = 1,
                         }(enemy_movement.xy)
                     ))
                 end
@@ -129,9 +129,9 @@ function _m.enemy_properties_for(enemy_map_marker)
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {
             --        new_movement_line_factory {
-            --            frames = 80,
+            --            frames = 160,
             --            angle = .75,
-            --            angled_speed = 1,
+            --            angled_speed = .5,
             --        },
             --        new_movement_fixed_factory(),
             --    },
@@ -161,21 +161,21 @@ function _m.boss_properties()
             -- phase 1:
             {
                 triggering_health_fraction = 1,
-                bullet_fire_timer = new_timer(40),
+                bullet_fire_timer = new_timer(80),
                 spawn_bullets = function(enemy_movement)
                     local bullets = {}
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75 - 1 / 8,
-                            angled_speed = 2,
+                            angled_speed = 1,
                         }(enemy_movement.xy.plus(0, 3))
                     ))
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75 + 1 / 8,
-                            angled_speed = 2,
+                            angled_speed = 1,
                         }(enemy_movement.xy.plus(0, 3))
                     ))
                     return bullets
@@ -185,28 +185,28 @@ function _m.boss_properties()
             -- phase 2:
             {
                 triggering_health_fraction = .85,
-                bullet_fire_timer = new_timer(20),
+                bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement)
                     local bullets = {}
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
-                            angled_speed = 2,
+                            angled_speed = 1,
                         }(enemy_movement.xy.plus(-21, 3))
                     ))
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
-                            angled_speed = 2,
+                            angled_speed = 1,
                         }(enemy_movement.xy.plus(21, 3))
                     ))
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
                             angle = .75,
-                            angled_speed = 2,
+                            angled_speed = 1,
                         }(enemy_movement.xy.plus(0, 3))
                     ))
                     return bullets
@@ -216,18 +216,18 @@ function _m.boss_properties()
                     sequence = {
                         new_movement_to_target_factory {
                             target_x = 30,
-                            frames = 30,
+                            frames = 60,
                         },
                         new_movement_to_target_factory {
                             target_x = _gaw - 30,
-                            frames = 60,
+                            frames = 120,
                         },
                         new_movement_to_target_factory {
                             target_x = _gaw / 2,
-                            frames = 30,
+                            frames = 60,
                         },
                         new_movement_fixed_factory {
-                            frames = 60,
+                            frames = 120,
                         },
                     },
                 },
@@ -235,7 +235,7 @@ function _m.boss_properties()
             -- phase 3:
             {
                 triggering_health_fraction = .3,
-                bullet_fire_timer = new_timer(30),
+                bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement)
                     local bullets = {}
                     for i = 3, 5 do
@@ -243,7 +243,7 @@ function _m.boss_properties()
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .25 + i / 8,
-                                angled_speed = 2,
+                                angled_speed = 1,
                             }(enemy_movement.xy.plus(-21, 3))
                         ))
                     end
@@ -252,7 +252,7 @@ function _m.boss_properties()
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .25 + i / 8,
-                                angled_speed = 2,
+                                angled_speed = 1,
                             }(enemy_movement.xy.plus(21, 3))
                         ))
                     end
@@ -261,7 +261,7 @@ function _m.boss_properties()
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .25 + i / 8,
-                                angled_speed = 2,
+                                angled_speed = 1,
                             }(enemy_movement.xy.plus(0, 3))
                         ))
                     end
@@ -272,12 +272,12 @@ function _m.boss_properties()
                         -- center it
                         new_movement_to_target_factory {
                             target_x = _gaw / 2,
-                            frames = 20,
+                            frames = 40,
                         },
                         -- move to the left
                         new_movement_to_target_factory {
                             target_x = 30,
-                            frames = 20,
+                            frames = 40,
                         },
                         -- move to the right and to the left in a loop
                         new_movement_sequence_factory {
@@ -285,11 +285,11 @@ function _m.boss_properties()
                             sequence = {
                                 new_movement_to_target_factory {
                                     target_x = _gaw - 30,
-                                    frames = 40,
+                                    frames = 80,
                                 },
                                 new_movement_to_target_factory {
                                     target_x = 30,
-                                    frames = 40,
+                                    frames = 80,
                                 },
                             },
                         },

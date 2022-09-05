@@ -35,13 +35,13 @@ function new_explosion(start_xy, magnitude, wait_frames)
             if wait_timer.ttl <= 0 then
                 for _, particle in pairs(particles) do
                     if particle.r > 0 then
-                        particle.angle = particle.angle + .2 * (rnd() - .5)
+                        particle.angle = particle.angle + .1 * (rnd() - .5)
                         local speed = rnd()
                         particle.xy = particle.xy.plus(
                             speed * cos(particle.angle),
                             speed * sin(particle.angle)
                         )
-                        particle.r = max(0, particle.r - magnitude * rnd() / 10)
+                        particle.r = max(0, particle.r - magnitude * rnd() / 20)
                     end
                 end
             end

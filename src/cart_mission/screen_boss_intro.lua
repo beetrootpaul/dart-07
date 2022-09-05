@@ -13,19 +13,21 @@ function new_screen_boss_intro(params)
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
+    local screen_frames = 180
+    local boss_info_slide_frames = 50
+
     local boss = new_boss {
         boss_properties = _m.boss_properties(),
-        intro_frames = 90,
+        intro_frames = 180,
         intro_start_xy = _xy(_gaw / 2, -120),
         start_xy = _xy(_gaw / 2, 20, 20),
     }
-
     local boss_info = new_boss_info {
-        slide_in_frames = 25,
-        present_frames = 40,
-        slide_out_frames = 25,
+        slide_in_frames = boss_info_slide_frames,
+        present_frames = screen_frames - 2 * boss_info_slide_frames,
+        slide_out_frames = boss_info_slide_frames,
     }
-    local screen_timer = new_timer(90)
+    local screen_timer = new_timer(screen_frames)
 
     --
 

@@ -145,7 +145,7 @@ function new_screen_enemies(params)
                     -- TODO: explosion SFX
                     add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r))
                     if powerup_type ~= "-" then
-                        -- TODO: implement more powerup types: circling orb? diagonal shot? laser? power field?
+                        -- TODO: implement more powerup types: circling orb? diagonal shot? laser? power field? faster shoot?
                         -- TODO: indicate powerups in hud
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end

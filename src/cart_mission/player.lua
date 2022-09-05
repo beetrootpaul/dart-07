@@ -5,8 +5,8 @@
 function new_player()
     local w = 10
     local h = 10
-    
-    local speed = 2
+
+    local speed = 1
     -- DEBUG:
     --local speed = 1
 
@@ -26,12 +26,18 @@ function new_player()
     })
     local ship_sprite_current = ship_sprite_neutral
 
-    local jet_sprite_visible = new_animated_sprite(4, 4, { 0, 0, 4, 4 }, 8)
+    local jet_sprite_visible = new_animated_sprite(
+        4,
+        4,
+        split("0,0,0,0,4,4,4,4"),
+        8
+    )
     -- TODO: consider jet sprite small instead of hidden
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
-    local on_bullets_spawned = new_throttle(6, _noop)
+    local bullet_spawn_throttle_length = 12
+    local on_bullets_spawned = new_throttle(bullet_spawn_throttle_length, _noop)
 
     local invincible_after_damage_timer
 
@@ -50,7 +56,7 @@ function new_player()
         end,
 
         set_on_bullets_spawned = function(callback)
-            on_bullets_spawned = new_throttle(6, callback)
+            on_bullets_spawned = new_throttle(bullet_spawn_throttle_length, callback)
         end,
 
         fire = function(p)
@@ -97,7 +103,7 @@ function new_player()
         end,
 
         _draw = function()
-            local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
+            local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 8) % 2 == 1
             -- TODO: consider blinking instead of flashing
             ship_sprite_current._draw(xy, {
                 -- TODO: make it pure white?
