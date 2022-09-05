@@ -45,19 +45,18 @@ function new_screen_boss_outro(params)
     end
 
     function screen._draw()
-        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
-        level._draw {
-            draw_within_level_bounds = function()
-                _flattened_for_each(
-                    player_bullets,
-                    { player },
-                    explosions,
-                    function(game_object)
-                        game_object._draw()
-                    end
-                )
-            end,
-        }
+        cls(_m.bg_color)
+        clip(_gaox, 0, _gaw, _gah)
+        _flattened_for_each(
+            { level },
+            player_bullets,
+            { player },
+            explosions,
+            function(game_object)
+                game_object._draw()
+            end
+        )
+        clip()
 
         hud._draw {
             player_health = health,
