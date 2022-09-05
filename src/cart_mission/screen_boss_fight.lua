@@ -106,19 +106,6 @@ function new_screen_boss_fight(params)
     end
 
     function screen._update()
-        -- TODO: REMOVE THIS
-        if btnp(_button_o) then
-            if _m.mission_number < _max_mission_number then
-                _load_mission_cart {
-                    mission_number = _m.mission_number,
-                    health = _health_default,
-                    is_triple_shot_enabled = false,
-                }
-            else
-                _load_main_cart()
-            end
-        end
-
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         if btn(_button_x) then

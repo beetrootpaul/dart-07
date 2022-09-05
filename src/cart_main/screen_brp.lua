@@ -28,7 +28,9 @@ function new_screen_brp()
 
     function screen._post_draw()
         if screen_timer.ttl <= 0 then
-            return new_screen_title()
+            return new_screen_title {
+                preselected_mission_number = 1,
+            }
         end
     end
 

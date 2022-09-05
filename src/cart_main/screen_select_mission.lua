@@ -7,8 +7,9 @@
 -- TODO: high score
 -- TODO: create a decent mission selection screen
 
-function new_screen_select_mission()
-    local selected_mission = 1
+function new_screen_select_mission(params)
+    local selected_mission = params.preselected_mission_number
+    
     local should_start_mission = false
 
     --

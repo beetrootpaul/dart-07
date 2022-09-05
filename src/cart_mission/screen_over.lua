@@ -46,7 +46,9 @@ function new_screen_over()
                     is_triple_shot_enabled = false,
                 }
             else
-                _load_main_cart()
+                _load_main_cart {
+                    preselected_mission_number = _m.mission_number,
+                }
             end
         end
     end

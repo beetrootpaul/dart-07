@@ -5,11 +5,14 @@
 local current_screen, next_screen
 
 function _init()
-    -- -- TODO NEXT: game over screen here with score from the failed/succeeded mission?
-    --local score = tonum(split(stat(6))[1]) or 2
-    --local number = tonum(split(stat(6))[2]) or -3
-
-    current_screen = new_screen_brp()
+    local cart_params = _parse_main_cart_params()
+    if cart_params.preselected_mission_number ~= nil then
+        current_screen = new_screen_title {
+            preselected_mission_number = cart_params.preselected_mission_number,
+        }
+    else
+        current_screen = new_screen_brp()
+    end
 end
 
 function _update60()
