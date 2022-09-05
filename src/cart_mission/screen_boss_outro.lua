@@ -2,7 +2,6 @@
 -- cart_mission/screen_boss_outro.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: boss spectacular destroy VFX
 -- TODO: boss spectacular destroy SFX
 -- TODO: win screen after all 3 levels
 
@@ -31,23 +30,32 @@ function new_screen_boss_outro(params)
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
-        level._update()
-        player._update()
-        _go_update(player_bullets)
-        _go_update(explosions)
-        hud._update()
-
-        fade_out._update()
-        screen_timer._update()
+        _flattened_for_each(
+            { level },
+            { player },
+            player_bullets,
+            explosions,
+            { hud },
+            { fade_out },
+            { screen_timer },
+            function(game_object)
+                game_object._update()
+            end
+        )
     end
 
     function screen._draw()
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                _go_draw(player_bullets)
-                player._draw()
-                _go_draw(explosions)
+                _flattened_for_each(
+                    player_bullets,
+                    { player },
+                    explosions,
+                    function(game_object)
+                        game_object._draw()
+                    end
+                )
             end,
         }
 
@@ -59,8 +67,15 @@ function new_screen_boss_outro(params)
     end
 
     function screen._post_draw()
-        _go_delete_finished(player_bullets)
-        _go_delete_finished(explosions)
+        _flattened_for_each(
+            player_bullets,
+            explosions,
+            function(game_object, game_objects)
+                if game_object.has_finished() then
+                    del(game_objects, game_object)
+                end
+            end
+        )
 
         -- TODO: fade screen out
         -- TODO: fade next screen in

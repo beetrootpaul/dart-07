@@ -2,6 +2,18 @@
 -- common/utils.lua  --
 -- -- -- -- -- -- -- --
 
+function _flattened_for_each(...)
+    local args = { ... }
+    local callback = args[#args]
+    del(args, callback)
+
+    for _, subarray in pairs(args) do
+        for __, value in pairs(subarray) do
+            callback(value, subarray)
+        end
+    end
+end
+
 function _noop()
     -- do nothing
 end

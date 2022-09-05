@@ -119,13 +119,18 @@ function new_screen_boss_fight(params)
             }
         end
 
-        level._update()
-        player._update()
-        _go_update(player_bullets)
-        boss._update()
-        _go_update(boss_bullets)
-        _go_update(explosions)
-        hud._update()
+        _flattened_for_each(
+            { level },
+            { player },
+            player_bullets,
+            { boss },
+            boss_bullets,
+            explosions,
+            { hud },
+            function(game_object)
+                game_object._update()
+            end
+        )
 
         handle_collisions()
     end
@@ -134,11 +139,16 @@ function new_screen_boss_fight(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                _go_draw(player_bullets)
-                _go_draw(boss_bullets)
-                boss._draw()
-                player._draw()
-                _go_draw(explosions)
+                _flattened_for_each(
+                    player_bullets,
+                    boss_bullets,
+                    { boss },
+                    { player },
+                    explosions,
+                    function(game_object)
+                        game_object._draw()
+                    end
+                )
             end,
         }
         hud._draw {
@@ -148,18 +158,30 @@ function new_screen_boss_fight(params)
         }
 
         -- DEBUG:
-        --_collisions._debug_draw_collision_circle(player.collision_circle())
         --for _, boss_cc in pairs(boss.collision_circles()) do
         --    _collisions._debug_draw_collision_circle(boss_cc)
         --end
-        --_go_draw_debug_collision_circles(player_bullets)
-        --_go_draw_debug_collision_circles(boss_bullets)
+        --_flattened_for_each(
+        --    { player },
+        --    player_bullets,
+        --    boss_bullets,
+        --    function(game_object)
+        --        _collisions._debug_draw_collision_circle(game_object.collision_circle())
+        --    end
+        --)
     end
 
     function screen._post_draw()
-        _go_delete_finished(player_bullets)
-        _go_delete_finished(boss_bullets)
-        _go_delete_finished(explosions)
+        _flattened_for_each(
+            player_bullets,
+            boss_bullets,
+            explosions,
+            function(game_object, game_objects)
+                if game_object.has_finished() then
+                    del(game_objects, game_object)
+                end
+            end
+        )
 
         if boss.has_finished() then
             -- TODO NEXT: draft version of exploding enemies and boss

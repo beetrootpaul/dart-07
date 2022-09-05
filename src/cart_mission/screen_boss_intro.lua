@@ -40,24 +40,35 @@ function new_screen_boss_intro(params)
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
-        level._update()
-        _go_update(player_bullets)
-        _go_update(explosions)
-        player._update()
         boss._update { no_fight = true }
-        hud._update()
-        boss_info._update()
-        screen_timer._update()
+
+        _flattened_for_each(
+            { level },
+            { player },
+            player_bullets,
+            explosions,
+            { hud },
+            { boss_info },
+            { screen_timer },
+            function(game_object)
+                game_object._update()
+            end
+        )
     end
 
     function screen._draw()
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                _go_draw(player_bullets)
-                boss._draw()
-                player._draw()
-                _go_draw(explosions)
+                _flattened_for_each(
+                    player_bullets,
+                    { boss },
+                    { player },
+                    explosions,
+                    function(game_object)
+                        game_object._draw()
+                    end
+                )
             end,
         }
         hud._draw {
@@ -67,8 +78,15 @@ function new_screen_boss_intro(params)
     end
 
     function screen._post_draw()
-        _go_delete_finished(player_bullets)
-        _go_delete_finished(explosions)
+        _flattened_for_each(
+            player_bullets,
+            explosions,
+            function(game_object, game_objects)
+                if game_object.has_finished() then
+                    del(game_objects, game_object)
+                end
+            end
+        )
 
         if screen_timer.ttl <= 0 then
             return new_screen_boss_fight {

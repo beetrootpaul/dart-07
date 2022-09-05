@@ -41,13 +41,17 @@ function new_screen_intro(params)
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
-        level._update()
-        player._update()
-        hud._update()
-        mission_info._update()
-
-        fade_in._update()
-        screen_timer._update()
+        _flattened_for_each(
+            { level },
+            { player },
+            { hud },
+            { mission_info },
+            { fade_in },
+            { screen_timer },
+            function(game_object)
+                game_object._update()
+            end
+        )
     end
 
     function screen._draw()

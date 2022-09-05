@@ -38,7 +38,6 @@ __lua__
 #include build/src/cart_mission/enemy_bullet_factory.lua
 #include build/src/cart_mission/explosion.lua
 #include build/src/cart_mission/fade.lua
-#include build/src/cart_mission/game_object.lua
 #include build/src/cart_mission/level.lua
 #include build/src/cart_mission/level_descriptor.lua
 #include build/src/cart_mission/player.lua
