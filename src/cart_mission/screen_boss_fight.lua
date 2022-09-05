@@ -83,7 +83,11 @@ function new_screen_boss_fight(params)
         boss.set_on_destroyed(function(collision_circles)
             -- TODO: explosions SFX
             for _, cc in pairs(collision_circles) do
-                add(explosions, new_explosion(cc.xy, 3 * cc.r))
+                add(explosions, new_explosion(cc.xy, .8 * cc.r))
+                add(explosions, new_explosion(cc.xy, 1.4 * cc.r, 2 + flr(rnd(22))))
+                add(explosions, new_explosion(cc.xy, 1.8 * cc.r, 6 + flr(rnd(18))))
+                add(explosions, new_explosion(cc.xy, 3.5 * cc.r, 15 + flr(rnd(9))))
+                add(explosions, new_explosion(cc.xy, 5 * cc.r, 25 + flr(rnd(3))))
             end
         end)
         player.set_on_bullets_spawned(function(bullets)

@@ -15,8 +15,11 @@ function new_screen_boss_outro(params)
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
-    local fade_out = new_fade("out", 10, 80)
-    local screen_timer = new_timer(90)
+    local screen_frames = 120
+    local fade_out_frames = 10
+    
+    local fade_out = new_fade("out", screen_frames, screen_frames - fade_out_frames)
+    local screen_timer = new_timer(screen_frames)
 
     --
 
@@ -26,6 +29,8 @@ function new_screen_boss_outro(params)
     end
 
     function screen._update()
+        player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
+
         level._update()
         player._update()
         _go_update(player_bullets)
