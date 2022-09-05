@@ -2,8 +2,8 @@
 -- cart_mission/gui/hud.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: score
--- TODO: indicate acquired powerups, i.e. triple shot
+-- TODO NEXT: score
+-- TODO NEXT: indicate acquired powerups, i.e. triple shot
 
 function new_hud(params)
     local wait_frames = params.wait_frames
@@ -57,7 +57,8 @@ function new_hud(params)
                 health_bar_segment._draw(xy.minus(_gaox, 20 + i * 4))
             end
 
-            -- TODO: polish it, add boss name above the bar
+            -- TODO: polish it
+            -- TODO NEXT: add boss name above the bar
             if boss_health and boss_health_max then
                 local health_fraction = boss_health / boss_health_max
                 rectfill(

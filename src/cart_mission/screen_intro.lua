@@ -4,7 +4,9 @@
 
 -- TODO: try to recreate cool text motion effect
 -- TODO: polish it
--- TODO: allow player to shoot during during mission intro and boss intro
+-- TODO NEXT: allow player to shoot during during mission intro and boss intro?
+-- TODO NEXT: mission name
+-- TODO: polish mission names and boss names
 
 function new_screen_intro(params)
     local health = params.health

@@ -4,8 +4,10 @@
 
 -- TODO: polished waves on level 1
 -- TODO: polished islands on level 1
--- TODO: fg and bg for level 2
--- TODO: fg and bg for level 3
+-- TODO: polished level 2
+-- TODO: polished level 3
+-- TODO NEXT: fg and bg for level 2
+-- TODO NEXT: fg and bg for level 3
 
 function new_level_descriptor()
     -- number below are sprites in the sprite sheet

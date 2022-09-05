@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: boss spectacular destroy SFX
--- TODO: win screen after all 3 levels
+-- TODO NEXT: win screen after all 3 levels
 
 function new_screen_boss_outro(params)
     local level = params.level
@@ -84,9 +84,7 @@ function new_screen_boss_outro(params)
                     is_triple_shot_enabled = is_triple_shot_enabled,
                 }
             else
-                _load_main_cart {
-                    preselected_mission_number = _m.mission_number,
-                }
+                return new_screen_win()
             end
         end
     end

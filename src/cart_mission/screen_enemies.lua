@@ -19,10 +19,9 @@ function new_screen_enemies(params)
 
     -- TODO: duplicated code
     local function handle_player_damage()
-        -- TODO NEXT: powerups retrieval after live lost?
+        -- TODO: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
-        -- TODO NEXT: player defeat explosion
         -- TODO: VFX of disappearing health segment
         health = health - 1
         player.take_damage(health)
@@ -67,7 +66,7 @@ function new_screen_enemies(params)
             end
             if not enemy.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, enemy_cc) then
-                    -- TODO: make enemy damaged as well
+                    -- TODO NEXT: make enemy damaged as well
                     handle_player_damage()
                 end
             end
@@ -88,7 +87,6 @@ function new_screen_enemies(params)
 
     local screen = {}
 
-    -- TODO: consider enabling extra layer of music
     function screen._init()
         level.enter_phase_main()
         
@@ -145,8 +143,8 @@ function new_screen_enemies(params)
                     -- TODO: explosion SFX
                     add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r))
                     if powerup_type ~= "-" then
-                        -- TODO: implement more powerup types: circling orb? diagonal shot? laser? power field? faster shoot?
-                        -- TODO: indicate powerups in hud
+                        -- TODO NEXT: implement more powerup types: circling orb? diagonal shot? laser? power field? faster shoot?
+                        -- TODO NEXT: indicate powerups in hud
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end
                 end,
@@ -215,7 +213,7 @@ function new_screen_enemies(params)
         end
 
         if health <= 0 then
-            -- TODO: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
+            -- TODO NEXT: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
             return new_screen_defeat {
                 level = level,
                 enemies = enemies,

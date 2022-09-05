@@ -2,7 +2,7 @@
 -- cart_mission/sprites/animated_sprite.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider consolidating with new_static_sprite
+-- TODO: consider consolidating with new_static_sprite for token optimisation
 function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
     params = params or {}
     local from_left_top_corner = params.from_left_top_corner

@@ -35,12 +35,12 @@ end
 -- TODO: texts shaded with 2 horizontal colors
 
 -- TODO NEXT: tutorial screen? press X to shoot, arrows to fly
--- TODO NEXT: screen shake?
--- TODO NEXT: menu item to disable screen shake?
+-- TODO: screen shake?
+-- TODO: menu item to disable screen shake?
 
--- TODO NEXT: "hit stop"?
+-- TODO: "hit stop"?
 
--- TODO NEXT: push enemies and boss on damage?
+-- TODO: push enemies and boss on damage?
 
 -- TODO: menu music
 -- TODO: music per stage

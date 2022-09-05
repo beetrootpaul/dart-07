@@ -2,7 +2,7 @@
 -- cart_mission/powerup.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: fancy animation
+-- TODO NEXT: fancy animation
 -- TODO: actions on pick up
 -- TODO: magnet for an easier pickup?
 

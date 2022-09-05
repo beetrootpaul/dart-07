@@ -17,11 +17,9 @@ __lua__
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
 #include build/src/common/fade.lua
-#include build/src/common/font_4px.lua
 #include build/src/common/gameplay_area.lua
 #include build/src/common/health.lua
 #include build/src/common/multicart.lua
-#include build/src/common/text_4px.lua
 #include build/src/common/throttle.lua
 #include build/src/common/utils.lua
 #include build/src/common/viewport.lua
@@ -50,6 +48,7 @@ __lua__
 #include build/src/cart_mission/screen_enemies.lua
 #include build/src/cart_mission/screen_intro.lua
 #include build/src/cart_mission/screen_over.lua
+#include build/src/cart_mission/screen_win.lua
 
 #include build/src/cart_mission.lua
 #include build/src/mission_3.lua

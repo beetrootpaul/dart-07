@@ -2,7 +2,7 @@
 -- cart_mission/screen_boss_intro.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: allow player to shoot during during mission intro and boss intro
+-- TODO NEXT: allow player to shoot during during mission intro and boss intro?
 
 function new_screen_boss_intro(params)
     local level = params.level

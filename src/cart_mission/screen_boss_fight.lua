@@ -2,8 +2,6 @@
 -- cart_mission/screen_boss_fight.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider some explosions along the fight
-
 function new_screen_boss_fight(params)
     local level = params.level
     local player = params.player
@@ -18,10 +16,9 @@ function new_screen_boss_fight(params)
 
     -- TODO: duplicated code
     local function handle_player_damage()
-        -- TODO NEXT: powerups retrieval after live lost?
+        -- TODO: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
-        -- TODO NEXT: player defeat explosion
         -- TODO: VFX of disappearing health segment
         health = health - 1
         player.take_damage(health)
@@ -37,7 +34,6 @@ function new_screen_boss_fight(params)
                 if not boss.has_finished() then
                     if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
                         -- TODO: SFX
-                        -- TODO: big explosion if no longer alive
                         boss.take_damage()
                         player_bullet.destroy()
                         -- TODO: magnetised score items?
@@ -46,7 +42,7 @@ function new_screen_boss_fight(params)
             end
             if not boss.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, boss_cc) then
-                    -- TODO: make boss damaged as well
+                    -- TODO NEXT: make boss damaged as well
                     handle_player_damage()
                 end
             end
@@ -179,8 +175,7 @@ function new_screen_boss_fight(params)
         )
 
         if boss.has_finished() then
-            -- TODO: nice post-boss-destroy visuals before transitioning to the next cart
-            -- TODO: should we keep boss bullets visible? Should we allow them to hit player? If not, should we nicely destroy them?
+            -- TODO NEXT: should we keep boss bullets visible? Should we allow them to hit player? If not, should we nicely destroy them?
             return new_screen_boss_outro {
                 level = level,
                 player = player,
@@ -193,7 +188,7 @@ function new_screen_boss_fight(params)
         end
 
         if health <= 0 then
-            -- TODO: should we keep remaining player bullets visible? Should we allow them to hit boss? If not, should we nicely destroy them?
+            -- TODO NEXT: should we keep remaining player bullets visible? Should we allow them to hit boss? If not, should we nicely destroy them?
             return new_screen_defeat {
                 level = level,
                 enemies = {},

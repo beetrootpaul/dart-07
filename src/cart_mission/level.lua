@@ -2,7 +2,7 @@
 -- cart_mission/level.lua  --
 -- -- -- -- -- -- -- -- -- --
 
--- TODO: add level particles like stars or floating corrupted matter
+-- TODO NEXT: add level particles like stars or floating corrupted matter
 
 -- to avoid thinking in x and y we talk here about
 --   - distance = how many tiles we have scrolled forward (can be fraction)
