@@ -5,7 +5,10 @@
 function new_player()
     local w = 10
     local h = 10
+    
     local speed = 2
+    -- DEBUG:
+    --local speed = 1
 
     local min_x = w / 2 + 1
     local max_x = _gaw - w / 2 - 1
@@ -24,6 +27,7 @@ function new_player()
     local ship_sprite_current = ship_sprite_neutral
 
     local jet_sprite_visible = new_animated_sprite(4, 4, { 0, 0, 4, 4 }, 8)
+    -- TODO: consider jet sprite small instead of hidden
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
@@ -64,7 +68,7 @@ function new_player()
 
         collision_circle = function()
             return {
-                xy = xy.plus(-.5, .5),
+                xy = xy,
                 r = 4,
             }
         end,
@@ -94,6 +98,7 @@ function new_player()
 
         _draw = function()
             local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 4) % 2 == 1
+            -- TODO: consider blinking instead of flashing
             ship_sprite_current._draw(xy, {
                 -- TODO: make it pure white?
                 flash_color = flash and _color_6_light_grey or nil,

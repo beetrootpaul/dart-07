@@ -6,7 +6,7 @@ function new_enemy(params)
     local enemy_properties = params.enemy_properties
     local start_xy = params.start_xy
     local on_bullets_spawned = params.on_bullets_spawned
-    local on_powerup_spawned = params.on_powerup_spawned
+    local on_destroyed = params.on_destroyed
 
     local health = enemy_properties.health
     local movement = enemy_properties.movement_factory(start_xy)
@@ -17,7 +17,7 @@ function new_enemy(params)
 
     local function collision_circle()
         return {
-            xy = movement.xy.plus(-.5, -.5 + enemy_properties.collision_circle_offset_y),
+            xy = movement.xy.plus(0, enemy_properties.collision_circle_offset_y),
             r = enemy_properties.collision_circle_r,
         }
     end
@@ -36,12 +36,7 @@ function new_enemy(params)
             else
                 is_destroyed = true
                 local powerup_type = rnd(split(enemy_properties.powerups_distribution))
-                if powerup_type ~= "-" then
-                    on_powerup_spawned(new_powerup {
-                        start_xy = movement.xy,
-                        powerup_type = powerup_type,
-                    })
-                end
+                on_destroyed(collision_circle(), powerup_type)
             end
         end,
 

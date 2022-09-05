@@ -2,10 +2,13 @@
 -- cart_mission/screen_boss_intro.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: allow player to shoot during during mission intro and boss intro
+
 function new_screen_boss_intro(params)
     local level = params.level
     local player = params.player
     local player_bullets = params.player_bullets
+    local explosions = params.explosions
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
@@ -36,9 +39,8 @@ function new_screen_boss_intro(params)
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         level._update()
-        for _, player_bullet in pairs(player_bullets) do
-            player_bullet._update()
-        end
+        _go_update(player_bullets)
+        _go_update(explosions)
         player._update()
         boss._update { no_fight = true }
         hud._update()
@@ -50,11 +52,10 @@ function new_screen_boss_intro(params)
         rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
         level._draw {
             draw_within_level_bounds = function()
-                for _, player_bullet in pairs(player_bullets) do
-                    player_bullet._draw()
-                end
+                _go_draw(player_bullets)
                 boss._draw()
                 player._draw()
+                _go_draw(explosions)
             end,
         }
         hud._draw {
@@ -64,13 +65,16 @@ function new_screen_boss_intro(params)
     end
 
     function screen._post_draw()
-        _delete_finished_from(player_bullets)
+        _go_delete_finished(player_bullets)
+        _go_delete_finished(explosions)
 
         if screen_timer.ttl <= 0 then
             return new_screen_boss_fight {
                 level = level,
                 player = player,
                 boss = boss,
+                player_bullets = player_bullets,
+                explosions = explosions,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
                 hud = hud,

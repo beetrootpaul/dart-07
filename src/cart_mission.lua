@@ -20,6 +20,7 @@ function _init()
     }
 end
 
+-- TODO: consider update60 after drawing all tiles for all levels. It might make sense to have smaller differences in scrolling speed across levels
 function _update()
     next_screen = current_screen._post_draw()
 

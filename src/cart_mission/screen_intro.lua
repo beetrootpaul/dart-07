@@ -2,7 +2,9 @@
 -- cart_mission/screen_intro.lua --
 -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: try to recreate cool text motion effect
 -- TODO: polish it
+-- TODO: allow player to shoot during during mission intro and boss intro
 
 function new_screen_intro(params)
     local health = params.health
@@ -12,15 +14,18 @@ function new_screen_intro(params)
     local level = new_level(level_descriptor)
     local player = new_player()
     local hud = new_hud {
-        wait_frames = 85,
+        wait_frames = 95,
         slide_in_frames = 20,
     }
     local mission_info = new_mission_info {
+        wait_frames = 10,
         slide_in_frames = 25,
         present_frames = 40,
         slide_out_frames = 25,
     }
-    local screen_timer = new_timer(90)
+
+    local fade_in = new_fade("in", 10)
+    local screen_timer = new_timer(100)
 
     --
 
@@ -37,6 +42,8 @@ function new_screen_intro(params)
         player._update()
         hud._update()
         mission_info._update()
+
+        fade_in._update()
         screen_timer._update()
     end
 
@@ -50,7 +57,10 @@ function new_screen_intro(params)
         hud._draw {
             player_health = health,
         }
+        
         mission_info._draw()
+
+        fade_in._draw()
     end
 
     function screen._post_draw()

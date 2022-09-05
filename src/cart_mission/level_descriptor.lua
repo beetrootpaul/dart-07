@@ -11,6 +11,12 @@ function new_level_descriptor()
     -- number below are sprites in the sprite sheet
     -- * end of the level
     local end_tile = 112
+    -- * enemy tiles, over empty space
+    local en_min = 73
+    local en_max = 79
+    -- * enemy tiles, over structure
+    local en_over_st_min = 89
+    local en_over_st_max = 95
     -- * structure tiles
     local st_center = 81
     local st_edge_left = 80
@@ -29,8 +35,6 @@ function new_level_descriptor()
     local st_filler_left_bottom = 68
     local st_filler_right_top = 115
     local st_filler_right_bottom = 67
-
-    -- TODO NEXT: handle structure markers in places where enemies are instead or make two types of same enemy marker: w/ and w/o structure behind
 
     local max_defined_distance
 
@@ -89,7 +93,7 @@ function new_level_descriptor()
             local lane2 = lane + 1
 
             local marker = markers[x][y]
-            if marker == st_center then
+            if marker == st_center or (marker and marker >= en_over_st_min and marker <= en_over_st_max) then
                 structures_occupied[distance][lane] = true
                 structures_occupied[distance][lane2] = true
                 structures_occupied[distance2][lane] = true
@@ -113,8 +117,11 @@ function new_level_descriptor()
                     structures_occupied[0][lane] = true
                     structures_occupied[0][lane2] = true
                 end
-            elseif marker ~= 0 and marker ~= end_tile then
+            end
+            if marker and marker >= en_min and marker <= en_max then
                 enemies[distance][lane] = marker
+            elseif marker and marker >= en_over_st_min and marker <= en_over_st_max then
+                enemies[distance][lane] = marker - (en_over_st_min - en_min)
             end
         end
     end

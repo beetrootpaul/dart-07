@@ -42,7 +42,7 @@ function new_level(descriptor)
             if phase == "intro" then
                 return false
             elseif phase == "main" then
-                return min_visible_distance >= max_defined_distance + 1
+                return max_visible_distance >= max_defined_distance + 1
             elseif phase == "outro" then
                 return true
             end

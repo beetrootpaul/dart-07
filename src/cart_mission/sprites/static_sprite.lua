@@ -13,7 +13,9 @@ function new_static_sprite(sprite_w, sprite_h, sprite_x, sprite_y, params)
             opts = opts or {}
 
             if not from_left_top_corner then
-                xy = xy.minus(sprite_w / 2, sprite_h / 2)
+                xy = xy.minus(sprite_w / 2, sprite_h / 2).round()
+            else
+                xy = xy.round()
             end
 
             if transparent_color then

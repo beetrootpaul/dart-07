@@ -11,17 +11,17 @@ _m = {
 
 _m.enemy_bullet_factory = new_enemy_bullet_factory {
     bullet_sprite = new_static_sprite(4, 4, 124, 64),
-    collision_circle_r = 2,
+    collision_circle_r = 1.5,
 }
 
 function _m.enemy_properties_for(enemy_map_marker)
-    if enemy_map_marker == 79 then
+    if enemy_map_marker == 73 then
         return {
             health = 1,
             ship_sprite = new_static_sprite(8, 8, 0, 64, {
                 transparent_color = _color_11_dark_green,
             }),
-            collision_circle_r = 4,
+            collision_circle_r = 3.5,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_sequence_factory {
                 sequence = {
@@ -64,7 +64,7 @@ function _m.boss_properties()
         }),
         collision_circles = function(movement)
             return {
-                { xy = movement.xy.plus(-.5, -.5 + 3), r = 5 },
+                { xy = movement.xy.plus(0, 3), r = 5 },
             }
         end,
         phases = {
