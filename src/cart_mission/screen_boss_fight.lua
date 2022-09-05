@@ -24,9 +24,7 @@ function new_screen_boss_fight(params)
         -- TODO NEXT: player defeat explosion
         -- TODO: VFX of disappearing health segment
         health = health - 1
-        if health > 0 then
-            player.start_invincibility_after_damage()
-        end
+        player.take_damage(health)
     end
 
     -- TODO: a little bit of duplicated code
@@ -90,6 +88,14 @@ function new_screen_boss_fight(params)
                 add(explosions, new_explosion(cc.xy, 5 * cc.r, 50 + flr(rnd(6))))
             end
         end)
+
+        player.set_on_destroyed(function(collision_circle)
+            -- TODO: explosion SFX
+            -- TODO: duplication
+            add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
+            add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
+            add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
+        end)
         player.set_on_bullets_spawned(function(bullets)
             for _, b in pairs(bullets) do
                 add(player_bullets, b)
@@ -122,8 +128,8 @@ function new_screen_boss_fight(params)
         _flattened_for_each(
             { level },
             { player },
-            player_bullets,
             { boss },
+            player_bullets,
             boss_bullets,
             explosions,
             { hud },
@@ -184,8 +190,8 @@ function new_screen_boss_fight(params)
         )
 
         if boss.has_finished() then
-            -- TODO NEXT: draft version of exploding enemies and boss
             -- TODO: nice post-boss-destroy visuals before transitioning to the next cart
+            -- TODO: should we keep boss bullets visible? Should we allow them to hit player? If not, should we nicely destroy them?
             return new_screen_boss_outro {
                 level = level,
                 player = player,
@@ -198,9 +204,17 @@ function new_screen_boss_fight(params)
         end
 
         if health <= 0 then
-            -- TODO NEXT: game over
-            -- TODO NEXT: wait a moment after death
-            _load_main_cart()
+            -- TODO: should we keep remaining player bullets visible? Should we allow them to hit boss? If not, should we nicely destroy them?
+            return new_screen_defeat {
+                level = level,
+                enemies = {},
+                boss = boss,
+                enemy_bullets = {},
+                boss_bullets = boss_bullets,
+                explosions = explosions,
+                health = health,
+                hud = hud,
+            }
         end
     end
 

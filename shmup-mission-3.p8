@@ -46,6 +46,7 @@ __lua__
 #include build/src/cart_mission/screen_boss_fight.lua
 #include build/src/cart_mission/screen_boss_intro.lua
 #include build/src/cart_mission/screen_boss_outro.lua
+#include build/src/cart_mission/screen_defeat.lua
 #include build/src/cart_mission/screen_enemies.lua
 #include build/src/cart_mission/screen_intro.lua
 

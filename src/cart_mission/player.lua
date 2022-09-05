@@ -41,7 +41,17 @@ function new_player()
 
     local invincible_after_damage_timer
 
+    -- TODO: consider merging mission intro with enemies screen? It would simplify callback setting logic
+    local on_destroyed = _noop
+
     local xy = _xy(_gaw / 2, _gah - 28)
+
+    local function collision_circle()
+        return {
+            xy = xy,
+            r = 4,
+        }
+    end
 
     -- 
 
@@ -55,6 +65,9 @@ function new_player()
                 .set_y(mid(min_y, xy.y + (down and speed or (up and -speed or 0)), max_y))
         end,
 
+        set_on_destroyed = function(callback)
+            on_destroyed = callback
+        end,
         set_on_bullets_spawned = function(callback)
             on_bullets_spawned = new_throttle(bullet_spawn_throttle_length, callback)
         end,
@@ -72,20 +85,20 @@ function new_player()
             on_bullets_spawned.invoke(bullets)
         end,
 
-        collision_circle = function()
-            return {
-                xy = xy,
-                r = 4,
-            }
-        end,
+        collision_circle = collision_circle,
 
         is_invincible_after_damage = function()
             return invincible_after_damage_timer ~= nil
         end,
 
-        start_invincibility_after_damage = function()
-            -- TODO: SFX
-            invincible_after_damage_timer = new_timer(30)
+        take_damage = function(updated_health)
+            if updated_health > 0 then
+                -- TODO: SFX
+                invincible_after_damage_timer = new_timer(30)
+            else
+                -- TODO: SFX
+                on_destroyed(collision_circle())
+            end
         end,
 
         _update = function()

@@ -2,6 +2,8 @@
 -- cart_mission/screen_enemies.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: consider combining screens into a single one, with a state management inside them
+
 function new_screen_enemies(params)
     local level = params.level
     local player = params.player
@@ -23,9 +25,7 @@ function new_screen_enemies(params)
         -- TODO NEXT: player defeat explosion
         -- TODO: VFX of disappearing health segment
         health = health - 1
-        if health > 0 then
-            player.start_invincibility_after_damage()
-        end
+        player.take_damage(health)
     end
 
     local function enable_triple_shot()
@@ -89,6 +89,14 @@ function new_screen_enemies(params)
     -- TODO: consider enabling extra layer of music
     function screen._init()
         level.enter_phase_main()
+        
+        player.set_on_destroyed(function(collision_circle)
+            -- TODO: explosion SFX
+            -- TODO: duplication
+            add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
+            add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
+            add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
+        end)
         player.set_on_bullets_spawned(function(bullets)
             for _, b in pairs(bullets) do
                 add(player_bullets, b)
@@ -173,7 +181,7 @@ function new_screen_enemies(params)
             end
         )
         clip()
-        
+
         hud._draw {
             player_health = health,
         }
@@ -218,9 +226,17 @@ function new_screen_enemies(params)
         end
 
         if health <= 0 then
-            -- TODO NEXT: game over screen
-            -- TODO NEXT: wait a moment after death
-            _load_main_cart()
+            -- TODO: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
+            return new_screen_defeat {
+                level = level,
+                enemies = enemies,
+                boss = nil,
+                enemy_bullets = enemy_bullets,
+                boss_bullets = {},
+                explosions = explosions,
+                health = health,
+                hud = hud,
+            }
         end
     end
 
