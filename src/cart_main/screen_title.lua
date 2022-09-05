@@ -25,7 +25,10 @@ function new_screen_title()
     function screen._draw()
         cls(_color_0_black)
 
-        print("todo shmup", 34, 50, _color_12_true_blue)
+        print("todo shmup", 34, 50, _color_15_peach)
+        print("press x", 34, 60, _color_6_light_grey)
+        -- TODO: high score across plays (persistent storage)
+        print("high score:", 34, 80, _color_12_true_blue)
     end
 
     function screen._post_draw()

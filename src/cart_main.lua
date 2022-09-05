@@ -9,7 +9,7 @@ function _init()
     --local score = tonum(split(stat(6))[1]) or 2
     --local number = tonum(split(stat(6))[2]) or -3
 
-    current_screen = new_screen_title()
+    current_screen = new_screen_brp()
 end
 
 function _update60()

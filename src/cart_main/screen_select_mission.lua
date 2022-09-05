@@ -2,6 +2,9 @@
 -- cart_main/screen_select_mission.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: unlock levels with progression
+-- TODO: extra option to go back
+-- TODO: high score
 -- TODO: create a decent mission selection screen
 
 function new_screen_select_mission()
