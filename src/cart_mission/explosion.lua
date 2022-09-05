@@ -8,6 +8,7 @@ function new_explosion(start_xy, magnitude, wait_frames)
     local particles = {}
     for _ = 1, 9 do
         add(particles, {
+            angle = .25 + .5 * (rnd() - .5),
             xy = start_xy.plus(
                 magnitude * (rnd() - .5),
                 magnitude * (rnd() - .5)
@@ -21,7 +22,7 @@ function new_explosion(start_xy, magnitude, wait_frames)
     return {
         has_finished = function()
             for _, particle in pairs(particles) do
-                if particle.r > 0 then
+                if particle.r > 1 then
                     return false
                 end
             end
@@ -32,11 +33,15 @@ function new_explosion(start_xy, magnitude, wait_frames)
             wait_timer._update()
             if wait_timer.ttl <= 0 then
                 for _, particle in pairs(particles) do
-                    particle.xy = particle.xy.plus(
-                        3 * (rnd() - .5),
-                        3 * (rnd() - .5)
-                    )
-                    particle.r = max(0, particle.r - magnitude * rnd() / 40)
+                    if particle.r > 1 then
+                        particle.angle = particle.angle + .2 * (rnd() - .5)
+                        local speed = rnd()
+                        particle.xy = particle.xy.plus(
+                            speed * cos(particle.angle),
+                            speed * sin(particle.angle)
+                        )
+                        particle.r = max(1, particle.r - magnitude * rnd() / 40)
+                    end
                 end
             end
         end,
@@ -44,22 +49,24 @@ function new_explosion(start_xy, magnitude, wait_frames)
         _draw = function()
             if wait_timer.ttl <= 0 then
                 for _, particle in pairs(particles) do
-                    local color = _color_8_red
-                    if particle.r < magnitude * .2 then
-                        color = _color_13_mauve
-                    elseif particle.r < magnitude * .4 then
-                        color = _color_6_light_grey
-                    elseif particle.r < magnitude * .6 then
-                        color = _color_15_peach
-                    elseif particle.r < magnitude * .8 then
-                        color = _color_9_dark_orange
+                    if particle.r > 1 then
+                        local color = _color_8_red
+                        if particle.r < magnitude * .2 then
+                            color = _color_13_mauve
+                        elseif particle.r < magnitude * .4 then
+                            color = _color_6_light_grey
+                        elseif particle.r < magnitude * .6 then
+                            color = _color_15_peach
+                        elseif particle.r < magnitude * .8 then
+                            color = _color_9_dark_orange
+                        end
+                        circfill(
+                            _gaox + particle.xy.x,
+                            particle.xy.y,
+                            particle.r,
+                            color
+                        )
                     end
-                    circfill(
-                        _gaox + particle.xy.x,
-                        particle.xy.y,
-                        particle.r,
-                        color
-                    )
                 end
             end
         end,

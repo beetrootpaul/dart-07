@@ -24,6 +24,7 @@ function new_player()
     local ship_sprite_current = ship_sprite_neutral
 
     local jet_sprite_visible = new_animated_sprite(4, 4, { 0, 0, 4, 4 }, 8)
+    -- TODO: consider jet sprite small instead of hidden
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
