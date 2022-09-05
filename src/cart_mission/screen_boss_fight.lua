@@ -57,6 +57,7 @@ function new_screen_boss_fight(params)
             if not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(boss_bullet.collision_circle(), player_cc) then
                     handle_player_damage()
+                    boss_bullet.destroy()
                 end
             end
         end

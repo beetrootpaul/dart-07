@@ -78,6 +78,7 @@ function new_screen_enemies(params)
             if not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(enemy_bullet.collision_circle(), player_cc) then
                     handle_player_damage()
+                    enemy_bullet.destroy()
                 end
             end
         end
