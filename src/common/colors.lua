@@ -13,12 +13,11 @@ _color_3_blue_green = 3
 -- 4
 -- 5
 _color_6_light_grey = 6
-_color_7_blue = 7
+_color_7_white = 7
 
 _color_8_red = 8
 _color_9_dark_orange = 9
--- TODO: finalize custom palette
--- 10
+_color_10_blue = 10
 _color_11_dark_green = 11
 
 _color_12_true_blue = 12
@@ -37,12 +36,11 @@ do
         [4] = 0,
         [5] = 0,
         [_color_6_light_grey] = 6,
-        [_color_7_blue] = 12,
+        [_color_7_white] = 7,
         --
         [_color_8_red] = 8,
         [_color_9_dark_orange] = 137,
-        -- TODO: finalize custom palette
-        [10] = 0,
+        [_color_10_blue] = 12,
         [_color_11_dark_green] = 3,
         --
         [_color_12_true_blue] = 140,
