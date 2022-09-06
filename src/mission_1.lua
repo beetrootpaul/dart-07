@@ -15,18 +15,144 @@ _m.enemy_bullet_factory = new_enemy_bullet_factory {
 }
 
 function _m.enemy_properties_for(enemy_map_marker)
+    -- heavy, aimed shot
+    if enemy_map_marker == 73 then
+        return {
+            health = 6,
+            ship_sprite = new_static_sprite(16, 16, 0, 80),
+            collision_circle_r = 8,
+            collision_circle_offset_y = 0,
+            movement_factory = new_movement_line_factory {
+                angle = .75,
+                angled_speed = .25,
+            },
+            bullet_fire_timer = new_timer(60),
+            spawn_bullets = function(enemy_movement, player_collision_circle)
+                local bullets = {}
+                for i = -2, 2 do
+                    add(bullets, _m.enemy_bullet_factory(
+                        new_movement_line_factory {
+                            angle = i * .02 + _angle_between(enemy_movement.xy, player_collision_circle.xy),
+                            angled_speed = 1.5,
+                        }(enemy_movement.xy)
+                    ))
+                end
+                return bullets
+            end,
+            powerups_distribution = "-,a,t",
+        }
+    end
+
+    -- forward-backward, horizontal shots
+    if enemy_map_marker == 74 then
+        return {
+            health = 3,
+            ship_sprite = new_static_sprite(11, 12, 24, 84),
+            collision_circle_r = 5.5,
+            collision_circle_offset_y = 1,
+            movement_factory = new_movement_sequence_factory {
+                loop = true,
+                sequence = {
+                    new_movement_line_factory {
+                        frames = 90,
+                        angle = .75,
+                        angled_speed = 1,
+                    },
+                    new_movement_line_factory {
+                        frames = 60,
+                        angle = .25,
+                        angled_speed = .25,
+                    },
+                },
+            },
+            bullet_fire_timer = new_timer(40),
+            spawn_bullets = function(enemy_movement, player_collision_circle)
+                return {
+                    _m.enemy_bullet_factory(
+                        new_movement_line_factory {
+                            angle = 0,
+                            angled_speed = 1,
+                        }(enemy_movement.xy)
+                    ),
+                    _m.enemy_bullet_factory(
+                        new_movement_line_factory {
+                            angle = .5,
+                            angled_speed = 1,
+                        }(enemy_movement.xy)
+                    ),
+                }
+            end,
+            powerups_distribution = "-,a,t",
+        }
+    end
+
+    -- fast, small
+    if enemy_map_marker == 75 then
+        return {
+            health = 1,
+            -- TODO: make enemies animated? At least some blinking light?
+            ship_sprite = new_static_sprite(7, 7, 14, 73),
+            collision_circle_r = 3.5,
+            collision_circle_offset_y = 0,
+            movement_factory = new_movement_line_factory {
+                angle = .75,
+                angled_speed = 1.5,
+            },
+            bullet_fire_timer = new_fake_timer(),
+            spawn_bullets = _noop,
+            powerups_distribution = "-,a,t",
+        }
+    end
+
+    -- left-right
+    if enemy_map_marker == 76 then
+        return {
+            health = 3,
+            ship_sprite = new_static_sprite(16, 8, 24, 73),
+            collision_circle_r = 8,
+            collision_circle_offset_y = -2,
+            movement_factory = new_movement_sequence_factory {
+                loop = true,
+                sequence = {
+                    new_movement_line_factory {
+                        base_speed_y = .25,
+                        frames = 160,
+                        angle = 0,
+                        angled_speed = .5,
+                    },
+                    new_movement_line_factory {
+                        base_speed_y = .25,
+                        frames = 160,
+                        angle = .5,
+                        angled_speed = .5,
+                    },
+                },
+            },
+            bullet_fire_timer = new_timer(50),
+            spawn_bullets = function(enemy_movement, player_collision_circle)
+                return {
+                    _m.enemy_bullet_factory(
+                        new_movement_line_factory {
+                            angle = .75,
+                            angled_speed = 1,
+                        }(enemy_movement.xy)
+                    ),
+                }
+            end,
+            powerups_distribution = "-,a,t",
+        }
+    end
+
     -- sinusoidal
     if enemy_map_marker == 77 then
         return {
             health = 1,
-            ship_sprite = new_static_sprite(6, 7, 26, 64, {
-                transparent_color = _color_11_dark_green,
-            }),
+            ship_sprite = new_static_sprite(6, 7, 26, 64),
             collision_circle_r = 3,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_sinusoidal_factory(),
             bullet_fire_timer = new_timer(40),
-            spawn_bullets = function(enemy_movement)
+            spawn_bullets = function(enemy_movement, player_collision_circle)
                 return {
                     _m.enemy_bullet_factory(
                         new_movement_line_factory({
@@ -59,9 +185,7 @@ function _m.enemy_properties_for(enemy_map_marker)
     if enemy_map_marker == 78 then
         return {
             health = 3,
-            ship_sprite = new_static_sprite(12, 9, 14, 64, {
-                transparent_color = _color_11_dark_green,
-            }),
+            ship_sprite = new_static_sprite(12, 9, 14, 64),
             collision_circle_r = 6,
             collision_circle_offset_y = -1,
             movement_factory = new_movement_sequence_factory {
@@ -101,14 +225,12 @@ function _m.enemy_properties_for(enemy_map_marker)
     if enemy_map_marker == 79 then
         return {
             health = 7,
-            ship_sprite = new_static_sprite(14, 16, 0, 64, {
-                transparent_color = _color_11_dark_green,
-            }),
+            ship_sprite = new_static_sprite(14, 16, 0, 64),
             collision_circle_r = 7,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_stationary_factory(),
             bullet_fire_timer = new_timer(60),
-            spawn_bullets = function(enemy_movement)
+            spawn_bullets = function(enemy_movement, player_collision_circle)
                 local bullets = {}
                 for i = 1, 7 do
                     add(bullets, _m.enemy_bullet_factory(
@@ -143,10 +265,8 @@ end
 
 function _m.boss_properties()
     return {
-        health = 7,
-        sprite = new_static_sprite(56, 26, 4, 98, {
-            transparent_color = _color_11_dark_green,
-        }),
+        health = 15,
+        sprite = new_static_sprite(56, 26, 4, 98),
         collision_circles = function(movement)
             return {
                 { xy = movement.xy.plus(0, 3), r = 5 },
@@ -161,24 +281,17 @@ function _m.boss_properties()
             -- phase 1:
             {
                 triggering_health_fraction = 1,
-                bullet_fire_timer = new_timer(80),
-                spawn_bullets = function(enemy_movement)
-                    local bullets = {}
-                    add(bullets, _m.enemy_bullet_factory(
-                        new_movement_line_factory {
-                            base_speed_y = enemy_movement.speed_xy.y,
-                            angle = .75 - 1 / 8,
-                            angled_speed = 1,
-                        }(enemy_movement.xy.plus(0, 3))
-                    ))
-                    add(bullets, _m.enemy_bullet_factory(
-                        new_movement_line_factory {
-                            base_speed_y = enemy_movement.speed_xy.y,
-                            angle = .75 + 1 / 8,
-                            angled_speed = 1,
-                        }(enemy_movement.xy.plus(0, 3))
-                    ))
-                    return bullets
+                bullet_fire_timer = new_timer(60),
+                spawn_bullets = function(enemy_movement, player_collision_circle)
+                    return {
+                        _m.enemy_bullet_factory(
+                            new_movement_line_factory {
+                                base_speed_y = enemy_movement.speed_xy.y,
+                                angle = .75,
+                                angled_speed = 1,
+                            }(enemy_movement.xy.plus(0, 3))
+                        ),
+                    }
                 end,
                 movement_factory = new_movement_fixed_factory(),
             },
@@ -186,26 +299,26 @@ function _m.boss_properties()
             {
                 triggering_health_fraction = .85,
                 bullet_fire_timer = new_timer(40),
-                spawn_bullets = function(enemy_movement)
+                spawn_bullets = function(enemy_movement, player_collision_circle)
                     local bullets = {}
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
-                            angle = .75,
+                            angle = _angle_between(enemy_movement.xy.plus(-21, 3), player_collision_circle.xy),
                             angled_speed = 1,
                         }(enemy_movement.xy.plus(-21, 3))
                     ))
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
-                            angle = .75,
+                            angle = _angle_between(enemy_movement.xy.plus(21, 3), player_collision_circle.xy),
                             angled_speed = 1,
                         }(enemy_movement.xy.plus(21, 3))
                     ))
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
-                            angle = .75,
+                            angle = _angle_between(enemy_movement.xy.plus(0, 3), player_collision_circle.xy),
                             angled_speed = 1,
                         }(enemy_movement.xy.plus(0, 3))
                     ))
@@ -236,7 +349,7 @@ function _m.boss_properties()
             {
                 triggering_health_fraction = .3,
                 bullet_fire_timer = new_timer(60),
-                spawn_bullets = function(enemy_movement)
+                spawn_bullets = function(enemy_movement, player_collision_circle)
                     local bullets = {}
                     for i = 3, 5 do
                         add(bullets, _m.enemy_bullet_factory(
@@ -246,8 +359,6 @@ function _m.boss_properties()
                                 angled_speed = 1,
                             }(enemy_movement.xy.plus(-21, 3))
                         ))
-                    end
-                    for i = 3, 5 do
                         add(bullets, _m.enemy_bullet_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
@@ -255,8 +366,6 @@ function _m.boss_properties()
                                 angled_speed = 1,
                             }(enemy_movement.xy.plus(21, 3))
                         ))
-                    end
-                    for i = 3, 5 do
                         add(bullets, _m.enemy_bullet_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,

@@ -65,8 +65,8 @@ function new_screen_boss_fight(params)
 
     function screen._init()
         boss.enter_phase_main()
-        boss.set_on_bullets_spawned(function(bullets)
-            for _, b in pairs(bullets) do
+        boss.set_on_bullets_spawned(function(bullets_fn, boss_movement)
+            for _, b in pairs(bullets_fn(boss_movement, player.collision_circle())) do
                 add(boss_bullets, b)
             end
         end)

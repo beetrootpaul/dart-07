@@ -2,6 +2,8 @@
 -- cart_main/screen_title.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: create a screen with tutorial where one can move ship around and shoot
+
 -- TODO: create a decent title screen
 
 function new_screen_title(params)

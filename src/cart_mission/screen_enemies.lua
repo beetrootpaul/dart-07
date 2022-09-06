@@ -134,8 +134,8 @@ function new_screen_enemies(params)
             add(enemies, new_enemy {
                 enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker),
                 start_xy = enemy_to_spawn.xy,
-                on_bullets_spawned = function(spawned_enemy_bullets)
-                    for _, seb in pairs(spawned_enemy_bullets) do
+                on_bullets_spawned = function(spawned_enemy_bullets_fn, enemy_movement)
+                    for _, seb in pairs(spawned_enemy_bullets_fn(enemy_movement, player.collision_circle())) do
                         add(enemy_bullets, seb)
                     end
                 end,

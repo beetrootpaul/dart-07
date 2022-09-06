@@ -2,10 +2,10 @@
 -- cart_mission/sprites/animated_sprite.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider consolidating with new_static_sprite for token optimisation
 function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
     params = params or {}
     local from_left_top_corner = params.from_left_top_corner
+    local transparent_color = params.transparent_color
 
     local frame = 1
     local max_frame = #sprite_xs
@@ -24,6 +24,11 @@ function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
                 xy = xy.round()
             end
 
+            if transparent_color then
+                palt(_color_0_black, false)
+                palt(transparent_color, true)
+            end
+
             if opts.flash_color then
                 for c = 0, 15 do
                     pal(c, opts.flash_color, 0)
@@ -38,6 +43,10 @@ function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
 
             if opts.flash_color then
                 pal(0)
+            end
+
+            if transparent_color then
+                palt()
             end
         end,
     }

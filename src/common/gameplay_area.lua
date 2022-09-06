@@ -20,5 +20,5 @@ end
 function _is_y_not_within_gameplay_area(y)
     -- 3 is an arbitrary chosen offset to increase a chance player will 
     -- see what they hit before it disappears
-    return y < 3 or y > _gah - 3
+    return y < 2 or y > _gah - 2
 end

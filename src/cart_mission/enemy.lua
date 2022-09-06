@@ -48,7 +48,7 @@ function new_enemy(params)
                 bullet_fire_timer.restart()
                 local cc = collision_circle()
                 if not _is_y_not_within_gameplay_area(cc.xy.y + cc.r) then
-                    on_bullets_spawned(enemy_properties.spawn_bullets(movement))
+                    on_bullets_spawned(enemy_properties.spawn_bullets, movement)
                 end
             end
 
