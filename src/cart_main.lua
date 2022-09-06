@@ -36,7 +36,7 @@ end
 
 -- TODO: texts shaded with 2 horizontal colors
 
--- TODO NEXT: tutorial screen? press X to shoot, arrows to fly
+-- TODO: tutorial screen? press X to shoot, arrows to fly
 -- TODO: screen shake?
 -- TODO: menu item to disable screen shake?
 

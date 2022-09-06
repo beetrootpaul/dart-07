@@ -171,7 +171,6 @@ function new_screen_boss_fight(params)
         )
 
         if boss.has_finished() then
-            -- TODO NEXT: should we keep boss bullets visible? Should we allow them to hit player? If not, should we nicely destroy them?
             return new_screen_boss_outro {
                 level = level,
                 player = player,
@@ -184,7 +183,6 @@ function new_screen_boss_fight(params)
         end
 
         if health <= 0 then
-            -- TODO NEXT: should we keep remaining player bullets visible? Should we allow them to hit boss? If not, should we nicely destroy them?
             return new_screen_defeat {
                 level = level,
                 enemies = {},

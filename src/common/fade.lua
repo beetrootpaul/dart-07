@@ -30,6 +30,10 @@ function new_fade(direction, fade_frames, wait_frames)
     }(_xy(0, y_min))
 
     return {
+        has_finished = function()
+            return fade_movement.has_finished()
+        end,
+
         _update = function()
             fade_movement._update()
         end,

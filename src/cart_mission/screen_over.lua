@@ -4,9 +4,9 @@
 
 -- TODO: create a decent game over screen
 
--- TODO NEXT: fade out
-
 function new_screen_over()
+    local fade_out = new_fade("out", 30)
+
     local retry = true
     local proceed = false
 
@@ -15,6 +15,7 @@ function new_screen_over()
     local screen = {}
 
     function screen._init()
+        -- TODO: music
     end
 
     function screen._update()
@@ -27,6 +28,10 @@ function new_screen_over()
         if btnp(_button_x) then
             proceed = true
         end
+
+        if proceed then
+            fade_out._update()
+        end
     end
 
     function screen._draw()
@@ -37,10 +42,12 @@ function new_screen_over()
         print("score: ", 10, 80, _color_3_blue_green)
         -- TODO NEXT: implement and show conditionally
         print("new high score!", 10, 100, _color_3_blue_green)
+
+        fade_out._draw()
     end
 
     function screen._post_draw()
-        if proceed then
+        if fade_out.has_finished() then
             if retry then
                 return new_screen_intro {
                     health = _health_default,

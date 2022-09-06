@@ -2,7 +2,6 @@
 -- cart_main/screen_select_mission.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: fade out to avoid instant color change, or… make fade in same color as selection screen
 -- TODO NEXT: unlock levels with progression
 -- TODO: extra option to go back
 -- TODO NEXT: high score
@@ -10,9 +9,10 @@
 
 function new_screen_select_mission(params)
     local selected_mission = params.preselected_mission_number
-    
+
     local fade_in = new_fade("in", 30)
-    
+    local fade_out = new_fade("out", 30)
+
     local proceed = false
 
     --
@@ -36,8 +36,12 @@ function new_screen_select_mission(params)
         if btnp(_button_x) then
             proceed = true
         end
-        
-        fade_in._update()
+
+        if proceed then
+            fade_out._update()
+        else
+            fade_in._update()
+        end
     end
 
     function screen._draw()
@@ -49,12 +53,13 @@ function new_screen_select_mission(params)
         print("mission 3", 30, 70, selected_mission == 3 and _color_6_light_grey or _color_13_mauve)
         -- TODO NEXT: high score across plays (persistent storage)
         print("high score:", 34, 80, _color_12_true_blue)
-        
+
+        fade_out._draw()
         fade_in._draw()
     end
 
     function screen._post_draw()
-        if proceed then
+        if fade_out.has_finished() then
             _copy_shared_assets_from_transferable_ram()
             _load_mission_cart {
                 mission_number = selected_mission,
