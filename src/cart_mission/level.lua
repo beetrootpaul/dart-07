@@ -2,7 +2,7 @@
 -- cart_mission/level.lua  --
 -- -- -- -- -- -- -- -- -- --
 
--- TODO: add level particles like stars or floating corrupted matter
+-- TODO NEXT: add level particles like stars or floating corrupted matter
 
 -- to avoid thinking in x and y we talk here about
 --   - distance = how many tiles we have scrolled forward (can be fraction)
@@ -28,7 +28,7 @@ function new_level(descriptor)
         split(
             "40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40," ..
                 "48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48," ..
-                "56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56," .. 
+                "56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56," ..
                 "64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64"
         ),
         32,
@@ -102,11 +102,7 @@ function new_level(descriptor)
             max_visible_distance = min_visible_distance + _vst - 1
         end,
 
-        _draw = function(opts)
-            local draw_within_level_bounds = opts.draw_within_level_bounds
-
-            clip(_gaox, 0, _gaw, _gah)
-
+        _draw = function()
             for distance = flr(min_visible_distance), ceil(max_visible_distance) do
                 for lane = 1, 12 do
                     local xy = _xy(
@@ -124,10 +120,6 @@ function new_level(descriptor)
                     end
                 end
             end
-
-            draw_within_level_bounds()
-
-            clip()
         end,
     }
 end 

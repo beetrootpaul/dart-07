@@ -3,6 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: better boss info GUI
+-- TODO NEXT: boss name
 
 function new_boss_info(params)
     local slide_in_frames = params.slide_in_frames

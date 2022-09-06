@@ -2,8 +2,6 @@
 -- cart_mission/screen_boss_fight.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider some explosions along the fight
-
 function new_screen_boss_fight(params)
     local level = params.level
     local player = params.player
@@ -18,15 +16,12 @@ function new_screen_boss_fight(params)
 
     -- TODO: duplicated code
     local function handle_player_damage()
-        -- TODO NEXT: powerups retrieval after live lost?
+        -- TODO: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
-        -- TODO NEXT: player defeat explosion
         -- TODO: VFX of disappearing health segment
         health = health - 1
-        if health > 0 then
-            player.start_invincibility_after_damage()
-        end
+        player.take_damage(health)
     end
 
     -- TODO: a little bit of duplicated code
@@ -39,7 +34,6 @@ function new_screen_boss_fight(params)
                 if not boss.has_finished() then
                     if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
                         -- TODO: SFX
-                        -- TODO: big explosion if no longer alive
                         boss.take_damage()
                         player_bullet.destroy()
                         -- TODO: magnetised score items?
@@ -48,6 +42,7 @@ function new_screen_boss_fight(params)
             end
             if not boss.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, boss_cc) then
+                    -- TODO NEXT: make boss damaged as well
                     handle_player_damage()
                 end
             end
@@ -58,6 +53,7 @@ function new_screen_boss_fight(params)
             if not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(boss_bullet.collision_circle(), player_cc) then
                     handle_player_damage()
+                    boss_bullet.destroy()
                 end
             end
         end
@@ -69,8 +65,8 @@ function new_screen_boss_fight(params)
 
     function screen._init()
         boss.enter_phase_main()
-        boss.set_on_bullets_spawned(function(bullets)
-            for _, b in pairs(bullets) do
+        boss.set_on_bullets_spawned(function(bullets_fn, boss_movement)
+            for _, b in pairs(bullets_fn(boss_movement, player.collision_circle())) do
                 add(boss_bullets, b)
             end
         end)
@@ -90,6 +86,14 @@ function new_screen_boss_fight(params)
                 add(explosions, new_explosion(cc.xy, 5 * cc.r, 50 + flr(rnd(6))))
             end
         end)
+
+        player.set_on_destroyed(function(collision_circle)
+            -- TODO: explosion SFX
+            -- TODO: duplication
+            add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
+            add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
+            add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
+        end)
         player.set_on_bullets_spawned(function(bullets)
             for _, b in pairs(bullets) do
                 add(player_bullets, b)
@@ -98,19 +102,6 @@ function new_screen_boss_fight(params)
     end
 
     function screen._update()
-        -- TODO: REMOVE THIS
-        if btnp(_button_o) then
-            if _m.mission_number < _max_mission_number then
-                _load_mission_cart {
-                    mission_number = _m.mission_number,
-                    health = _health_default,
-                    is_triple_shot_enabled = false,
-                }
-            else
-                _load_main_cart()
-            end
-        end
-
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         if btn(_button_x) then
@@ -119,28 +110,38 @@ function new_screen_boss_fight(params)
             }
         end
 
-        level._update()
-        player._update()
-        _go_update(player_bullets)
-        boss._update()
-        _go_update(boss_bullets)
-        _go_update(explosions)
-        hud._update()
+        _flattened_for_each(
+            { level },
+            { player },
+            { boss },
+            player_bullets,
+            boss_bullets,
+            explosions,
+            { hud },
+            function(game_object)
+                game_object._update()
+            end
+        )
 
         handle_collisions()
     end
 
     function screen._draw()
-        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
-        level._draw {
-            draw_within_level_bounds = function()
-                _go_draw(player_bullets)
-                _go_draw(boss_bullets)
-                boss._draw()
-                player._draw()
-                _go_draw(explosions)
-            end,
-        }
+        cls(_m.bg_color)
+        clip(_gaox, 0, _gaw, _gah)
+        _flattened_for_each(
+            { level },
+            player_bullets,
+            boss_bullets,
+            { boss },
+            { player },
+            explosions,
+            function(game_object)
+                game_object._draw()
+            end
+        )
+        clip()
+
         hud._draw {
             player_health = health,
             boss_health = boss.health or nil,
@@ -148,22 +149,33 @@ function new_screen_boss_fight(params)
         }
 
         -- DEBUG:
-        --_collisions._debug_draw_collision_circle(player.collision_circle())
         --for _, boss_cc in pairs(boss.collision_circles()) do
         --    _collisions._debug_draw_collision_circle(boss_cc)
         --end
-        --_go_draw_debug_collision_circles(player_bullets)
-        --_go_draw_debug_collision_circles(boss_bullets)
+        --_flattened_for_each(
+        --    { player },
+        --    player_bullets,
+        --    boss_bullets,
+        --    function(game_object)
+        --        _collisions._debug_draw_collision_circle(game_object.collision_circle())
+        --    end
+        --)
     end
 
     function screen._post_draw()
-        _go_delete_finished(player_bullets)
-        _go_delete_finished(boss_bullets)
-        _go_delete_finished(explosions)
+        _flattened_for_each(
+            player_bullets,
+            boss_bullets,
+            explosions,
+            function(game_object, game_objects)
+                if game_object.has_finished() then
+                    del(game_objects, game_object)
+                end
+            end
+        )
 
         if boss.has_finished() then
-            -- TODO NEXT: draft version of exploding enemies and boss
-            -- TODO: nice post-boss-destroy visuals before transitioning to the next cart
+            -- TODO NEXT: should we keep boss bullets visible? Should we allow them to hit player? If not, should we nicely destroy them?
             return new_screen_boss_outro {
                 level = level,
                 player = player,
@@ -176,9 +188,17 @@ function new_screen_boss_fight(params)
         end
 
         if health <= 0 then
-            -- TODO NEXT: game over
-            -- TODO NEXT: wait a moment after death
-            _load_main_cart()
+            -- TODO NEXT: should we keep remaining player bullets visible? Should we allow them to hit boss? If not, should we nicely destroy them?
+            return new_screen_defeat {
+                level = level,
+                enemies = {},
+                boss = boss,
+                enemy_bullets = {},
+                boss_bullets = boss_bullets,
+                explosions = explosions,
+                health = health,
+                hud = hud,
+            }
         end
     end
 

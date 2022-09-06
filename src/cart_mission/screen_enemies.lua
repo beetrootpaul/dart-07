@@ -2,6 +2,8 @@
 -- cart_mission/screen_enemies.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO: consider combining screens into a single one, with a state management inside them
+
 function new_screen_enemies(params)
     local level = params.level
     local player = params.player
@@ -17,15 +19,12 @@ function new_screen_enemies(params)
 
     -- TODO: duplicated code
     local function handle_player_damage()
-        -- TODO NEXT: powerups retrieval after live lost?
+        -- TODO: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
-        -- TODO NEXT: player defeat explosion
         -- TODO: VFX of disappearing health segment
         health = health - 1
-        if health > 0 then
-            player.start_invincibility_after_damage()
-        end
+        player.take_damage(health)
     end
 
     local function enable_triple_shot()
@@ -67,6 +66,7 @@ function new_screen_enemies(params)
             end
             if not enemy.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, enemy_cc) then
+                    -- TODO NEXT: make enemy damaged as well
                     handle_player_damage()
                 end
             end
@@ -77,6 +77,7 @@ function new_screen_enemies(params)
             if not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(enemy_bullet.collision_circle(), player_cc) then
                     handle_player_damage()
+                    enemy_bullet.destroy()
                 end
             end
         end
@@ -86,9 +87,16 @@ function new_screen_enemies(params)
 
     local screen = {}
 
-    -- TODO: consider enabling extra layer of music
     function screen._init()
         level.enter_phase_main()
+        
+        player.set_on_destroyed(function(collision_circle)
+            -- TODO: explosion SFX
+            -- TODO: duplication
+            add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
+            add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
+            add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
+        end)
         player.set_on_bullets_spawned(function(bullets)
             for _, b in pairs(bullets) do
                 add(player_bullets, b)
@@ -97,19 +105,6 @@ function new_screen_enemies(params)
     end
 
     function screen._update()
-        -- TODO: REMOVE THIS
-        if btnp(_button_o) then
-            if _m.mission_number < _max_mission_number then
-                _load_mission_cart {
-                    mission_number = _m.mission_number,
-                    health = _health_default,
-                    is_triple_shot_enabled = false
-                }
-            else
-                _load_main_cart()
-            end
-        end
-
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
         if btn(_button_x) then
@@ -118,16 +113,19 @@ function new_screen_enemies(params)
             }
         end
 
-        level._update()
-        player._update()
-
-        _go_update(enemies)
-        _go_update(player_bullets)
-        _go_update(enemy_bullets)
-        _go_update(powerups)
-        _go_update(explosions)
-
-        hud._update()
+        _flattened_for_each(
+            { level },
+            { player },
+            enemies,
+            player_bullets,
+            enemy_bullets,
+            powerups,
+            explosions,
+            { hud },
+            function(game_object)
+                game_object._update()
+            end
+        )
 
         handle_collisions()
 
@@ -136,8 +134,8 @@ function new_screen_enemies(params)
             add(enemies, new_enemy {
                 enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker),
                 start_xy = enemy_to_spawn.xy,
-                on_bullets_spawned = function(spawned_enemy_bullets)
-                    for _, seb in pairs(spawned_enemy_bullets) do
+                on_bullets_spawned = function(spawned_enemy_bullets_fn, enemy_movement)
+                    for _, seb in pairs(spawned_enemy_bullets_fn(enemy_movement, player.collision_circle())) do
                         add(enemy_bullets, seb)
                     end
                 end,
@@ -145,8 +143,8 @@ function new_screen_enemies(params)
                     -- TODO: explosion SFX
                     add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r))
                     if powerup_type ~= "-" then
-                        -- TODO: implement more powerup types: circling orb? diagonal shot? laser? power field? faster shoot?
-                        -- TODO: indicate powerups in hud
+                        -- TODO NEXT: implement more powerup types: circling orb? diagonal shot? laser? power field? faster shoot?
+                        -- TODO NEXT: indicate powerups in hud
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end
                 end,
@@ -155,35 +153,52 @@ function new_screen_enemies(params)
     end
 
     function screen._draw()
-        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
-        level._draw {
-            draw_within_level_bounds = function()
-                _go_draw(enemy_bullets)
-                _go_draw(player_bullets)
-                _go_draw(enemies)
-                _go_draw(powerups)
-                player._draw()
-                _go_draw(explosions)
-            end,
-        }
+        cls(_m.bg_color)
+        clip(_gaox, 0, _gaw, _gah)
+        _flattened_for_each(
+            { level },
+            enemy_bullets,
+            player_bullets,
+            enemies,
+            powerups,
+            { player },
+            explosions,
+            function(game_object)
+                game_object._draw()
+            end
+        )
+        clip()
+
         hud._draw {
             player_health = health,
         }
 
         -- DEBUG:
-        --_collisions._debug_draw_collision_circle(player.collision_circle())
-        --_go_draw_debug_collision_circles(enemies)
-        --_go_draw_debug_collision_circles(player_bullets)
-        --_go_draw_debug_collision_circles(enemy_bullets)
-        --_go_draw_debug_collision_circles(powerups)
+        --_flattened_for_each(
+        --    { player },
+        --    enemies,
+        --    player_bullets,
+        --    enemy_bullets,
+        --    powerups,
+        --    function(game_object)
+        --        _collisions._debug_draw_collision_circle(game_object.collision_circle())
+        --    end
+        --)
     end
 
     function screen._post_draw()
-        _go_delete_finished(enemies)
-        _go_delete_finished(powerups)
-        _go_delete_finished(player_bullets)
-        _go_delete_finished(enemy_bullets)
-        _go_delete_finished(explosions)
+        _flattened_for_each(
+            enemies,
+            powerups,
+            player_bullets,
+            enemy_bullets,
+            explosions,
+            function(game_object, game_objects)
+                if game_object.has_finished() then
+                    del(game_objects, game_object)
+                end
+            end
+        )
 
         if level.has_scrolled_to_end() and #enemies <= 0 and #enemy_bullets <= 0 and #powerups <= 0 then
             return new_screen_boss_intro {
@@ -198,9 +213,17 @@ function new_screen_enemies(params)
         end
 
         if health <= 0 then
-            -- TODO NEXT: game over screen
-            -- TODO NEXT: wait a moment after death
-            _load_main_cart()
+            -- TODO NEXT: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
+            return new_screen_defeat {
+                level = level,
+                enemies = enemies,
+                boss = nil,
+                enemy_bullets = enemy_bullets,
+                boss_bullets = {},
+                explosions = explosions,
+                health = health,
+                hud = hud,
+            }
         end
     end
 

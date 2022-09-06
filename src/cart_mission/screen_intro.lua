@@ -4,13 +4,15 @@
 
 -- TODO: try to recreate cool text motion effect
 -- TODO: polish it
--- TODO: allow player to shoot during during mission intro and boss intro
+-- TODO NEXT: allow player to shoot during during mission intro and boss intro?
+-- TODO NEXT: mission name
+-- TODO: polish mission names and boss names
 
 function new_screen_intro(params)
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
 
-    local fade_frames = 20
+    local fade_frames = 30
     local mission_info_slide_frames = 50
     local screen_frames = 200
 
@@ -41,28 +43,30 @@ function new_screen_intro(params)
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
-        level._update()
-        player._update()
-        hud._update()
-        mission_info._update()
-
-        fade_in._update()
-        screen_timer._update()
+        _flattened_for_each(
+            { level },
+            { player },
+            { hud },
+            { mission_info },
+            { fade_in },
+            { screen_timer },
+            function(game_object)
+                game_object._update()
+            end
+        )
     end
 
     function screen._draw()
-        rectfill(_gaox, 0, _gaox + _gaw - 1, _gah - 1, _m.bg_color)
-        level._draw {
-            draw_within_level_bounds = function()
-                player._draw()
-            end,
-        }
+        cls(_m.bg_color)
+        clip(_gaox, 0, _gaw, _gah)
+        level._draw()
+        player._draw()
+        clip()
+        
         hud._draw {
             player_health = health,
         }
-
         mission_info._draw()
-
         fade_in._draw()
     end
 

@@ -86,7 +86,7 @@ function new_boss(params)
             current_phase.bullet_fire_timer._update()
             if current_phase.bullet_fire_timer.ttl <= 0 then
                 current_phase.bullet_fire_timer.restart()
-                on_bullets_spawned(current_phase.spawn_bullets(movement))
+                on_bullets_spawned(current_phase.spawn_bullets, movement)
             end
         end
 

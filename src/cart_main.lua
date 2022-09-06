@@ -5,11 +5,14 @@
 local current_screen, next_screen
 
 function _init()
-    -- -- TODO NEXT: game over screen here with score from the failed/succeeded mission?
-    --local score = tonum(split(stat(6))[1]) or 2
-    --local number = tonum(split(stat(6))[2]) or -3
-
-    current_screen = new_screen_title()
+    local cart_params = _parse_main_cart_params()
+    if cart_params.preselected_mission_number ~= nil then
+        current_screen = new_screen_title {
+            preselected_mission_number = cart_params.preselected_mission_number,
+        }
+    else
+        current_screen = new_screen_brp()
+    end
 end
 
 function _update60()
@@ -32,12 +35,12 @@ end
 -- TODO: texts shaded with 2 horizontal colors
 
 -- TODO NEXT: tutorial screen? press X to shoot, arrows to fly
--- TODO NEXT: screen shake?
--- TODO NEXT: menu item to disable screen shake?
+-- TODO: screen shake?
+-- TODO: menu item to disable screen shake?
 
--- TODO NEXT: "hit stop"?
+-- TODO: "hit stop"?
 
--- TODO NEXT: push enemies and boss on damage?
+-- TODO: push enemies and boss on damage?
 
 -- TODO: menu music
 -- TODO: music per stage

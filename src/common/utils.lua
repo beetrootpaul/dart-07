@@ -2,6 +2,24 @@
 -- common/utils.lua  --
 -- -- -- -- -- -- -- --
 
+function _angle_between(xy1, xy2)
+    local dxy = xy2.minus(xy1)
+    -- TODO: describe atan2 in API helper filer
+    return atan2(dxy.x, dxy.y)
+end
+
+function _flattened_for_each(...)
+    local args = { ... }
+    local callback = args[#args]
+    del(args, callback)
+
+    for _, subarray in pairs(args) do
+        for __, value in pairs(subarray) do
+            callback(value, subarray)
+        end
+    end
+end
+
 function _noop()
     -- do nothing
 end

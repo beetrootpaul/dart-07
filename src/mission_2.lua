@@ -18,9 +18,7 @@ function _m.enemy_properties_for(enemy_map_marker)
     if enemy_map_marker == 79 then
         return {
             health = 1,
-            ship_sprite = new_static_sprite(8, 8, 0, 64, {
-                transparent_color = _color_11_dark_green,
-            }),
+            ship_sprite = new_static_sprite(8, 8, 0, 64),
             collision_circle_r = 3.5,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_sequence_factory {
@@ -37,7 +35,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                 },
             },
             bullet_fire_timer = new_timer(30),
-            spawn_bullets = function(enemy_movement)
+            spawn_bullets = function(enemy_movement, player_collision_circle)
                 local bullets = {}
                 for i = 3, 5 do
                     add(bullets, _m.enemy_bullet_factory(
@@ -59,9 +57,7 @@ end
 function _m.boss_properties()
     return {
         health = 20,
-        sprite = new_static_sprite(56, 26, 4, 98, {
-            transparent_color = _color_11_dark_green,
-        }),
+        sprite = new_static_sprite(56, 26, 4, 98),
         collision_circles = function(movement)
             return {
                 { xy = movement.xy.plus(0, 3), r = 5 },
@@ -72,7 +68,7 @@ function _m.boss_properties()
             {
                 triggering_health_fraction = 1,
                 bullet_fire_timer = new_timer(80),
-                spawn_bullets = function(enemy_movement)
+                spawn_bullets = function(enemy_movement, player_collision_circle)
                     local bullets = {}
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {

@@ -1,17 +1,15 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/screen_boss_outro.lua  --
--- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/screen_defeat.lua   --
+-- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: boss spectacular destroy SFX
--- TODO NEXT: win screen after all 3 levels
-
-function new_screen_boss_outro(params)
+function new_screen_defeat(params)
     local level = params.level
-    local player = params.player
-    local player_bullets = params.player_bullets
+    local enemies = params.enemies
+    local boss = params.boss -- optional
+    local enemy_bullets = params.enemy_bullets
+    local boss_bullets = params.boss_bullets
     local explosions = params.explosions
     local health = params.health
-    local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
     local screen_frames = 120
@@ -25,15 +23,16 @@ function new_screen_boss_outro(params)
     local screen = {}
 
     function screen._init()
+        -- TODO: music?
     end
 
     function screen._update()
-        player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
-
         _flattened_for_each(
             { level },
-            { player },
-            player_bullets,
+            enemies,
+            { boss },
+            enemy_bullets,
+            boss_bullets,
             explosions,
             { hud },
             { fade_out },
@@ -49,8 +48,10 @@ function new_screen_boss_outro(params)
         clip(_gaox, 0, _gaw, _gah)
         _flattened_for_each(
             { level },
-            player_bullets,
-            { player },
+            enemies,
+            { boss },
+            enemy_bullets,
+            boss_bullets,
             explosions,
             function(game_object)
                 game_object._draw()
@@ -67,7 +68,9 @@ function new_screen_boss_outro(params)
 
     function screen._post_draw()
         _flattened_for_each(
-            player_bullets,
+            enemies,
+            enemy_bullets,
+            boss_bullets,
             explosions,
             function(game_object, game_objects)
                 if game_object.has_finished() then
@@ -77,15 +80,7 @@ function new_screen_boss_outro(params)
         )
 
         if screen_timer.ttl <= 0 then
-            if _m.mission_number < _max_mission_number then
-                _load_mission_cart {
-                    mission_number = _m.mission_number + 1,
-                    health = health,
-                    is_triple_shot_enabled = is_triple_shot_enabled,
-                }
-            else
-                return new_screen_win()
-            end
+            return new_screen_over()
         end
     end
 

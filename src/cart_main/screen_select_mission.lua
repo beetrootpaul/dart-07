@@ -2,10 +2,14 @@
 -- cart_main/screen_select_mission.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO NEXT: unlock levels with progression
+-- TODO NEXT: extra option to go back
+-- TODO NEXT: high score
 -- TODO: create a decent mission selection screen
 
-function new_screen_select_mission()
-    local selected_mission = 1
+function new_screen_select_mission(params)
+    local selected_mission = params.preselected_mission_number
+    
     local should_start_mission = false
 
     --
@@ -16,6 +20,7 @@ function new_screen_select_mission()
     end
 
     function screen._update()
+        -- TODO: up/down SFX
         if btnp(_button_up) then
             selected_mission = selected_mission - 1
         end
@@ -31,7 +36,7 @@ function new_screen_select_mission()
     end
 
     function screen._draw()
-        cls(_color_0_black)
+        cls(_color_11_dark_green)
 
         print("mission 1", 30, 30, selected_mission == 1 and _color_6_light_grey or _color_13_mauve)
         print("mission 2", 30, 50, selected_mission == 2 and _color_6_light_grey or _color_13_mauve)

@@ -11,12 +11,14 @@ function _init()
 
     -- TODO: decent polished menu item
     menuitem(1, "-> to main <-", function()
-        _load_main_cart()
+        _load_main_cart {
+            preselected_mission_number = _m.mission_number,
+        }
     end)
 
     current_screen = new_screen_intro {
-        health = cart_params.health,
-        is_triple_shot_enabled = cart_params.is_triple_shot_enabled,
+        health = cart_params.health ~= nil and cart_params.health or _health_default,
+        is_triple_shot_enabled = cart_params.is_triple_shot_enabled ~= nil and cart_params.is_triple_shot_enabled or false,
     }
 end
 

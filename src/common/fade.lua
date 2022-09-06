@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/fade.lua --
--- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+-- common/fade.lua   --
+-- -- -- -- -- -- -- --
 
 -- direction: "in" | "out"
 function new_fade(direction, fade_frames, wait_frames)

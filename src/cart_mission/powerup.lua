@@ -2,7 +2,7 @@
 -- cart_mission/powerup.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: fancy animation
+-- TODO NEXT: fancy animation
 -- TODO: actions on pick up
 -- TODO: magnet for an easier pickup?
 
@@ -12,13 +12,9 @@ function new_powerup(start_xy, powerup_type)
     local sprite
 
     if powerup_type == "a" then
-        sprite = new_static_sprite(7, 8, 121, 0, {
-            transparent_color = _color_11_dark_green,
-        })
+        sprite = new_static_sprite(7, 8, 121, 0)
     elseif powerup_type == "t" then
-        sprite = new_static_sprite(7, 8, 113, 0, {
-            transparent_color = _color_11_dark_green,
-        })
+        sprite = new_static_sprite(7, 8, 113, 0)
     end
 
     local movement = new_movement_line_factory {
@@ -37,7 +33,7 @@ function new_powerup(start_xy, powerup_type)
     function powerup.collision_circle()
         return {
             xy = movement.xy,
-            r = 3,
+            r = 6,
         }
     end
 
