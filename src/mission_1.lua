@@ -7,6 +7,8 @@ _m = {
     scroll_per_frame = .5,
     bg_color = _color_12_true_blue,
     has_bg_tiles = true,
+    mission_name = "death islands",
+    boss_name = "painful death",
 }
 
 _m.enemy_bullet_factory = new_enemy_bullet_factory {

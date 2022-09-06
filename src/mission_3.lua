@@ -7,6 +7,8 @@ _m = {
     scroll_per_frame = 1.5,
     bg_color = _color_2_darker_purple,
     has_bg_tiles = false,
+    mission_name = "rotfl",
+    boss_name = "lol"
 }
 
 _m.enemy_bullet_factory = new_enemy_bullet_factory {

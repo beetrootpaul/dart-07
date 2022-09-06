@@ -7,6 +7,8 @@ _m = {
     scroll_per_frame = 1,
     bg_color = _color_1_dark_blue,
     has_bg_tiles = false,
+    mission_name = "death space",
+    boss_name = "cheerful death"
 }
 
 _m.enemy_bullet_factory = new_enemy_bullet_factory {

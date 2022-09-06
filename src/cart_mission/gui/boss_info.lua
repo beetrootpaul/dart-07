@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: better boss info GUI
--- TODO NEXT: boss name
+-- TODO: can be consolidated with mission info?
 
 function new_boss_info(params)
     local rounding_fn = "ceil"
@@ -37,13 +37,9 @@ function new_boss_info(params)
             clip(_gaox, 0, _gaw, _gah)
 
             local x, y = movement.xy[rounding_fn]().x, movement.xy[rounding_fn]().y
-            for dx = -1, 1 do
-                for dy = -1, 1 do
-                    print("boss", x + 10 + dx, y - 7 + dy, _color_8_red)
-                end
-            end
-            print("boss", x + 10, y - 7, _m.bg_color)
-            rectfill(x, y, x + _gaw - 1, y, _color_8_red)
+            _outlined_print("boss", x + 10, y - 13, _m.bg_color, _color_8_red)
+            _outlined_print(_m.boss_name, x + 10, y - 7, _m.bg_color, _color_8_red)
+            line(x, y, x + _gaw - 1, y, _color_8_red)
 
             clip()
         end,

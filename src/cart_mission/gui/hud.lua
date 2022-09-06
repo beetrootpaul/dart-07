@@ -55,14 +55,13 @@ function new_hud(params)
             end
 
             -- TODO: polish it
-            -- TODO NEXT: add boss name above the bar
             if boss_health and boss_health_max then
                 local health_fraction = boss_health / boss_health_max
                 rectfill(
                     _gaox + boss_health_bar_margin,
-                    2,
-                    _gaox + boss_health_bar_margin + ceil(health_fraction * (_gaw - 2 * boss_health_bar_margin)) - 1,
                     4,
+                    _gaox + boss_health_bar_margin + ceil(health_fraction * (_gaw - 2 * boss_health_bar_margin)) - 1,
+                    5,
                     _color_8_red
                 )
             end
