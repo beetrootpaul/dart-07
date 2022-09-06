@@ -2,7 +2,9 @@
 -- cart_mission/player.lua --
 -- -- -- -- -- -- -- -- -- --
 
-function new_player()
+function new_player(params)
+    local on_bullets_spawned = new_throttle(12, params.on_bullets_spawned)
+
     local w = 10
     local h = 10
 
@@ -29,9 +31,6 @@ function new_player()
     -- TODO: consider jet sprite small instead of hidden
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
-
-    local bullet_spawn_throttle_length = 12
-    local on_bullets_spawned = new_throttle(bullet_spawn_throttle_length, _noop)
 
     local invincible_after_damage_timer
 
@@ -61,9 +60,6 @@ function new_player()
 
         set_on_destroyed = function(callback)
             on_destroyed = callback
-        end,
-        set_on_bullets_spawned = function(callback)
-            on_bullets_spawned = new_throttle(bullet_spawn_throttle_length, callback)
         end,
 
         fire = function(p)

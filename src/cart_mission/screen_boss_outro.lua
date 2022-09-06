@@ -30,6 +30,12 @@ function new_screen_boss_outro(params)
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
+        if btn(_button_x) then
+            player.fire {
+                is_triple_shot_enabled = is_triple_shot_enabled,
+            }
+        end
+
         _flattened_for_each(
             { level },
             { player },

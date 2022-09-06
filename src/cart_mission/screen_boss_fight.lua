@@ -95,11 +95,6 @@ function new_screen_boss_fight(params)
             add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
         end)
-        player.set_on_bullets_spawned(function(bullets)
-            for _, b in pairs(bullets) do
-                add(player_bullets, b)
-            end
-        end)
     end
 
     function screen._update()

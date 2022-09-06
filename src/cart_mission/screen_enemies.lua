@@ -7,12 +7,12 @@
 function new_screen_enemies(params)
     local level = params.level
     local player = params.player
+    local player_bullets = params.player_bullets
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
 
     local enemies = {}
-    local player_bullets = {}
     local enemy_bullets = {}
     local powerups = {}
     local explosions = {}
@@ -90,18 +90,13 @@ function new_screen_enemies(params)
 
     function screen._init()
         level.enter_phase_main()
-        
+
         player.set_on_destroyed(function(collision_circle)
             -- TODO: explosion SFX
             -- TODO: duplication
             add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
             add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
-        end)
-        player.set_on_bullets_spawned(function(bullets)
-            for _, b in pairs(bullets) do
-                add(player_bullets, b)
-            end
         end)
     end
 

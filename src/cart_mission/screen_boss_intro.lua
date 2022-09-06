@@ -2,8 +2,6 @@
 -- cart_mission/screen_boss_intro.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: allow player to shoot during during mission intro and boss intro?
-
 function new_screen_boss_intro(params)
     local level = params.level
     local player = params.player
@@ -12,7 +10,7 @@ function new_screen_boss_intro(params)
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
     local hud = params.hud
-
+    
     local screen_frames = 180
     local boss_info_slide_frames = 50
 
@@ -39,6 +37,12 @@ function new_screen_boss_intro(params)
 
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
+        
+        if btn(_button_x) then
+            player.fire {
+                is_triple_shot_enabled = is_triple_shot_enabled,
+            }
+        end
 
         boss._update { no_fight = true }
 
