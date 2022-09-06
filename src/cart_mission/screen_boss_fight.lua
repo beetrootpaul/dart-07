@@ -42,7 +42,8 @@ function new_screen_boss_fight(params)
             end
             if not boss.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, boss_cc) then
-                    -- TODO NEXT: make boss damaged as well
+                    -- TODO: SFX
+                    boss.take_damage()
                     handle_player_damage()
                 end
             end
