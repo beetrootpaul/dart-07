@@ -18,7 +18,6 @@ function new_explosion(start_xy, magnitude, wait_frames)
     end
 
     local wait_timer = new_timer(wait_frames or 0)
-    --local wait_timer = new_timer(100)
 
     return {
         has_finished = function()

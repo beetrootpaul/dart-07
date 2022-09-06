@@ -6,16 +6,13 @@
 -- TODO NEXT: indicate acquired powerups, i.e. triple shot
 
 function new_hud(params)
-    local wait_frames = params.wait_frames
-    local slide_in_frames = params.slide_in_frames
-
     local movement = new_movement_sequence_factory {
         sequence = {
             new_movement_fixed_factory {
-                frames = wait_frames,
+                frames = params.wait_frames
             },
             new_movement_to_target_factory {
-                frames = slide_in_frames,
+                frames = params.slide_in_frames,
                 target_x = 4,
                 easing_fn = _easing_easeoutquart,
             },
@@ -25,7 +22,7 @@ function new_hud(params)
     local bar_w = 16
     local boss_health_bar_margin = 2
 
-    local hearth = new_static_sprite(6, 5, 40, 12, {
+    local heart = new_static_sprite(6, 5, 40, 12, {
         from_left_top_corner = true,
     })
     local health_bar_start = new_static_sprite(8, 5, 40, 7, {
@@ -49,7 +46,7 @@ function new_hud(params)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
 
             local xy = movement.xy.ceil()
-            hearth._draw(xy.minus(_gaox - 1, 10))
+            heart._draw(xy.minus(_gaox - 1, 10))
             if player_health > 0 then
                 health_bar_start._draw(xy.minus(_gaox, 20))
             end

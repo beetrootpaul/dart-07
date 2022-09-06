@@ -137,13 +137,19 @@ function new_level_descriptor()
             --  - t = top
             --  - b = bottom
             --  - m = middle
-            local slt, smt, srt = structures_occupied[distance][lane - 1], structures_occupied[distance][lane], structures_occupied[distance][lane + 1]
-            local slm, smm, srm = structures_occupied[distance - 1][lane - 1], structures_occupied[distance - 1][lane], structures_occupied[distance - 1][lane + 1]
-            local slb, smb, srb = structures_occupied[distance - 2][lane - 1], structures_occupied[distance - 2][lane], structures_occupied[distance - 2][lane + 1]
-            local sllt, sllb = structures_occupied[distance][lane - 2], structures_occupied[distance - 2][lane - 2]
-            local srrt, srrb = structures_occupied[distance][lane + 2], structures_occupied[distance - 2][lane + 2]
-            local sltt, srtt = structures_occupied[distance + 1][lane - 1], structures_occupied[distance + 1][lane + 1]
-            local slbb, srbb = structures_occupied[distance - 3][lane - 1], structures_occupied[distance - 3][lane + 1]
+            local dist_t = distance
+            local dist_m = distance - 1
+            local dist_b = distance - 2
+            local lane_l = lane - 1
+            local lane_m = lane
+            local lane_r = lane + 1
+            local slt, smt, srt = structures_occupied[dist_t][lane_l], structures_occupied[dist_t][lane_m], structures_occupied[dist_t][lane_r]
+            local slm, smm, srm = structures_occupied[dist_m][lane_l], structures_occupied[dist_m][lane_m], structures_occupied[dist_m][lane_r]
+            local slb, smb, srb = structures_occupied[dist_b][lane_l], structures_occupied[dist_b][lane_m], structures_occupied[dist_b][lane_r]
+            local sllt, sllb = structures_occupied[dist_t][lane_l - 1], structures_occupied[dist_b][lane_l - 1]
+            local srrt, srrb = structures_occupied[dist_t][lane_r + 1], structures_occupied[dist_b][lane_r + 1]
+            local sltt, srtt = structures_occupied[dist_t + 1][lane_l], structures_occupied[dist_t + 1][lane_r]
+            local slbb, srbb = structures_occupied[dist_b - 1][lane_l], structures_occupied[dist_b - 1][lane_r]
             local tile_to_set
             if smm then
                 if not slm and not smt then
@@ -184,7 +190,7 @@ function new_level_descriptor()
                     tile_to_set = st_inner_right_bottom
                 end
             end
-            structures[distance - 1][lane] = tile_to_set
+            structures[dist_m][lane_m] = tile_to_set
         end
     end
 

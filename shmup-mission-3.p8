@@ -10,7 +10,6 @@ __lua__
 #include build/src/common/movement/movement_line_factory.lua
 #include build/src/common/movement/movement_sequence_factory.lua
 #include build/src/common/movement/movement_sinusoidal_factory.lua
-#include build/src/common/movement/movement_stationary_factory.lua
 #include build/src/common/movement/movement_to_target_factory.lua
 #include build/src/common/timer/fake_timer.lua
 #include build/src/common/timer/timer.lua

@@ -2,6 +2,7 @@
 -- cart_main/screen_select_mission.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+-- TODO NEXT: fade out to avoid instant color change, or… make fade in same color as selection screen
 -- TODO NEXT: unlock levels with progression
 -- TODO NEXT: extra option to go back
 -- TODO NEXT: high score

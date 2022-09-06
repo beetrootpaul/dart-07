@@ -15,7 +15,7 @@ _m.enemy_bullet_factory = new_enemy_bullet_factory {
 }
 
 function _m.enemy_properties_for(enemy_map_marker)
-    -- heavy, aimed shot
+    -- heavy, aimed spread shot
     if enemy_map_marker == 73 then
         return {
             health = 6,
@@ -32,7 +32,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                 for i = -2, 2 do
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
-                            angle = i * .02 + _angle_between(enemy_movement.xy, player_collision_circle.xy),
+                            angle = i * .03 + _angle_between(enemy_movement.xy, player_collision_circle.xy),
                             angled_speed = 1.5,
                         }(enemy_movement.xy)
                     ))
@@ -70,12 +70,14 @@ function _m.enemy_properties_for(enemy_map_marker)
                 return {
                     _m.enemy_bullet_factory(
                         new_movement_line_factory {
+                            base_speed_y = _m.scroll_per_frame,
                             angle = 0,
                             angled_speed = 1,
                         }(enemy_movement.xy)
                     ),
                     _m.enemy_bullet_factory(
                         new_movement_line_factory {
+                            base_speed_y = _m.scroll_per_frame,
                             angle = .5,
                             angled_speed = 1,
                         }(enemy_movement.xy)
@@ -228,7 +230,10 @@ function _m.enemy_properties_for(enemy_map_marker)
             ship_sprite = new_static_sprite(14, 16, 0, 64),
             collision_circle_r = 7,
             collision_circle_offset_y = 0,
-            movement_factory = new_movement_stationary_factory(),
+            movement_factory = new_movement_line_factory {
+                angle = .75,
+                angled_speed = _m.scroll_per_frame,
+            },
             bullet_fire_timer = new_timer(60),
             spawn_bullets = function(enemy_movement, player_collision_circle)
                 local bullets = {}
