@@ -209,7 +209,7 @@ function new_screen_enemies(params)
         end
 
         if health <= 0 then
-            -- TODO NEXT: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
+            -- TODO: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
             return new_screen_defeat {
                 level = level,
                 enemies = enemies,

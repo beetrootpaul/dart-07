@@ -3,7 +3,6 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: boss spectacular destroy SFX
--- TODO NEXT: win screen after all 3 levels
 
 function new_screen_boss_outro(params)
     local level = params.level

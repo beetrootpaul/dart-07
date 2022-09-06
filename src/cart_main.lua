@@ -8,7 +8,7 @@ function _init()
     local cart_params = _parse_main_cart_params()
 
     if cart_params.preselected_mission_number ~= nil then
-        current_screen = new_screen_title {
+        current_screen = new_screen_select_mission {
             preselected_mission_number = cart_params.preselected_mission_number,
         }
     else
