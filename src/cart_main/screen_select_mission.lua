@@ -52,7 +52,7 @@ function new_screen_select_mission(params)
         print("mission 2", 30, 50, selected_mission == 2 and _color_6_light_grey or _color_13_mauve)
         print("mission 3", 30, 70, selected_mission == 3 and _color_6_light_grey or _color_13_mauve)
         -- TODO NEXT: high score across plays (persistent storage)
-        print("high score:", 34, 80, _color_12_true_blue)
+        --print("high score:", 34, 80, _color_12_true_blue)
 
         fade_out._draw()
         fade_in._draw()
@@ -65,6 +65,7 @@ function new_screen_select_mission(params)
                 mission_number = selected_mission,
                 health = _health_default,
                 is_triple_shot_enabled = false,
+                is_fast_shot_enabled = false,
             }
         end
     end

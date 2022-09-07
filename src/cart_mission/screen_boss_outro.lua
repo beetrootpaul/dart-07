@@ -11,13 +11,11 @@ function new_screen_boss_outro(params)
     local explosions = params.explosions
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
+    local is_fast_shot_enabled = params.is_fast_shot_enabled
     local hud = params.hud
 
-    local screen_frames = 120
-    local fade_out_frames = 30
-
-    local fade_out = new_fade("out", fade_out_frames, screen_frames - fade_out_frames)
-    local screen_timer = new_timer(screen_frames)
+    local fade_out = new_fade("out", 30, 90)
+    local screen_timer = new_timer(120)
 
     --
 
@@ -32,6 +30,7 @@ function new_screen_boss_outro(params)
         if btn(_button_x) then
             player.fire {
                 is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
             }
         end
 
@@ -87,6 +86,7 @@ function new_screen_boss_outro(params)
                     mission_number = _m.mission_number + 1,
                     health = health,
                     is_triple_shot_enabled = is_triple_shot_enabled,
+                    is_fast_shot_enabled = is_fast_shot_enabled,
                 }
             else
                 return new_screen_win()

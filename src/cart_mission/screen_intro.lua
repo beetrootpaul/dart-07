@@ -9,6 +9,7 @@
 function new_screen_intro(params)
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
+    local is_fast_shot_enabled = params.is_fast_shot_enabled
 
     local fade_frames = 30
     local mission_info_slide_frames = 50
@@ -51,6 +52,7 @@ function new_screen_intro(params)
         if btn(_button_x) then
             player.fire {
                 is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
             }
         end
 
@@ -105,6 +107,7 @@ function new_screen_intro(params)
                 player_bullets = player_bullets,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
                 hud = hud,
             }
         end

@@ -170,7 +170,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,h,h,h,t",
             -- DEBUG:
             --health = 100,
-            powerups_distribution = "t",
+            powerups_distribution = "f",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {
@@ -210,7 +210,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             powerups_distribution = "-,-,-,-,-,-,-,-,-,h,h,t",
             -- DEBUG:
             --health = 100,
-            powerups_distribution = "h",
+            powerups_distribution = "t",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {

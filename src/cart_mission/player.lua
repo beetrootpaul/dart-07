@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- --
 
 function new_player(params)
-    local on_bullets_spawned = new_throttle(12, params.on_bullets_spawned)
+    local on_bullets_spawned = new_throttle(params.on_bullets_spawned)
 
     local w = 10
     local h = 10
@@ -11,11 +11,6 @@ function new_player(params)
     local speed = 1
     -- DEBUG:
     --local speed = 1
-
-    local min_x = w / 2 + 1
-    local max_x = _gaw - w / 2 - 1
-    local min_y = h / 2 + 1
-    local max_y = _gah - h / 2 - 1
 
     local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0)
     local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0)
@@ -53,8 +48,16 @@ function new_player(params)
             jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
             ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
             xy = xy
-                .set_x(mid(min_x, xy.x + (right and speed or (left and -speed or 0)), max_x))
-                .set_y(mid(min_y, xy.y + (down and speed or (up and -speed or 0)), max_y))
+                .set_x(mid(
+                w / 2 + 1,
+                xy.x + (right and speed or (left and -speed or 0)),
+                _gaw - w / 2 - 1
+            ))
+                .set_y(mid(
+                h / 2 + 1,
+                xy.y + (down and speed or (up and -speed or 0)),
+                _gah - h / 2 - 1
+            ))
         end,
 
         set_on_destroyed = function(callback)
@@ -64,14 +67,18 @@ function new_player(params)
         fire = function(p)
             local bullets = {
                 -- TODO: SFX?
-                new_player_bullet { start_xy = xy.plus(0, -4) },
+                new_player_bullet(xy.plus(0, -4)),
             }
             if p.is_triple_shot_enabled then
                 -- TODO: different SFX?
-                add(bullets, new_player_bullet { start_xy = xy.plus(-5, -2) })
-                add(bullets, new_player_bullet { start_xy = xy.plus(5, -2) })
+                add(bullets, new_player_bullet(xy.plus(-5, -2)))
+                add(bullets, new_player_bullet(xy.plus(5, -2)))
             end
-            on_bullets_spawned.invoke(bullets)
+            on_bullets_spawned.invoke(
+            -- TODO: balancing
+                p.is_fast_shot_enabled and 9 or 18,
+                bullets
+            )
         end,
 
         collision_circle = collision_circle,
@@ -105,13 +112,16 @@ function new_player(params)
         end,
 
         _draw = function()
-            local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 8) % 2 == 1
+            local flash_color = invincible_after_damage_timer and
+                flr(invincible_after_damage_timer.ttl / 8) % 2 == 1 and
+                _color_6_light_grey or
+                nil
             -- TODO: consider blinking instead of flashing
             ship_sprite_current._draw(xy, {
-                flash_color = flash and _color_6_light_grey or nil,
+                flash_color = flash_color,
             })
             jet_sprite._draw(xy.plus(0, 8), {
-                flash_color = flash and _color_6_light_grey or nil,
+                flash_color = flash_color,
             })
         end,
 

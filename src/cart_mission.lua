@@ -18,6 +18,7 @@ function _init()
     current_screen = new_screen_intro {
         health = cart_params.health ~= nil and cart_params.health or _health_default,
         is_triple_shot_enabled = cart_params.is_triple_shot_enabled ~= nil and cart_params.is_triple_shot_enabled or false,
+        is_fast_shot_enabled = cart_params.is_fast_shot_enabled ~= nil and cart_params.is_fast_shot_enabled or false,
     }
     current_screen._init()
 end

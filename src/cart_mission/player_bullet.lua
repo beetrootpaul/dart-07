@@ -4,9 +4,7 @@
 
 -- TODO: consider heat wave distortion behind a bullet
 
-function new_player_bullet(params)
-    local start_xy = params.start_xy
-
+function new_player_bullet(start_xy)
     local is_destroyed = false
 
     local bullet_sprite = new_static_sprite(4, 5, 0, 16)
