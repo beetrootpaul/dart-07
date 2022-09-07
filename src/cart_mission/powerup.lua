@@ -9,13 +9,11 @@
 function new_powerup(start_xy, powerup_type)
     local is_picked = false
 
-    local sprite
-
-    if powerup_type == "a" then
-        sprite = new_static_sprite(7, 8, 121, 0)
-    elseif powerup_type == "t" then
-        sprite = new_static_sprite(7, 8, 113, 0)
-    end
+    local sprites = {
+        h = new_static_sprite(9, 8, 119, 0),
+        t = new_static_sprite(9, 8, 119, 8),
+        f = new_static_sprite(9, 8, 119, 16),
+    }
 
     local movement = new_movement_line_factory {
         angle = .75,
@@ -46,7 +44,7 @@ function new_powerup(start_xy, powerup_type)
     end
 
     function powerup._draw()
-        sprite._draw(movement.xy)
+        sprites[powerup_type]._draw(movement.xy)
     end
 
     return powerup

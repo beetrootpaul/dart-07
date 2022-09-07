@@ -18,6 +18,10 @@ TODO itch.io link
 
 TODO longer description
 
+TODO player ship
+TODO sample enemies
+TODO powerups and their meaning
+
 ---
 
 TODO any other info, i.e. about being a PICO-8 game

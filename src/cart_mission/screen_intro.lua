@@ -4,13 +4,12 @@
 
 -- TODO: try to recreate cool text motion effect
 -- TODO: polish it
--- TODO NEXT: allow player to shoot during during mission intro and boss intro?
--- TODO NEXT: mission name
 -- TODO: polish mission names and boss names
 
 function new_screen_intro(params)
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
+    local is_fast_shot_enabled = params.is_fast_shot_enabled
 
     local fade_frames = 30
     local mission_info_slide_frames = 50
@@ -18,7 +17,14 @@ function new_screen_intro(params)
 
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
-    local player = new_player()
+    local player_bullets = {}
+    local player = new_player {
+        on_bullets_spawned = function(bullets)
+            for _, b in pairs(bullets) do
+                add(player_bullets, b)
+            end
+        end,
+    }
     local hud = new_hud {
         wait_frames = 190,
         slide_in_frames = 40,
@@ -43,9 +49,17 @@ function new_screen_intro(params)
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
 
+        if btn(_button_x) then
+            player.fire {
+                is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
+            }
+        end
+
         _flattened_for_each(
             { level },
             { player },
+            player_bullets,
             { hud },
             { mission_info },
             { fade_in },
@@ -59,10 +73,16 @@ function new_screen_intro(params)
     function screen._draw()
         cls(_m.bg_color)
         clip(_gaox, 0, _gaw, _gah)
-        level._draw()
-        player._draw()
+        _flattened_for_each(
+            { level },
+            player_bullets,
+            { player },
+            function(game_object)
+                game_object._draw()
+            end
+        )
         clip()
-        
+
         hud._draw {
             player_health = health,
         }
@@ -71,12 +91,23 @@ function new_screen_intro(params)
     end
 
     function screen._post_draw()
+        _flattened_for_each(
+            player_bullets,
+            function(game_object, game_objects)
+                if game_object.has_finished() then
+                    del(game_objects, game_object)
+                end
+            end
+        )
+
         if screen_timer.ttl <= 0 then
             return new_screen_enemies {
                 level = level,
                 player = player,
+                player_bullets = player_bullets,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
                 hud = hud,
             }
         end

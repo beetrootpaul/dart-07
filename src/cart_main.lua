@@ -6,13 +6,15 @@ local current_screen, next_screen
 
 function _init()
     local cart_params = _parse_main_cart_params()
+
     if cart_params.preselected_mission_number ~= nil then
-        current_screen = new_screen_title {
+        current_screen = new_screen_select_mission {
             preselected_mission_number = cart_params.preselected_mission_number,
         }
     else
         current_screen = new_screen_brp()
     end
+    current_screen._init()
 end
 
 function _update60()
@@ -34,7 +36,7 @@ end
 
 -- TODO: texts shaded with 2 horizontal colors
 
--- TODO NEXT: tutorial screen? press X to shoot, arrows to fly
+-- TODO: tutorial screen? press X to shoot, arrows to fly
 -- TODO: screen shake?
 -- TODO: menu item to disable screen shake?
 

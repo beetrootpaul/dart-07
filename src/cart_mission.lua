@@ -9,8 +9,7 @@ function _init()
 
     _copy_shared_assets_to_transferable_ram()
 
-    -- TODO: decent polished menu item
-    menuitem(1, "-> to main <-", function()
+    menuitem(1, "exit to title", function()
         _load_main_cart {
             preselected_mission_number = _m.mission_number,
         }
@@ -19,7 +18,9 @@ function _init()
     current_screen = new_screen_intro {
         health = cart_params.health ~= nil and cart_params.health or _health_default,
         is_triple_shot_enabled = cart_params.is_triple_shot_enabled ~= nil and cart_params.is_triple_shot_enabled or false,
+        is_fast_shot_enabled = cart_params.is_fast_shot_enabled ~= nil and cart_params.is_fast_shot_enabled or false,
     }
+    current_screen._init()
 end
 
 function _update60()

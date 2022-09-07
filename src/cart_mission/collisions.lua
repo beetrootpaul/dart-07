@@ -5,11 +5,8 @@
 _collisions = {}
 
 function _collisions.are_colliding(collision_circle_1, collision_circle_2)
-    -- prevent collision detection if objects are outside top and bottom edges of the gameplay area
-    if _is_y_not_within_gameplay_area(collision_circle_1.xy.y + collision_circle_1.r) or
-        _is_y_not_within_gameplay_area(collision_circle_1.xy.y - collision_circle_1.r) or
-        _is_y_not_within_gameplay_area(collision_circle_2.xy.y + collision_circle_2.r) or
-        _is_y_not_within_gameplay_area(collision_circle_2.xy.y - collision_circle_2.r)
+    if _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle_1) or
+        _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle_2)
     then
         return false
     end

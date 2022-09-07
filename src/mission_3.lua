@@ -7,8 +7,11 @@ _m = {
     scroll_per_frame = 1.5,
     bg_color = _color_2_darker_purple,
     has_bg_tiles = false,
+    mission_name = "rotfl",
+    boss_name = "lol"
 }
 
+-- TODO: polish mission 3 enemy bullets
 _m.enemy_bullet_factory = new_enemy_bullet_factory {
     bullet_sprite = new_static_sprite(4, 4, 124, 64),
     collision_circle_r = 1.5,

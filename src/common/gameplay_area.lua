@@ -17,8 +17,6 @@ function _is_safely_outside_gameplay_area(xy)
         xy.y > _gah + _ts
 end
 
-function _is_y_not_within_gameplay_area(y)
-    -- 3 is an arbitrary chosen offset to increase a chance player will 
-    -- see what they hit before it disappears
-    return y < 2 or y > _gah - 2
+function _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle)
+    return collision_circle.xy.y + collision_circle.r < 3
 end

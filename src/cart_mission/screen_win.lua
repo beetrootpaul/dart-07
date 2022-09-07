@@ -4,9 +4,9 @@
 
 -- TODO: create a decent win screen
 
--- TODO NEXT: fade out
-
 function new_screen_win()
+    local fade_out = new_fade("out", 30)
+
     local proceed = false
 
     --
@@ -21,6 +21,10 @@ function new_screen_win()
         if btnp(_button_x) then
             proceed = true
         end
+
+        if proceed then
+            fade_out._update()
+        end
     end
 
     function screen._draw()
@@ -28,13 +32,16 @@ function new_screen_win()
 
         print("win!", 10, 40, _color_12_true_blue)
         print("press x", 10, 60, 1 + flr(sin(2 * t())) == 0 and _color_6_light_grey or _color_13_mauve)
-        print("score: ", 10, 80, _color_3_blue_green)
+        -- TODO NEXT: score
+        --print("score: ", 10, 80, _color_3_blue_green)
         -- TODO NEXT: implement and show conditionally
-        print("new high score!", 10, 100, _color_3_blue_green)
+        --print("new high score!", 10, 100, _color_3_blue_green)
+
+        fade_out._draw()
     end
 
     function screen._post_draw()
-        if proceed then
+        if fade_out.has_finished() then
             _load_main_cart {
                 preselected_mission_number = _m.mission_number,
             }

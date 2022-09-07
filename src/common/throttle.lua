@@ -2,15 +2,15 @@
 -- common/throttle.lua  --
 -- -- -- -- -- -- -- -- --
 
-function new_throttle(throttle_length_in_frames, throttled_function)
-    local frames_since_last_passed_invoke = throttle_length_in_frames
+function new_throttle(throttled_function)
+    local frames_since_last_passed_invoke = 9999
 
     return {
         _update = function()
             -- min applied here guards us against reaching a numerical limit
-            frames_since_last_passed_invoke = min(frames_since_last_passed_invoke + 1, throttle_length_in_frames)
+            frames_since_last_passed_invoke = min(frames_since_last_passed_invoke + 1, 9999)
         end,
-        invoke = function(...)
+        invoke = function(throttle_length_in_frames, ...)
             if frames_since_last_passed_invoke >= throttle_length_in_frames then
                 frames_since_last_passed_invoke = 0
                 throttled_function(...)

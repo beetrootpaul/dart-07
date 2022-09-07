@@ -46,8 +46,7 @@ function new_enemy(params)
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
-                local cc = collision_circle()
-                if not _is_y_not_within_gameplay_area(cc.xy.y + cc.r) then
+                if not _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle()) then
                     on_bullets_spawned(enemy_properties.spawn_bullets, movement)
                 end
             end
@@ -57,7 +56,6 @@ function new_enemy(params)
 
         _draw = function()
             enemy_properties.ship_sprite._draw(movement.xy, {
-                -- TODO: make it pure white?
                 flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
             })
         end,

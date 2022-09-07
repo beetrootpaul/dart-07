@@ -24,6 +24,14 @@ function _noop()
     -- do nothing
 end
 
+function _outlined_print(text, x, y, text_color, outline_color)
+    -- docs on control codes: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Control_Codes
+    for control_code in all(split "\-f,\-h,\|f,\|h,\+ff,\+hh,\+fh,\+hf") do
+        print(control_code .. text, x, y, outline_color)
+    end
+    print(text, x, y, text_color)
+end
+
 function _round(value)
     return flr(value + .5)
 end

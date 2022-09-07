@@ -7,11 +7,11 @@ function new_boss(params)
     local intro_frames = params.intro_frames
     local intro_start_xy = params.intro_start_xy
     local start_xy = params.start_xy
+    local on_entered_next_phase = params.on_entered_next_phase
+    local on_destroyed = params.on_destroyed
 
     -- TODO: consider merging boss intro with boss fight? It would simplify callback setting logic
     local on_bullets_spawned = _noop
-    local on_entered_next_phase = _noop
-    local on_destroyed = _noop
 
     local phases = boss_properties.phases
 
@@ -36,12 +36,6 @@ function new_boss(params)
 
     function boss.set_on_bullets_spawned(callback)
         on_bullets_spawned = callback
-    end
-    function boss.set_on_entered_next_phase(callback)
-        on_entered_next_phase = callback
-    end
-    function boss.set_on_destroyed(callback)
-        on_destroyed = callback
     end
 
     function boss.has_finished()
@@ -95,7 +89,6 @@ function new_boss(params)
 
     function boss._draw()
         boss_properties.sprite._draw(movement.xy.ceil(), {
-            -- TODO: make it pure white?
             flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
         })
     end

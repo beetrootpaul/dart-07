@@ -10,6 +10,7 @@ function new_screen_boss_fight(params)
     local explosions = params.explosions
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
+    local is_fast_shot_enabled = params.is_fast_shot_enabled
     local hud = params.hud
 
     local boss_bullets = {}
@@ -19,6 +20,7 @@ function new_screen_boss_fight(params)
         -- TODO: powerups retrieval after live lost?
         -- TODO: SFX
         is_triple_shot_enabled = false
+        is_fast_shot_enabled = false
         -- TODO: VFX of disappearing health segment
         health = health - 1
         player.take_damage(health)
@@ -31,18 +33,18 @@ function new_screen_boss_fight(params)
         -- player bullets vs boss + player vs boss
         for _, boss_cc in pairs(boss.collision_circles()) do
             for __, player_bullet in pairs(player_bullets) do
-                if not boss.has_finished() then
+                if not boss.has_finished() and not player_bullet.has_finished() then
                     if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
                         -- TODO: SFX
                         boss.take_damage()
                         player_bullet.destroy()
-                        -- TODO: magnetised score items?
                     end
                 end
             end
             if not boss.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, boss_cc) then
-                    -- TODO NEXT: make boss damaged as well
+                    -- TODO: SFX
+                    boss.take_damage()
                     handle_player_damage()
                 end
             end
@@ -50,7 +52,7 @@ function new_screen_boss_fight(params)
 
         -- player vs boss bullets
         for _, boss_bullet in pairs(boss_bullets) do
-            if not player.is_invincible_after_damage() then
+            if not boss_bullet.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(boss_bullet.collision_circle(), player_cc) then
                     handle_player_damage()
                     boss_bullet.destroy()
@@ -70,22 +72,6 @@ function new_screen_boss_fight(params)
                 add(boss_bullets, b)
             end
         end)
-        boss.set_on_entered_next_phase(function(collision_circles)
-            -- TODO: small explosions SFX
-            for _, cc in pairs(collision_circles) do
-                add(explosions, new_explosion(cc.xy, .75 * cc.r))
-            end
-        end)
-        boss.set_on_destroyed(function(collision_circles)
-            -- TODO: explosions SFX
-            for _, cc in pairs(collision_circles) do
-                add(explosions, new_explosion(cc.xy, .8 * cc.r))
-                add(explosions, new_explosion(cc.xy, 1.4 * cc.r, 4 + flr(rnd(44))))
-                add(explosions, new_explosion(cc.xy, 1.8 * cc.r, 12 + flr(rnd(36))))
-                add(explosions, new_explosion(cc.xy, 3.5 * cc.r, 30 + flr(rnd(18))))
-                add(explosions, new_explosion(cc.xy, 5 * cc.r, 50 + flr(rnd(6))))
-            end
-        end)
 
         player.set_on_destroyed(function(collision_circle)
             -- TODO: explosion SFX
@@ -93,11 +79,6 @@ function new_screen_boss_fight(params)
             add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
             add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
-        end)
-        player.set_on_bullets_spawned(function(bullets)
-            for _, b in pairs(bullets) do
-                add(player_bullets, b)
-            end
         end)
     end
 
@@ -107,6 +88,7 @@ function new_screen_boss_fight(params)
         if btn(_button_x) then
             player.fire {
                 is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
             }
         end
 
@@ -175,7 +157,6 @@ function new_screen_boss_fight(params)
         )
 
         if boss.has_finished() then
-            -- TODO NEXT: should we keep boss bullets visible? Should we allow them to hit player? If not, should we nicely destroy them?
             return new_screen_boss_outro {
                 level = level,
                 player = player,
@@ -183,12 +164,12 @@ function new_screen_boss_fight(params)
                 explosions = explosions,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
                 hud = hud,
             }
         end
 
         if health <= 0 then
-            -- TODO NEXT: should we keep remaining player bullets visible? Should we allow them to hit boss? If not, should we nicely destroy them?
             return new_screen_defeat {
                 level = level,
                 enemies = {},

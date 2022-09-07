@@ -2,8 +2,6 @@
 -- cart_mission/screen_boss_intro.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: allow player to shoot during during mission intro and boss intro?
-
 function new_screen_boss_intro(params)
     local level = params.level
     local player = params.player
@@ -11,6 +9,7 @@ function new_screen_boss_intro(params)
     local explosions = params.explosions
     local health = params.health
     local is_triple_shot_enabled = params.is_triple_shot_enabled
+    local is_fast_shot_enabled = params.is_fast_shot_enabled
     local hud = params.hud
 
     local screen_frames = 180
@@ -21,6 +20,23 @@ function new_screen_boss_intro(params)
         intro_frames = 180,
         intro_start_xy = _xy(_gaw / 2, -120),
         start_xy = _xy(_gaw / 2, 20, 20),
+        on_entered_next_phase = function(collision_circles)
+            -- TODO: small explosions SFX
+            for _, cc in pairs(collision_circles) do
+                add(explosions, new_explosion(cc.xy, .75 * cc.r))
+            end
+        end,
+        on_destroyed = function(collision_circles)
+            -- TODO: explosions SFX
+            for _, cc in pairs(collision_circles) do
+                local xy, r = cc.xy, cc.r
+                add(explosions, new_explosion(xy, .8 * r))
+                add(explosions, new_explosion(xy, 1.4 * r, 4 + flr(rnd(44))))
+                add(explosions, new_explosion(xy, 1.8 * r, 12 + flr(rnd(36))))
+                add(explosions, new_explosion(xy, 3.5 * r, 30 + flr(rnd(18))))
+                add(explosions, new_explosion(xy, 5 * r, 50 + flr(rnd(6))))
+            end
+        end,
     }
     local boss_info = new_boss_info {
         slide_in_frames = boss_info_slide_frames,
@@ -39,6 +55,13 @@ function new_screen_boss_intro(params)
 
     function screen._update()
         player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
+
+        if btn(_button_x) then
+            player.fire {
+                is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
+            }
+        end
 
         boss._update { no_fight = true }
 
@@ -97,6 +120,7 @@ function new_screen_boss_intro(params)
                 explosions = explosions,
                 health = health,
                 is_triple_shot_enabled = is_triple_shot_enabled,
+                is_fast_shot_enabled = is_fast_shot_enabled,
                 hud = hud,
             }
         end
