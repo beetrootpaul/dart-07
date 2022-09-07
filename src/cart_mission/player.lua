@@ -28,7 +28,6 @@ function new_player(params)
         split("0,0,0,0,4,4,4,4"),
         8
     )
-    -- TODO: consider jet sprite small instead of hidden
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
@@ -109,11 +108,9 @@ function new_player(params)
             local flash = invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 8) % 2 == 1
             -- TODO: consider blinking instead of flashing
             ship_sprite_current._draw(xy, {
-                -- TODO: make it pure white?
                 flash_color = flash and _color_6_light_grey or nil,
             })
             jet_sprite._draw(xy.plus(0, 8), {
-                -- TODO: make it pure white?
                 flash_color = flash and _color_6_light_grey or nil,
             })
         end,

@@ -62,7 +62,7 @@ function new_screen_brp()
         end
 
         if fade_out_timer.passed_fraction() < 1 then
-            sspr(sx, sy, 29, 14, 30, 40, 58, 28)
+            sspr(sx, sy, 29, 14, 34, 49, 58, 28)
         end
     end
 

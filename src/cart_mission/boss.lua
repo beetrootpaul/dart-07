@@ -95,7 +95,6 @@ function new_boss(params)
 
     function boss._draw()
         boss_properties.sprite._draw(movement.xy.ceil(), {
-            -- TODO: make it pure white?
             flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
         })
     end

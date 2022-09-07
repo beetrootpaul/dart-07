@@ -41,7 +41,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                 end
                 return bullets
             end,
-            powerups_distribution = "-,a,t",
+            powerups_distribution = "-,h,t",
         }
     end
 
@@ -56,9 +56,9 @@ function _m.enemy_properties_for(enemy_map_marker)
                 loop = true,
                 sequence = {
                     new_movement_line_factory {
-                        frames = 90,
+                        frames = 60,
                         angle = .75,
-                        angled_speed = 1,
+                        angled_speed = .75,
                     },
                     new_movement_line_factory {
                         frames = 60,
@@ -86,7 +86,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                     ),
                 }
             end,
-            powerups_distribution = "-,a,t",
+            powerups_distribution = "-,h,t",
         }
     end
 
@@ -104,7 +104,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             },
             bullet_fire_timer = new_fake_timer(),
             spawn_bullets = _noop,
-            powerups_distribution = "-,a,t",
+            powerups_distribution = "-,h,t",
         }
     end
 
@@ -143,7 +143,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                     ),
                 }
             end,
-            powerups_distribution = "-,a,t",
+            powerups_distribution = "-,h,t",
         }
     end
 
@@ -167,7 +167,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                     )
                 }
             end,
-            powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,a,a,a,t",
+            powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,h,h,h,t",
             -- DEBUG:
             --health = 100,
             powerups_distribution = "t",
@@ -207,10 +207,10 @@ function _m.enemy_properties_for(enemy_map_marker)
             },
             bullet_fire_timer = new_fake_timer(),
             spawn_bullets = _noop,
-            powerups_distribution = "-,-,-,-,-,-,-,-,-,a,a,t",
+            powerups_distribution = "-,-,-,-,-,-,-,-,-,h,h,t",
             -- DEBUG:
             --health = 100,
-            powerups_distribution = "a",
+            powerups_distribution = "h",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {
@@ -250,10 +250,10 @@ function _m.enemy_properties_for(enemy_map_marker)
                 end
                 return bullets
             end,
-            powerups_distribution = "-,-,-,a,a,t",
+            powerups_distribution = "-,-,-,h,h,t",
             -- DEBUG:
             --health = 100,
-            powerups_distribution = "a",
+            powerups_distribution = "h",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {

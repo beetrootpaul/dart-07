@@ -43,7 +43,7 @@ function new_screen_enemies(params)
                 -- TODO: VFX on player
                 -- TODO: VFX on health status
                 powerup.pick()
-                if powerup.powerup_type == "a" then
+                if powerup.powerup_type == "h" then
                     health = health + 1
                 elseif powerup.powerup_type == "t" then
                     enable_triple_shot()

@@ -11,10 +11,10 @@ function new_powerup(start_xy, powerup_type)
 
     local sprite
 
-    if powerup_type == "a" then
-        sprite = new_static_sprite(7, 8, 121, 0)
+    if powerup_type == "h" then
+        sprite = new_static_sprite(9, 8, 119, 0)
     elseif powerup_type == "t" then
-        sprite = new_static_sprite(7, 8, 113, 0)
+        sprite = new_static_sprite(9, 8, 119, 8)
     end
 
     local movement = new_movement_line_factory {
