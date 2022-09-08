@@ -2,6 +2,27 @@
 -- cart_mission/game/game.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
+
+
+local negative = {
+    [0] = 7,
+    [1] = 15,
+    [2] = 11,
+    [3] = 13,
+    [4] = 4, --
+    [5] = 5, -- 
+    [6] = 14,
+    [7] = 0,
+    [8] = 10,
+    [9] = 12,
+    [10] = 8,
+    [11] = 2,
+    [12] = 9,
+    [13] = 3,
+    [14] = 6,
+    [15] = 1,
+}
+
 function new_game(params)
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
@@ -261,6 +282,41 @@ function new_game(params)
             end
         )
         clip()
+
+        local p_xy = player.collision_circle().xy
+        local r_outer2 = 45 * 45
+        local r_inner2 = 40 * 40
+        local masks = {
+            0x0000.000f,
+            0x0000.00f0,
+            0x0000.0f00,
+            0x0000.f000,
+            0x000f.0000,
+            0x00f0.0000,
+            0x0f00.0000,
+            0xf000.0000,
+        }
+        for x = _gaox, _gaox + _gaw - 1, 8 do
+            for y = 0, _gah - 1 do
+                local dy = y - p_xy.y
+
+                local offset = (x >> 1) + (y << 6)
+                local c = peek4(0x6000 + offset)
+
+                local result = 0
+                for pos = 1, 7 do
+                    local shift = pos * 4 - 20
+                    local cp = (c & masks[pos]) >> shift
+                    local dx = x + pos - 1 - p_xy.x - _gaox
+                    local dist = dx * dx + dy * dy
+                    if dist < r_outer2 and dist > r_inner2 then cp = negative[cp] end
+                    result = result + (cp << shift)
+                end
+
+                -- TODO: describe poke4 in API file
+                poke4(0x6000 + offset, result)
+            end
+        end
 
         -- DEBUG:
         --if boss then
