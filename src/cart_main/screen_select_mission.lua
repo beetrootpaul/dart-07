@@ -4,7 +4,7 @@
 
 -- TODO NEXT: unlock levels with progression
 -- TODO: extra option to go back
--- TODO NEXT: high score
+-- TODO: high score
 -- TODO: create a decent mission selection screen
 
 function new_screen_select_mission(params)
@@ -51,7 +51,7 @@ function new_screen_select_mission(params)
         print("mission 1", 30, 30, selected_mission == 1 and _color_6_light_grey or _color_13_mauve)
         print("mission 2", 30, 50, selected_mission == 2 and _color_6_light_grey or _color_13_mauve)
         print("mission 3", 30, 70, selected_mission == 3 and _color_6_light_grey or _color_13_mauve)
-        -- TODO NEXT: high score across plays (persistent storage)
+        -- TODO: high score across plays (persistent storage)
         --print("high score:", 34, 80, _color_12_true_blue)
 
         fade_out._draw()
@@ -64,8 +64,8 @@ function new_screen_select_mission(params)
             _load_mission_cart {
                 mission_number = selected_mission,
                 health = _health_default,
-                is_triple_shot_enabled = false,
-                is_fast_shot_enabled = false,
+                triple_shot = false,
+                fast_shoot = false,
             }
         end
     end

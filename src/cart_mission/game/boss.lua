@@ -1,17 +1,15 @@
--- -- -- -- -- -- -- -- -- --
--- cart_mission/boss.lua   --
--- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/boss.lua --
+-- -- -- -- -- -- -- -- -- -- --
 
 function new_boss(params)
     local boss_properties = params.boss_properties
     local intro_frames = params.intro_frames
     local intro_start_xy = params.intro_start_xy
     local start_xy = params.start_xy
+    local on_bullets_spawned = params.on_bullets_spawned
     local on_entered_next_phase = params.on_entered_next_phase
     local on_destroyed = params.on_destroyed
-
-    -- TODO: consider merging boss intro with boss fight? It would simplify callback setting logic
-    local on_bullets_spawned = _noop
 
     local phases = boss_properties.phases
 
@@ -22,9 +20,12 @@ function new_boss(params)
         easing_fn = _easing_easeoutquart,
     }(intro_start_xy)
 
-    local current_phase_number = nil
+    local current_phase_number = 0
 
-    local is_flashing_from_damage = false
+    local invincible_during_intro = true
+
+    local flashing_from_damage = false
+
     local is_destroyed = false
 
     --
@@ -34,48 +35,46 @@ function new_boss(params)
         health = boss_properties.health,
     }
 
-    function boss.set_on_bullets_spawned(callback)
-        on_bullets_spawned = callback
-    end
-
     function boss.has_finished()
         return is_destroyed
     end
 
-    function boss.enter_phase_main()
-        current_phase_number = 0
+    function boss.start_first_phase()
+        current_phase_number = 1
+        movement = phases[current_phase_number].movement_factory(movement.xy)
+        invincible_during_intro = false
     end
 
     function boss.collision_circles()
         return boss_properties.collision_circles(movement)
     end
 
+    function boss.is_invincible_during_intro()
+        return invincible_during_intro
+    end
+
     function boss.take_damage()
         boss.health = boss.health - 1
         if boss.health > 0 then
-            is_flashing_from_damage = true
+            flashing_from_damage = true
         else
             is_destroyed = true
             on_destroyed(boss_properties.collision_circles(movement))
         end
     end
 
-    function boss._update(p)
-        p = p or {}
-
-        if current_phase_number and current_phase_number < #phases then
+    function boss._update()
+        if current_phase_number > 0 and current_phase_number < #phases then
             if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
                 current_phase_number = current_phase_number + 1
-                if current_phase_number > 1 then
-                    on_entered_next_phase(boss_properties.collision_circles(movement))
-                end
+                on_entered_next_phase(boss_properties.collision_circles(movement))
                 movement = phases[current_phase_number].movement_factory(movement.xy)
             end
         end
 
         movement._update()
 
-        if not p.no_fight then
+        if current_phase_number > 0 then
             local current_phase = phases[current_phase_number]
             current_phase.bullet_fire_timer._update()
             if current_phase.bullet_fire_timer.ttl <= 0 then
@@ -84,12 +83,12 @@ function new_boss(params)
             end
         end
 
-        is_flashing_from_damage = false
+        flashing_from_damage = false
     end
 
     function boss._draw()
         boss_properties.sprite._draw(movement.xy.ceil(), {
-            flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
+            flash_color = flashing_from_damage and _color_9_dark_orange or nil,
         })
     end
 

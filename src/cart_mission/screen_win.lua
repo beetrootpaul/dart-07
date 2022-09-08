@@ -34,7 +34,7 @@ function new_screen_win()
         print("press x", 10, 60, 1 + flr(sin(2 * t())) == 0 and _color_6_light_grey or _color_13_mauve)
         -- TODO NEXT: score
         --print("score: ", 10, 80, _color_3_blue_green)
-        -- TODO NEXT: implement and show conditionally
+        -- TODO: implement and show conditionally
         --print("new high score!", 10, 100, _color_3_blue_green)
 
         fade_out._draw()

@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/level_descriptor.lua   --
--- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/level_descriptor.lua --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: polished waves on level 1
 -- TODO: polished islands on level 1

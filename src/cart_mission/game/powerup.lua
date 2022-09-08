@@ -1,9 +1,8 @@
--- -- -- -- -- -- -- -- -- -- --
--- cart_mission/powerup.lua   --
--- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/powerup.lua --
+-- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: fancy animation
--- TODO: actions on pick up
+-- TODO: fancy animation
 -- TODO: magnet for an easier pickup?
 
 function new_powerup(start_xy, powerup_type)

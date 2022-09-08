@@ -2,8 +2,6 @@
 -- cart_main/screen_brp.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: create a decent beetroot paul logo screen
-
 function new_screen_brp()
     local screen_frames = 150
     local fade_frames = 24
@@ -17,7 +15,6 @@ function new_screen_brp()
     local screen = {}
 
     function screen._init()
-        -- TODO: music
     end
 
     function screen._update()
@@ -34,7 +31,7 @@ function new_screen_brp()
 
     function screen._draw()
         cls(_color_0_black)
-        
+
         local bg_pattern = 0xffff
         local sx, sy = 0, 32
 

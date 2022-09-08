@@ -26,7 +26,7 @@ TODO powerups and their meaning
 
 TODO any other info, i.e. about being a PICO-8 game
 
-TODO PICO-8 version
+PICO-8 version use to develop this game: `0.2.5c`
 
 TODO mention multi-cart setup and that it's maybe not necessary, but wanted to have it for learning purposes
 

@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/enemy_bullet_factory.lua  --
--- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/enemy_bullet_factory.lua   --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_enemy_bullet_factory(bullet_properties)
     return function(movement)

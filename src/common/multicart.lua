@@ -29,8 +29,8 @@ do
         local is_fast_shot_enabled_param = get_cart_param_at(3)
         return {
             health = health_param ~= nil and tonum(health_param) or nil,
-            is_triple_shot_enabled = is_triple_shot_enabled_param ~= nil and is_triple_shot_enabled_param == "true" or nil,
-            is_fast_shot_enabled = is_fast_shot_enabled_param ~= nil and is_fast_shot_enabled_param == "true" or nil,
+            triple_shot = is_triple_shot_enabled_param ~= nil and is_triple_shot_enabled_param == "true" or nil,
+            fast_shoot = is_fast_shot_enabled_param ~= nil and is_fast_shot_enabled_param == "true" or nil,
         }
     end
 
@@ -56,10 +56,10 @@ do
     function _load_mission_cart(params)
         local mission_number = params.mission_number
         local health = params.health
-        local is_triple_shot_enabled = params.is_triple_shot_enabled
-        local is_fast_shot_enabled = params.is_fast_shot_enabled
+        local triple_shot = params.triple_shot
+        local fast_shoot = params.fast_shoot
 
-        local cart_params = tostr(health) .. "," .. tostr(is_triple_shot_enabled) .. "," .. tostr(is_fast_shot_enabled)
+        local cart_params = tostr(health) .. "," .. tostr(triple_shot) .. "," .. tostr(fast_shoot)
 
         -- "load(…)" returns "false" if not failed and doesn't allow execution 
         -- of any further instruction if succeeded. This means we can safely

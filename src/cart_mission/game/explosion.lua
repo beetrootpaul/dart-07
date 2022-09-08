@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- --
--- cart_mission/explosion.lua --
--- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/explosion.lua  --
+-- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: polish it
 

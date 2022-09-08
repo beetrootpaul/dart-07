@@ -3,7 +3,6 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO NEXT: score
--- TODO NEXT: indicate acquired powerups, i.e. triple shot
 
 function new_hud(params)
     local player_health_bar_movement = new_movement_sequence_factory {

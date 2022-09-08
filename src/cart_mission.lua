@@ -15,10 +15,10 @@ function _init()
         }
     end)
 
-    current_screen = new_screen_intro {
+    current_screen = new_screen_mission_intro {
         health = cart_params.health ~= nil and cart_params.health or _health_default,
-        is_triple_shot_enabled = cart_params.is_triple_shot_enabled ~= nil and cart_params.is_triple_shot_enabled or false,
-        is_fast_shot_enabled = cart_params.is_fast_shot_enabled ~= nil and cart_params.is_fast_shot_enabled or false,
+        triple_shot = cart_params.triple_shot ~= nil and cart_params.triple_shot or false,
+        fast_shoot = cart_params.fast_shoot ~= nil and cart_params.fast_shoot or false,
     }
     current_screen._init()
 end

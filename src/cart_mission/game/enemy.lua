@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- --
--- cart_mission/enemy.lua  --
--- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/enemy.lua   --
+-- -- -- -- -- -- -- -- -- -- -- --
 
 function new_enemy(params)
     local enemy_properties = params.enemy_properties
