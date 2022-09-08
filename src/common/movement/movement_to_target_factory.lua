@@ -6,8 +6,9 @@ function new_movement_to_target_factory(params)
     local easing_fn = params.easing_fn or _easing_linear
 
     return function(start_xy)
-        local timer = new_timer(params.frames)
-        local on_finished = params.on_finished or nil
+        local timer = new_timer(params.frames, {
+            on_finished = params.on_finished or nil,
+        })
 
         local function xy()
             return _xy(
@@ -35,10 +36,6 @@ function new_movement_to_target_factory(params)
 
         function movement._update()
             timer._update()
-            if on_finished and timer.ttl <= 0 then
-                on_finished()
-                on_finished = nil
-            end
             movement.speed_xy = xy().minus(movement.xy)
             movement.xy = movement.xy.plus(movement.speed_xy)
         end

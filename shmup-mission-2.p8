@@ -35,6 +35,7 @@ __lua__
 #include build/src/cart_mission/game/player.lua
 #include build/src/cart_mission/game/player_bullet.lua
 #include build/src/cart_mission/game/powerup.lua
+#include build/src/cart_mission/game/shockwave.lua
 
 #include build/src/cart_mission/gui/boss_info.lua
 #include build/src/cart_mission/gui/hud.lua

@@ -19,11 +19,6 @@ function new_screen_boss_outro(params)
     end
 
     function screen._update()
-        game.set_player_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
-        if btn(_button_x) then
-            game.player_fire()
-        end
-
         game._update()
         hud._update()
         fade_out._update()

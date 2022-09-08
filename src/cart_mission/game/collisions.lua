@@ -4,11 +4,15 @@
 
 _collisions = {}
 
-function _collisions.are_colliding(collision_circle_1, collision_circle_2)
-    if _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle_1) or
-        _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle_2)
-    then
-        return false
+function _collisions.are_colliding(collision_circle_1, collision_circle_2, opts)
+    opts = opts or {}
+    
+    if not opts.ignore_gameplay_area_check then
+        if _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle_1) or
+            _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle_2)
+        then
+            return false
+        end
     end
 
     -- actual collision check

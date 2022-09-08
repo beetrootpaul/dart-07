@@ -53,8 +53,8 @@ function new_boss(params)
         return invincible_during_intro
     end
 
-    function boss.take_damage()
-        boss.health = boss.health - 1
+    function boss.take_damage(damage)
+        boss.health = max(0, boss.health - damage)
         if boss.health > 0 then
             flashing_from_damage = true
         else

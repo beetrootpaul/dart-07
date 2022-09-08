@@ -2,13 +2,24 @@
 -- common/timer/timer.lua  --
 -- -- -- -- -- -- -- -- -- --
 
-function new_timer(frames)
+function new_timer(frames, params)
+    params = params or {}
+    local on_finished = params.on_finished or nil
+
     local timer = {
         ttl = frames,
     }
 
+    function timer.has_finished()
+        return timer.ttl <= 0
+    end
+
     function timer._update()
         timer.ttl = max(timer.ttl - 1, 0)
+        if on_finished and timer.ttl <= 0 then
+            on_finished()
+            on_finished = nil
+        end
     end
 
     function timer.passed_fraction()
