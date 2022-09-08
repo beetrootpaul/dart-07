@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "chokidar-cli": "3.0.0",
-    "luamin": "github:beetrootpaul/luamin#f3da7f4d2bd410fef39d30a6c2e74a3e754f7767",
+    "luamin": "github:beetrootpaul/luamin#58c36403c707adf7618edfbf1ecdca51797a9fb7",
     "mkdirp": "1.0.4",
     "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
