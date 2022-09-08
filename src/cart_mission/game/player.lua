@@ -1,16 +1,15 @@
--- -- -- -- -- -- -- -- -- --
--- cart_mission/player.lua --
--- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/player.lua  --
+-- -- -- -- -- -- -- -- -- -- -- --
 
 function new_player(params)
     local on_bullets_spawned = new_throttle(params.on_bullets_spawned)
+    local on_destroyed = params.on_destroyed
 
     local w = 10
     local h = 10
 
     local speed = 1
-    -- DEBUG:
-    --local speed = 1
 
     local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0)
     local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0)
@@ -28,8 +27,7 @@ function new_player(params)
 
     local invincible_after_damage_timer
 
-    -- TODO NEXT: consider merging mission intro with enemies screen? It would simplify callback setting logic
-    local on_destroyed = _noop
+    local is_destroyed = false
 
     local xy = _xy(_gaw / 2, _gah - 28)
 
@@ -43,6 +41,10 @@ function new_player(params)
     -- 
 
     return {
+
+        has_finished = function()
+            return is_destroyed
+        end,
 
         set_movement = function(left, right, up, down)
             jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
@@ -60,23 +62,19 @@ function new_player(params)
             ))
         end,
 
-        set_on_destroyed = function(callback)
-            on_destroyed = callback
-        end,
-
         fire = function(p)
             local bullets = {
                 -- TODO: SFX?
                 new_player_bullet(xy.plus(0, -4)),
             }
-            if p.is_triple_shot_enabled then
+            if p.triple_shot then
                 -- TODO: different SFX?
                 add(bullets, new_player_bullet(xy.plus(-5, -2)))
                 add(bullets, new_player_bullet(xy.plus(5, -2)))
             end
             on_bullets_spawned.invoke(
             -- TODO: balancing
-                p.is_fast_shot_enabled and 9 or 18,
+                p.fast_shoot and 9 or 18,
                 bullets
             )
         end,
@@ -93,6 +91,7 @@ function new_player(params)
                 invincible_after_damage_timer = new_timer(30)
             else
                 -- TODO: SFX
+                is_destroyed = true
                 on_destroyed(collision_circle())
             end
         end,

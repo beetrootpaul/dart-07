@@ -1,8 +1,8 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/screen_boss_fight.lua  --
--- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/screen_enemies_fight.lua  --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_boss_fight(params)
+function new_screen_enemies_fight(params)
     local game = params.game
     local hud = params.hud
 
@@ -11,7 +11,7 @@ function new_screen_boss_fight(params)
     local screen = {}
 
     function screen._init()
-        game.start_boss_fight()
+        game.enter_enemies_phase()
     end
 
     function screen._update()
@@ -29,22 +29,21 @@ function new_screen_boss_fight(params)
         game._draw()
         hud._draw {
             player_health = game.player_health,
-            boss_health = game.boss_health,
-            boss_health_max = game.boss_health_max,
         }
     end
 
     function screen._post_draw()
         game._post_draw()
 
-        if game.is_boss_defeated() then
-            return new_screen_boss_outro {
+        if game.is_ready_to_enter_boss_phase() then
+            return new_screen_boss_intro {
                 game = game,
                 hud = hud,
             }
         end
 
         if game.player_health <= 0 then
+            -- TODO: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
             return new_screen_defeat {
                 game = game,
                 hud = hud,

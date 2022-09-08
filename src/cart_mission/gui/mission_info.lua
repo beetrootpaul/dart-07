@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: better mission info GUI
--- TODO NEXT: can be consolidated with boss info?
+-- TODO: can be consolidated with boss info?
 
 function new_mission_info(params)
     local rounding_fn = "ceil"

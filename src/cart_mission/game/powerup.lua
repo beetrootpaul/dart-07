@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- --
--- cart_mission/powerup.lua   --
--- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/game/powerup.lua --
+-- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: fancy animation
 -- TODO: magnet for an easier pickup?

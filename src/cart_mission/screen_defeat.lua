@@ -3,13 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_defeat(params)
-    local level = params.level
-    local enemies = params.enemies
-    local boss = params.boss -- optional
-    local enemy_bullets = params.enemy_bullets
-    local boss_bullets = params.boss_bullets
-    local explosions = params.explosions
-    local health = params.health
+    local game = params.game
     local hud = params.hud
 
     local screen_frames = 120
@@ -27,57 +21,23 @@ function new_screen_defeat(params)
     end
 
     function screen._update()
-        _flattened_for_each(
-            { level },
-            enemies,
-            { boss },
-            enemy_bullets,
-            boss_bullets,
-            explosions,
-            { hud },
-            { fade_out },
-            { screen_timer },
-            function(game_object)
-                game_object._update()
-            end
-        )
+        game._update()
+        hud._update()
+        fade_out._update()
+        screen_timer._update()
     end
 
     function screen._draw()
         cls(_m.bg_color)
-        clip(_gaox, 0, _gaw, _gah)
-        _flattened_for_each(
-            { level },
-            enemies,
-            { boss },
-            enemy_bullets,
-            boss_bullets,
-            explosions,
-            function(game_object)
-                game_object._draw()
-            end
-        )
-        clip()
-
+        game._draw()
         hud._draw {
-            player_health = health,
+            player_health = game.player_health,
         }
-
         fade_out._draw()
     end
 
     function screen._post_draw()
-        _flattened_for_each(
-            enemies,
-            enemy_bullets,
-            boss_bullets,
-            explosions,
-            function(game_object, game_objects)
-                if game_object.has_finished() then
-                    del(game_objects, game_object)
-                end
-            end
-        )
+        game._post_draw()
 
         if screen_timer.ttl <= 0 then
             return new_screen_over()

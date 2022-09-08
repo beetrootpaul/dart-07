@@ -40,7 +40,7 @@ function new_screen_over()
         -- TODO: make it restart with initial params 
         print("try again (mission " .. _m.mission_number .. ")", 10, 40, retry and _color_6_light_grey or _color_13_mauve)
         print("back to title", 10, 60, retry and _color_13_mauve or _color_6_light_grey)
-        -- TODO: score
+        -- TODO NEXT: score
         --print("score: ", 10, 80, _color_3_blue_green)
         -- TODO: implement and show conditionally
         --print("new high score!", 10, 100, _color_3_blue_green)
@@ -51,10 +51,10 @@ function new_screen_over()
     function screen._post_draw()
         if fade_out.has_finished() then
             if retry then
-                return new_screen_intro {
+                return new_screen_mission_intro {
                     health = _health_default,
-                    is_triple_shot_enabled = false,
-                    is_fast_shot_enabled = false,
+                    triple_shot = false,
+                    fast_shoot = false,
                 }
             else
                 _load_main_cart {

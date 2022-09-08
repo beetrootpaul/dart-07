@@ -3,41 +3,12 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_boss_intro(params)
-    local level = params.level
-    local player = params.player
-    local player_bullets = params.player_bullets
-    local explosions = params.explosions
-    local health = params.health
-    local is_triple_shot_enabled = params.is_triple_shot_enabled
-    local is_fast_shot_enabled = params.is_fast_shot_enabled
+    local game = params.game
     local hud = params.hud
 
     local screen_frames = 180
     local boss_info_slide_frames = 50
 
-    local boss = new_boss {
-        boss_properties = _m.boss_properties(),
-        intro_frames = 180,
-        intro_start_xy = _xy(_gaw / 2, -120),
-        start_xy = _xy(_gaw / 2, 20, 20),
-        on_entered_next_phase = function(collision_circles)
-            -- TODO: small explosions SFX
-            for _, cc in pairs(collision_circles) do
-                add(explosions, new_explosion(cc.xy, .75 * cc.r))
-            end
-        end,
-        on_destroyed = function(collision_circles)
-            -- TODO: explosions SFX
-            for _, cc in pairs(collision_circles) do
-                local xy, r = cc.xy, cc.r
-                add(explosions, new_explosion(xy, .8 * r))
-                add(explosions, new_explosion(xy, 1.4 * r, 4 + flr(rnd(44))))
-                add(explosions, new_explosion(xy, 1.8 * r, 12 + flr(rnd(36))))
-                add(explosions, new_explosion(xy, 3.5 * r, 30 + flr(rnd(18))))
-                add(explosions, new_explosion(xy, 5 * r, 50 + flr(rnd(6))))
-            end
-        end,
-    }
     local boss_info = new_boss_info {
         slide_in_frames = boss_info_slide_frames,
         present_frames = screen_frames - 2 * boss_info_slide_frames,
@@ -51,76 +22,36 @@ function new_screen_boss_intro(params)
 
     function screen._init()
         -- TODO: boss music
+        game.enter_boss_phase()
     end
 
     function screen._update()
-        player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
-
+        game.set_player_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
         if btn(_button_x) then
-            player.fire {
-                is_triple_shot_enabled = is_triple_shot_enabled,
-                is_fast_shot_enabled = is_fast_shot_enabled,
-            }
+            game.player_fire()
         end
 
-        boss._update { no_fight = true }
-
-        _flattened_for_each(
-            { level },
-            { player },
-            player_bullets,
-            explosions,
-            { hud },
-            { boss_info },
-            { screen_timer },
-            function(game_object)
-                game_object._update()
-            end
-        )
+        game._update()
+        hud._update()
+        boss_info._update()
+        screen_timer._update()
     end
 
     function screen._draw()
         cls(_m.bg_color)
-        clip(_gaox, 0, _gaw, _gah)
-        _flattened_for_each(
-            { level },
-            player_bullets,
-            { boss },
-            { player },
-            explosions,
-            function(game_object)
-                game_object._draw()
-            end
-        )
-        clip()
-
+        game._draw()
         hud._draw {
-            player_health = health,
+            player_health = game.player_health,
         }
         boss_info._draw()
     end
 
     function screen._post_draw()
-        _flattened_for_each(
-            player_bullets,
-            explosions,
-            function(game_object, game_objects)
-                if game_object.has_finished() then
-                    del(game_objects, game_object)
-                end
-            end
-        )
+        game._post_draw()
 
         if screen_timer.ttl <= 0 then
             return new_screen_boss_fight {
-                level = level,
-                player = player,
-                boss = boss,
-                player_bullets = player_bullets,
-                explosions = explosions,
-                health = health,
-                is_triple_shot_enabled = is_triple_shot_enabled,
-                is_fast_shot_enabled = is_fast_shot_enabled,
+                game = game,
                 hud = hud,
             }
         end

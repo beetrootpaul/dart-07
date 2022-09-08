@@ -34,7 +34,7 @@ function _m.enemy_properties_for(enemy_map_marker)
                 for i = -2, 2 do
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
-                            angle = i * .03 + _angle_between(enemy_movement.xy, player_collision_circle.xy),
+                            angle = i * .04 + _angle_between(enemy_movement.xy, player_collision_circle.xy),
                             angled_speed = 1.5,
                         }(enemy_movement.xy)
                     ))
@@ -170,7 +170,8 @@ function _m.enemy_properties_for(enemy_map_marker)
             powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,h,h,h,t",
             -- DEBUG:
             --health = 100,
-            powerups_distribution = "f",
+            --powerups_distribution = "f",
+            powerups_distribution = "h",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {
@@ -210,7 +211,8 @@ function _m.enemy_properties_for(enemy_map_marker)
             powerups_distribution = "-,-,-,-,-,-,-,-,-,h,h,t",
             -- DEBUG:
             --health = 100,
-            powerups_distribution = "t",
+            --powerups_distribution = "t",
+            powerups_distribution = "h",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --    sequence = {

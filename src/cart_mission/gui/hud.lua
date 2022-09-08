@@ -2,7 +2,7 @@
 -- cart_mission/gui/hud.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: score
+-- TODO NEXT: score
 
 function new_hud(params)
     local player_health_bar_movement = new_movement_sequence_factory {

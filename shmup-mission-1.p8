@@ -24,28 +24,32 @@ __lua__
 #include build/src/common/viewport.lua
 #include build/src/common/xy.lua
 
+#include build/src/cart_mission/game/boss.lua
+#include build/src/cart_mission/game/collisions.lua
+#include build/src/cart_mission/game/enemy.lua
+#include build/src/cart_mission/game/enemy_bullet_factory.lua
+#include build/src/cart_mission/game/explosion.lua
+#include build/src/cart_mission/game/game.lua
+#include build/src/cart_mission/game/level.lua
+#include build/src/cart_mission/game/level_descriptor.lua
+#include build/src/cart_mission/game/player.lua
+#include build/src/cart_mission/game/player_bullet.lua
+#include build/src/cart_mission/game/powerup.lua
+
 #include build/src/cart_mission/gui/boss_info.lua
 #include build/src/cart_mission/gui/hud.lua
 #include build/src/cart_mission/gui/mission_info.lua
+
 #include build/src/cart_mission/sprites/animated_sprite.lua
 #include build/src/cart_mission/sprites/fake_sprite.lua
 #include build/src/cart_mission/sprites/static_sprite.lua
-#include build/src/cart_mission/boss.lua
-#include build/src/cart_mission/collisions.lua
-#include build/src/cart_mission/enemy.lua
-#include build/src/cart_mission/enemy_bullet_factory.lua
-#include build/src/cart_mission/explosion.lua
-#include build/src/cart_mission/level.lua
-#include build/src/cart_mission/level_descriptor.lua
-#include build/src/cart_mission/player.lua
-#include build/src/cart_mission/player_bullet.lua
-#include build/src/cart_mission/powerup.lua
+
 #include build/src/cart_mission/screen_boss_fight.lua
 #include build/src/cart_mission/screen_boss_intro.lua
 #include build/src/cart_mission/screen_boss_outro.lua
 #include build/src/cart_mission/screen_defeat.lua
-#include build/src/cart_mission/screen_enemies.lua
-#include build/src/cart_mission/screen_intro.lua
+#include build/src/cart_mission/screen_enemies_fight.lua
+#include build/src/cart_mission/screen_mission_intro.lua
 #include build/src/cart_mission/screen_over.lua
 #include build/src/cart_mission/screen_win.lua
 
