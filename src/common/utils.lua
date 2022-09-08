@@ -4,7 +4,6 @@
 
 function _angle_between(xy1, xy2)
     local dxy = xy2.minus(xy1)
-    -- TODO: describe atan2 in API helper filer
     return atan2(dxy.x, dxy.y)
 end
 

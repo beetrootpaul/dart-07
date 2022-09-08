@@ -2,8 +2,7 @@
 -- cart_mission/gui/hud.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: score
--- TODO NEXT: indicate acquired powerups, i.e. triple shot
+-- TODO: score
 
 function new_hud(params)
     local player_health_bar_movement = new_movement_sequence_factory {

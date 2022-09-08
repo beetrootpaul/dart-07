@@ -63,6 +63,23 @@ end
 function assert(condition, message)
 end
 
+--- Converts DX, DY into an angle from 0..1.
+--- As with cos/sin, angle is taken to run anticlockwise in screenspace.
+--- For example:
+---
+--- - ?ATAN(0, -1) -- RETURNS 0.25
+---
+---
+--- - API docs: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#ATAN2
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Atan2
+---
+--- @param dx number
+--- @param dy number
+--- @return number
+function atan2(dx, dy)
+end
+
 --- Get button B state for player PL (default 0)
 ---
 --- If no parameters supplied, returns a bitfield of all 12 button states for player 0 & 1 (P0: bits 0..5 P1: bits 8..13)

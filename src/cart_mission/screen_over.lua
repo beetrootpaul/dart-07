@@ -40,9 +40,9 @@ function new_screen_over()
         -- TODO: make it restart with initial params 
         print("try again (mission " .. _m.mission_number .. ")", 10, 40, retry and _color_6_light_grey or _color_13_mauve)
         print("back to title", 10, 60, retry and _color_13_mauve or _color_6_light_grey)
-        -- TODO NEXT: score
+        -- TODO: score
         --print("score: ", 10, 80, _color_3_blue_green)
-        -- TODO NEXT: implement and show conditionally
+        -- TODO: implement and show conditionally
         --print("new high score!", 10, 100, _color_3_blue_green)
 
         fade_out._draw()

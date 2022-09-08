@@ -28,7 +28,7 @@ function new_player(params)
 
     local invincible_after_damage_timer
 
-    -- TODO: consider merging mission intro with enemies screen? It would simplify callback setting logic
+    -- TODO NEXT: consider merging mission intro with enemies screen? It would simplify callback setting logic
     local on_destroyed = _noop
 
     local xy = _xy(_gaw / 2, _gah - 28)

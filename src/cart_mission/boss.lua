@@ -10,7 +10,7 @@ function new_boss(params)
     local on_entered_next_phase = params.on_entered_next_phase
     local on_destroyed = params.on_destroyed
 
-    -- TODO: consider merging boss intro with boss fight? It would simplify callback setting logic
+    -- TODO NEXT: consider merging boss intro with boss fight? It would simplify callback setting logic
     local on_bullets_spawned = _noop
 
     local phases = boss_properties.phases
