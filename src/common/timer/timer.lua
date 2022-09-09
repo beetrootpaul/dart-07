@@ -10,10 +10,6 @@ function new_timer(frames, params)
         ttl = frames,
     }
 
-    function timer.has_finished()
-        return timer.ttl <= 0
-    end
-
     function timer._update()
         timer.ttl = max(timer.ttl - 1, 0)
         if on_finished and timer.ttl <= 0 then
@@ -24,10 +20,7 @@ function new_timer(frames, params)
 
     function timer.passed_fraction()
         -- TODO: rethink this timer since it looks like bad things are happening here…
-        if frames <= 1 then
-            return 1
-        end
-        return mid(0, 1 - timer.ttl / (frames - 1), 1)
+        return frames <= 1 and 1 or mid(0, 1 - timer.ttl / (frames - 1), 1)
     end
 
     function timer.restart()

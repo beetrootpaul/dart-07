@@ -31,9 +31,8 @@ function new_movement_sequence_factory(sequence, loop)
                     current_sub_movement = sequence[sequence_index](current_sub_movement.xy)
                 end
             end
-            
-            movement.xy = current_sub_movement.xy
-            movement.speed_xy = current_sub_movement.speed_xy
+
+            movement.xy, movement.speed_xy = current_sub_movement.xy, current_sub_movement.speed_xy
         end
 
         return movement

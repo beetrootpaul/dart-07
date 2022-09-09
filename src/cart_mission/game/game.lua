@@ -157,10 +157,18 @@ function new_game(params)
             end
         end
 
-        -- player vs enemy bullets
+        -- shockwaves vs enemy bullets + player vs enemy bullets
         for _, enemy_bullet in pairs(enemy_bullets) do
+            local enemy_bullet_cc = enemy_bullet.collision_circle()
+            for _, shockwave in pairs(shockwaves) do
+                if not enemy_bullet.has_finished() and not shockwave.has_finished() then
+                    if _collisions.are_colliding(shockwave.collision_circle(), enemy_bullet_cc) then
+                        enemy_bullet.destroy()
+                    end
+                end
+            end
             if not enemy_bullet.has_finished() and not player.is_invincible_after_damage() then
-                if _collisions.are_colliding(enemy_bullet.collision_circle(), player_cc) then
+                if _collisions.are_colliding(enemy_bullet_cc, player_cc) then
                     handle_player_damage()
                     enemy_bullet.destroy()
                 end

@@ -37,10 +37,7 @@ function new_fade(direction, fade_frames, wait_frames)
         end,
 
         _draw = function()
-            local i = 1
-            local y = fade_movement.xy.y
-            local strip_h = 0
-
+            local i, y, strip_h = 1, fade_movement.xy.y, 0
             while i <= #patterns do
                 y = y + strip_h
                 strip_h = strip_hs[i]
