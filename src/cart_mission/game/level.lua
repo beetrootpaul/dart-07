@@ -9,8 +9,7 @@
 --   - lane     = which row of tiles are we talking about, perpendicular to distance 
 function new_level(descriptor)
     local max_defined_distance = descriptor.max_defined_distance
-    local structures = descriptor.structures
-    local enemies = descriptor.enemies
+    local structures, enemies = descriptor.structures, descriptor.enemies
 
     -- we draw enemy in center of block of 4 tiles, but store them in the top-left tile's position
     local enemy_offset = _xy(_ts / 2, _ts / 2)
@@ -44,39 +43,34 @@ function new_level(descriptor)
         end,
 
         has_scrolled_to_end = function()
-            if phase == "intro" then
-                return false
-            elseif phase == "main" then
+            if phase == "main" then
                 return max_visible_distance >= max_defined_distance + 1
-            elseif phase == "outro" then
-                return true
             end
+            return phase == "outro"
         end,
 
         enemies_to_spawn = function()
-            if phase == "intro" then
-                return {}
-            elseif phase == "main" then
-                local result = {}
-                if spawn_distance > prev_spawn_distance then
-                    prev_spawn_distance = spawn_distance
-                    for lane = 1, 12 do
-                        local enemy_map_marker = enemies[spawn_distance] and enemies[spawn_distance][lane] or nil
-                        if enemy_map_marker then
-                            add(result, {
-                                enemy_map_marker = enemy_map_marker,
-                                xy = _xy(
-                                    (lane - .5) * _ts,
-                                    _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts
-                                ).plus(enemy_offset),
-                            })
-                        end
-                    end
-                end
-                return result
-            elseif phase == "outro" then
+            if phase ~= "main" then
                 return {}
             end
+            
+            local result = {}
+            if spawn_distance > prev_spawn_distance then
+                prev_spawn_distance = spawn_distance
+                for lane = 1, 12 do
+                    local enemy_map_marker = enemies[spawn_distance] and enemies[spawn_distance][lane] or nil
+                    if enemy_map_marker then
+                        add(result, {
+                            enemy_map_marker = enemy_map_marker,
+                            xy = _xy(
+                                (lane - .5) * _ts,
+                                _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts
+                            ).plus(enemy_offset),
+                        })
+                    end
+                end
+            end
+            return result
         end,
 
         _update = function()

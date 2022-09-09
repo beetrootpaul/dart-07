@@ -25,22 +25,20 @@ function _m.enemy_properties_for(enemy_map_marker)
             collision_circle_r = 3.5,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_sequence_factory {
-                sequence = {
-                    new_movement_line_factory {
-                        frames = 80,
-                        angle = .75,
-                        angled_speed = .5,
-                    },
-                    new_movement_line_factory {
-                        angle = .75,
-                        angled_speed = 1.5,
-                    },
+                new_movement_line_factory {
+                    frames = 80,
+                    angle = .75,
+                    angled_speed = .5,
+                },
+                new_movement_line_factory {
+                    angle = .75,
+                    angled_speed = 1.5,
                 },
             },
-            bullet_fire_timer = new_timer(30),
+            bullet_fire_timer = new_timer(60),
             spawn_bullets = function(enemy_movement, player_collision_circle)
                 local bullets = {}
-                for i = 3, 5 do
+                for i = 4, 4 do
                     add(bullets, _m.enemy_bullet_factory(
                         new_movement_line_factory {
                             base_speed_y = enemy_movement.speed_xy.y,
@@ -59,7 +57,7 @@ end
 
 function _m.boss_properties()
     return {
-        health = 20,
+        health = 50,
         sprite = new_static_sprite(56, 26, 4, 98),
         collision_circles = function(movement)
             return {

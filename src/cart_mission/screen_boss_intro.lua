@@ -2,10 +2,7 @@
 -- cart_mission/screen_boss_intro.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_boss_intro(params)
-    local game = params.game
-    local hud = params.hud
-
+function new_screen_boss_intro(game, hud)
     local screen_frames = 180
     local boss_info_slide_frames = 50
 
@@ -26,11 +23,6 @@ function new_screen_boss_intro(params)
     end
 
     function screen._update()
-        game.set_player_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
-        if btn(_button_x) then
-            game.player_fire()
-        end
-
         game._update()
         hud._update()
         boss_info._update()
@@ -41,7 +33,8 @@ function new_screen_boss_intro(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
+            shockwave_charges = game.shockwave_charges,
         }
         boss_info._draw()
     end
@@ -50,10 +43,7 @@ function new_screen_boss_intro(params)
         game._post_draw()
 
         if screen_timer.ttl <= 0 then
-            return new_screen_boss_fight {
-                game = game,
-                hud = hud,
-            }
+            return new_screen_boss_fight(game, hud)
         end
     end
 

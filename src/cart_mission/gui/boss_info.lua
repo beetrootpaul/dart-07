@@ -8,23 +8,21 @@
 function new_boss_info(params)
     local rounding_fn = "ceil"
     local movement = new_movement_sequence_factory {
-        sequence = {
-            new_movement_to_target_factory {
-                frames = params.slide_in_frames,
-                target_y = _gah / 2,
-                easing_fn = _easing_easeoutquart,
-                on_finished = function()
-                    rounding_fn = "flr"
-                end,
-            },
-            new_movement_fixed_factory {
-                frames = params.present_frames,
-            },
-            new_movement_to_target_factory {
-                frames = params.slide_out_frames,
-                target_y = _gah + 1,
-                easing_fn = _easing_easeinquart,
-            },
+        new_movement_to_target_factory {
+            frames = params.slide_in_frames,
+            target_y = _gah / 2,
+            easing_fn = _easing_easeoutquart,
+            on_finished = function()
+                rounding_fn = "flr"
+            end,
+        },
+        new_movement_fixed_factory {
+            frames = params.present_frames,
+        },
+        new_movement_to_target_factory {
+            frames = params.slide_out_frames,
+            target_y = _gah + 1,
+            easing_fn = _easing_easeinquart,
         },
     }(_xy(_gaox, -1))
 

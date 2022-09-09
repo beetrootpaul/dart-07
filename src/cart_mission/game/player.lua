@@ -4,12 +4,10 @@
 
 function new_player(params)
     local on_bullets_spawned = new_throttle(params.on_bullets_spawned)
+    local on_shockwave_triggered = new_throttle(params.on_shockwave_triggered)
     local on_destroyed = params.on_destroyed
 
-    local w = 10
-    local h = 10
-
-    local speed = 1
+    local w, h, speed = 10, 12, 1
 
     local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0)
     local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0)
@@ -79,6 +77,10 @@ function new_player(params)
             )
         end,
 
+        trigger_shockwave = function()
+            on_shockwave_triggered.invoke(6, new_shockwave(xy, 1))
+        end,
+
         collision_circle = collision_circle,
 
         is_invincible_after_damage = function()
@@ -106,6 +108,7 @@ function new_player(params)
             end
 
             on_bullets_spawned._update()
+            on_shockwave_triggered._update()
 
             jet_sprite._update()
         end,

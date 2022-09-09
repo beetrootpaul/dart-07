@@ -7,8 +7,7 @@
 function new_screen_over()
     local fade_out = new_fade("out", 30)
 
-    local retry = true
-    local proceed = false
+    local retry, proceed = true, false
 
     --
 
@@ -53,6 +52,7 @@ function new_screen_over()
             if retry then
                 return new_screen_mission_intro {
                     health = _health_default,
+                    shockwave_charges = _shockwave_charges_default,
                     triple_shot = false,
                     fast_shoot = false,
                 }

@@ -4,10 +4,7 @@
 
 -- TODO: boss spectacular destroy SFX
 
-function new_screen_boss_outro(params)
-    local game = params.game
-    local hud = params.hud
-
+function new_screen_boss_outro(game, hud)
     local fade_out = new_fade("out", 30, 90)
     local screen_timer = new_timer(120)
 
@@ -19,11 +16,6 @@ function new_screen_boss_outro(params)
     end
 
     function screen._update()
-        game.set_player_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
-        if btn(_button_x) then
-            game.player_fire()
-        end
-
         game._update()
         hud._update()
         fade_out._update()
@@ -34,7 +26,8 @@ function new_screen_boss_outro(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
+            shockwave_charges = game.shockwave_charges,
         }
         fade_out._draw()
     end
@@ -46,7 +39,8 @@ function new_screen_boss_outro(params)
             if _m.mission_number < _max_mission_number then
                 _load_mission_cart {
                     mission_number = _m.mission_number + 1,
-                    health = game.player_health,
+                    health = game.health,
+                    shockwave_charges = game.shockwave_charges,
                     triple_shot = game.triple_shot,
                     fast_shoot = game.fast_shoot,
                 }

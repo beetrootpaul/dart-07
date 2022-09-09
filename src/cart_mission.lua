@@ -15,8 +15,12 @@ function _init()
         }
     end)
 
+    -- disable btnp repeating
+    poke(0x5f5c, 255)
+
     current_screen = new_screen_mission_intro {
         health = cart_params.health ~= nil and cart_params.health or _health_default,
+        shockwave_charges = cart_params.shockwave_charges ~= nil and cart_params.shockwave_charges or _shockwave_charges_default,
         triple_shot = cart_params.triple_shot ~= nil and cart_params.triple_shot or false,
         fast_shoot = cart_params.fast_shoot ~= nil and cart_params.fast_shoot or false,
     }

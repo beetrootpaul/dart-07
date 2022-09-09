@@ -18,15 +18,13 @@ function new_fade(direction, fade_frames, wait_frames)
     end
 
     local fade_movement = new_movement_sequence_factory {
-        sequence = {
-            new_movement_fixed_factory {
-                frames = wait_frames or 0,
-            },
-            new_movement_to_target_factory {
-                frames = fade_frames,
-                target_y = 0,
-            },
-        }
+        new_movement_fixed_factory {
+            frames = wait_frames or 0,
+        },
+        new_movement_to_target_factory {
+            frames = fade_frames,
+            target_y = 0,
+        },
     }(_xy(0, y_min))
 
     return {
@@ -39,10 +37,7 @@ function new_fade(direction, fade_frames, wait_frames)
         end,
 
         _draw = function()
-            local i = 1
-            local y = fade_movement.xy.y
-            local strip_h = 0
-
+            local i, y, strip_h = 1, fade_movement.xy.y, 0
             while i <= #patterns do
                 y = y + strip_h
                 strip_h = strip_hs[i]

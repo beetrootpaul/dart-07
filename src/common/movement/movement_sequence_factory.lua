@@ -2,10 +2,7 @@
 -- common/movement/movement_sequence_factory.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_movement_sequence_factory(params)
-    local loop = params.loop or false
-    local sequence = params.sequence
-
+function new_movement_sequence_factory(sequence, loop)
     return function(start_xy)
         local sequence_index = 1
         local current_sub_movement = sequence[sequence_index](start_xy)
@@ -34,9 +31,8 @@ function new_movement_sequence_factory(params)
                     current_sub_movement = sequence[sequence_index](current_sub_movement.xy)
                 end
             end
-            
-            movement.xy = current_sub_movement.xy
-            movement.speed_xy = current_sub_movement.speed_xy
+
+            movement.xy, movement.speed_xy = current_sub_movement.xy, current_sub_movement.speed_xy
         end
 
         return movement

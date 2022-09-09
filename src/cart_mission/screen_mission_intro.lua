@@ -9,6 +9,7 @@
 function new_screen_mission_intro(params)
     local game = new_game {
         health = params.health,
+        shockwave_charges = params.shockwave_charges,
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
     }
@@ -40,11 +41,6 @@ function new_screen_mission_intro(params)
     end
 
     function screen._update()
-        game.set_player_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
-        if btn(_button_x) then
-            game.player_fire()
-        end
-
         game._update()
         mission_info._update()
         hud._update()
@@ -57,7 +53,8 @@ function new_screen_mission_intro(params)
         game._draw()
         mission_info._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
+            shockwave_charges = game.shockwave_charges,
         }
         fade_in._draw()
     end
@@ -66,10 +63,7 @@ function new_screen_mission_intro(params)
         game._post_draw()
 
         if screen_timer.ttl <= 0 then
-            return new_screen_enemies_fight {
-                game = game,
-                hud = hud,
-            }
+            return new_screen_enemies_fight(game, hud)
         end
     end
 
