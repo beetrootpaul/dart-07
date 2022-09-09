@@ -48,12 +48,10 @@ __lua__
 #include build/src/cart_mission/sprites/fake_sprite.lua
 #include build/src/cart_mission/sprites/static_sprite.lua
 
-#include build/src/cart_mission/screen_boss_fight.lua
-#include build/src/cart_mission/screen_boss_intro.lua
-#include build/src/cart_mission/screen_boss_outro.lua
 #include build/src/cart_mission/screen_defeat.lua
-#include build/src/cart_mission/screen_enemies_fight.lua
-#include build/src/cart_mission/screen_mission_intro.lua
+#include build/src/cart_mission/screen_mission_boss.lua
+#include build/src/cart_mission/screen_mission_end.lua
+#include build/src/cart_mission/screen_mission_main.lua
 #include build/src/cart_mission/screen_over.lua
 #include build/src/cart_mission/screen_win.lua
 

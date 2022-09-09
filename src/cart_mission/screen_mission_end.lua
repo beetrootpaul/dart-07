@@ -1,10 +1,10 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/screen_boss_outro.lua  --
+-- cart_mission/screen_mission_end.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: boss spectacular destroy SFX
 
-function new_screen_boss_outro(game, hud)
+function new_screen_mission_end(game, hud)
     local fade_out = new_fade("out", 30, 90)
     local screen_timer = new_timer(120)
 
