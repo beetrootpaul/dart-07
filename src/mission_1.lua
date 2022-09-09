@@ -52,21 +52,18 @@ function _m.enemy_properties_for(enemy_map_marker)
             ship_sprite = new_static_sprite(11, 12, 24, 84),
             collision_circle_r = 5.5,
             collision_circle_offset_y = 1,
-            movement_factory = new_movement_sequence_factory {
-                loop = true,
-                sequence = {
-                    new_movement_line_factory {
-                        frames = 60,
-                        angle = .75,
-                        angled_speed = .75,
-                    },
-                    new_movement_line_factory {
-                        frames = 60,
-                        angle = .25,
-                        angled_speed = .25,
-                    },
+            movement_factory = new_movement_loop_factory({
+                new_movement_line_factory {
+                    frames = 60,
+                    angle = .75,
+                    angled_speed = .75,
                 },
-            },
+                new_movement_line_factory {
+                    frames = 60,
+                    angle = .25,
+                    angled_speed = .25,
+                },
+            }),
             bullet_fire_timer = new_timer(40),
             spawn_bullets = function(enemy_movement, player_collision_circle)
                 return {
@@ -87,6 +84,8 @@ function _m.enemy_properties_for(enemy_map_marker)
                 }
             end,
             powerups_distribution = "-,h,t",
+            -- DEBUG:
+            powerups_distribution = "s",
         }
     end
 
@@ -115,23 +114,20 @@ function _m.enemy_properties_for(enemy_map_marker)
             ship_sprite = new_static_sprite(16, 8, 24, 73),
             collision_circle_r = 8,
             collision_circle_offset_y = -2,
-            movement_factory = new_movement_sequence_factory {
-                loop = true,
-                sequence = {
-                    new_movement_line_factory {
-                        base_speed_y = .25,
-                        frames = 160,
-                        angle = 0,
-                        angled_speed = .5,
-                    },
-                    new_movement_line_factory {
-                        base_speed_y = .25,
-                        frames = 160,
-                        angle = .5,
-                        angled_speed = .5,
-                    },
+            movement_factory = new_movement_loop_factory({
+                new_movement_line_factory {
+                    base_speed_y = .25,
+                    frames = 160,
+                    angle = 0,
+                    angled_speed = .5,
                 },
-            },
+                new_movement_line_factory {
+                    base_speed_y = .25,
+                    frames = 160,
+                    angle = .5,
+                    angled_speed = .5,
+                },
+            }),
             bullet_fire_timer = new_timer(50),
             spawn_bullets = function(enemy_movement, player_collision_circle)
                 return {
@@ -144,6 +140,8 @@ function _m.enemy_properties_for(enemy_map_marker)
                 }
             end,
             powerups_distribution = "-,h,t",
+            -- DEBUG:
+            powerups_distribution = "s",
         }
     end
 
@@ -171,17 +169,16 @@ function _m.enemy_properties_for(enemy_map_marker)
             -- DEBUG:
             --health = 100,
             --powerups_distribution = "f",
-            powerups_distribution = "h",
+            --powerups_distribution = "h",
+            powerups_distribution = "s",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
-            --    sequence = {
             --        new_movement_line_factory {
             --            frames = 160,
             --            angle = .75,
             --            angled_speed = .5,
             --        },
             --        new_movement_fixed_factory(),
-            --    },
             --},
         }
     end
@@ -194,16 +191,14 @@ function _m.enemy_properties_for(enemy_map_marker)
             collision_circle_r = 6,
             collision_circle_offset_y = -1,
             movement_factory = new_movement_sequence_factory {
-                sequence = {
-                    new_movement_line_factory {
-                        frames = 80,
-                        angle = .75,
-                        angled_speed = .5,
-                    },
-                    new_movement_line_factory {
-                        angle = .75,
-                        angled_speed = 1.5,
-                    },
+                new_movement_line_factory {
+                    frames = 80,
+                    angle = .75,
+                    angled_speed = .5,
+                },
+                new_movement_line_factory {
+                    angle = .75,
+                    angled_speed = 1.5,
                 },
             },
             bullet_fire_timer = new_fake_timer(),
@@ -212,17 +207,16 @@ function _m.enemy_properties_for(enemy_map_marker)
             -- DEBUG:
             --health = 100,
             --powerups_distribution = "t",
-            powerups_distribution = "h",
+            --powerups_distribution = "h",
+            powerups_distribution = "s",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
-            --    sequence = {
             --        new_movement_line_factory {
             --            frames = 100,
             --            angle = .75,
             --            angled_speed = .5,
             --        },
             --        new_movement_fixed_factory(),
-            --    },
             --},
         }
     end
@@ -255,17 +249,16 @@ function _m.enemy_properties_for(enemy_map_marker)
             powerups_distribution = "-,-,-,h,h,t",
             -- DEBUG:
             --health = 100,
-            powerups_distribution = "h",
+            --powerups_distribution = "h",
+            powerups_distribution = "s",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
-            --    sequence = {
             --        new_movement_line_factory {
             --            frames = 160,
             --            angle = .75,
             --            angled_speed = .5,
             --        },
             --        new_movement_fixed_factory(),
-            --    },
             --},
         }
     end
@@ -333,26 +326,23 @@ function _m.boss_properties()
                     ))
                     return bullets
                 end,
-                movement_factory = new_movement_sequence_factory {
-                    loop = true,
-                    sequence = {
-                        new_movement_to_target_factory {
-                            target_x = 30,
-                            frames = 60,
-                        },
-                        new_movement_to_target_factory {
-                            target_x = _gaw - 30,
-                            frames = 120,
-                        },
-                        new_movement_to_target_factory {
-                            target_x = _gaw / 2,
-                            frames = 60,
-                        },
-                        new_movement_fixed_factory {
-                            frames = 120,
-                        },
+                movement_factory = new_movement_loop_factory({
+                    new_movement_to_target_factory {
+                        target_x = 30,
+                        frames = 60,
                     },
-                },
+                    new_movement_to_target_factory {
+                        target_x = _gaw - 30,
+                        frames = 120,
+                    },
+                    new_movement_to_target_factory {
+                        target_x = _gaw / 2,
+                        frames = 60,
+                    },
+                    new_movement_fixed_factory {
+                        frames = 120,
+                    },
+                }),
             },
             -- phase 3:
             {
@@ -386,32 +376,27 @@ function _m.boss_properties()
                     return bullets
                 end,
                 movement_factory = new_movement_sequence_factory {
-                    sequence = {
-                        -- center it
+                    -- center it
+                    new_movement_to_target_factory {
+                        target_x = _gaw / 2,
+                        frames = 40,
+                    },
+                    -- move to the left
+                    new_movement_to_target_factory {
+                        target_x = 30,
+                        frames = 40,
+                    },
+                    -- move to the right and to the left in a loop
+                    new_movement_loop_factory({
                         new_movement_to_target_factory {
-                            target_x = _gaw / 2,
-                            frames = 40,
+                            target_x = _gaw - 30,
+                            frames = 80,
                         },
-                        -- move to the left
                         new_movement_to_target_factory {
                             target_x = 30,
-                            frames = 40,
+                            frames = 80,
                         },
-                        -- move to the right and to the left in a loop
-                        new_movement_sequence_factory {
-                            loop = true,
-                            sequence = {
-                                new_movement_to_target_factory {
-                                    target_x = _gaw - 30,
-                                    frames = 80,
-                                },
-                                new_movement_to_target_factory {
-                                    target_x = 30,
-                                    frames = 80,
-                                },
-                            },
-                        },
-                    },
+                    }),
                 },
             }
         },

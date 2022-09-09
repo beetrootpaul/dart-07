@@ -12,6 +12,7 @@ function new_powerup(start_xy, powerup_type)
         h = new_static_sprite(9, 8, 119, 0),
         t = new_static_sprite(9, 8, 119, 8),
         f = new_static_sprite(9, 8, 119, 16),
+        s = new_static_sprite(9, 8, 119, 24),
     }
 
     local movement = new_movement_line_factory {

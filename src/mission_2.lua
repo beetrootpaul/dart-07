@@ -25,16 +25,14 @@ function _m.enemy_properties_for(enemy_map_marker)
             collision_circle_r = 3.5,
             collision_circle_offset_y = 0,
             movement_factory = new_movement_sequence_factory {
-                sequence = {
-                    new_movement_line_factory {
-                        frames = 80,
-                        angle = .75,
-                        angled_speed = .5,
-                    },
-                    new_movement_line_factory {
-                        angle = .75,
-                        angled_speed = 1.5,
-                    },
+                new_movement_line_factory {
+                    frames = 80,
+                    angle = .75,
+                    angled_speed = .5,
+                },
+                new_movement_line_factory {
+                    angle = .75,
+                    angled_speed = 1.5,
                 },
             },
             bullet_fire_timer = new_timer(60),

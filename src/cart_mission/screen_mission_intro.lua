@@ -9,6 +9,7 @@
 function new_screen_mission_intro(params)
     local game = new_game {
         health = params.health,
+        shockwave_charges = params.shockwave_charges,
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
     }
@@ -52,7 +53,7 @@ function new_screen_mission_intro(params)
         game._draw()
         mission_info._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
         }
         fade_in._draw()
     end

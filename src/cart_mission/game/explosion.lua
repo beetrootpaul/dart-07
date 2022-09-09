@@ -33,7 +33,6 @@ function new_explosion(start_xy, magnitude, wait_frames)
             wait_timer._update()
             if wait_timer.ttl <= 0 then
                 for _, particle in pairs(particles) do
-                    local angle = particle.angle
                     if particle.r > 0 then
                         particle.angle = particle.angle + .1 * (rnd() - .5)
                         local speed = rnd()

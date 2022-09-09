@@ -53,6 +53,7 @@ function new_screen_over()
             if retry then
                 return new_screen_mission_intro {
                     health = _health_default,
+                    shockwave_charges = _shockwave_charges_default,
                     triple_shot = false,
                     fast_shoot = false,
                 }

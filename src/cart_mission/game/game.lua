@@ -35,7 +35,8 @@ function new_game(params)
     }
 
     local game = {
-        player_health = params.health,
+        health = params.health,
+        shockwave_charges = params.shockwave_charges,
         boss_health = nil,
         boss_health_max = nil,
         triple_shot = params.triple_shot,
@@ -48,8 +49,8 @@ function new_game(params)
         game.triple_shot = false
         game.fast_shoot = false
         -- TODO: VFX of disappearing health segment
-        game.player_health = game.player_health - 1
-        player.take_damage(game.player_health)
+        game.health = game.health - 1
+        player.take_damage(game.health)
     end
 
     local function handle_collisions()
@@ -65,18 +66,24 @@ function new_game(params)
                     -- TODO: VFX on health status
                     powerup.pick()
                     if powerup.powerup_type == "h" then
-                        if game.player_health < _health_max then
-                            game.player_health = game.player_health + 1
+                        if game.health < _health_max then
+                            -- TODO: SFX
+                            game.health = game.health + 1
                         else
+                            -- TODO: SFX
                             -- TODO: increment score instead
                         end
                     elseif powerup.powerup_type == "t" then
                         game.triple_shot = true
                     elseif powerup.powerup_type == "f" then
                         game.fast_shoot = true
-
-                        -- TODO NEXT: shock waves
-                        -- TODO NEXT: max 4 shock waves
+                    elseif powerup.powerup_type == "s" then
+                        if game.shockwave_charges < _shockwave_charges_max then
+                            -- TODO: SFX
+                            game.shockwave_charges = game.shockwave_charges + 1
+                        end
+                        -- TODO: SFX
+                        -- TODO: increment score instead
                     end
                 end
             end
@@ -230,7 +237,13 @@ function new_game(params)
                 }
             end
             if btnp(_button_o) then
-                player.trigger_shockwave()
+                if game.shockwave_charges > 0 then
+                    game.shockwave_charges = game.shockwave_charges - 1
+                    -- TODO: SFX
+                    player.trigger_shockwave()
+                else
+                    -- TODO: SFX
+                end
             end
         end
 

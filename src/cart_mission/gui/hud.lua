@@ -6,15 +6,13 @@
 
 function new_hud(params)
     local player_health_bar_movement = new_movement_sequence_factory {
-        sequence = {
-            new_movement_fixed_factory {
-                frames = params.wait_frames
-            },
-            new_movement_to_target_factory {
-                frames = params.slide_in_frames,
-                target_x = 0,
-                easing_fn = _easing_easeoutquart,
-            },
+        new_movement_fixed_factory {
+            frames = params.wait_frames
+        },
+        new_movement_to_target_factory {
+            frames = params.slide_in_frames,
+            target_x = 0,
+            easing_fn = _easing_easeoutquart,
         },
     }(_xy(-20, _vs))
 

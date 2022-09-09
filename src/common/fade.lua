@@ -18,15 +18,13 @@ function new_fade(direction, fade_frames, wait_frames)
     end
 
     local fade_movement = new_movement_sequence_factory {
-        sequence = {
-            new_movement_fixed_factory {
-                frames = wait_frames or 0,
-            },
-            new_movement_to_target_factory {
-                frames = fade_frames,
-                target_y = 0,
-            },
-        }
+        new_movement_fixed_factory {
+            frames = wait_frames or 0,
+        },
+        new_movement_to_target_factory {
+            frames = fade_frames,
+            target_y = 0,
+        },
     }(_xy(0, y_min))
 
     return {

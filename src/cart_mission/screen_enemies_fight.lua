@@ -23,7 +23,7 @@ function new_screen_enemies_fight(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
         }
     end
 
@@ -37,7 +37,7 @@ function new_screen_enemies_fight(params)
             }
         end
 
-        if game.player_health <= 0 then
+        if game.health <= 0 then
             -- TODO: should we keep remaining player bullets visible? Should we allow them to hit boss after intro (even if practically impossible)? If not, should we nicely destroy them?
             return new_screen_defeat {
                 game = game,

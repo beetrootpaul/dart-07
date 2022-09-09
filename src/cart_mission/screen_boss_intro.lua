@@ -36,7 +36,7 @@ function new_screen_boss_intro(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
         }
         boss_info._draw()
     end

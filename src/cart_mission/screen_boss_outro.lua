@@ -29,7 +29,7 @@ function new_screen_boss_outro(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
         }
         fade_out._draw()
     end
@@ -41,7 +41,8 @@ function new_screen_boss_outro(params)
             if _m.mission_number < _max_mission_number then
                 _load_mission_cart {
                     mission_number = _m.mission_number + 1,
-                    health = game.player_health,
+                    health = game.health,
+                    shockwave_charges = game.shockwave_charges,
                     triple_shot = game.triple_shot,
                     fast_shoot = game.fast_shoot,
                 }

@@ -23,7 +23,7 @@ function new_screen_boss_fight(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
             boss_health = game.boss_health,
             boss_health_max = game.boss_health_max,
         }
@@ -39,7 +39,7 @@ function new_screen_boss_fight(params)
             }
         end
 
-        if game.player_health <= 0 then
+        if game.health <= 0 then
             return new_screen_defeat {
                 game = game,
                 hud = hud,

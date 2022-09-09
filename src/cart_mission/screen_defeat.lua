@@ -31,7 +31,7 @@ function new_screen_defeat(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw {
-            player_health = game.player_health,
+            player_health = game.health,
         }
         fade_out._draw()
     end
