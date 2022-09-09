@@ -4,10 +4,7 @@
 
 -- TODO: boss spectacular destroy SFX
 
-function new_screen_boss_outro(params)
-    local game = params.game
-    local hud = params.hud
-
+function new_screen_boss_outro(game, hud)
     local fade_out = new_fade("out", 30, 90)
     local screen_timer = new_timer(120)
 
@@ -30,6 +27,7 @@ function new_screen_boss_outro(params)
         game._draw()
         hud._draw {
             player_health = game.health,
+            shockwave_charges = game.shockwave_charges,
         }
         fade_out._draw()
     end

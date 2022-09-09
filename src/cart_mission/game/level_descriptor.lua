@@ -14,29 +14,15 @@ function new_level_descriptor()
     -- * end of the level
     local end_tile = 112
     -- * enemy tiles, over empty space
-    local en_min = 73
-    local en_max = 79
+    local en_min, en_max = 73, 79
     -- * enemy tiles, over structure
-    local en_over_st_min = 89
-    local en_over_st_max = 95
+    local en_over_st_min, en_over_st_max = 89, 95
     -- * structure tiles
     local st_center = 81
-    local st_edge_left = 80
-    local st_edge_right = 82
-    local st_edge_top = 65
-    local st_edge_bottom = 97
-    local st_outside_left_top = 64
-    local st_outside_left_bottom = 96
-    local st_outside_right_top = 66
-    local st_outside_right_bottom = 98
-    local st_inner_left_top = 83
-    local st_inner_left_bottom = 99
-    local st_inner_right_top = 84
-    local st_inner_right_bottom = 100
-    local st_filler_left_top = 116
-    local st_filler_left_bottom = 68
-    local st_filler_right_top = 115
-    local st_filler_right_bottom = 67
+    local st_edge_left, st_edge_right, st_edge_top, st_edge_bottom = 80, 82, 65, 97
+    local st_outside_left_top, st_outside_left_bottom, st_outside_right_top, st_outside_right_bottom = 64, 96, 66, 98
+    local st_inner_left_top, st_inner_left_bottom, st_inner_right_top, st_inner_right_bottom = 83, 99, 84, 100
+    local st_filler_left_top, st_filler_left_bottom, st_filler_right_top, st_filler_right_bottom = 116, 68, 115, 67
 
     local max_defined_distance
 
@@ -79,8 +65,7 @@ function new_level_descriptor()
 
     -- conversion from markers to level descriptor
     local structures_occupied = { [-1] = {}, [0] = {} }
-    local structures = {}
-    local enemies = {}
+    local structures, enemies = {}, {}
     for x = 1, #markers do
         local distance = x * 2 - 1
         local distance2 = distance + 1

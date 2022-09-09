@@ -2,10 +2,7 @@
 -- cart_mission/screen_defeat.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_defeat(params)
-    local game = params.game
-    local hud = params.hud
-
+function new_screen_defeat(game, hud)
     local screen_frames = 120
     local fade_out_frames = 30
 
@@ -32,6 +29,7 @@ function new_screen_defeat(params)
         game._draw()
         hud._draw {
             player_health = game.health,
+            shockwave_charges = game.shockwave_charges,
         }
         fade_out._draw()
     end

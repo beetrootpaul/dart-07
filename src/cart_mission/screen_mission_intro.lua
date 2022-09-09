@@ -54,6 +54,7 @@ function new_screen_mission_intro(params)
         mission_info._draw()
         hud._draw {
             player_health = game.health,
+            shockwave_charges = game.shockwave_charges,
         }
         fade_in._draw()
     end
@@ -62,10 +63,7 @@ function new_screen_mission_intro(params)
         game._post_draw()
 
         if screen_timer.ttl <= 0 then
-            return new_screen_enemies_fight {
-                game = game,
-                hud = hud,
-            }
+            return new_screen_enemies_fight(game, hud)
         end
     end
 

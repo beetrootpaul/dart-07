@@ -6,12 +6,7 @@ function new_game(params)
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
 
-    local player_bullets = {}
-    local enemy_bullets = {}
-    local enemies = {}
-    local powerups = {}
-    local explosions = {}
-    local shockwaves = {}
+    local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves = {}, {}, {}, {}, {}, {}
 
     local shockwave_enemy_hits = {}
 

@@ -85,7 +85,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             end,
             powerups_distribution = "-,h,t",
             -- DEBUG:
-            powerups_distribution = "s",
+            powerups_distribution = "s,t,f,h",
         }
     end
 
@@ -141,7 +141,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             end,
             powerups_distribution = "-,h,t",
             -- DEBUG:
-            powerups_distribution = "s",
+            powerups_distribution = "s,t,f,h",
         }
     end
 
@@ -170,7 +170,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             --health = 100,
             --powerups_distribution = "f",
             --powerups_distribution = "h",
-            powerups_distribution = "s",
+            powerups_distribution = "s,t,f,h",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --        new_movement_line_factory {
@@ -208,7 +208,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             --health = 100,
             --powerups_distribution = "t",
             --powerups_distribution = "h",
-            powerups_distribution = "s",
+            powerups_distribution = "s,t,f,h",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --        new_movement_line_factory {
@@ -250,7 +250,7 @@ function _m.enemy_properties_for(enemy_map_marker)
             -- DEBUG:
             --health = 100,
             --powerups_distribution = "h",
-            powerups_distribution = "s",
+            powerups_distribution = "s,t,f,h",
             --bullet_fire_timer = new_fake_timer(),
             --movement_factory = new_movement_sequence_factory {
             --        new_movement_line_factory {

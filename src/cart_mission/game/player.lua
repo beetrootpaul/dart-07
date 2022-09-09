@@ -7,10 +7,7 @@ function new_player(params)
     local on_shockwave_triggered = new_throttle(params.on_shockwave_triggered)
     local on_destroyed = params.on_destroyed
 
-    local w = 10
-    local h = 10
-
-    local speed = 1
+    local w, h, speed = 10, 12, 1
 
     local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0)
     local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0)

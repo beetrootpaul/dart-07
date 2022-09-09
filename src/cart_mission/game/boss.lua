@@ -4,12 +4,9 @@
 
 function new_boss(params)
     local boss_properties = params.boss_properties
-    local intro_frames = params.intro_frames
-    local intro_start_xy = params.intro_start_xy
+    local intro_frames, intro_start_xy = params.intro_frames, params.intro_start_xy
     local start_xy = params.start_xy
-    local on_bullets_spawned = params.on_bullets_spawned
-    local on_entered_next_phase = params.on_entered_next_phase
-    local on_destroyed = params.on_destroyed
+    local on_bullets_spawned, on_entered_next_phase, on_destroyed = params.on_bullets_spawned, params.on_entered_next_phase, params.on_destroyed
 
     local phases = boss_properties.phases
 
@@ -22,11 +19,7 @@ function new_boss(params)
 
     local current_phase_number = 0
 
-    local invincible_during_intro = true
-
-    local flashing_from_damage = false
-
-    local is_destroyed = false
+    local invincible_during_intro, flashing_from_damage, is_destroyed = true, false, false
 
     --
 

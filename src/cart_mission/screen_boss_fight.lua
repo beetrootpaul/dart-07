@@ -2,12 +2,7 @@
 -- cart_mission/screen_boss_fight.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_boss_fight(params)
-    local game = params.game
-    local hud = params.hud
-
-    --
-
+function new_screen_boss_fight(game, hud)
     local screen = {}
 
     function screen._init()
@@ -24,6 +19,7 @@ function new_screen_boss_fight(params)
         game._draw()
         hud._draw {
             player_health = game.health,
+            shockwave_charges = game.shockwave_charges,
             boss_health = game.boss_health,
             boss_health_max = game.boss_health_max,
         }
@@ -33,17 +29,11 @@ function new_screen_boss_fight(params)
         game._post_draw()
 
         if game.is_boss_defeated() then
-            return new_screen_boss_outro {
-                game = game,
-                hud = hud,
-            }
+            return new_screen_boss_outro(game, hud)
         end
 
         if game.health <= 0 then
-            return new_screen_defeat {
-                game = game,
-                hud = hud,
-            }
+            return new_screen_defeat(game, hud)
         end
     end
 

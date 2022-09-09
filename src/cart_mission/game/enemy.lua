@@ -10,16 +10,13 @@ do
 
         local enemy_properties = params.enemy_properties
         local start_xy = params.start_xy
-        local on_bullets_spawned = params.on_bullets_spawned
-        local on_damaged = params.on_damaged
-        local on_destroyed = params.on_destroyed
+        local on_bullets_spawned, on_damaged, on_destroyed = params.on_bullets_spawned, params.on_damaged, params.on_destroyed
 
         local health = enemy_properties.health
         local movement = enemy_properties.movement_factory(start_xy)
         local bullet_fire_timer = enemy_properties.bullet_fire_timer
 
-        local is_flashing_from_damage = false
-        local is_destroyed = false
+        local is_flashing_from_damage, is_destroyed = false, false
 
         local function collision_circle()
             return {
@@ -30,7 +27,7 @@ do
 
         return {
             id = next_id,
-            
+
             has_finished = function()
                 return is_destroyed or movement.xy.y > _gah + _ts
             end,

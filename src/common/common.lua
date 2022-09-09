@@ -13,4 +13,4 @@ _health_default = 3
 _shockwave_charges_max = 4
 _shockwave_charges_default = 1
 -- DEBUG:
-_shockwave_charges_default = 4
+--_shockwave_charges_default = 4
