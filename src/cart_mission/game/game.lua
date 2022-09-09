@@ -2,27 +2,6 @@
 -- cart_mission/game/game.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
-
-
-local negative = {
-    [0] = 7,
-    [1] = 15,
-    [2] = 11,
-    [3] = 13,
-    [4] = 4, --
-    [5] = 5, -- 
-    [6] = 14,
-    [7] = 0,
-    [8] = 10,
-    [9] = 12,
-    [10] = 8,
-    [11] = 2,
-    [12] = 9,
-    [13] = 3,
-    [14] = 6,
-    [15] = 1,
-}
-
 function new_game(params)
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
@@ -284,37 +263,40 @@ function new_game(params)
         clip()
 
         local p_xy = player.collision_circle().xy
-        local r_outer2 = 45 * 45
-        local r_inner2 = 40 * 40
-        local masks = {
-            0x0000.000f,
-            0x0000.00f0,
-            0x0000.0f00,
-            0x0000.f000,
-            0x000f.0000,
-            0x00f0.0000,
-            0x0f00.0000,
-            0xf000.0000,
-        }
-        for x = _gaox, _gaox + _gaw - 1, 8 do
-            for y = 0, _gah - 1 do
-                local dy = y - p_xy.y
 
-                local offset = (x >> 1) + (y << 6)
-                local c = peek4(0x6000 + offset)
+        local negative = { [0] = 7, 15, 11, 13, 4, 5, 14, 0, 10, 12, 8, 2, 9, 3, 6, 1 }
+        local masks = split("0x0000.000f,0x0000.00f0,0x0000.0f00,0x0000.f000,0x000f.0000,0x00f0.0000,0x0f00.0000,0xf000.0000")
+        local margin_h = 16
+        local player_x = p_xy.x + margin_h
+        local player_y = p_xy.y
+        local r_outer = 20
+        local r_inner = 15
+        local r_outer2 = r_outer * r_outer
+        local r_inner2 = r_inner * r_inner
 
-                local result = 0
-                for pos = 1, 7 do
-                    local shift = pos * 4 - 20
-                    local cp = (c & masks[pos]) >> shift
-                    local dx = x + pos - 1 - p_xy.x - _gaox
-                    local dist = dx * dx + dy * dy
-                    if dist < r_outer2 and dist > r_inner2 then cp = negative[cp] end
-                    result = result + (cp << shift)
+        for y = max(0, player_y - r_outer), min(player_y + r_outer, 127) do
+            local dy = y - player_y
+            local address_base = 0x6000 + (y << 6)
+            local distance_base = dy * dy
+
+            for x = max(player_x - r_outer, margin_h), min(player_x + r_outer, 127 - margin_h), 8 do
+                local dx_base = x - 1 - player_x
+                local address = address_base + (x >> 1)
+                local colors_before = peek4(address)
+
+                local colors_after = 0
+                -- FIX IT for left most bit (bit_pos = 8) (probably an issue with a sign bit?)
+                for bit_pos = 1, 7 do
+                    local dx = dx_base + bit_pos
+                    local distance = distance_base + dx * dx
+                    local shift = (bit_pos << 2) - 20
+                    --local color = (colors_before & masks[bit_pos]) >> shift
+                    local color = (colors_before & masks[bit_pos]) >> shift
+                    if distance > r_inner2 and distance < r_outer2 then color = negative[color] end
+                    colors_after = colors_after + (color << shift)
                 end
 
-                -- TODO: describe poke4 in API file
-                poke4(0x6000 + offset, result)
+                poke4(address, colors_after)
             end
         end
 
