@@ -2,7 +2,6 @@
 -- cart_main/screen_select_mission.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: unlock levels with progression
 -- TODO: extra option to go back
 -- TODO: high score
 -- TODO: create a decent mission selection screen
@@ -13,6 +12,8 @@ function new_screen_select_mission(params)
     local fade_in = new_fade("in", 30)
     local fade_out = new_fade("out", 30)
 
+    local max_unlocked_mission
+
     local proceed = false
 
     --
@@ -20,6 +21,9 @@ function new_screen_select_mission(params)
     local screen = {}
 
     function screen._init()
+        -- TODO: describe DGET in API file
+        -- TODO: encapsulate as _read_persisted_max_unlocked_mission(…)
+        max_unlocked_mission = max(dget(0), 1)
     end
 
     function screen._update()
@@ -30,7 +34,7 @@ function new_screen_select_mission(params)
         if btnp(_button_down) then
             selected_mission = selected_mission + 1
         end
-        selected_mission = (selected_mission - 1) % _max_mission_number + 1
+        selected_mission = (selected_mission - 1) % max_unlocked_mission + 1
 
         -- TODO: make it clear for the user which button is to be pressed
         if btnp(_button_x) then
@@ -48,9 +52,9 @@ function new_screen_select_mission(params)
         cls(_color_11_dark_green)
 
         print("todo shmup", 34, 10, _color_15_peach)
-        print("mission 1", 30, 30, selected_mission == 1 and _color_6_light_grey or _color_13_mauve)
-        print("mission 2", 30, 50, selected_mission == 2 and _color_6_light_grey or _color_13_mauve)
-        print("mission 3", 30, 70, selected_mission == 3 and _color_6_light_grey or _color_13_mauve)
+        print("mission 1", 30, 30, 1 <= max_unlocked_mission and (selected_mission == 1 and _color_6_light_grey or _color_13_mauve) or _color_8_red)
+        print("mission 2", 30, 50, 2 <= max_unlocked_mission and (selected_mission == 2 and _color_6_light_grey or _color_13_mauve) or _color_8_red)
+        print("mission 3", 30, 70, 3 <= max_unlocked_mission and (selected_mission == 3 and _color_6_light_grey or _color_13_mauve) or _color_8_red)
         -- TODO: high score across plays (persistent storage)
         --print("high score:", 34, 80, _color_12_true_blue)
 

@@ -45,50 +45,6 @@ function _m.enemy_properties_for(enemy_map_marker)
         }
     end
 
-    -- forward-backward, horizontal shots
-    if enemy_map_marker == 74 then
-        return {
-            health = 3,
-            ship_sprite = new_static_sprite(11, 12, 24, 84),
-            collision_circle_r = 5.5,
-            collision_circle_offset_y = 1,
-            movement_factory = new_movement_loop_factory({
-                new_movement_line_factory {
-                    frames = 60,
-                    angle = .75,
-                    angled_speed = .75,
-                },
-                new_movement_line_factory {
-                    frames = 60,
-                    angle = .25,
-                    angled_speed = .25,
-                },
-            }),
-            bullet_fire_timer = new_timer(40),
-            spawn_bullets = function(enemy_movement, player_collision_circle)
-                return {
-                    _m.enemy_bullet_factory(
-                        new_movement_line_factory {
-                            base_speed_y = _m.scroll_per_frame,
-                            angle = 0,
-                            angled_speed = 1,
-                        }(enemy_movement.xy)
-                    ),
-                    _m.enemy_bullet_factory(
-                        new_movement_line_factory {
-                            base_speed_y = _m.scroll_per_frame,
-                            angle = .5,
-                            angled_speed = 1,
-                        }(enemy_movement.xy)
-                    ),
-                }
-            end,
-            powerups_distribution = "-,h,t",
-            -- DEBUG:
-            powerups_distribution = "s,t,f,h",
-        }
-    end
-
     -- fast, small
     if enemy_map_marker == 75 then
         return {

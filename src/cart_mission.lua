@@ -9,6 +9,10 @@ function _init()
 
     _copy_shared_assets_to_transferable_ram()
 
+    -- TODO: describe CARTDATA in API file
+    -- TODO: update ID to the final one
+    cartdata("todo-shmup")
+
     menuitem(1, "exit to title", function()
         _load_main_cart {
             preselected_mission_number = _m.mission_number,
