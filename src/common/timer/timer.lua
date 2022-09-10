@@ -19,7 +19,8 @@ function new_timer(frames, params)
     end
 
     function timer.passed_fraction()
-        -- TODO: rethink this timer since it looks like bad things are happening here…
+        -- we refer to "frames - 1" here, because we want "passed_fraction()" to still return "1" _after_ the first "_update()" call
+        -- (we usually call "passed_fraction()" in "_draw()" which happens after "_update()")
         return frames <= 1 and 1 or mid(0, 1 - timer.ttl / (frames - 1), 1)
     end
 

@@ -28,13 +28,9 @@ function new_fade(direction, fade_frames, wait_frames)
     }(_xy(0, y_min))
 
     return {
-        has_finished = function()
-            return fade_movement.has_finished()
-        end,
+        has_finished = fade_movement.has_finished,
 
-        _update = function()
-            fade_movement._update()
-        end,
+        _update = fade_movement._update,
 
         _draw = function()
             local i, y, strip_h = 1, fade_movement.xy.y, 0

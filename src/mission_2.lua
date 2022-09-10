@@ -5,9 +5,11 @@
 _m = {
     mission_number = 2,
     scroll_per_frame = .75,
-    bg_color = _color_1_dark_blue,
     mission_name = "death space",
-    boss_name = "cheerful death"
+    boss_name = "cheerful death",
+    bg_color = _color_1_dark_blue,
+    mission_main_music = 0,
+    mission_boss_music = 1,
 }
 
 do
@@ -51,7 +53,6 @@ do
         end
     end
 
-    -- TODO: polish mission 2 enemy bullets
     local enemy_bullet_factory = new_enemy_bullet_factory {
         bullet_sprite = new_static_sprite(4, 4, 124, 64),
         collision_circle_r = 1.5,
@@ -78,7 +79,7 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: SFX?
+                    sfx(32, 3)
                     local bullets = {}
                     for i = 4, 4 do
                         add(bullets, enemy_bullet_factory(
@@ -112,7 +113,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(32, 3)
                         local bullets = {}
                         add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {

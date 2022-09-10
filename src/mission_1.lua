@@ -5,9 +5,11 @@
 _m = {
     mission_number = 1,
     scroll_per_frame = .5,
-    bg_color = _color_12_true_blue,
     mission_name = "death islands",
     boss_name = "painful death",
+    bg_color = _color_12_true_blue,
+    mission_main_music = 0,
+    mission_boss_music = 2,
 }
 
 do
@@ -69,7 +71,6 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: SFX?
                     local bullets = {}
                     for i = -2, 2 do
                         add(bullets, enemy_bullet_small_factory(
@@ -87,7 +88,6 @@ do
             -- enemy: fast, small
             [75] = {
                 health = 1,
-                -- TODO: make enemies animated? At least some blinking light?
                 ship_sprite = new_static_sprite(7, 7, 14, 73),
                 collision_circle_r = 3.5,
                 collision_circle_offset_y = 0,
@@ -122,7 +122,7 @@ do
                 }),
                 bullet_fire_timer = new_timer(50),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: SFX?
+                    sfx(33, 3)
                     return {
                         enemy_bullet_big_factory(
                             new_movement_line_factory {
@@ -146,7 +146,6 @@ do
                 movement_factory = new_movement_sinusoidal_factory(),
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: no SFX?
                     return {
                         enemy_bullet_small_factory(
                             new_movement_line_factory({
@@ -222,7 +221,7 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: SFX?
+                    sfx(32, 3)
                     local bullets = {}
                     for i = 1, 7 do
                         add(bullets, enemy_bullet_small_factory(
@@ -274,7 +273,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(60),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(33, 3)
                         return {
                             enemy_bullet_big_factory(
                                 new_movement_line_factory {
@@ -292,7 +291,7 @@ do
                     triggering_health_fraction = .85,
                     bullet_fire_timer = new_timer(40),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(33, 3)
                         local bullets = {}
                         add(bullets, enemy_bullet_small_factory(
                             new_movement_line_factory {
@@ -340,7 +339,7 @@ do
                     triggering_health_fraction = .3,
                     bullet_fire_timer = new_timer(60),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(33, 3)
                         local bullets = {}
                         for i = 3, 5 do
                             add(bullets, enemy_bullet_small_factory(

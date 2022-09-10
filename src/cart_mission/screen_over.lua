@@ -2,8 +2,6 @@
 -- cart_main/screen_over.lua  --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: create a decent game over screen
-
 function new_screen_over()
     local fade_out = new_fade("out", 30)
 
@@ -14,18 +12,17 @@ function new_screen_over()
     local screen = {}
 
     function screen._init()
-        -- TODO: music
     end
 
     function screen._update()
         if btnp(_button_up) or btnp(_button_down) then
-            sfx(_sfx_options_change)
+            sfx(_sfx_options_change, 3)
             retry = not retry
         end
 
-        -- TODO: make it clear for the user which button is to be pressed
         if btnp(_button_x) then
-            sfx(_sfx_options_confirm)
+            _music_fade_out()
+            sfx(_sfx_options_confirm, 3)
             proceed = true
         end
 
@@ -37,13 +34,8 @@ function new_screen_over()
     function screen._draw()
         cls(_color_0_black)
 
-        -- TODO: make it restart with initial params 
         print("try again (mission " .. _m.mission_number .. ")", 10, 40, retry and _color_6_light_grey or _color_13_mauve)
         print("back to title", 10, 60, retry and _color_13_mauve or _color_6_light_grey)
-        -- TODO NEXT: score
-        --print("score: ", 10, 80, _color_3_blue_green)
-        -- TODO: implement and show conditionally
-        --print("new high score!", 10, 100, _color_3_blue_green)
 
         fade_out._draw()
     end

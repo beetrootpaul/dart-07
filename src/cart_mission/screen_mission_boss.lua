@@ -3,13 +3,15 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_mission_boss(game, hud)
-    local screen_frames = 180
+    local boss_info_frames = 180
     local boss_info_slide_frames = 50
 
-    local boss_info = new_boss_info {
+    local boss_info = new_sliding_info {
         slide_in_frames = boss_info_slide_frames,
-        present_frames = screen_frames - 2 * boss_info_slide_frames,
+        present_frames = boss_info_frames - 2 * boss_info_slide_frames,
         slide_out_frames = boss_info_slide_frames,
+        text_1 = "boss",
+        text_2 = _m.boss_name,
     }
 
     --
@@ -17,7 +19,7 @@ function new_screen_mission_boss(game, hud)
     local screen = {}
 
     function screen._init()
-        -- TODO: boss music
+        _music_fade_out()
         game.enter_boss_phase()
     end
 
@@ -50,6 +52,7 @@ function new_screen_mission_boss(game, hud)
 
         if boss_info and boss_info.has_finished() then
             boss_info = nil
+            music(_m.mission_boss_music)
             game.start_boss_fight()
         end
 

@@ -14,7 +14,6 @@ function new_screen_defeat(game, hud)
     local screen = {}
 
     function screen._init()
-        -- TODO: music?
     end
 
     function screen._update()

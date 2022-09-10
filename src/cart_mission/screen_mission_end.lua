@@ -2,8 +2,6 @@
 -- cart_mission/screen_mission_end.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: boss spectacular destroy SFX
-
 function new_screen_mission_end(game, hud)
     local fade_out = new_fade("out", 30, 90)
     local screen_timer = new_timer(120)
@@ -15,12 +13,10 @@ function new_screen_mission_end(game, hud)
     local screen = {}
 
     function screen._init()
-        -- TODO: describe DGET in API file
-        -- TODO: encapsulate as _read_persisted_max_unlocked_mission(…)
+        _music_fade_out()
+        
         max_unlocked_mission = max(dget(0), 1)
         if max_unlocked_mission <= _m.mission_number then
-            -- TODO: describe DSET in API file
-            -- TODO: encapsulate as _persist_max_unlocked_mission(…)
             dset(0, _m.mission_number + 1)
         end
     end
