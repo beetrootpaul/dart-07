@@ -7,14 +7,11 @@
 -- SFXs individual for a cart: 32 - 39 (i.e. various enemy shooting types or an extra SFX for a logo screen)
 -- music individual for a cart: 40 - 64
 
--- TODO: use it
---_sfx_options_next = 0
--- TODO: use it
+_sfx_options_change = 0
+-- TODO: use it?
 --_sfx_options_prev = 1
--- TODO: use it
---_sfx_options_confirm = 2
--- TODO: use it
---_sfx_options_cannot_confirm = 3
+_sfx_options_confirm = 2
+_sfx_options_cannot_confirm = 3
 
 _sfx_powerup_spawned = 4
 _sfx_powerup_no_effect = 5

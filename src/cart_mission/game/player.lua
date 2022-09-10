@@ -65,17 +65,17 @@ function new_player(params)
         set_movement = function(left, right, up, down)
             jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
             ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
-            xy = xy
-                .set_x(mid(
-                w / 2 + 1,
-                xy.x + (right and speed or (left and -speed or 0)),
-                _gaw - w / 2 - 1
-            ))
-                .set_y(mid(
-                h / 2 + 1,
-                xy.y + (down and speed or (up and -speed or 0)),
-                _gah - h / 2 - 1
-            ))
+            xy = _xy(
+                mid(
+                    w / 2 + 1,
+                    xy.x + (right and speed or (left and -speed or 0)),
+                    _gaw - w / 2 - 1
+                ),
+                mid(
+                    h / 2 + 1,
+                    xy.y + (down and speed or (up and -speed or 0)),
+                    _gah - h / 2 - 1
+                ))
         end,
 
         fire = function(p)

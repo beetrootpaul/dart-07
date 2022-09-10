@@ -11,7 +11,7 @@ function new_movement_sinusoidal_factory()
         end
 
         local movement = {
-            xy = start_xy.set_x(x()),
+            xy = _xy(x(), start_xy.y),
             speed_xy = _xy(
                 x() - start_xy.x,
                 1
@@ -23,7 +23,7 @@ function new_movement_sinusoidal_factory()
         end
 
         function movement._update()
-            movement.speed_xy = movement.speed_xy.set_x(x() - movement.xy.x)
+            movement.speed_xy = _xy(x() - movement.xy.x, movement.speed_xy.y)
             movement.xy = movement.xy.plus(movement.speed_xy)
             age = age + 1
         end
