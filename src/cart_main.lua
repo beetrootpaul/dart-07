@@ -47,7 +47,7 @@ end
 -- TODO: polishing: screen win; with info which button to press to progress
 -- TODO: polishing: screen over; with info which button to press to progress
 
--- TODO: polishing: negative palette
+-- TODO: polishing: negative palette, in code and in Aseprite
 
 -- TODO: polishing: boss health bar
 

@@ -7,7 +7,7 @@ _m = {
     scroll_per_frame = .75,
     mission_name = "death space",
     boss_name = "cheerful death",
-    bg_color = _color_1_dark_blue,
+    bg_color = _color_1_darker_blue,
     mission_main_music = 0,
     mission_boss_music = 1,
 }
@@ -49,7 +49,7 @@ do
             pset(
                 _gaox + star.x,
                 star.y,
-                star.speed > .45 and _color_7_white or (star.speed > .35 and _color_6_light_grey or _color_14_lavender))
+                star.speed > .45 and _color_7_white or (star.speed > .35 and _color_6_light_grey or _color_13_lavender))
         end
     end
 
@@ -68,14 +68,18 @@ do
                 collision_circle_offset_y = 0,
                 movement_factory = new_movement_sequence_factory {
                     new_movement_line_factory {
-                        frames = 80,
                         angle = .75,
-                        angled_speed = .5,
+                        angled_speed = _m.scroll_per_frame,
                     },
-                    new_movement_line_factory {
-                        angle = .75,
-                        angled_speed = 1.5,
-                    },
+                    --new_movement_line_factory {
+                    --    frames = 80,
+                    --    angle = .75,
+                    --    angled_speed = .5,
+                    --},
+                    --new_movement_line_factory {
+                    --    angle = .75,
+                    --    angled_speed = 1.5,
+                    --},
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)

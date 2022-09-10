@@ -41,8 +41,8 @@ function new_hud(params)
             rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
             -- DEBUG:
-            --rectfill(0, 0, bar_w - 1, _vs - 1, _color_3_blue_green)
-            --rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_3_blue_green)
+            --rectfill(0, 0, bar_w - 1, _vs - 1, _color_5_blue_green)
+            --rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_5_blue_green)
 
             local xy = _xy(-_gaox + 3, _vs - 16).plus(slide_in_offset.xy.ceil())
             heart._draw(xy.plus(1, 6))
