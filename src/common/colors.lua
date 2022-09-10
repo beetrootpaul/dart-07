@@ -53,4 +53,7 @@ do
         pal(palette, 1)
     end
 end
-    
+
+-- TODO: polish this palette
+-- note: since tables are 1-indexed, color 0 is provided at the end of a table
+_palette_negative = split "15,11,13,4,5,14,0,10,12,8,2,9,3,6,1,7"

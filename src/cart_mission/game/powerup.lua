@@ -25,6 +25,7 @@ function new_powerup(start_xy, powerup_type)
 
     local powerup = {
         powerup_type = powerup_type,
+        _update = movement._update,
     }
 
     function powerup.has_finished()
@@ -40,10 +41,6 @@ function new_powerup(start_xy, powerup_type)
 
     function powerup.pick()
         is_picked = true
-    end
-
-    function powerup._update()
-        movement._update()
     end
 
     function powerup._draw()

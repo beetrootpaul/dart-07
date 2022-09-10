@@ -53,21 +53,21 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
                 for _, particle in pairs(particles) do
                     local r = particle.r
                     if r > 0 then
-                        local color = 16 * _color_9_dark_orange + _color_8_red
+                        local c1, c2 = _color_9_dark_orange, _color_8_red
                         if r < magnitude * .2 then
-                            color = 16 * _color_14_lavender + _color_13_mauve
+                            c1, c2 = _color_14_lavender, _color_13_mauve
                         elseif r < magnitude * .4 then
-                            color = 16 * _color_6_light_grey + _color_14_lavender
+                            c1, c2 = _color_6_light_grey, _color_14_lavender
                         elseif r < magnitude * .6 then
-                            color = 16 * _color_6_light_grey + _color_15_peach
+                            c1, c2 = _color_6_light_grey, _color_15_peach
                         elseif r < magnitude * .8 then
-                            color = 16 * _color_15_peach + _color_9_dark_orange
+                            c1, c2 = _color_15_peach, _color_9_dark_orange
                         end
                         circfill(
                             _gaox + particle.xy.x,
                             particle.xy.y,
                             r,
-                            color
+                            16 * c1 + c2
                         )
                     end
                 end

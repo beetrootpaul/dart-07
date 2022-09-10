@@ -32,9 +32,7 @@ function new_player_bullet(start_xy)
             is_destroyed = true
         end,
 
-        _update = function()
-            movement._update()
-        end,
+        _update = movement._update,
 
         _draw = function()
             bullet_sprite._draw(movement.xy)
