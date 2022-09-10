@@ -20,7 +20,7 @@ function new_screen_win()
 
     function screen._update()
         if btnp(_button_x) then
-            sfx(_sfx_options_confirm)
+            sfx(_sfx_options_confirm, 3)
             proceed = true
         end
 

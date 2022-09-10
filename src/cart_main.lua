@@ -8,7 +8,9 @@ function _init()
     local preselected_mission_number = _get_cart_param(1)
 
     -- TODO: describe CARTDATA in API file
-    -- TODO: update ID to the final one
+    -- TODO: update ID to the final one, both in function call as in the comment below
+    -- to clear cart data, go to cart data folder (defined as "root_path" in "$HOME/Library/Application Support/pico-8/config.txt")
+    -- and delete "todo-shmup.p8d.txt" file
     cartdata("todo-shmup")
 
     current_screen = preselected_mission_number ~= nil and

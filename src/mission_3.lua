@@ -84,7 +84,7 @@ do
                 },
                 bullet_fire_timer = new_timer(30),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    sfx(32)
+                    sfx(32, 3)
                     local bullets = {}
                     for i = 3, 5 do
                         add(bullets, enemy_bullet_factory(
@@ -118,7 +118,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        sfx(32)
+                        sfx(32, 3)
                         local bullets = {}
                         add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {

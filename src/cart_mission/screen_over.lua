@@ -19,13 +19,13 @@ function new_screen_over()
 
     function screen._update()
         if btnp(_button_up) or btnp(_button_down) then
-            sfx(_sfx_options_change)
+            sfx(_sfx_options_change, 3)
             retry = not retry
         end
 
         -- TODO: make it clear for the user which button is to be pressed
         if btnp(_button_x) then
-            sfx(_sfx_options_confirm)
+            sfx(_sfx_options_confirm, 3)
             proceed = true
         end
 

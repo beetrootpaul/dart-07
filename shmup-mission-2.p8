@@ -41,9 +41,8 @@ __lua__
 #include build/src/cart_mission/game/powerup.lua
 #include build/src/cart_mission/game/shockwave.lua
 
-#include build/src/cart_mission/gui/boss_info.lua
 #include build/src/cart_mission/gui/hud.lua
-#include build/src/cart_mission/gui/mission_info.lua
+#include build/src/cart_mission/gui/sliding_info.lua
 
 #include build/src/cart_mission/sprites/animated_sprite.lua
 #include build/src/cart_mission/sprites/fake_sprite.lua

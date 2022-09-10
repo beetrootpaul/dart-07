@@ -24,23 +24,23 @@ function new_game(params)
     local player = new_player {
         on_bullets_spawned = function(bullets)
             if game.triple_shot then
-                sfx(_sfx_player_triple_shoot)
+                sfx(_sfx_player_triple_shoot, 3)
             else
-                sfx(_sfx_player_shoot)
+                sfx(_sfx_player_shoot, 3)
             end
             for _, b in pairs(bullets) do
                 add(player_bullets, b)
             end
         end,
         on_shockwave_triggered = function(shockwave)
-            sfx(_sfx_player_shockwave)
+            sfx(_sfx_player_shockwave, 3)
             add(shockwaves, shockwave)
         end,
         on_damaged = function()
-            sfx(_sfx_damage_player)
+            sfx(_sfx_damage_player, 3)
         end,
         on_destroyed = function(collision_circle)
-            sfx(_sfx_destroy_player)
+            sfx(_sfx_destroy_player, 3)
             add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
             add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
@@ -62,34 +62,34 @@ function new_game(params)
     local function handle_powerup(powerup)
         if powerup.powerup_type == "h" then
             if game.health < _health_max then
-                sfx(_sfx_powerup_heart)
+                sfx(_sfx_powerup_heart, 3)
                 game.health = game.health + 1
             else
-                sfx(_sfx_powerup_no_effect)
+                sfx(_sfx_powerup_no_effect, 3)
                 -- TODO: increment score instead
             end
         elseif powerup.powerup_type == "t" then
             if game.triple_shot then
-                sfx(_sfx_powerup_no_effect)
+                sfx(_sfx_powerup_no_effect, 3)
                 -- TODO: increment score instead
             else
-                sfx(_sfx_powerup_triple_shot)
+                sfx(_sfx_powerup_triple_shot, 3)
                 game.triple_shot = true
             end
         elseif powerup.powerup_type == "f" then
             if game.fast_shoot then
-                sfx(_sfx_powerup_no_effect)
+                sfx(_sfx_powerup_no_effect, 3)
                 -- TODO: increment score instead
             else
-                sfx(_sfx_powerup_fast_shot)
+                sfx(_sfx_powerup_fast_shot, 3)
                 game.fast_shoot = true
             end
         elseif powerup.powerup_type == "s" then
             if game.shockwave_charges < _shockwave_charges_max then
-                sfx(_sfx_powerup_shockwave)
+                sfx(_sfx_powerup_shockwave, 3)
                 game.shockwave_charges = game.shockwave_charges + 1
             else
-                sfx(_sfx_powerup_no_effect)
+                sfx(_sfx_powerup_no_effect, 3)
                 -- TODO: increment score instead
             end
         end
@@ -227,26 +227,26 @@ function new_game(params)
                 end
             end,
             on_damage = function()
-                sfx(_sfx_damage_boss)
+                sfx(_sfx_damage_boss, 3)
             end,
             on_entered_next_phase = function(collision_circles)
-                sfx(_sfx_destroy_boss_phase)
+                sfx(_sfx_destroy_boss_phase, 3)
                 for _, cc in pairs(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
             end,
             on_destroyed = function(collision_circles)
-                sfx(_sfx_destroy_boss_final_1)
+                sfx(_sfx_destroy_boss_final_1, 3)
                 for _, cc in pairs(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     add(explosions, new_explosion(xy, .8 * r))
                     add(explosions, new_explosion(xy, 1.4 * r, 4 + flr(rnd(44))))
                     add(explosions, new_explosion(xy, 1.8 * r, 12 + flr(rnd(36)), function()
-                        sfx(_sfx_destroy_boss_final_2)
+                        sfx(_sfx_destroy_boss_final_2, 3)
                     end))
                     add(explosions, new_explosion(xy, 3.5 * r, 30 + flr(rnd(18))))
                     add(explosions, new_explosion(xy, 5 * r, 50 + flr(rnd(6)), function()
-                        sfx(_sfx_destroy_boss_final_3)
+                        sfx(_sfx_destroy_boss_final_3, 3)
                     end))
                 end
             end,
@@ -316,14 +316,14 @@ function new_game(params)
                     end
                 end,
                 on_damaged = function(collision_circle)
-                    sfx(_sfx_damage_enemy)
+                    sfx(_sfx_damage_enemy, 3)
                     add(explosions, new_explosion(collision_circle.xy, .5 * collision_circle.r))
                 end,
                 on_destroyed = function(collision_circle, powerup_type)
-                    sfx(_sfx_destroy_enemy)
+                    sfx(_sfx_destroy_enemy, 3)
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
-                        sfx(_sfx_powerup_spawned)
+                        sfx(_sfx_powerup_spawned, 3)
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end
                 end,

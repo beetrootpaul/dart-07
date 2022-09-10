@@ -15,18 +15,20 @@ function new_screen_mission_main(params)
     }
 
     local fade_in_frames = 30
-    local mission_info_slide_frames = 50
+    local sliding_info_slide_frames = 50
     local screen_frames = 200
 
     local hud = new_hud {
         wait_frames = screen_frames - 10,
         slide_in_frames = 40,
     }
-    local mission_info = new_mission_info {
+    local sliding_info = new_sliding_info {
         wait_frames = fade_in_frames,
-        slide_in_frames = mission_info_slide_frames,
-        present_frames = screen_frames - fade_in_frames - 2 * mission_info_slide_frames,
-        slide_out_frames = mission_info_slide_frames,
+        slide_in_frames = sliding_info_slide_frames,
+        present_frames = screen_frames - fade_in_frames - 2 * sliding_info_slide_frames,
+        slide_out_frames = sliding_info_slide_frames,
+        text_1 = "mission " .. _m.mission_number,
+        text_2 = _m.mission_name,
     }
     local fade_in = new_fade("in", fade_in_frames)
 
@@ -43,8 +45,8 @@ function new_screen_mission_main(params)
         game._update()
         hud._update()
 
-        if mission_info then
-            mission_info._update()
+        if sliding_info then
+            sliding_info._update()
         end
         if fade_in then
             fade_in._update()
@@ -59,8 +61,8 @@ function new_screen_mission_main(params)
             shockwave_charges = game.shockwave_charges,
         }
 
-        if mission_info then
-            mission_info._draw()
+        if sliding_info then
+            sliding_info._draw()
         end
         if fade_in then
             fade_in._draw()
@@ -74,8 +76,8 @@ function new_screen_mission_main(params)
             fade_in = nil
         end
 
-        if mission_info and mission_info.has_finished() then
-            mission_info = nil
+        if sliding_info and sliding_info.has_finished() then
+            sliding_info = nil
             game.enter_enemies_phase()
         end
 

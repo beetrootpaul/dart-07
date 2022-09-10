@@ -29,11 +29,11 @@ function new_screen_select_mission(params)
 
     function screen._update()
         if btnp(_button_up) then
-            sfx(_sfx_options_change)
+            sfx(_sfx_options_change, 3)
             selected_mission = selected_mission - 1
         end
         if btnp(_button_down) then
-            sfx(_sfx_options_change)
+            sfx(_sfx_options_change, 3)
             selected_mission = selected_mission + 1
         end
         selected_mission = (selected_mission - 1) % _max_mission_number + 1
@@ -41,10 +41,10 @@ function new_screen_select_mission(params)
         -- TODO: make it clear for the user which button is to be pressed
         if btnp(_button_x) then
             if selected_mission <= max_unlocked_mission then
-                sfx(_sfx_options_confirm)
+                sfx(_sfx_options_confirm, 3)
                 proceed = true
             else
-                sfx(_sfx_options_cannot_confirm)
+                sfx(_sfx_options_cannot_confirm, 3)
             end
         end
 
