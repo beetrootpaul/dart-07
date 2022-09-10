@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: polish it
--- TODO: consider going back to negative color ring problem ( https://www.lexaloffle.com/bbs/?tid=46286 )
+-- TODO NEXT: consider going back to negative color ring problem ( https://www.lexaloffle.com/bbs/?tid=46286 )
 
 do
     local next_id = 0

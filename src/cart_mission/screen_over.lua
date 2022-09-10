@@ -14,7 +14,6 @@ function new_screen_over()
     local screen = {}
 
     function screen._init()
-        -- TODO: music
     end
 
     function screen._update()
@@ -25,6 +24,7 @@ function new_screen_over()
 
         -- TODO: make it clear for the user which button is to be pressed
         if btnp(_button_x) then
+            _music_fade_out()
             sfx(_sfx_options_confirm, 3)
             proceed = true
         end

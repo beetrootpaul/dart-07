@@ -40,3 +40,7 @@ _sfx_destroy_boss_phase = 21
 _sfx_destroy_boss_final_1 = 22
 _sfx_destroy_boss_final_2 = 23
 _sfx_destroy_boss_final_3 = 24
+
+function _music_fade_out()
+    music(-1, 500)
+end

@@ -41,6 +41,7 @@ function new_screen_select_mission(params)
         -- TODO: make it clear for the user which button is to be pressed
         if btnp(_button_x) then
             if selected_mission <= max_unlocked_mission then
+                _music_fade_out()
                 sfx(_sfx_options_confirm, 3)
                 proceed = true
             else

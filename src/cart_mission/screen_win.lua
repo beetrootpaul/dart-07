@@ -14,12 +14,13 @@ function new_screen_win()
     local screen = {}
 
     function screen._init()
-        -- this music is available on the last mission cart only
+        -- this music is available on the last mission's cart only
         music(2)
     end
 
     function screen._update()
         if btnp(_button_x) then
+            _music_fade_out()
             sfx(_sfx_options_confirm, 3)
             proceed = true
         end
