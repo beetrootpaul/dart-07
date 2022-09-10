@@ -10,9 +10,7 @@ function new_screen_mission_main(params)
         fast_shoot = params.fast_shoot,
     }
 
-    local fade_in_frames = 30
-    local sliding_info_slide_frames = 50
-    local screen_frames = 200
+    local fade_in_frames, sliding_info_slide_frames, screen_frames = 30, 50, 200
 
     local hud = new_hud {
         wait_frames = screen_frames - 10,
