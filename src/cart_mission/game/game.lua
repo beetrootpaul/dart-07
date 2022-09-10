@@ -42,7 +42,7 @@ function new_game(params)
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
         end,
     }
-    
+
     --
 
     local function handle_player_damage()
@@ -55,6 +55,42 @@ function new_game(params)
         player.take_damage(game.health)
     end
 
+    local function handle_powerup(powerup)
+        if powerup.powerup_type == "h" then
+            if game.health < _health_max then
+                sfx(_sfx_powerup_heart)
+                game.health = game.health + 1
+            else
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            end
+        elseif powerup.powerup_type == "t" then
+            if game.triple_shot then
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            else
+                sfx(_sfx_powerup_triple_shot)
+                game.triple_shot = true
+            end
+        elseif powerup.powerup_type == "f" then
+            if game.fast_shoot then
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            else
+                sfx(_sfx_powerup_fast_shot)
+                game.fast_shoot = true
+            end
+        elseif powerup.powerup_type == "s" then
+            if game.shockwave_charges < _shockwave_charges_max then
+                sfx(_sfx_powerup_shockwave)
+                game.shockwave_charges = game.shockwave_charges + 1
+            else
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            end
+        end
+    end
+
     local function handle_collisions()
         local player_cc = player.collision_circle()
 
@@ -63,30 +99,10 @@ function new_game(params)
             -- TODO: magnet?
             if not powerup.has_finished() then
                 if _collisions.are_colliding(player_cc, powerup.collision_circle()) then
-                    -- TODO: SFX
                     -- TODO: VFX on player
                     -- TODO: VFX on health status
                     powerup.pick()
-                    if powerup.powerup_type == "h" then
-                        if game.health < _health_max then
-                            -- TODO: SFX
-                            game.health = game.health + 1
-                        else
-                            -- TODO: SFX
-                            -- TODO: increment score instead
-                        end
-                    elseif powerup.powerup_type == "t" then
-                        game.triple_shot = true
-                    elseif powerup.powerup_type == "f" then
-                        game.fast_shoot = true
-                    elseif powerup.powerup_type == "s" then
-                        if game.shockwave_charges < _shockwave_charges_max then
-                            -- TODO: SFX
-                            game.shockwave_charges = game.shockwave_charges + 1
-                        end
-                        -- TODO: SFX
-                        -- TODO: increment score instead
-                    end
+                    handle_powerup(powerup)
                 end
             end
         end
@@ -296,6 +312,7 @@ function new_game(params)
                     -- TODO: explosion SFX
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
+                        sfx(_sfx_powerup_spawned)
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end
                 end,
