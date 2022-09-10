@@ -5,7 +5,7 @@
 function _get_cart_param(index)
     local cart_params = split(stat(6), ",", false)
     if #cart_params < index then
-        return false
+        return nil
     end
     local p = cart_params[index]
     return #p > 0 and p or nil
