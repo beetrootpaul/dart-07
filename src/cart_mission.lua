@@ -9,6 +9,10 @@ function _init()
 
     _copy_shared_assets_to_transferable_ram()
 
+    -- TODO: describe CARTDATA in API file
+    -- TODO: update ID to the final one
+    cartdata("todo-shmup")
+
     menuitem(1, "exit to title", function()
         _load_main_cart {
             preselected_mission_number = _m.mission_number,
@@ -18,7 +22,7 @@ function _init()
     -- disable btnp repeating
     poke(0x5f5c, 255)
 
-    current_screen = new_screen_mission_intro {
+    current_screen = new_screen_mission_main {
         health = cart_params.health ~= nil and cart_params.health or _health_default,
         shockwave_charges = cart_params.shockwave_charges ~= nil and cart_params.shockwave_charges or _shockwave_charges_default,
         triple_shot = cart_params.triple_shot ~= nil and cart_params.triple_shot or false,

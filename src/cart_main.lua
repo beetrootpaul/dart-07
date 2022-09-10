@@ -6,6 +6,10 @@ local current_screen, next_screen
 
 function _init()
     local cart_params = _parse_main_cart_params()
+    
+    -- TODO: describe CARTDATA in API file
+    -- TODO: update ID to the final one
+    cartdata("todo-shmup")
 
     if cart_params.preselected_mission_number ~= nil then
         current_screen = new_screen_select_mission {

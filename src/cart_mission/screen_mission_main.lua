@@ -1,12 +1,12 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/screen_mission_intro.lua  --
+-- cart_mission/screen_mission_main.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- TODO: try to recreate cool text motion effect
 -- TODO: polish it
 -- TODO: polish mission names and boss names
 
-function new_screen_mission_intro(params)
+function new_screen_mission_main(params)
     local game = new_game {
         health = params.health,
         shockwave_charges = params.shockwave_charges,
@@ -30,8 +30,6 @@ function new_screen_mission_intro(params)
     }
     local fade_in = new_fade("in", fade_in_frames)
 
-    local screen_timer = new_timer(screen_frames)
-
     --
 
     local screen = {}
@@ -42,28 +40,50 @@ function new_screen_mission_intro(params)
 
     function screen._update()
         game._update()
-        mission_info._update()
         hud._update()
-        fade_in._update()
-        screen_timer._update()
+
+        if mission_info then
+            mission_info._update()
+        end
+        if fade_in then
+            fade_in._update()
+        end
     end
 
     function screen._draw()
         cls(_m.bg_color)
         game._draw()
-        mission_info._draw()
         hud._draw {
             player_health = game.health,
             shockwave_charges = game.shockwave_charges,
         }
-        fade_in._draw()
+
+        if mission_info then
+            mission_info._draw()
+        end
+        if fade_in then
+            fade_in._draw()
+        end
     end
 
     function screen._post_draw()
         game._post_draw()
 
-        if screen_timer.ttl <= 0 then
-            return new_screen_enemies_fight(game, hud)
+        if fade_in and fade_in.has_finished() then
+            fade_in = nil
+        end
+
+        if mission_info and mission_info.has_finished() then
+            mission_info = nil
+            game.enter_enemies_phase()
+        end
+
+        if game.is_ready_to_enter_boss_phase() then
+            return new_screen_mission_boss(game, hud)
+        end
+
+        if game.health <= 0 then
+            return new_screen_defeat(game, hud)
         end
     end
 

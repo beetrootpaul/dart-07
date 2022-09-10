@@ -30,6 +30,10 @@ function new_mission_info(params)
     }(_xy(_gaox, -1))
 
     return {
+        has_finished = function()
+            return movement.has_finished()
+        end,
+        
         _update = function()
             movement._update()
         end,

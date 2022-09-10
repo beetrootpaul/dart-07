@@ -2,8 +2,6 @@
 -- cart_mission/game/level.lua   --
 -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: add level particles like stars or floating corrupted matter
-
 -- to avoid thinking in x and y we talk here about
 --   - distance = how many tiles we have scrolled forward (can be fraction)
 --   - lane     = which row of tiles are we talking about, perpendicular to distance 
@@ -21,22 +19,11 @@ function new_level(descriptor)
     local spawn_distance_offset = 1
     local spawn_distance = max_visible_distance + spawn_distance_offset
 
-    local bg_tile = new_animated_sprite(
-        8,
-        8,
-        split(
-            "40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40," ..
-                "48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48," ..
-                "56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56," ..
-                "64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64"
-        ),
-        32,
-        { from_left_top_corner = true }
-    )
-
     -- phase: intro -> main -> outro 
     local phase = "intro"
-
+    
+    _m.level_bg_init()
+    
     return {
         enter_phase_main = function()
             phase = "main"
@@ -74,7 +61,7 @@ function new_level(descriptor)
         end,
 
         _update = function()
-            bg_tile._update()
+            _m.level_bg_update()
 
             if phase ~= "outro" and min_visible_distance >= max_defined_distance + 1 then
                 phase = "outro"
@@ -97,15 +84,14 @@ function new_level(descriptor)
         end,
 
         _draw = function()
+            _m.level_bg_draw(min_visible_distance, max_visible_distance)
+            
             for distance = flr(min_visible_distance), ceil(max_visible_distance) do
                 for lane = 1, 12 do
                     local xy = _xy(
                         (lane - 1) * _ts,
                         _vs - flr((distance - min_visible_distance + 1) * _ts)
                     )
-                    if _m.has_bg_tiles then
-                        bg_tile._draw(xy)
-                    end
                     if phase == "main" then
                         local fg_tile = structures[distance][lane]
                         if fg_tile then

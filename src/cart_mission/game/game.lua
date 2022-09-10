@@ -289,7 +289,6 @@ function new_game(params)
                     -- TODO: explosion SFX
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
-                        -- TODO NEXT: implement shock wave
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end
                 end,

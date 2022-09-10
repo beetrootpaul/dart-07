@@ -1,8 +1,8 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/screen_boss_intro.lua  --
--- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- cart_mission/screen_mission_boss.lua   --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_boss_intro(game, hud)
+function new_screen_mission_boss(game, hud)
     local screen_frames = 180
     local boss_info_slide_frames = 50
 
@@ -11,7 +11,6 @@ function new_screen_boss_intro(game, hud)
         present_frames = screen_frames - 2 * boss_info_slide_frames,
         slide_out_frames = boss_info_slide_frames,
     }
-    local screen_timer = new_timer(screen_frames)
 
     --
 
@@ -25,8 +24,10 @@ function new_screen_boss_intro(game, hud)
     function screen._update()
         game._update()
         hud._update()
-        boss_info._update()
-        screen_timer._update()
+
+        if boss_info then
+            boss_info._update()
+        end
     end
 
     function screen._draw()
@@ -35,15 +36,29 @@ function new_screen_boss_intro(game, hud)
         hud._draw {
             player_health = game.health,
             shockwave_charges = game.shockwave_charges,
+            boss_health = (not boss_info) and game.boss_health or nil,
+            boss_health_max = (not boss_info) and game.boss_health_max or nil,
         }
-        boss_info._draw()
+
+        if boss_info then
+            boss_info._draw()
+        end
     end
 
     function screen._post_draw()
         game._post_draw()
 
-        if screen_timer.ttl <= 0 then
-            return new_screen_boss_fight(game, hud)
+        if boss_info and boss_info.has_finished() then
+            boss_info = nil
+            game.start_boss_fight()
+        end
+
+        if game.is_boss_defeated() then
+            return new_screen_mission_end(game, hud)
+        end
+
+        if game.health <= 0 then
+            return new_screen_defeat(game, hud)
         end
     end
 
