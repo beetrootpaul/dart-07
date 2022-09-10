@@ -43,12 +43,7 @@ function new_screen_over()
     function screen._post_draw()
         if fade_out.has_finished() then
             if retry then
-                return new_screen_mission_main {
-                    health = _health_default,
-                    shockwave_charges = _shockwave_charges_default,
-                    triple_shot = false,
-                    fast_shoot = false,
-                }
+                extcmd("reset")
             else
                 _load_main_cart {
                     preselected_mission_number = _m.mission_number,

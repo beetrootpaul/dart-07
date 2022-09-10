@@ -52,4 +52,6 @@ Development:
 
 Optionally, to build without minification: `npm run watch-and-build-as-is`
 
-To build dist packages: `npm run dist`
+To build dist packages:
+- remove cart data file from PICO-8 cart data folder (as set in `$HOME/Library/Application Support/pico-8/config.txt`)
+- then run `npm run dist`
