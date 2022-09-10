@@ -41,5 +41,4 @@ _sfx_destroy_boss_final_1 = 22
 _sfx_destroy_boss_final_2 = 23
 _sfx_destroy_boss_final_3 = 24
 
---TODO NEXT: implement sample enemy sounds to check against tokens
 --TODO NEXT: implement sample music to check against tokens

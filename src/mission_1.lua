@@ -122,7 +122,7 @@ do
                 }),
                 bullet_fire_timer = new_timer(50),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: SFX?
+                    sfx(33)
                     return {
                         enemy_bullet_big_factory(
                             new_movement_line_factory {
@@ -222,7 +222,7 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: SFX?
+                    sfx(32)
                     local bullets = {}
                     for i = 1, 7 do
                         add(bullets, enemy_bullet_small_factory(
@@ -274,7 +274,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(60),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(33)
                         return {
                             enemy_bullet_big_factory(
                                 new_movement_line_factory {
@@ -292,7 +292,7 @@ do
                     triggering_health_fraction = .85,
                     bullet_fire_timer = new_timer(40),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(33)
                         local bullets = {}
                         add(bullets, enemy_bullet_small_factory(
                             new_movement_line_factory {
@@ -340,7 +340,7 @@ do
                     triggering_health_fraction = .3,
                     bullet_fire_timer = new_timer(60),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(33)
                         local bullets = {}
                         for i = 3, 5 do
                             add(bullets, enemy_bullet_small_factory(
