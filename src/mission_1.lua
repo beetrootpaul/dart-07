@@ -45,9 +45,13 @@ do
         end
     end
 
-    local enemy_bullet_factory = new_enemy_bullet_factory {
+    local enemy_bullet_small_factory = new_enemy_bullet_factory {
         bullet_sprite = new_static_sprite(4, 4, 124, 64),
         collision_circle_r = 1.5,
+    }
+    local enemy_bullet_big_factory = new_enemy_bullet_factory {
+        bullet_sprite = new_static_sprite(6, 6, 118, 64),
+        collision_circle_r = 2.5,
     }
 
     function _m.enemy_properties_for(enemy_map_marker)
@@ -64,9 +68,10 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
+                    -- TODO: SFX?
                     local bullets = {}
                     for i = -2, 2 do
-                        add(bullets, enemy_bullet_factory(
+                        add(bullets, enemy_bullet_small_factory(
                             new_movement_line_factory {
                                 angle = i * .04 + _angle_between(enemy_movement.xy, player_collision_circle.xy),
                                 angled_speed = 1.5,
@@ -120,11 +125,12 @@ do
                 }),
                 bullet_fire_timer = new_timer(50),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
+                    -- TODO: SFX?
                     return {
-                        enemy_bullet_factory(
+                        enemy_bullet_big_factory(
                             new_movement_line_factory {
                                 angle = .75,
-                                angled_speed = 1,
+                                angled_speed = .75,
                             }(enemy_movement.xy)
                         ),
                     }
@@ -145,8 +151,9 @@ do
                 movement_factory = new_movement_sinusoidal_factory(),
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
+                    -- TODO: no SFX?
                     return {
-                        enemy_bullet_factory(
+                        enemy_bullet_small_factory(
                             new_movement_line_factory({
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .75,
@@ -224,9 +231,10 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
+                    -- TODO: SFX?
                     local bullets = {}
                     for i = 1, 7 do
-                        add(bullets, enemy_bullet_factory(
+                        add(bullets, enemy_bullet_small_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .25 + i / 8,
@@ -275,12 +283,13 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(60),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
+                        -- TODO: SFX?
                         return {
-                            enemy_bullet_factory(
+                            enemy_bullet_big_factory(
                                 new_movement_line_factory {
                                     base_speed_y = enemy_movement.speed_xy.y,
                                     angle = .75,
-                                    angled_speed = 1,
+                                    angled_speed = 1.5,
                                 }(enemy_movement.xy.plus(0, 3))
                             ),
                         }
@@ -292,22 +301,23 @@ do
                     triggering_health_fraction = .85,
                     bullet_fire_timer = new_timer(40),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
+                        -- TODO: SFX?
                         local bullets = {}
-                        add(bullets, enemy_bullet_factory(
+                        add(bullets, enemy_bullet_small_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = _angle_between(enemy_movement.xy.plus(-21, 3), player_collision_circle.xy),
                                 angled_speed = 1,
                             }(enemy_movement.xy.plus(-21, 3))
                         ))
-                        add(bullets, enemy_bullet_factory(
+                        add(bullets, enemy_bullet_small_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = _angle_between(enemy_movement.xy.plus(21, 3), player_collision_circle.xy),
                                 angled_speed = 1,
                             }(enemy_movement.xy.plus(21, 3))
                         ))
-                        add(bullets, enemy_bullet_factory(
+                        add(bullets, enemy_bullet_small_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = _angle_between(enemy_movement.xy.plus(0, 3), player_collision_circle.xy),
@@ -339,23 +349,24 @@ do
                     triggering_health_fraction = .3,
                     bullet_fire_timer = new_timer(60),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
+                        -- TODO: SFX?
                         local bullets = {}
                         for i = 3, 5 do
-                            add(bullets, enemy_bullet_factory(
+                            add(bullets, enemy_bullet_small_factory(
                                 new_movement_line_factory {
                                     base_speed_y = enemy_movement.speed_xy.y,
                                     angle = .25 + i / 8,
                                     angled_speed = 1,
                                 }(enemy_movement.xy.plus(-21, 3))
                             ))
-                            add(bullets, enemy_bullet_factory(
+                            add(bullets, enemy_bullet_small_factory(
                                 new_movement_line_factory {
                                     base_speed_y = enemy_movement.speed_xy.y,
                                     angle = .25 + i / 8,
                                     angled_speed = 1,
                                 }(enemy_movement.xy.plus(21, 3))
                             ))
-                            add(bullets, enemy_bullet_factory(
+                            add(bullets, enemy_bullet_small_factory(
                                 new_movement_line_factory {
                                     base_speed_y = enemy_movement.speed_xy.y,
                                     angle = .25 + i / 8,
