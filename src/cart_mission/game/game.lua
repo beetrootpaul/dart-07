@@ -3,6 +3,15 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 function new_game(params)
+    local game = {
+        health = params.health,
+        shockwave_charges = params.shockwave_charges,
+        boss_health = nil,
+        boss_health_max = nil,
+        triple_shot = params.triple_shot,
+        fast_shoot = params.fast_shoot,
+    }
+
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
 
@@ -14,6 +23,11 @@ function new_game(params)
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
+            if game.triple_shot then
+                sfx(_sfx_player_triple_shoot)
+            else
+                sfx(_sfx_player_shoot)
+            end
             for _, b in pairs(bullets) do
                 add(player_bullets, b)
             end
@@ -28,15 +42,8 @@ function new_game(params)
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
         end,
     }
-
-    local game = {
-        health = params.health,
-        shockwave_charges = params.shockwave_charges,
-        boss_health = nil,
-        boss_health_max = nil,
-        triple_shot = params.triple_shot,
-        fast_shoot = params.fast_shoot,
-    }
+    
+    --
 
     local function handle_player_damage()
         -- TODO: powerups retrieval after live lost?

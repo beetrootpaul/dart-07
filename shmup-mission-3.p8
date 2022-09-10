@@ -16,6 +16,7 @@ __lua__
 #include build/src/common/timer/fake_timer.lua
 #include build/src/common/timer/timer.lua
 
+#include build/src/common/audio.lua
 #include build/src/common/buttons.lua
 #include build/src/common/colors.lua
 #include build/src/common/common.lua

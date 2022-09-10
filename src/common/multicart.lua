@@ -79,38 +79,41 @@ do
         load("#tmp_multicart_lvl" .. mission_number, nil, cart_params)
     end
 
-    function _copy_shared_assets_to_transferable_ram()
-        -- TODO: ?
-        --local src_addr = 0x4300
-        --memcpy(0x0, src_addr, 0x1000) -- copy sprite sheet, sections 1 and 2
-        --src_addr = src_addr + 0x1000
-        --memcpy(0x3200, src_addr, 0x44 * 5) -- copy SFXs 0-5
-        --src_addr = src_addr + 0x44 * 5
-        --memcpy(0x3200 + 0x44 * 20, src_addr, 0x44 * 5) -- copy SFXs 20-29
+    local memory_sprite_sheet_start = 0x0000
 
-        -- TODO: assert if within ranges on both sides
-        -- TODO: explain thoroughly in a comment
-        -- TODO: add to PICO-8 API file
-        memcpy(0x0, 0x4300, 0x0800) -- copy first sprite sheet tab
+    -- TODO: add MEMCPY to PICO-8 API file
+
+    -- docs about memory space:
+    --   - https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Memory
+    --   - https://pico-8.fandom.com/wiki/Memory
+    function _copy_shared_assets_to_transferable_ram()
+        -- 0x0000 = start of sprite sheet tabs 1-2
+        -- 0x1000 = start of sprite sheet tabs 3-4, just after end of tabs 1-2
+        -- 0x3200 = start of 64 SFXs (therefore length of 32 SFXs = (0x4300-0x3200)/2 = 0x880
+        -- 0x4300 = user data start (transferable between carts), just after end of SFXs
+        -- 0x5600 = custom font, just after end of user data
+
+        -- copy first tab of the sprite sheet
+        memcpy(0x0000, 0x4300, 0x0800)
+        -- copy first 32 SFXs
+        memcpy(0x3200, 0x4b00, 0x0880)
+        -- we reached address 0x537f so far, which is within range of the user data 
     end
 
+    -- docs about memory space:
+    --   - https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Memory
+    --   - https://pico-8.fandom.com/wiki/Memory
     function _copy_shared_assets_from_transferable_ram()
-        -- TODO: ?
-        -- user data addresses: 0x4300 .. 0x55ff
-        --local expected_max_addr = 0x4300 + 0x1000 + 0x44 * 5 + 0x44 * 5
-        --assert(expected_max_addr < 0x55ff, tostr(expected_max_addr, 0x1) .. " :-(")
-        --local dest_addr = 0x4300
-        --memcpy(dest_addr, 0x0, 0x1000) -- copy sprite sheet, sections 1 and 2
-        --dest_addr = dest_addr + 0x1000
-        --memcpy(dest_addr, 0x3200, 0x44 * 5) -- copy SFXs 0-5
-        --dest_addr = dest_addr + 0x44 * 5
-        --memcpy(dest_addr, 0x3200 + 0x44 * 20, 0x44 * 5) -- copy SFXs 20-25
-        --dest_addr = dest_addr + 0x44 * 5
-        --assert(expected_max_addr == dest_addr, "should be equal")
+        -- 0x0000 = start of sprite sheet tabs 1-2
+        -- 0x1000 = start of sprite sheet tabs 3-4, just after end of tabs 1-2
+        -- 0x3200 = start of 64 SFXs (therefore length of 32 SFXs = (0x4300-0x3200)/2 = 0x880
+        -- 0x4300 = user data start (transferable between carts), just after end of SFXs
+        -- 0x5600 = custom font, just after end of user data
 
-        -- TODO: assert if within ranges on both sides
-        -- TODO: explain thoroughly in a comment
-        memcpy(0x4300, 0x0, 0x0800) -- copy first sprite sheet tab
+        -- copy first tab of the sprite sheet
+        memcpy(0x4300, 0x0000, 0x0800)
+        -- copy first 32 SFXs
+        memcpy(0x4b00, 0x3200, 0x0880)
     end
 
 end

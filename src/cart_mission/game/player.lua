@@ -36,6 +36,24 @@ function new_player(params)
         }
     end
 
+    local function create_single_bullet()
+        return {
+            new_player_bullet(xy.plus(0, -4)),
+        }
+    end
+
+    local function create_triple_bullets()
+        return {
+            new_player_bullet(xy.plus(0, -4)),
+            new_player_bullet(xy.plus(-5, -2)),
+            new_player_bullet(xy.plus(5, -2)),
+        }
+    end
+
+    local function create_shockwave()
+        return new_shockwave(xy, 1)
+    end
+
     -- 
 
     return {
@@ -61,24 +79,19 @@ function new_player(params)
         end,
 
         fire = function(p)
-            local bullets = {
-                -- TODO: SFX?
-                new_player_bullet(xy.plus(0, -4)),
-            }
-            if p.triple_shot then
-                -- TODO: different SFX?
-                add(bullets, new_player_bullet(xy.plus(-5, -2)))
-                add(bullets, new_player_bullet(xy.plus(5, -2)))
-            end
-            on_bullets_spawned.invoke(
+            on_bullets_spawned.invoke_if_ready(
             -- TODO: balancing
                 p.fast_shoot and 9 or 18,
-                bullets
+                p.triple_shot and create_triple_bullets or create_single_bullet
             )
         end,
 
         trigger_shockwave = function()
-            on_shockwave_triggered.invoke(6, new_shockwave(xy, 1))
+            on_shockwave_triggered.invoke_if_ready(
+            -- TODO: balancing
+                6,
+                create_shockwave
+            )
         end,
 
         collision_circle = collision_circle,
