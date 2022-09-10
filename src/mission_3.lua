@@ -5,9 +5,11 @@
 _m = {
     mission_number = 3,
     scroll_per_frame = 1,
-    bg_color = _color_2_darker_purple,
     mission_name = "rotfl",
-    boss_name = "lol"
+    boss_name = "lol",
+    bg_color = _color_2_darker_purple,
+    mission_main_music = 0,
+    mission_boss_music = 1,
 }
 
 do
@@ -82,7 +84,7 @@ do
                 },
                 bullet_fire_timer = new_timer(30),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    -- TODO: SFX?
+                    sfx(32)
                     local bullets = {}
                     for i = 3, 5 do
                         add(bullets, enemy_bullet_factory(
@@ -116,7 +118,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                        -- TODO: SFX?
+                        sfx(32)
                         local bullets = {}
                         add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {

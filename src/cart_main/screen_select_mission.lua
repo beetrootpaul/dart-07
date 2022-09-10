@@ -21,6 +21,7 @@ function new_screen_select_mission(params)
     local screen = {}
 
     function screen._init()
+        music(0)
         -- TODO: describe DGET in API file
         -- TODO: encapsulate as _read_persisted_max_unlocked_mission(…)
         max_unlocked_mission = max(dget(0), 1)

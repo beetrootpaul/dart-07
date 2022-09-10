@@ -14,7 +14,7 @@ function new_screen_defeat(game, hud)
     local screen = {}
 
     function screen._init()
-        -- TODO: music?
+        -- TODO NEXT: music fade out?
     end
 
     function screen._update()

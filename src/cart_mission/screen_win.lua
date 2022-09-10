@@ -14,7 +14,8 @@ function new_screen_win()
     local screen = {}
 
     function screen._init()
-        -- TODO: music
+        -- this music is available on the last mission cart only
+        music(2)
     end
 
     function screen._update()

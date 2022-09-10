@@ -17,7 +17,8 @@ function new_screen_mission_boss(game, hud)
     local screen = {}
 
     function screen._init()
-        -- TODO: boss music
+        -- TODO NEXT: music fade in?
+        music(_m.mission_boss_music)
         game.enter_boss_phase()
     end
 

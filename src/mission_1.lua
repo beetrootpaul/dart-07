@@ -5,9 +5,11 @@
 _m = {
     mission_number = 1,
     scroll_per_frame = .5,
-    bg_color = _color_12_true_blue,
     mission_name = "death islands",
     boss_name = "painful death",
+    bg_color = _color_12_true_blue,
+    mission_main_music = 0,
+    mission_boss_music = 2,
 }
 
 do

@@ -15,6 +15,8 @@ function new_screen_mission_end(game, hud)
     local screen = {}
 
     function screen._init()
+        -- TODO NEXT: music fade out?
+        
         -- TODO: describe DGET in API file
         -- TODO: encapsulate as _read_persisted_max_unlocked_mission(…)
         max_unlocked_mission = max(dget(0), 1)

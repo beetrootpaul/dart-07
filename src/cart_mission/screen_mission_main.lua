@@ -35,7 +35,8 @@ function new_screen_mission_main(params)
     local screen = {}
 
     function screen._init()
-        -- TODO: music  
+        -- TODO NEXT: music fade in?
+        music(_m.mission_main_music)
     end
 
     function screen._update()
