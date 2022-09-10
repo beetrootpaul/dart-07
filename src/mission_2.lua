@@ -58,8 +58,9 @@ do
     }
 
     function _m.enemy_properties_for(enemy_map_marker)
-        if enemy_map_marker == 79 then
-            return {
+        return ({
+
+            [79] = {
                 health = 1,
                 ship_sprite = new_static_sprite(8, 8, 0, 64),
                 collision_circle_r = 3.5,
@@ -91,9 +92,9 @@ do
                     return bullets
                 end,
                 powerups_distribution = "t",
-            }
-        end
-        assert(false, "unexpected enemy_map_marker = " .. enemy_map_marker)
+            },
+
+        })[enemy_map_marker]
     end
 
     function _m.boss_properties()

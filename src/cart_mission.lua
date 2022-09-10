@@ -5,7 +5,10 @@
 local current_screen, next_screen
 
 function _init()
-    local cart_params = _parse_mission_cart_params()
+    local health_param = _get_cart_param(1)
+    local shockwave_charges_param = _get_cart_param(2)
+    local is_triple_shot_enabled_param = _get_cart_param(3)
+    local is_fast_shot_enabled_param = _get_cart_param(4)
 
     _copy_shared_assets_to_transferable_ram()
 
@@ -23,10 +26,10 @@ function _init()
     poke(0x5f5c, 255)
 
     current_screen = new_screen_mission_main {
-        health = cart_params.health ~= nil and cart_params.health or _health_default,
-        shockwave_charges = cart_params.shockwave_charges ~= nil and cart_params.shockwave_charges or _shockwave_charges_default,
-        triple_shot = cart_params.triple_shot ~= nil and cart_params.triple_shot or false,
-        fast_shoot = cart_params.fast_shoot ~= nil and cart_params.fast_shoot or false,
+        health = health_param ~= nil and tonum(health_param) or _health_default,
+        shockwave_charges = shockwave_charges_param ~= nil and tonum(shockwave_charges_param) or _shockwave_charges_default,
+        triple_shot = is_triple_shot_enabled_param == "true",
+        fast_shoot = is_fast_shot_enabled_param == "true",
     }
     current_screen._init()
 end

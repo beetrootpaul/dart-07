@@ -55,9 +55,10 @@ do
     }
 
     function _m.enemy_properties_for(enemy_map_marker)
-        -- heavy, aimed spread shot
-        if enemy_map_marker == 73 then
-            return {
+        return ({
+
+            -- enemy: heavy, aimed spread shot
+            [73] = {
                 health = 6,
                 ship_sprite = new_static_sprite(16, 16, 0, 80),
                 collision_circle_r = 8,
@@ -81,12 +82,10 @@ do
                     return bullets
                 end,
                 powerups_distribution = "-,h,t",
-            }
-        end
+            },
 
-        -- fast, small
-        if enemy_map_marker == 75 then
-            return {
+            -- enemy: fast, small
+            [75] = {
                 health = 1,
                 -- TODO: make enemies animated? At least some blinking light?
                 ship_sprite = new_static_sprite(7, 7, 14, 73),
@@ -99,12 +98,10 @@ do
                 bullet_fire_timer = new_fake_timer(),
                 spawn_bullets = _noop,
                 powerups_distribution = "-,h,t",
-            }
-        end
+            },
 
-        -- left-right
-        if enemy_map_marker == 76 then
-            return {
+            -- enemy: left-right
+            [76] = {
                 health = 3,
                 ship_sprite = new_static_sprite(16, 8, 24, 73),
                 collision_circle_r = 8,
@@ -138,12 +135,10 @@ do
                 powerups_distribution = "-,h,t",
                 -- DEBUG:
                 powerups_distribution = "s,t,f,h",
-            }
-        end
+            },
 
-        -- sinusoidal
-        if enemy_map_marker == 77 then
-            return {
+            -- enemy: sinusoidal
+            [77] = {
                 health = 1,
                 ship_sprite = new_static_sprite(6, 7, 26, 64),
                 collision_circle_r = 3,
@@ -177,12 +172,10 @@ do
                 --        },
                 --        new_movement_fixed_factory(),
                 --},
-            }
-        end
+            },
 
-        -- wait and charge
-        if enemy_map_marker == 78 then
-            return {
+            -- enemy: wait and charge
+            [78] = {
                 health = 3,
                 ship_sprite = new_static_sprite(12, 9, 14, 64),
                 collision_circle_r = 6,
@@ -215,12 +208,10 @@ do
                 --        },
                 --        new_movement_fixed_factory(),
                 --},
-            }
-        end
+            },
 
-        -- stationary
-        if enemy_map_marker == 79 then
-            return {
+            -- enemy: stationary
+            [79] = {
                 health = 7,
                 ship_sprite = new_static_sprite(14, 16, 0, 64),
                 collision_circle_r = 7,
@@ -258,9 +249,9 @@ do
                 --        },
                 --        new_movement_fixed_factory(),
                 --},
-            }
-        end
-        assert(false, "unexpected enemy_map_marker = " .. enemy_map_marker)
+            },
+
+        })[enemy_map_marker]
     end
 
     function _m.boss_properties()
