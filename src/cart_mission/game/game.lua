@@ -50,11 +50,8 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        -- TODO: powerups retrieval after live lost?
-        -- TODO: SFX
         game.triple_shot = false
         game.fast_shoot = false
-        -- TODO: VFX of disappearing health segment
         game.health = game.health - 1
         player.take_damage(game.health)
     end
@@ -66,12 +63,10 @@ function new_game(params)
                 game.health = game.health + 1
             else
                 sfx(_sfx_powerup_no_effect, 3)
-                -- TODO: increment score instead
             end
         elseif powerup.powerup_type == "t" then
             if game.triple_shot then
                 sfx(_sfx_powerup_no_effect, 3)
-                -- TODO: increment score instead
             else
                 sfx(_sfx_powerup_triple_shot, 3)
                 game.triple_shot = true
@@ -79,7 +74,6 @@ function new_game(params)
         elseif powerup.powerup_type == "f" then
             if game.fast_shoot then
                 sfx(_sfx_powerup_no_effect, 3)
-                -- TODO: increment score instead
             else
                 sfx(_sfx_powerup_fast_shot, 3)
                 game.fast_shoot = true
@@ -90,7 +84,6 @@ function new_game(params)
                 game.shockwave_charges = game.shockwave_charges + 1
             else
                 sfx(_sfx_powerup_no_effect, 3)
-                -- TODO: increment score instead
             end
         end
     end
@@ -100,11 +93,8 @@ function new_game(params)
 
         -- player vs powerups
         for _, powerup in pairs(powerups) do
-            -- TODO: magnet?
             if not powerup.has_finished() then
                 if _collisions.are_colliding(player_cc, powerup.collision_circle()) then
-                    -- TODO: VFX on player
-                    -- TODO: VFX on health status
                     powerup.pick()
                     handle_powerup(powerup)
                 end
@@ -117,13 +107,10 @@ function new_game(params)
             for _, shockwave in pairs(shockwaves) do
                 local combined_id = shockwave.id .. "-" .. enemy.id
                 shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] or 0
-                -- TODO: balancing
                 if not enemy.has_finished() and not shockwave.has_finished() and shockwave_enemy_hits[combined_id] < 8 then
                     if _collisions.are_colliding(shockwave.collision_circle(), enemy_cc, {
                         ignore_gameplay_area_check = true,
                     }) then
-                        -- TODO: SFX
-                        -- TODO: balancing
                         enemy.take_damage(2)
                         shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] + 1
                     end
@@ -132,7 +119,6 @@ function new_game(params)
             for __, player_bullet in pairs(player_bullets) do
                 if not enemy.has_finished() and not player_bullet.has_finished() then
                     if _collisions.are_colliding(player_bullet.collision_circle(), enemy_cc) then
-                        -- TODO: SFX
                         enemy.take_damage(1)
                         player_bullet.destroy()
                     end
@@ -140,7 +126,6 @@ function new_game(params)
             end
             if not enemy.has_finished() and not player.is_invincible_after_damage() then
                 if _collisions.are_colliding(player_cc, enemy_cc) then
-                    -- TODO: SFX
                     enemy.take_damage(1)
                     handle_player_damage()
                 end
@@ -153,13 +138,10 @@ function new_game(params)
                 for _, shockwave in pairs(shockwaves) do
                     local combined_id = shockwave.id .. "-boss"
                     shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] or 0
-                    -- TODO: balancing
                     if not boss.has_finished() and not shockwave.has_finished() and shockwave_enemy_hits[combined_id] < 8 then
                         if _collisions.are_colliding(shockwave.collision_circle(), boss_cc, {
                             ignore_gameplay_area_check = true,
                         }) then
-                            -- TODO: SFX
-                            -- TODO: balancing
                             boss.take_damage(2)
                             shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] + 1
                         end
@@ -168,7 +150,6 @@ function new_game(params)
                 for __, player_bullet in pairs(player_bullets) do
                     if not boss.has_finished() and not player_bullet.has_finished() then
                         if _collisions.are_colliding(player_bullet.collision_circle(), boss_cc) then
-                            -- TODO: SFX
                             boss.take_damage(1)
                             player_bullet.destroy()
                         end
@@ -176,7 +157,6 @@ function new_game(params)
                 end
                 if not boss.has_finished() and not player.is_invincible_after_damage() then
                     if _collisions.are_colliding(player_cc, boss_cc) then
-                        -- TODO: SFX
                         boss.take_damage(1)
                         handle_player_damage()
                     end
@@ -276,10 +256,8 @@ function new_game(params)
             if btnp(_button_o) then
                 if game.shockwave_charges > 0 then
                     game.shockwave_charges = game.shockwave_charges - 1
-                    -- TODO: SFX
                     player.trigger_shockwave()
                 else
-                    -- TODO: SFX
                 end
             end
         end

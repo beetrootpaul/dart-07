@@ -57,7 +57,6 @@ do
         end
     end
 
-    -- TODO: polish mission 3 enemy bullets
     local enemy_bullet_factory = new_enemy_bullet_factory {
         bullet_sprite = new_static_sprite(4, 4, 124, 64),
         collision_circle_r = 1.5,

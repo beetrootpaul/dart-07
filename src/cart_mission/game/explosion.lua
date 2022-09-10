@@ -2,8 +2,6 @@
 -- cart_mission/game/explosion.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: polish it
-
 function new_explosion(start_xy, magnitude, wait_frames, on_started)
     local particles = {}
     for _ = 1, 9 do

@@ -32,6 +32,8 @@ TODO mention multi-cart setup and that it's maybe not necessary, but wanted to h
 
 TODO mention cross-cart data graphics and SFX copying as well
 
+TODO link to #easingcheatsheet https://www.lexaloffle.com/bbs/?tid=40577
+
 ---
 
 TODO screenshots

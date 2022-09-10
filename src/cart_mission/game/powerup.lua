@@ -2,9 +2,6 @@
 -- cart_mission/game/powerup.lua --
 -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: fancy animation
--- TODO: magnet for an easier pickup?
-
 function new_powerup(start_xy, powerup_type)
     local is_picked = false
 

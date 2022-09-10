@@ -2,8 +2,6 @@
 -- cart_mission/game/shockwave.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: polish it
-
 do
     local next_id = 0
 

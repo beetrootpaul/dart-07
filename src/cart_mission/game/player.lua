@@ -80,7 +80,6 @@ function new_player(params)
 
         fire = function(p)
             on_bullets_spawned.invoke_if_ready(
-            -- TODO: balancing
                 p.fast_shoot and 9 or 18,
                 p.triple_shot and create_triple_bullets or create_single_bullet
             )
@@ -88,7 +87,6 @@ function new_player(params)
 
         trigger_shockwave = function()
             on_shockwave_triggered.invoke_if_ready(
-            -- TODO: balancing
                 6,
                 create_shockwave
             )
@@ -130,7 +128,6 @@ function new_player(params)
                 flr(invincible_after_damage_timer.ttl / 8) % 2 == 1 and
                 _color_6_light_grey or
                 nil
-            -- TODO: consider blinking instead of flashing
             ship_sprite_current._draw(xy, {
                 flash_color = flash_color,
             })

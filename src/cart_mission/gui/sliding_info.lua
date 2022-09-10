@@ -2,8 +2,6 @@
 -- cart_mission/gui/sliding_info.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: better mission info GUI
-
 function new_sliding_info(params)
     local rounding_fn = "ceil"
     local movement = new_movement_sequence_factory {

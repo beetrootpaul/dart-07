@@ -12,8 +12,6 @@ function _init()
 
     _copy_shared_assets_to_transferable_ram()
 
-    -- TODO: describe CARTDATA in API file
-    -- TODO: update ID to the final one, both in function call as in the comment below
     -- to clear cart data, go to cart data folder (defined as "root_path" in "$HOME/Library/Application Support/pico-8/config.txt")
     -- and delete "todo-shmup.p8d.txt" file
     cartdata("todo-shmup")

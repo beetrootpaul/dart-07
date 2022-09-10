@@ -26,7 +26,6 @@ function _load_main_cart(params)
     -- SPLORE from favorites tab (outside game's directory).
     load("shmup.p8", nil, cart_params)
     load("shmup/shmup.p8", nil, cart_params)
-    -- TODO: use a nice final BBS cart ID here
     load("#tmp_multicart_main", nil, cart_params)
 end
 
@@ -47,14 +46,10 @@ function _load_mission_cart(params)
     -- file paths, we use two variants here: one if we navigate in SPLORE to 
     -- inside of this game's directory and one if we started the game in 
     -- SPLORE from favorites tab (outside game's directory).
-    -- TODO: add to PICO-8 API file
     load("shmup-mission-" .. mission_number .. ".p8", nil, cart_params)
     load("shmup/shmup-mission-" .. mission_number .. ".p8", nil, cart_params)
-    -- TODO: use a nice final BBS cart ID here
     load("#tmp_multicart_lvl" .. mission_number, nil, cart_params)
 end
-
--- TODO: add MEMCPY to PICO-8 API file
 
 -- docs about memory space:
 --   - https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Memory

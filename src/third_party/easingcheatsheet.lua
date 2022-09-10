@@ -5,8 +5,6 @@
 -- Also, commented out functions unused in this codebase, so the token usage is lower.
 --
 
--- TODO: link to the source in README as well, since it will disappear from the codebase during minification
-
 function _easing_linear(t)
     return t
 end

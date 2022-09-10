@@ -2,8 +2,6 @@
 -- cart_mission/game/player_bullet.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: consider heat wave distortion behind a bullet
-
 function new_player_bullet(start_xy)
     local is_destroyed = false
 

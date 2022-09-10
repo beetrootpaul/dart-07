@@ -2,8 +2,6 @@
 -- cart_main/screen_win.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: create a decent win screen
-
 function new_screen_win()
     local fade_out = new_fade("out", 30)
 
@@ -35,10 +33,6 @@ function new_screen_win()
 
         print("win!", 10, 40, _color_12_true_blue)
         print("press x", 10, 60, 1 + flr(sin(2 * t())) == 0 and _color_6_light_grey or _color_13_mauve)
-        -- TODO NEXT: score
-        --print("score: ", 10, 80, _color_3_blue_green)
-        -- TODO: implement and show conditionally
-        --print("new high score!", 10, 100, _color_3_blue_green)
 
         fade_out._draw()
     end

@@ -2,10 +2,6 @@
 -- cart_mission/screen_mission_main.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- TODO: try to recreate cool text motion effect
--- TODO: polish it
--- TODO: polish mission names and boss names
-
 function new_screen_mission_main(params)
     local game = new_game {
         health = params.health,

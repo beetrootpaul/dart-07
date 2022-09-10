@@ -65,7 +65,6 @@ function new_hud(params)
                 end
             end
 
-            -- TODO: polish it
             if p.boss_health and p.boss_health_max then
                 local health_fraction = p.boss_health / p.boss_health_max
                 rectfill(
