@@ -62,8 +62,9 @@ do
     }
 
     function _m.enemy_properties_for(enemy_map_marker)
-        if enemy_map_marker == 73 then
-            return {
+        return ({
+
+            [73] = {
                 health = 1,
                 ship_sprite = new_static_sprite(8, 8, 0, 64),
                 collision_circle_r = 3.5,
@@ -81,6 +82,7 @@ do
                 },
                 bullet_fire_timer = new_timer(30),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
+                    -- TODO: SFX?
                     local bullets = {}
                     for i = 3, 5 do
                         add(bullets, enemy_bullet_factory(
@@ -94,9 +96,9 @@ do
                     return bullets
                 end,
                 powerups_distribution = "t",
-            }
-        end
-        assert(false, "unexpected enemy_map_marker = " .. enemy_map_marker)
+            },
+
+        })[enemy_map_marker]
     end
 
     function _m.boss_properties()
@@ -114,6 +116,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
+                        -- TODO: SFX?
                         local bullets = {}
                         add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {

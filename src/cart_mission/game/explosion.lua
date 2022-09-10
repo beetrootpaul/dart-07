@@ -4,7 +4,7 @@
 
 -- TODO: polish it
 
-function new_explosion(start_xy, magnitude, wait_frames)
+function new_explosion(start_xy, magnitude, wait_frames, on_started)
     local particles = {}
     for _ = 1, 9 do
         add(particles, {
@@ -32,6 +32,7 @@ function new_explosion(start_xy, magnitude, wait_frames)
         _update = function()
             wait_timer._update()
             if wait_timer.ttl <= 0 then
+                (on_started or _noop)()
                 for _, particle in pairs(particles) do
                     if particle.r > 0 then
                         particle.angle = particle.angle + .1 * (rnd() - .5)

@@ -34,7 +34,7 @@ function new_powerup(start_xy, powerup_type)
     function powerup.collision_circle()
         return {
             xy = movement.xy,
-            r = 6,
+            r = 7,
         }
     end
 

@@ -12,7 +12,7 @@ do
         next_id = next_id + 1
 
         local r_progress = new_movement_line_factory {
-            frames = ceil(_gah / speed) + 20,
+            frames = ceil(_gah / speed) - 20,
             angle = 0,
             angled_speed = speed,
         }(_xy(0, 0))

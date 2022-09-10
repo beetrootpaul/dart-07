@@ -3,6 +3,15 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 function new_game(params)
+    local game = {
+        health = params.health,
+        shockwave_charges = params.shockwave_charges,
+        boss_health = nil,
+        boss_health_max = nil,
+        triple_shot = params.triple_shot,
+        fast_shoot = params.fast_shoot,
+    }
+
     local level_descriptor = new_level_descriptor()
     local level = new_level(level_descriptor)
 
@@ -14,29 +23,31 @@ function new_game(params)
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
+            if game.triple_shot then
+                sfx(_sfx_player_triple_shoot)
+            else
+                sfx(_sfx_player_shoot)
+            end
             for _, b in pairs(bullets) do
                 add(player_bullets, b)
             end
         end,
         on_shockwave_triggered = function(shockwave)
+            sfx(_sfx_player_shockwave)
             add(shockwaves, shockwave)
         end,
+        on_damaged = function()
+            sfx(_sfx_damage_player)
+        end,
         on_destroyed = function(collision_circle)
-            -- TODO: explosion SFX
+            sfx(_sfx_destroy_player)
             add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
             add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
         end,
     }
 
-    local game = {
-        health = params.health,
-        shockwave_charges = params.shockwave_charges,
-        boss_health = nil,
-        boss_health_max = nil,
-        triple_shot = params.triple_shot,
-        fast_shoot = params.fast_shoot,
-    }
+    --
 
     local function handle_player_damage()
         -- TODO: powerups retrieval after live lost?
@@ -48,6 +59,42 @@ function new_game(params)
         player.take_damage(game.health)
     end
 
+    local function handle_powerup(powerup)
+        if powerup.powerup_type == "h" then
+            if game.health < _health_max then
+                sfx(_sfx_powerup_heart)
+                game.health = game.health + 1
+            else
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            end
+        elseif powerup.powerup_type == "t" then
+            if game.triple_shot then
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            else
+                sfx(_sfx_powerup_triple_shot)
+                game.triple_shot = true
+            end
+        elseif powerup.powerup_type == "f" then
+            if game.fast_shoot then
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            else
+                sfx(_sfx_powerup_fast_shot)
+                game.fast_shoot = true
+            end
+        elseif powerup.powerup_type == "s" then
+            if game.shockwave_charges < _shockwave_charges_max then
+                sfx(_sfx_powerup_shockwave)
+                game.shockwave_charges = game.shockwave_charges + 1
+            else
+                sfx(_sfx_powerup_no_effect)
+                -- TODO: increment score instead
+            end
+        end
+    end
+
     local function handle_collisions()
         local player_cc = player.collision_circle()
 
@@ -56,30 +103,10 @@ function new_game(params)
             -- TODO: magnet?
             if not powerup.has_finished() then
                 if _collisions.are_colliding(player_cc, powerup.collision_circle()) then
-                    -- TODO: SFX
                     -- TODO: VFX on player
                     -- TODO: VFX on health status
                     powerup.pick()
-                    if powerup.powerup_type == "h" then
-                        if game.health < _health_max then
-                            -- TODO: SFX
-                            game.health = game.health + 1
-                        else
-                            -- TODO: SFX
-                            -- TODO: increment score instead
-                        end
-                    elseif powerup.powerup_type == "t" then
-                        game.triple_shot = true
-                    elseif powerup.powerup_type == "f" then
-                        game.fast_shoot = true
-                    elseif powerup.powerup_type == "s" then
-                        if game.shockwave_charges < _shockwave_charges_max then
-                            -- TODO: SFX
-                            game.shockwave_charges = game.shockwave_charges + 1
-                        end
-                        -- TODO: SFX
-                        -- TODO: increment score instead
-                    end
+                    handle_powerup(powerup)
                 end
             end
         end
@@ -199,21 +226,28 @@ function new_game(params)
                     end
                 end
             end,
+            on_damage = function()
+                sfx(_sfx_damage_boss)
+            end,
             on_entered_next_phase = function(collision_circles)
-                -- TODO: small explosions SFX
+                sfx(_sfx_destroy_boss_phase)
                 for _, cc in pairs(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
             end,
             on_destroyed = function(collision_circles)
-                -- TODO: explosions SFX
+                sfx(_sfx_destroy_boss_final_1)
                 for _, cc in pairs(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     add(explosions, new_explosion(xy, .8 * r))
                     add(explosions, new_explosion(xy, 1.4 * r, 4 + flr(rnd(44))))
-                    add(explosions, new_explosion(xy, 1.8 * r, 12 + flr(rnd(36))))
+                    add(explosions, new_explosion(xy, 1.8 * r, 12 + flr(rnd(36)), function()
+                        sfx(_sfx_destroy_boss_final_2)
+                    end))
                     add(explosions, new_explosion(xy, 3.5 * r, 30 + flr(rnd(18))))
-                    add(explosions, new_explosion(xy, 5 * r, 50 + flr(rnd(6))))
+                    add(explosions, new_explosion(xy, 5 * r, 50 + flr(rnd(6)), function()
+                        sfx(_sfx_destroy_boss_final_3)
+                    end))
                 end
             end,
         }
@@ -282,13 +316,14 @@ function new_game(params)
                     end
                 end,
                 on_damaged = function(collision_circle)
-                    -- TODO: explosion SFX
+                    sfx(_sfx_damage_enemy)
                     add(explosions, new_explosion(collision_circle.xy, .5 * collision_circle.r))
                 end,
                 on_destroyed = function(collision_circle, powerup_type)
-                    -- TODO: explosion SFX
+                    sfx(_sfx_destroy_enemy)
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
+                        sfx(_sfx_powerup_spawned)
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end
                 end,

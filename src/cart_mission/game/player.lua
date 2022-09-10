@@ -5,7 +5,7 @@
 function new_player(params)
     local on_bullets_spawned = new_throttle(params.on_bullets_spawned)
     local on_shockwave_triggered = new_throttle(params.on_shockwave_triggered)
-    local on_destroyed = params.on_destroyed
+    local on_damaged, on_destroyed = params.on_damaged, params.on_destroyed
 
     local w, h, speed = 10, 12, 1
 
@@ -32,8 +32,26 @@ function new_player(params)
     local function collision_circle()
         return {
             xy = xy,
-            r = 4,
+            r = 3.5,
         }
+    end
+
+    local function create_single_bullet()
+        return {
+            new_player_bullet(xy.plus(0, -4)),
+        }
+    end
+
+    local function create_triple_bullets()
+        return {
+            new_player_bullet(xy.plus(0, -4)),
+            new_player_bullet(xy.plus(-5, -2)),
+            new_player_bullet(xy.plus(5, -2)),
+        }
+    end
+
+    local function create_shockwave()
+        return new_shockwave(xy, 1)
     end
 
     -- 
@@ -47,38 +65,33 @@ function new_player(params)
         set_movement = function(left, right, up, down)
             jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
             ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
-            xy = xy
-                .set_x(mid(
-                w / 2 + 1,
-                xy.x + (right and speed or (left and -speed or 0)),
-                _gaw - w / 2 - 1
-            ))
-                .set_y(mid(
-                h / 2 + 1,
-                xy.y + (down and speed or (up and -speed or 0)),
-                _gah - h / 2 - 1
-            ))
+            xy = _xy(
+                mid(
+                    w / 2 + 1,
+                    xy.x + (right and speed or (left and -speed or 0)),
+                    _gaw - w / 2 - 1
+                ),
+                mid(
+                    h / 2 + 1,
+                    xy.y + (down and speed or (up and -speed or 0)),
+                    _gah - h / 2 - 1
+                ))
         end,
 
         fire = function(p)
-            local bullets = {
-                -- TODO: SFX?
-                new_player_bullet(xy.plus(0, -4)),
-            }
-            if p.triple_shot then
-                -- TODO: different SFX?
-                add(bullets, new_player_bullet(xy.plus(-5, -2)))
-                add(bullets, new_player_bullet(xy.plus(5, -2)))
-            end
-            on_bullets_spawned.invoke(
+            on_bullets_spawned.invoke_if_ready(
             -- TODO: balancing
                 p.fast_shoot and 9 or 18,
-                bullets
+                p.triple_shot and create_triple_bullets or create_single_bullet
             )
         end,
 
         trigger_shockwave = function()
-            on_shockwave_triggered.invoke(6, new_shockwave(xy, 1))
+            on_shockwave_triggered.invoke_if_ready(
+            -- TODO: balancing
+                6,
+                create_shockwave
+            )
         end,
 
         collision_circle = collision_circle,
@@ -89,10 +102,9 @@ function new_player(params)
 
         take_damage = function(updated_health)
             if updated_health > 0 then
-                -- TODO: SFX
                 invincible_after_damage_timer = new_timer(30)
+                on_damaged()
             else
-                -- TODO: SFX
                 is_destroyed = true
                 on_destroyed(collision_circle())
             end
