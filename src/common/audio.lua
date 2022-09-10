@@ -25,34 +25,24 @@ _sfx_powerup_shockwave = 9
 
 _sfx_player_shoot = 10
 _sfx_player_triple_shoot = 11
--- TODO: use it
---_sfx_player_shockwave = 12
--- TODO: use it
+_sfx_player_shockwave = 12
+-- TODO: use it?
 --_sfx_player_cannot_shockwave = 13
 
--- TODO: use it
---_sfx_damage_player = 14
--- TODO: use it
---_sfx_damage_enemy_shoot = 15
--- TODO: use it
+_sfx_damage_player = 14
+_sfx_damage_enemy = 15
+-- TODO: use it?
 --_sfx_damage_enemy_shockwave = 16
--- TODO: use it
---_sfx_damage_boss_shoot = 17
--- TODO: use it
+_sfx_damage_boss = 17
+-- TODO: use it?
 --_sfx_damage_boss_shockwave = 18
 
--- TODO: use it
---_sfx_destroy_player = 19
--- TODO: use it
---_sfx_destroy_enemy = 20
--- TODO: use it
---_sfx_destroy_boss_phase = 21
--- TODO: use it
---_sfx_destroy_boss_final_1 = 22
--- TODO: use it
---_sfx_destroy_boss_final_2 = 23
--- TODO: use it
---_sfx_destroy_boss_final_3 = 24
+_sfx_destroy_player = 19
+_sfx_destroy_enemy = 20
+_sfx_destroy_boss_phase = 21
+_sfx_destroy_boss_final_1 = 22
+_sfx_destroy_boss_final_2 = 23
+_sfx_destroy_boss_final_3 = 24
 
 --TODO NEXT: implement sample enemy sounds to check against tokens
 --TODO NEXT: implement sample music to check against tokens

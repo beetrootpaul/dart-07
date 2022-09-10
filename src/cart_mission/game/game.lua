@@ -33,10 +33,14 @@ function new_game(params)
             end
         end,
         on_shockwave_triggered = function(shockwave)
+            sfx(_sfx_player_shockwave)
             add(shockwaves, shockwave)
         end,
+        on_damaged = function()
+            sfx(_sfx_damage_player)
+        end,
         on_destroyed = function(collision_circle)
-            -- TODO: explosion SFX
+            sfx(_sfx_destroy_player)
             add(explosions, new_explosion(collision_circle.xy, 1 * collision_circle.r))
             add(explosions, new_explosion(collision_circle.xy, 2 * collision_circle.r, 4 + flr(rnd(8))))
             add(explosions, new_explosion(collision_circle.xy, 3 * collision_circle.r, 12 + flr(rnd(8))))
@@ -222,21 +226,28 @@ function new_game(params)
                     end
                 end
             end,
+            on_damage = function()
+                sfx(_sfx_damage_boss)
+            end,
             on_entered_next_phase = function(collision_circles)
-                -- TODO: small explosions SFX
+                sfx(_sfx_destroy_boss_phase)
                 for _, cc in pairs(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
             end,
             on_destroyed = function(collision_circles)
-                -- TODO: explosions SFX
+                sfx(_sfx_destroy_boss_final_1)
                 for _, cc in pairs(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     add(explosions, new_explosion(xy, .8 * r))
                     add(explosions, new_explosion(xy, 1.4 * r, 4 + flr(rnd(44))))
-                    add(explosions, new_explosion(xy, 1.8 * r, 12 + flr(rnd(36))))
+                    add(explosions, new_explosion(xy, 1.8 * r, 12 + flr(rnd(36)), function()
+                        sfx(_sfx_destroy_boss_final_2)
+                    end))
                     add(explosions, new_explosion(xy, 3.5 * r, 30 + flr(rnd(18))))
-                    add(explosions, new_explosion(xy, 5 * r, 50 + flr(rnd(6))))
+                    add(explosions, new_explosion(xy, 5 * r, 50 + flr(rnd(6)), function()
+                        sfx(_sfx_destroy_boss_final_3)
+                    end))
                 end
             end,
         }
@@ -305,11 +316,11 @@ function new_game(params)
                     end
                 end,
                 on_damaged = function(collision_circle)
-                    -- TODO: explosion SFX
+                    sfx(_sfx_damage_enemy)
                     add(explosions, new_explosion(collision_circle.xy, .5 * collision_circle.r))
                 end,
                 on_destroyed = function(collision_circle, powerup_type)
-                    -- TODO: explosion SFX
+                    sfx(_sfx_destroy_enemy)
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
                         sfx(_sfx_powerup_spawned)

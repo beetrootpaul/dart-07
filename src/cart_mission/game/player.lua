@@ -5,7 +5,7 @@
 function new_player(params)
     local on_bullets_spawned = new_throttle(params.on_bullets_spawned)
     local on_shockwave_triggered = new_throttle(params.on_shockwave_triggered)
-    local on_destroyed = params.on_destroyed
+    local on_damaged, on_destroyed = params.on_damaged, params.on_destroyed
 
     local w, h, speed = 10, 12, 1
 
@@ -32,7 +32,7 @@ function new_player(params)
     local function collision_circle()
         return {
             xy = xy,
-            r = 4,
+            r = 3.5,
         }
     end
 
@@ -102,10 +102,9 @@ function new_player(params)
 
         take_damage = function(updated_health)
             if updated_health > 0 then
-                -- TODO: SFX
                 invincible_after_damage_timer = new_timer(30)
+                on_damaged()
             else
-                -- TODO: SFX
                 is_destroyed = true
                 on_destroyed(collision_circle())
             end
