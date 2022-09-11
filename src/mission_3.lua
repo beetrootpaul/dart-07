@@ -18,9 +18,9 @@ do
     local function maybe_add_particle(y)
         if rnd() < .1 then
             local props = rnd {
-                { sx = 40, sy = 32, w = 5, h = 5 },
-                { sx = 45, sy = 32, w = 4, h = 3 },
-                { sx = 45, sy = 35, w = 3, h = 4 },
+                { sx = 24, sy = 56, w = 5, h = 5 },
+                { sx = 29, sy = 56, w = 4, h = 3 },
+                { sx = 29, sy = 59, w = 3, h = 4 },
             }
             add(particles, {
                 xy = _xy(
@@ -85,7 +85,7 @@ do
                 spawn_bullets = function(enemy_movement, player_collision_circle)
                     sfx(32, 3)
                     local bullets = {}
-                    for i = 3, 5 do
+                    for i = 4, 4 do
                         add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,

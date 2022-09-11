@@ -63,9 +63,8 @@ end
 -- TODO: polishing: music: mission 3 boss
 
 -- TODO: polishing: sprites: enemy 
--- TODO: polishing: sprites: structure
+-- TODO: polishing: sprites: structures of mission 3
 -- TODO: polishing: sprites: enemy bullets
--- TODO: polishing: sprites: player
 -- TODO: polishing: sprites: player bullet
 
 -- TODO: polishing: player invincibility
