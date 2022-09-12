@@ -14,17 +14,31 @@ _m = {
 
 do
     local particles
+    local particle_step_counter
 
     local function maybe_add_particle(y)
-        if rnd() < .1 then
+        if rnd() < .4 then
             local props = rnd {
-                { sx = 24, sy = 56, w = 5, h = 5 },
-                { sx = 29, sy = 56, w = 4, h = 3 },
-                { sx = 29, sy = 59, w = 3, h = 4 },
+                -- particle 1
+                { sx = 24, sy = 56, w = 3, h = 4 },
+                { sx = 24, sy = 56, w = 3, h = 4 },
+                -- particle 2
+                { sx = 28, sy = 56, w = 4, h = 3 },
+                { sx = 28, sy = 56, w = 4, h = 3 },
+                -- particle 3
+                { sx = 33, sy = 56, w = 3, h = 3 },
+                { sx = 33, sy = 56, w = 3, h = 3 },
+                -- particle 4
+                { sx = 24, sy = 61, w = 3, h = 3 },
+                { sx = 24, sy = 61, w = 3, h = 3 },
+                -- particle 5
+                { sx = 28, sy = 60, w = 5, h = 4 },
+                -- particle 6
+                { sx = 34, sy = 60, w = 4, h = 4 },
             }
             add(particles, {
                 xy = _xy(
-                    ceil(.1 + rnd(_gaw - .1)),
+                    flr(4 + rnd(_gaw - 2 * 4)),
                     y
                 ),
                 sprite = new_static_sprite(props.w, props.h, props.sx, props.sy)
@@ -34,21 +48,28 @@ do
 
     function _m.level_bg_init()
         particles = {}
+        particle_step_counter = 0
 
-        for y = 0, _gah - 1 do
+        for y = 0, _gah - 1, _ts do
             maybe_add_particle(y)
         end
     end
 
     function _m.level_bg_update()
         for _, particle in pairs(particles) do
-            particle.xy = particle.xy.plus(0, _m.scroll_per_frame)
             if particle.xy.y >= _gah + _ts then
                 del(particles, particle)
             end
         end
 
-        maybe_add_particle(-_ts)
+        for _, particle in pairs(particles) do
+            particle.xy = particle.xy.plus(0, _m.scroll_per_frame * .5)
+        end
+
+        particle_step_counter = (particle_step_counter + 1) % 8
+        if particle_step_counter == 0 then
+            maybe_add_particle(-_ts)
+        end
     end
 
     function _m.level_bg_draw(min_visible_distance, max_visible_distance)
