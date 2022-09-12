@@ -13,6 +13,8 @@ _m = {
 }
 
 do
+    local tube_tiles = split "71,72,87,88,118,118,118,118,103,104,119,120"
+    local tube_tiles_offset_y
     local particles
     local particle_step_counter
 
@@ -47,6 +49,7 @@ do
     end
 
     function _m.level_bg_init()
+        tube_tiles_offset_y = 0
         particles = {}
         particle_step_counter = 0
 
@@ -62,8 +65,10 @@ do
             end
         end
 
+        tube_tiles_offset_y = (tube_tiles_offset_y + .5) % _ts
+
         for _, particle in pairs(particles) do
-            particle.xy = particle.xy.plus(0, _m.scroll_per_frame * .5)
+            particle.xy = particle.xy.plus(0, 1.5)
         end
 
         particle_step_counter = (particle_step_counter + 1) % 8
@@ -72,7 +77,21 @@ do
         end
     end
 
-    function _m.level_bg_draw(min_visible_distance, max_visible_distance)
+    function _m.level_bg_draw()
+        palt(_color_0_black, false)
+        palt(_color_11_transparent, true)
+        for lane = 1, 12 do
+            local tube_tile = tube_tiles[lane]
+            for distance = 0, 16 do
+                spr(
+                    tube_tile,
+                    _gaox + (lane - 1) * _ts,
+                    ceil((distance - 1) * _ts + tube_tiles_offset_y)
+                )
+            end
+        end
+        palt()
+
         for _, particle in pairs(particles) do
             particle.sprite._draw(particle.xy)
         end

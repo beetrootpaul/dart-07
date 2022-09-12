@@ -13,11 +13,12 @@ _m = {
 }
 
 do
-
-    local bg_tile
+    local waves_tile
+    local waves_tile_offset_y
 
     function _m.level_bg_init()
-        bg_tile = new_animated_sprite(
+        waves_tile_offset_y = 0
+        waves_tile = new_animated_sprite(
             8,
             8,
             split(
@@ -32,17 +33,17 @@ do
     end
 
     function _m.level_bg_update()
-        bg_tile._update()
+        waves_tile_offset_y = (waves_tile_offset_y + _m.scroll_per_frame) % _ts
+        waves_tile._update()
     end
 
-    function _m.level_bg_draw(min_visible_distance, max_visible_distance)
-        for distance = flr(min_visible_distance), ceil(max_visible_distance) do
+    function _m.level_bg_draw()
+        for distance = 0, 16 do
             for lane = 1, 12 do
-                local xy = _xy(
+                waves_tile._draw(_xy(
                     (lane - 1) * _ts,
-                    _vs - flr((distance - min_visible_distance + 1) * _ts)
-                )
-                bg_tile._draw(xy)
+                    ceil((distance - 1) * _ts + waves_tile_offset_y)
+                ))
             end
         end
     end

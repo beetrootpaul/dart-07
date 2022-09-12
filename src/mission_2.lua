@@ -44,7 +44,7 @@ do
         maybe_add_star(0)
     end
 
-    function _m.level_bg_draw(min_visible_distance, max_visible_distance)
+    function _m.level_bg_draw()
         for _, star in pairs(stars) do
             pset(
                 _gaox + star.x,
