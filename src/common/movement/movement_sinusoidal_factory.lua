@@ -14,7 +14,7 @@ function new_movement_sinusoidal_factory()
             xy = _xy(x(), start_xy.y),
             speed_xy = _xy(
                 x() - start_xy.x,
-                1
+                .75
             )
         }
 

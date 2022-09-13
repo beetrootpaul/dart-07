@@ -23,11 +23,11 @@ function new_screen_select_mission(params)
 
     function screen._update()
         if btnp(_button_up) then
-            sfx(_sfx_options_change, 3)
+            _sfx_play(_sfx_options_change)
             selected_mission = selected_mission - 1
         end
         if btnp(_button_down) then
-            sfx(_sfx_options_change, 3)
+            _sfx_play(_sfx_options_change)
             selected_mission = selected_mission + 1
         end
         selected_mission = (selected_mission - 1) % _max_mission_number + 1
@@ -35,18 +35,14 @@ function new_screen_select_mission(params)
         if btnp(_button_x) then
             if selected_mission <= max_unlocked_mission then
                 _music_fade_out()
-                sfx(_sfx_options_confirm, 3)
+                _sfx_play(_sfx_options_confirm)
                 proceed = true
             else
-                sfx(_sfx_options_cannot_confirm, 3)
+                _sfx_play(_sfx_options_cannot_confirm)
             end
         end
 
-        if proceed then
-            fade_out._update()
-        else
-            fade_in._update()
-        end
+        (proceed and fade_out or fade_in)._update()
     end
 
     function screen._draw()

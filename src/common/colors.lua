@@ -4,25 +4,10 @@
 
 -- colors and their names are taken from: https://pico-8.fandom.com/wiki/Palette)
 
-_color_0_black = 0
-_color_1_darker_blue = 1
-_color_2_darker_purple = 2
-_color_3_dark_green = 3
-
-_color_4_true_blue = 4
-_color_5_blue_green = 5
-_color_6_light_grey = 6
-_color_7_white = 7
-
-_color_8_red = 8
-_color_9_dark_orange = 9
-_color_10_unused = 10
-_color_11_transparent = 11
-
-_color_12_blue = 12
-_color_13_lavender = 13
-_color_14_mauve = 14
-_color_15_peach = 15
+_color_0_black, _color_1_darker_blue, _color_2_darker_purple, _color_3_dark_green = 0, 1, 2, 3
+_color_4_true_blue, _color_5_blue_green, _color_6_light_grey, _color_7_white = 4, 5, 6, 7
+_color_8_red, _color_9_dark_orange, _color_10_unused, _color_11_transparent = 8, 9, 10, 11
+_color_12_blue, _color_13_lavender, _color_14_mauve, _color_15_peach = 12, 13, 14, 15
 
 do
     local palette = {

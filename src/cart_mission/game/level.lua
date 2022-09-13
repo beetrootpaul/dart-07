@@ -6,8 +6,7 @@
 --   - distance = how many tiles we have scrolled forward (can be fraction)
 --   - lane     = which row of tiles are we talking about, perpendicular to distance 
 function new_level(descriptor)
-    local max_defined_distance = descriptor.max_defined_distance
-    local structures, enemies = descriptor.structures, descriptor.enemies
+    local max_defined_distance, structures, enemies = descriptor.max_defined_distance, descriptor.structures, descriptor.enemies
 
     -- we draw enemy in center of block of 4 tiles, but store them in the top-left tile's position
     local enemy_offset = _xy(_ts / 2, _ts / 2)
@@ -30,10 +29,7 @@ function new_level(descriptor)
         end,
 
         has_scrolled_to_end = function()
-            if phase == "main" then
-                return max_visible_distance >= max_defined_distance + 1
-            end
-            return phase == "outro"
+            return phase == "main" and max_visible_distance >= max_defined_distance + 1 or phase == "outro"
         end,
 
         enemies_to_spawn = function()
@@ -72,9 +68,7 @@ function new_level(descriptor)
                 -- loop infinitely
                 min_visible_distance = min_visible_distance % 1 + 1
             elseif phase == "main" then
-                if spawn_distance < flr(max_visible_distance) + spawn_distance_offset then
-                    spawn_distance = flr(max_visible_distance) + spawn_distance_offset
-                end
+                spawn_distance = max(spawn_distance, flr(max_visible_distance) + spawn_distance_offset)
             elseif phase == "outro" then
                 -- loop infinitely
                 local distance_fraction = min_visible_distance - flr(min_visible_distance)
@@ -86,16 +80,16 @@ function new_level(descriptor)
         _draw = function()
             _m.level_bg_draw()
 
-            for distance = flr(min_visible_distance), ceil(max_visible_distance) do
-                for lane = 1, 12 do
-                    local xy = _xy(
-                        (lane - 1) * _ts,
-                        _vs - flr((distance - min_visible_distance + 1) * _ts)
-                    )
-                    if phase == "main" then
+            if phase == "main" then
+                for distance = flr(min_visible_distance), ceil(max_visible_distance) do
+                    for lane = 1, 12 do
                         local fg_tile = structures[distance][lane]
                         if fg_tile then
-                            spr(fg_tile, _gaox + xy.x, xy.y)
+                            spr(
+                                fg_tile,
+                                _gaox + (lane - 1) * _ts,
+                                _vs - flr((distance - min_visible_distance + 1) * _ts)
+                            )
                         end
                     end
                 end

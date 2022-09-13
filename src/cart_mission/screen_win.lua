@@ -19,7 +19,7 @@ function new_screen_win()
     function screen._update()
         if btnp(_button_x) then
             _music_fade_out()
-            sfx(_sfx_options_confirm, 3)
+            _sfx_play(_sfx_options_confirm)
             proceed = true
         end
 

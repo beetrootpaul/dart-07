@@ -2,6 +2,13 @@
 -- common/utils.lua  --
 -- -- -- -- -- -- -- --
 
+function _add_all(table, ...)
+    for _, item in pairs({ ... }) do
+        add(table, item)
+    end
+    return table
+end
+
 function _angle_between(xy1, xy2)
     local dxy = xy2.minus(xy1)
     return atan2(dxy.x, dxy.y)
