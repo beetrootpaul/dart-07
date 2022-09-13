@@ -38,7 +38,7 @@ do
         --
         [_color_8_red] = 8,
         [_color_9_dark_orange] = 137,
-        [_color_10_unused] = 14, -- show accidental usages of unused colors as pink, which is not present in the chosen palette 
+        [_color_10_unused] = 10, -- show accidental usages of unused colors as yellow, which is not present in the chosen palette 
         [_color_11_transparent] = 11, -- use a bright green as transparency indicator in the sprite sheet
         --
         [_color_12_blue] = 12,
@@ -53,4 +53,4 @@ do
 end
 
 -- note: since tables are 1-indexed, color 0 is provided at the end of a table
-_palette_negative = split "15,11,13,4,5,14,0,10,12,8,2,9,3,6,1,7"
+_palette_negative = split "6,13,14,9,15,1,0,12,4,11,10,8,2,3,5,7"
