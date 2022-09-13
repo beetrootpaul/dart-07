@@ -14,7 +14,7 @@ do
 
         local health = enemy_properties.health
         local movement = enemy_properties.movement_factory(start_xy)
-        local bullet_fire_timer = enemy_properties.bullet_fire_timer
+        local bullet_fire_timer = enemy_properties.bullet_fire_timer or new_fake_timer()
 
         local flashing_after_damage_timer
 
@@ -24,7 +24,7 @@ do
 
         local function collision_circle()
             return {
-                xy = movement.xy.plus(0, enemy_properties.collision_circle_offset_y),
+                xy = movement.xy.plus(0, enemy_properties.collision_circle_offset_y or 0),
                 r = enemy_properties.collision_circle_r,
             }
         end

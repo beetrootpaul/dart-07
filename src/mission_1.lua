@@ -65,11 +65,12 @@ do
                 health = 5,
                 ship_sprite = new_static_sprite(22, 24, 0, 64),
                 flash_sprite = new_static_sprite(22, 24, 22, 64),
-                collision_circle_r = 7,
-                collision_circle_offset_y = 0,
+                collision_circle_r = 6,
                 movement_factory = new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m.scroll_per_frame,
+                    -- DEBUG:
+                    --frames = 123,
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
