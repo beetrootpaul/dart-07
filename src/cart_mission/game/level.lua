@@ -16,7 +16,7 @@ function new_level(descriptor)
     local max_visible_distance = min_visible_distance + _vst - 1
 
     local prev_spawn_distance = max_visible_distance
-    local spawn_distance_offset = 1
+    local spawn_distance_offset = 2
     local spawn_distance = max_visible_distance + spawn_distance_offset
 
     -- phase: intro -> main -> outro 
