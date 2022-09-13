@@ -22,8 +22,5 @@ function _xy(x, y)
         ceil = function()
             return _xy(ceil(x), ceil(y))
         end,
-        round = function()
-            return _xy(_round(x), _round(y))
-        end,
     }
 end

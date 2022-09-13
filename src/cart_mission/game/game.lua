@@ -103,31 +103,32 @@ function new_game(params)
 
         -- shockwaves vs enemies + player bullets vs enemies + player vs enemies
         for _, enemy in pairs(enemies) do
-            local enemy_cc = enemy.collision_circle()
-            for _, shockwave in pairs(shockwaves) do
-                local combined_id = shockwave.id .. "-" .. enemy.id
-                shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] or 0
-                if not enemy.has_finished() and not shockwave.has_finished() and shockwave_enemy_hits[combined_id] < 8 then
-                    if _collisions.are_colliding(shockwave.collision_circle(), enemy_cc, {
-                        ignore_gameplay_area_check = true,
-                    }) then
-                        enemy.take_damage(2)
-                        shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] + 1
+            for _, enemy_cc in pairs(enemy.collision_circles()) do
+                for _, shockwave in pairs(shockwaves) do
+                    local combined_id = shockwave.id .. "-" .. enemy.id
+                    shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] or 0
+                    if not enemy.has_finished() and not shockwave.has_finished() and shockwave_enemy_hits[combined_id] < 8 then
+                        if _collisions.are_colliding(shockwave.collision_circle(), enemy_cc, {
+                            ignore_gameplay_area_check = true,
+                        }) then
+                            enemy.take_damage(2)
+                            shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] + 1
+                        end
                     end
                 end
-            end
-            for __, player_bullet in pairs(player_bullets) do
-                if not enemy.has_finished() and not player_bullet.has_finished() then
-                    if _collisions.are_colliding(player_bullet.collision_circle(), enemy_cc) then
+                for __, player_bullet in pairs(player_bullets) do
+                    if not enemy.has_finished() and not player_bullet.has_finished() then
+                        if _collisions.are_colliding(player_bullet.collision_circle(), enemy_cc) then
+                            enemy.take_damage(1)
+                            player_bullet.destroy()
+                        end
+                    end
+                end
+                if not enemy.has_finished() and not player.is_invincible_after_damage() then
+                    if _collisions.are_colliding(player_cc, enemy_cc) then
                         enemy.take_damage(1)
-                        player_bullet.destroy()
+                        handle_player_damage()
                     end
-                end
-            end
-            if not enemy.has_finished() and not player.is_invincible_after_damage() then
-                if _collisions.are_colliding(player_cc, enemy_cc) then
-                    enemy.take_damage(1)
-                    handle_player_damage()
                 end
             end
         end
@@ -333,21 +334,25 @@ function new_game(params)
         clip()
 
         -- DEBUG:
-        --if boss then
-        --    for _, boss_cc in pairs(boss.collision_circles()) do
-        --        _collisions._debug_draw_collision_circle(boss_cc)
-        --    end
-        --end
-        --_flattened_for_each(
-        --    player_bullets,
-        --    enemy_bullets,
-        --    { player },
-        --    enemies,
-        --    powerups,
-        --    function(game_object)
-        --        _collisions._debug_draw_collision_circle(game_object.collision_circle())
-        --    end
-        --)
+        if boss then
+            for _, boss_cc in pairs(boss.collision_circles()) do
+                _collisions._debug_draw_collision_circle(boss_cc)
+            end
+        end
+        for _, enemy in pairs(enemies) do
+            for _, enemy_cc in pairs(enemy.collision_circles()) do
+                _collisions._debug_draw_collision_circle(enemy_cc)
+            end
+        end
+        _flattened_for_each(
+            player_bullets,
+            enemy_bullets,
+            { player },
+            powerups,
+            function(game_object)
+                _collisions._debug_draw_collision_circle(game_object.collision_circle())
+            end
+        )
     end
 
     function game._post_draw()

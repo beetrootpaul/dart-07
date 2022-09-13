@@ -39,7 +39,7 @@ function new_boss(params)
     end
 
     function boss.collision_circles()
-        return boss_properties.collision_circles(movement)
+        return boss_properties.collision_circles(movement.xy)
     end
 
     function boss.is_invincible_during_intro()
@@ -53,7 +53,7 @@ function new_boss(params)
             on_damage()
         else
             is_destroyed = true
-            on_destroyed(boss_properties.collision_circles(movement))
+            on_destroyed(boss_properties.collision_circles(movement.xy))
         end
     end
 
@@ -61,7 +61,7 @@ function new_boss(params)
         if current_phase_number > 0 and current_phase_number < #phases then
             if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
                 current_phase_number = current_phase_number + 1
-                on_entered_next_phase(boss_properties.collision_circles(movement))
+                on_entered_next_phase(boss_properties.collision_circles(movement.xy))
                 movement = phases[current_phase_number].movement_factory(movement.xy)
             end
         end

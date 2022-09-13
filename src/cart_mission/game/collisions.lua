@@ -22,12 +22,12 @@ function _collisions.are_colliding(collision_circle_1, collision_circle_2, opts)
 end
 
 -- DEBUG:
---function _collisions._debug_draw_collision_circle(collision_circle)
---    oval(
---        _round(_gaox + collision_circle.xy.x - collision_circle.r),
---        _round(collision_circle.xy.y - collision_circle.r),
---        _round(_gaox + collision_circle.xy.x + collision_circle.r),
---        _round(collision_circle.xy.y + collision_circle.r),
---        _color_3_dark_green
---    )
---end
+function _collisions._debug_draw_collision_circle(collision_circle)
+    oval(
+        ceil(_gaox + collision_circle.xy.x - collision_circle.r - .5),
+        ceil(collision_circle.xy.y - collision_circle.r - .5),
+        flr(_gaox + collision_circle.xy.x + collision_circle.r - .5),
+        flr(collision_circle.xy.y + collision_circle.r - .5),
+        _color_3_dark_green
+    )
+end

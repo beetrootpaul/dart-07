@@ -69,7 +69,11 @@ do
                 health = 5,
                 ship_sprite = new_static_sprite(28, 28, 0, 64),
                 flash_sprite = new_static_sprite(28, 28, 28, 64),
-                collision_circle_r = 5,
+                collision_circles = function(enemy_xy)
+                    return {
+                        { xy = enemy_xy, r = 5 },
+                    }
+                end,
                 movement_factory = new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m.scroll_per_frame,

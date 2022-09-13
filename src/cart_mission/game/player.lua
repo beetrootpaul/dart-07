@@ -31,8 +31,8 @@ function new_player(params)
 
     local function collision_circle()
         return {
-            xy = xy,
-            r = 3.5,
+            xy = xy.plus(0, 1),
+            r = 3,
         }
     end
 

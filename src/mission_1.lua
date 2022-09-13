@@ -60,12 +60,52 @@ do
     function _m.enemy_properties_for(enemy_map_marker)
         return ({
 
+            -- enemy: long aimed multi-shot
+            [78] = {
+                health = 5,
+                ship_sprite = new_static_sprite(8, 22, 44, 64),
+                flash_sprite = new_static_sprite(8, 22, 52, 64),
+                collision_circles = function(enemy_xy)
+                    return {
+                        { xy = enemy_xy, r = 4 },
+                        { xy = enemy_xy.plus(0, 7), r = 4 },
+                        { xy = enemy_xy.minus(0, 7), r = 4 },
+                    }
+                end,
+                movement_factory = new_movement_line_factory {
+                    angle = .75,
+                    angled_speed = _m.scroll_per_frame,
+                    -- DEBUG:
+                    frames = 123,
+                },
+                --bullet_fire_timer = new_timer(60),
+                spawn_bullets = function(enemy_movement, player_collision_circle)
+                    sfx(32, 3)
+                    local bullets = {}
+                    for i = 1, 8 do
+                        add(bullets, enemy_bullet_small_factory(
+                            new_movement_line_factory {
+                                base_speed_y = enemy_movement.speed_xy.y,
+                                angle = .0625 + i / 8,
+                                angled_speed = 1,
+                            }(enemy_movement.xy)
+                        ))
+                    end
+                    return bullets
+                end,
+                powerups_distribution = "h,f,t,s",
+            },
+
             -- enemy: stationary
             [79] = {
                 health = 5,
                 ship_sprite = new_static_sprite(22, 24, 0, 64),
                 flash_sprite = new_static_sprite(22, 24, 22, 64),
-                collision_circle_r = 6,
+                collision_circles = function(enemy_xy)
+                    return {
+                        { xy = enemy_xy, r = 6 },
+                    }
+                end,
                 movement_factory = new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m.scroll_per_frame,
@@ -252,14 +292,14 @@ do
         return {
             health = 15,
             sprite = new_static_sprite(56, 26, 4, 98),
-            collision_circles = function(movement)
+            collision_circles = function(boss_xy)
                 return {
-                    { xy = movement.xy.plus(0, 3), r = 5 },
-                    { xy = movement.xy.plus(0, -5), r = 7 },
-                    { xy = movement.xy.plus(-11, -6), r = 5 },
-                    { xy = movement.xy.plus(11, -6), r = 5 },
-                    { xy = movement.xy.plus(-21, 3), r = 7 },
-                    { xy = movement.xy.plus(21, 3), r = 7 },
+                    { xy = boss_xy.plus(0, 3), r = 5 },
+                    { xy = boss_xy.plus(0, -5), r = 7 },
+                    { xy = boss_xy.plus(-11, -6), r = 5 },
+                    { xy = boss_xy.plus(11, -6), r = 5 },
+                    { xy = boss_xy.plus(-21, 3), r = 7 },
+                    { xy = boss_xy.plus(21, 3), r = 7 },
                 }
             end,
             phases = {

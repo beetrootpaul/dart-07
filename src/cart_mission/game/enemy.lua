@@ -22,13 +22,6 @@ do
 
         local is_destroyed = false
 
-        local function collision_circle()
-            return {
-                xy = movement.xy.plus(0, enemy_properties.collision_circle_offset_y or 0),
-                r = enemy_properties.collision_circle_r,
-            }
-        end
-
         return {
             id = next_id,
 
@@ -36,18 +29,22 @@ do
                 return is_destroyed or movement.xy.y > _gah + _ts
             end,
 
-            collision_circle = collision_circle,
+            collision_circles = function()
+                return enemy_properties.collision_circles(movement.xy)
+            end,
 
             take_damage = function(damage)
+                local main_collision_circle = enemy_properties.collision_circles(movement.xy)[1]
+
                 health = max(0, health - damage)
                 if health > 0 then
                     sprite = enemy_properties.flash_sprite
                     flashing_after_damage_timer = new_timer(4)
-                    on_damaged(collision_circle())
+                    on_damaged(main_collision_circle)
                 else
                     is_destroyed = true
                     local powerup_type = rnd(split(enemy_properties.powerups_distribution))
-                    on_destroyed(collision_circle(), powerup_type)
+                    on_destroyed(main_collision_circle, powerup_type)
                 end
             end,
 
@@ -56,10 +53,16 @@ do
 
                 bullet_fire_timer._update()
                 if bullet_fire_timer.ttl <= 0 then
-                    bullet_fire_timer.restart()
-                    if not _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle()) then
+                    local can_spawn_bullets = false
+                    for _, cc in pairs(enemy_properties.collision_circles(movement.xy)) do
+                        if not _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc) then
+                            can_spawn_bullets = can_spawn_bullets or true
+                        end
+                    end
+                    if can_spawn_bullets then
                         on_bullets_spawned(enemy_properties.spawn_bullets, movement)
                     end
+                    bullet_fire_timer.restart()
                 end
 
                 if flashing_after_damage_timer then
