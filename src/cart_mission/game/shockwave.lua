@@ -37,7 +37,9 @@ do
             r_inner = mid(r_min, r_inner, r_outer)
             if r_inner == r_outer then return end
 
-            -- Negative ring implementation below is based on a code snippet from user FReDs72. Thanks a lot!
+            -- Negative ring implementation below is based on:
+            --   - a code snippet from user FReDs72
+            --   - a [Circular Clipping Masks article by Krystman](https://www.lexaloffle.com/bbs/?tid=46286)
 
             -- use screen memory as if it was a sprite sheet (needed for "sspr" and "pal" used below)
             poke(0x5f54, 0x60)

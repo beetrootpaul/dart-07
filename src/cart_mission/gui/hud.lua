@@ -25,7 +25,6 @@ function new_hud(params)
     local health_bar_start = new_static_sprite(8, 5, 40, 19, sprite_opts)
     local health_bar_segment_full = new_static_sprite(8, 11, 40, 8, sprite_opts)
     local health_bar_segment_empty = new_static_sprite(1, 11, 40, 8, sprite_opts)
-    local health_bar_segment_joint = new_static_sprite(8, 2, 40, 6, sprite_opts)
 
     local shockwave = new_static_sprite(7, 6, 48, 24, sprite_opts)
     local shockwave_bar_start = new_static_sprite(8, 1, 48, 23, sprite_opts)
@@ -41,18 +40,16 @@ function new_hud(params)
             rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
             -- DEBUG:
-            --rectfill(0, 0, bar_w - 1, _vs - 1, _color_3_blue_green)
-            --rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_3_blue_green)
+            --rectfill(0, 0, bar_w - 1, _vs - 1, _color_5_blue_green)
+            --rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_5_blue_green)
 
             local xy = _xy(-_gaox + 3, _vs - 16).plus(slide_in_offset.xy.ceil())
             heart._draw(xy.plus(1, 6))
-            health_bar_start._draw(xy.minus(0, 4))
             for segment = 1, _health_max do
                 (p.player_health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy.minus(0, 4 + segment * 8))
-                if p.player_health > segment then
-                    health_bar_segment_joint._draw(xy.minus(0, 4 + segment * 8 - 1))
-                end
             end
+            -- we have to draw health_bar_start after health_bar_segment_full in order to cover 1st segment's joint with black pixels
+            health_bar_start._draw(xy.minus(0, 4))
 
             xy = _xy(_gaw + 5, _vs - 16).minus(slide_in_offset.xy.ceil())
             shockwave._draw(xy.plus(0, 6))

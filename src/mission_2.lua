@@ -4,10 +4,10 @@
 
 _m = {
     mission_number = 2,
-    scroll_per_frame = .75,
+    scroll_per_frame = 1,
     mission_name = "death space",
     boss_name = "cheerful death",
-    bg_color = _color_1_dark_blue,
+    bg_color = _color_1_darker_blue,
     mission_main_music = 0,
     mission_boss_music = 1,
 }
@@ -16,12 +16,14 @@ do
     local stars
 
     local function maybe_add_star(y)
-        if rnd() < .2 then
-            add(stars, {
-                x = ceil(.1 + rnd(_gaw - .1)),
+        if rnd() < .1 then
+            local star = {
+                x = ceil(1 + rnd(_gaw - 3)),
                 y = y,
-                speed = rnd { .3, .4, .5 }
-            })
+                speed = rnd { .25, .5, .75 }
+            }
+            star.color = star.speed == .75 and _color_6_light_grey or (star.speed == .5 and _color_13_lavender or _color_14_mauve)
+            add(stars, star)
         end
     end
 
@@ -44,12 +46,13 @@ do
         maybe_add_star(0)
     end
 
-    function _m.level_bg_draw(min_visible_distance, max_visible_distance)
+    function _m.level_bg_draw()
         for _, star in pairs(stars) do
             pset(
                 _gaox + star.x,
                 star.y,
-                star.speed > .45 and _color_7_white or (star.speed > .35 and _color_6_light_grey or _color_14_lavender))
+                star.color
+            )
         end
     end
 
@@ -68,14 +71,18 @@ do
                 collision_circle_offset_y = 0,
                 movement_factory = new_movement_sequence_factory {
                     new_movement_line_factory {
-                        frames = 80,
                         angle = .75,
-                        angled_speed = .5,
+                        angled_speed = _m.scroll_per_frame,
                     },
-                    new_movement_line_factory {
-                        angle = .75,
-                        angled_speed = 1.5,
-                    },
+                    --new_movement_line_factory {
+                    --    frames = 80,
+                    --    angle = .75,
+                    --    angled_speed = .5,
+                    --},
+                    --new_movement_line_factory {
+                    --    angle = .75,
+                    --    angled_speed = 1.5,
+                    --},
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)

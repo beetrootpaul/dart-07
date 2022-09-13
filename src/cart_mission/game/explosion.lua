@@ -53,9 +53,9 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
                     if r > 0 then
                         local c1, c2 = _color_9_dark_orange, _color_8_red
                         if r < magnitude * .2 then
-                            c1, c2 = _color_14_lavender, _color_13_mauve
+                            c1, c2 = _color_13_lavender, _color_14_mauve
                         elseif r < magnitude * .4 then
-                            c1, c2 = _color_6_light_grey, _color_14_lavender
+                            c1, c2 = _color_6_light_grey, _color_13_lavender
                         elseif r < magnitude * .6 then
                             c1, c2 = _color_6_light_grey, _color_15_peach
                         elseif r < magnitude * .8 then

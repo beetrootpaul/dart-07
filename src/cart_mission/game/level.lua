@@ -21,9 +21,9 @@ function new_level(descriptor)
 
     -- phase: intro -> main -> outro 
     local phase = "intro"
-    
+
     _m.level_bg_init()
-    
+
     return {
         enter_phase_main = function()
             phase = "main"
@@ -40,7 +40,7 @@ function new_level(descriptor)
             if phase ~= "main" then
                 return {}
             end
-            
+
             local result = {}
             if spawn_distance > prev_spawn_distance then
                 prev_spawn_distance = spawn_distance
@@ -84,8 +84,8 @@ function new_level(descriptor)
         end,
 
         _draw = function()
-            _m.level_bg_draw(min_visible_distance, max_visible_distance)
-            
+            _m.level_bg_draw()
+
             for distance = flr(min_visible_distance), ceil(max_visible_distance) do
                 for lane = 1, 12 do
                     local xy = _xy(

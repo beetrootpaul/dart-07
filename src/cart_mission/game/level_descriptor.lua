@@ -5,17 +5,19 @@
 function new_level_descriptor()
     -- number below are sprites in the sprite sheet
     -- * end of the level
-    local end_tile = 112
+    local end_tile = 64
     -- * enemy tiles, over empty space
     local en_min, en_max = 73, 79
     -- * enemy tiles, over structure
     local en_over_st_min, en_over_st_max = 89, 95
-    -- * structure tiles
-    local st_center = 81
-    local st_edge_left, st_edge_right, st_edge_top, st_edge_bottom = 80, 82, 65, 97
-    local st_outside_left_top, st_outside_left_bottom, st_outside_right_top, st_outside_right_bottom = 64, 96, 66, 98
-    local st_inner_left_top, st_inner_left_bottom, st_inner_right_top, st_inner_right_bottom = 83, 99, 84, 100
-    local st_filler_left_top, st_filler_left_bottom, st_filler_right_top, st_filler_right_bottom = 116, 68, 115, 67
+    -- * structure tiles (cw = clockwise, ccw = counterclockwise)
+    local st_center = 85
+    local st_edge_left, st_edge_right, st_edge_top, st_edge_bottom = 84, 86, 69, 101
+    local st_convex_left_top, st_convex_left_bottom, st_convex_right_top, st_convex_right_bottom = 68, 100, 70, 102
+    local st_concave_left_top_ccw, st_concave_left_top, st_concave_left_top_cw = 80, 81, 65
+    local st_concave_left_bottom_ccw, st_concave_left_bottom, st_concave_left_bottom_cw = 113, 97, 96
+    local st_concave_right_top_ccw, st_concave_right_top, st_concave_right_top_cw = 66, 82, 83
+    local st_concave_right_bottom_ccw, st_concave_right_bottom, st_concave_right_bottom_cw = 99, 98, 114
 
     local max_defined_distance
 
@@ -124,20 +126,16 @@ function new_level_descriptor()
             local slt, smt, srt = structures_occupied[dist_t][lane_l], structures_occupied[dist_t][lane_m], structures_occupied[dist_t][lane_r]
             local slm, smm, srm = structures_occupied[dist_m][lane_l], structures_occupied[dist_m][lane_m], structures_occupied[dist_m][lane_r]
             local slb, smb, srb = structures_occupied[dist_b][lane_l], structures_occupied[dist_b][lane_m], structures_occupied[dist_b][lane_r]
-            local sllt, sllb = structures_occupied[dist_t][lane_l - 1], structures_occupied[dist_b][lane_l - 1]
-            local srrt, srrb = structures_occupied[dist_t][lane_r + 1], structures_occupied[dist_b][lane_r + 1]
-            local sltt, srtt = structures_occupied[dist_t + 1][lane_l], structures_occupied[dist_t + 1][lane_r]
-            local slbb, srbb = structures_occupied[dist_b - 1][lane_l], structures_occupied[dist_b - 1][lane_r]
             local tile_to_set
             if smm then
                 if not slm and not smt then
-                    tile_to_set = st_outside_left_top
+                    tile_to_set = st_convex_left_top
                 elseif not slm and not smb then
-                    tile_to_set = st_outside_left_bottom
+                    tile_to_set = st_convex_left_bottom
                 elseif not srm and not smt then
-                    tile_to_set = st_outside_right_top
+                    tile_to_set = st_convex_right_top
                 elseif not srm and not smb then
-                    tile_to_set = st_outside_right_bottom
+                    tile_to_set = st_convex_right_bottom
                 elseif not slm and not slt and not slb then
                     tile_to_set = st_edge_left
                 elseif not srm and not srt and not srb then
@@ -146,26 +144,34 @@ function new_level_descriptor()
                     tile_to_set = st_edge_top
                 elseif not smb and not slb and not srb then
                     tile_to_set = st_edge_bottom
-                elseif (not sllt and slm and not smt and srt) or (not sltt and smt and not slm and slb) then
-                    tile_to_set = st_filler_left_top
-                elseif (not sllb and slm and not smb and srb) or (not slbb and smb and not slm and slt) then
-                    tile_to_set = st_filler_left_bottom
-                elseif (not srrt and srm and not smt and slt) or (not srtt and smt and not srm and srb) then
-                    tile_to_set = st_filler_right_top
-                elseif (not srrb and srm and not smb and slb) or (not srbb and smb and not srm and srt) then
-                    tile_to_set = st_filler_right_bottom
+                elseif smb and not srm and srt then
+                    tile_to_set = st_concave_left_top_ccw
+                elseif srm and not smb and slb then
+                    tile_to_set = st_concave_left_top_cw
+                elseif slm and not smb and srb then
+                    tile_to_set = st_concave_right_top_ccw
+                elseif smb and not slm and slt then
+                    tile_to_set = st_concave_right_top_cw
+                elseif smt and not slm and slb then
+                    tile_to_set = st_concave_right_bottom_ccw
+                elseif slm and not smt and srt then
+                    tile_to_set = st_concave_right_bottom_cw
+                elseif srm and not smt and slt then
+                    tile_to_set = st_concave_left_bottom_ccw
+                elseif smt and not srm and srb then
+                    tile_to_set = st_concave_left_bottom_cw
                 else
                     tile_to_set = st_center
                 end
             else
-                if slm and smt then
-                    tile_to_set = st_inner_left_top
-                elseif slm and smb then
-                    tile_to_set = st_inner_left_bottom
-                elseif srm and smt then
-                    tile_to_set = st_inner_right_top
-                elseif srm and smb then
-                    tile_to_set = st_inner_right_bottom
+                if slm and slt and smt then
+                    tile_to_set = st_concave_left_top
+                elseif slm and slb and smb then
+                    tile_to_set = st_concave_left_bottom
+                elseif srm and srt and smt then
+                    tile_to_set = st_concave_right_top
+                elseif srm and srb and smb then
+                    tile_to_set = st_concave_right_bottom
                 end
             end
             structures[dist_m][lane_m] = tile_to_set

@@ -50,12 +50,12 @@ function new_screen_select_mission(params)
     end
 
     function screen._draw()
-        cls(_color_11_dark_green)
+        cls(_color_3_dark_green)
 
         print("shmup", 34, 10, _color_15_peach)
-        print("mission 1", 30, 30, 1 <= max_unlocked_mission and (selected_mission == 1 and _color_6_light_grey or _color_14_lavender) or (selected_mission == 1 and _color_8_red or _color_13_mauve))
-        print("mission 2", 30, 50, 2 <= max_unlocked_mission and (selected_mission == 2 and _color_6_light_grey or _color_14_lavender) or (selected_mission == 2 and _color_8_red or _color_13_mauve))
-        print("mission 3", 30, 70, 3 <= max_unlocked_mission and (selected_mission == 3 and _color_6_light_grey or _color_14_lavender) or (selected_mission == 3 and _color_8_red or _color_13_mauve))
+        print("mission 1", 30, 30, 1 <= max_unlocked_mission and (selected_mission == 1 and _color_6_light_grey or _color_13_lavender) or (selected_mission == 1 and _color_8_red or _color_14_mauve))
+        print("mission 2", 30, 50, 2 <= max_unlocked_mission and (selected_mission == 2 and _color_6_light_grey or _color_13_lavender) or (selected_mission == 2 and _color_8_red or _color_14_mauve))
+        print("mission 3", 30, 70, 3 <= max_unlocked_mission and (selected_mission == 3 and _color_6_light_grey or _color_13_lavender) or (selected_mission == 3 and _color_8_red or _color_14_mauve))
 
         fade_out._draw()
         fade_in._draw()

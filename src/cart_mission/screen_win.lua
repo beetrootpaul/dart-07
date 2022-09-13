@@ -31,8 +31,8 @@ function new_screen_win()
     function screen._draw()
         cls(_color_0_black)
 
-        print("win!", 10, 40, _color_12_true_blue)
-        print("press x", 10, 60, 1 + flr(sin(2 * t())) == 0 and _color_6_light_grey or _color_13_mauve)
+        print("win!", 10, 40, _color_4_true_blue)
+        print("press x", 10, 60, 1 + flr(sin(2 * t())) == 0 and _color_6_light_grey or _color_14_mauve)
 
         fade_out._draw()
     end

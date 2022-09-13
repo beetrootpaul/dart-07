@@ -28,6 +28,6 @@ end
 --        _round(collision_circle.xy.y - collision_circle.r),
 --        _round(_gaox + collision_circle.xy.x + collision_circle.r),
 --        _round(collision_circle.xy.y + collision_circle.r),
---        _color_11_dark_green
+--        _color_3_dark_green
 --    )
 --end

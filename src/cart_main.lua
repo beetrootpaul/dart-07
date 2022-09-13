@@ -47,7 +47,7 @@ end
 -- TODO: polishing: screen win; with info which button to press to progress
 -- TODO: polishing: screen over; with info which button to press to progress
 
--- TODO: polishing: negative palette
+-- TODO: polishing: negative palette, in code and in Aseprite
 
 -- TODO: polishing: boss health bar
 
@@ -63,9 +63,8 @@ end
 -- TODO: polishing: music: mission 3 boss
 
 -- TODO: polishing: sprites: enemy 
--- TODO: polishing: sprites: structure
+-- TODO: polishing: sprites: structures of mission 3 
 -- TODO: polishing: sprites: enemy bullets
--- TODO: polishing: sprites: player
 -- TODO: polishing: sprites: player bullet
 
 -- TODO: polishing: player invincibility
