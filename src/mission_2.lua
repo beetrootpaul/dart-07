@@ -67,6 +67,7 @@ do
             [79] = {
                 health = 1,
                 ship_sprite = new_static_sprite(8, 8, 0, 64),
+                flash_sprite = new_static_sprite(8, 8, 0, 64),
                 collision_circle_r = 3.5,
                 collision_circle_offset_y = 0,
                 movement_factory = new_movement_sequence_factory {

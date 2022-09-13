@@ -318,14 +318,14 @@ function new_game(params)
         clip(_gaox, 0, _gaw, _gah)
         _flattened_for_each(
             { level },
-            shockwaves,
+            enemies, -- some enemies are placed on a ground and have collision circle smaller than a sprite, therefore have to be drawn before a player and bullets
+            { boss },
             player_bullets,
             enemy_bullets,
             { player },
-            enemies,
-            { boss },
             powerups,
             explosions,
+            shockwaves, -- draw shockwaves on top of everything since they are supposed to affect the final game image
             function(game_object)
                 game_object._draw()
             end

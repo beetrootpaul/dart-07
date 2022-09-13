@@ -16,7 +16,11 @@ do
         local movement = enemy_properties.movement_factory(start_xy)
         local bullet_fire_timer = enemy_properties.bullet_fire_timer
 
-        local is_flashing_from_damage, is_destroyed = false, false
+        local flashing_after_damage_timer
+
+        local sprite = enemy_properties.ship_sprite
+
+        local is_destroyed = false
 
         local function collision_circle()
             return {
@@ -37,7 +41,8 @@ do
             take_damage = function(damage)
                 health = max(0, health - damage)
                 if health > 0 then
-                    is_flashing_from_damage = true
+                    sprite = enemy_properties.flash_sprite
+                    flashing_after_damage_timer = new_timer(4)
                     on_damaged(collision_circle())
                 else
                     is_destroyed = true
@@ -57,13 +62,18 @@ do
                     end
                 end
 
-                is_flashing_from_damage = false
+                if flashing_after_damage_timer then
+                    if flashing_after_damage_timer.ttl <= 0 then
+                        sprite = enemy_properties.ship_sprite
+                        flashing_after_damage_timer = nil
+                    else
+                        flashing_after_damage_timer._update()
+                    end
+                end
             end,
 
             _draw = function()
-                enemy_properties.ship_sprite._draw(movement.xy, {
-                    flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
-                })
+                sprite._draw(movement.xy)
             end,
         }
     end

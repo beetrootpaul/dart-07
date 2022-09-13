@@ -6,7 +6,7 @@
 function new_movement_line_factory(params)
     return function(start_xy)
         local timer = params.frames and new_timer(params.frames) or new_fake_timer()
-        
+
         local movement = {
             xy = start_xy,
             speed_xy = _xy(
@@ -21,7 +21,9 @@ function new_movement_line_factory(params)
 
         function movement._update()
             timer._update()
-            movement.xy = movement.xy.plus(movement.speed_xy)
+            if timer.ttl > 0 then
+                movement.xy = movement.xy.plus(movement.speed_xy)
+            end
         end
 
         return movement
