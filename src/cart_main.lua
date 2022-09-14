@@ -34,6 +34,7 @@ function _draw()
     _remap_display_colors()
 end
 
+-- TODO: API file: UNPACK
 -- TODO: API file: DGET
 -- TODO: API file: DSET
 -- TODO: API file: CARTDATA
@@ -46,8 +47,6 @@ end
 -- TODO: polishing: screen mission select; with info which button to press to progress 
 -- TODO: polishing: screen win; with info which button to press to progress
 -- TODO: polishing: screen over; with info which button to press to progress
-
--- TODO: polishing: negative palette, in code and in Aseprite
 
 -- TODO: polishing: boss health bar
 
@@ -63,9 +62,7 @@ end
 -- TODO: polishing: music: mission 3 boss
 
 -- TODO: polishing: sprites: enemy 
--- TODO: polishing: sprites: structures of mission 3 
 -- TODO: polishing: sprites: enemy bullets
--- TODO: polishing: sprites: player bullet
 
 -- TODO: polishing: player invincibility
 
@@ -82,10 +79,6 @@ end
 -- TODO: polishing: sliding info: 1a. mission names
 -- TODO: polishing: sliding info: 1b. boss names
 -- TODO: polishing: sliding info:  2. look&feel
-
--- TODO: polishing: mission 1: waves 
--- TODO: polishing: mission 2: stars 
--- TODO: polishing: mission 3: particles 
 
 -- TODO: score and persisted high score
 

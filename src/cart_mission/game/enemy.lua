@@ -14,15 +14,24 @@ do
 
         local health = enemy_properties.health
         local movement = enemy_properties.movement_factory(start_xy)
-        local bullet_fire_timer = enemy_properties.bullet_fire_timer
+        local bullet_fire_timer = enemy_properties.bullet_fire_timer or new_fake_timer()
 
-        local is_flashing_from_damage, is_destroyed = false, false
+        local ship_sprite_props_txt, flash_sprite_props_txt = unpack(split(enemy_properties.sprites_props_txt, "|"))
+        local ship_sprite, flash_sprite = new_static_sprite(unpack(split(ship_sprite_props_txt))), new_static_sprite(unpack(split(flash_sprite_props_txt)))
 
-        local function collision_circle()
-            return {
-                xy = movement.xy.plus(0, enemy_properties.collision_circle_offset_y),
-                r = enemy_properties.collision_circle_r,
-            }
+        local flashing_after_damage_timer
+
+        local is_destroyed = false
+
+        local function collision_circles()
+            local ccs = {}
+            for _, cc_props in pairs(enemy_properties.collision_circles_props) do
+                add(ccs, {
+                    xy = movement.xy.plus(cc_props[2] or _xy(0, 0)),
+                    r = cc_props[1],
+                })
+            end
+            return ccs
         end
 
         return {
@@ -32,17 +41,19 @@ do
                 return is_destroyed or movement.xy.y > _gah + _ts
             end,
 
-            collision_circle = collision_circle,
+            collision_circles = collision_circles,
 
             take_damage = function(damage)
+                local main_collision_circle = collision_circles()[1]
+
                 health = max(0, health - damage)
                 if health > 0 then
-                    is_flashing_from_damage = true
-                    on_damaged(collision_circle())
+                    flashing_after_damage_timer = new_timer(4)
+                    on_damaged(main_collision_circle)
                 else
                     is_destroyed = true
                     local powerup_type = rnd(split(enemy_properties.powerups_distribution))
-                    on_destroyed(collision_circle(), powerup_type)
+                    on_destroyed(main_collision_circle, powerup_type)
                 end
             end,
 
@@ -51,19 +62,34 @@ do
 
                 bullet_fire_timer._update()
                 if bullet_fire_timer.ttl <= 0 then
-                    bullet_fire_timer.restart()
-                    if not _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(collision_circle()) then
+                    local can_spawn_bullets = false
+                    for _, cc in pairs(collision_circles()) do
+                        if not _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc) then
+                            can_spawn_bullets = can_spawn_bullets or true
+                        end
+                    end
+                    if can_spawn_bullets then
                         on_bullets_spawned(enemy_properties.spawn_bullets, movement)
                     end
+                    bullet_fire_timer.restart()
                 end
 
-                is_flashing_from_damage = false
+                if flashing_after_damage_timer then
+                    if flashing_after_damage_timer.ttl <= 0 then
+                        flashing_after_damage_timer = nil
+                    else
+                        flashing_after_damage_timer._update()
+                    end
+                end
             end,
 
             _draw = function()
-                enemy_properties.ship_sprite._draw(movement.xy, {
-                    flash_color = is_flashing_from_damage and _color_9_dark_orange or nil,
-                })
+                ship_sprite._draw(movement.xy)
+                -- DEBUG:
+                --if flr(.5 * sin(t())) == 0 then
+                if flashing_after_damage_timer and flashing_after_damage_timer.ttl > 0 then
+                    flash_sprite._draw(movement.xy)
+                end
             end,
         }
     end

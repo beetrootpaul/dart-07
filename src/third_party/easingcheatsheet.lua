@@ -9,14 +9,14 @@ function _easing_linear(t)
     return t
 end
 
---function _easing_easeinquad(t)
---    return t * t
---end
+function _easing_easeinquad(t)
+    return t * t
+end
 
---function _easing_easeoutquad(t)
---    t = t - 1
---    return 1 - t * t
---end
+function _easing_easeoutquad(t)
+    t = t - 1
+    return 1 - t * t
+end
 
 --function _easing_easeinoutquad(t)
 --    if (t < .5) then

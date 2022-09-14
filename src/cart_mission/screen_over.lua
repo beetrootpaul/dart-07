@@ -16,13 +16,13 @@ function new_screen_over()
 
     function screen._update()
         if btnp(_button_up) or btnp(_button_down) then
-            sfx(_sfx_options_change, 3)
+            _sfx_play(_sfx_options_change)
             retry = not retry
         end
 
         if btnp(_button_x) then
             _music_fade_out()
-            sfx(_sfx_options_confirm, 3)
+            _sfx_play(_sfx_options_confirm)
             proceed = true
         end
 

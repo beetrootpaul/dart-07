@@ -2,10 +2,4 @@
 -- common/buttons.lua   --
 -- -- -- -- -- -- -- -- --
 
-_button_left = 0
-_button_right = 1
-_button_up = 2
-_button_down = 3
-
-_button_o = 4
-_button_x = 5
+_button_left, _button_right, _button_up, _button_down, _button_o, _button_x = 0, 1, 2, 3, 4, 5
