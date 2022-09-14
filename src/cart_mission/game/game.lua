@@ -204,13 +204,13 @@ function new_game(params)
             end,
             on_entered_next_phase = function(collision_circles)
                 _sfx_play(_sfx_destroy_boss_phase)
-                for _, cc in pairs(collision_circles) do
+                for cc in all(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
             end,
             on_destroyed = function(collision_circles)
                 _sfx_play(_sfx_destroy_boss_final_1)
-                for _, cc in pairs(collision_circles) do
+                for cc in all(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     _add_all(
                         explosions,
@@ -337,7 +337,7 @@ function new_game(params)
         --_flattened_for_each(
         --player_bullets,
         --enemy_bullets,
-        --boss and boss.collision_circles() or nil,
+        --    boss and boss.collision_circles() or nil,
         --{ player },
         --powerups,
         --    function(game_object_or_collision_circle)

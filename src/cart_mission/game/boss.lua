@@ -10,16 +10,34 @@ function new_boss(params)
 
     local phases = boss_properties.phases
 
+    local boss_sprite_props_txt, flash_sprite_props_txt = unpack(split(boss_properties.sprites_props_txt, "|"))
+    local boss_sprite, flash_sprite = new_static_sprite(unpack(split(boss_sprite_props_txt))), new_static_sprite(unpack(split(flash_sprite_props_txt)))
+
     local movement = new_movement_to_target_factory {
         target_x = start_xy.x,
         target_y = start_xy.y,
         frames = intro_frames,
         easing_fn = _easing_easeoutquart,
+        -- DEBUG:
+        --frames = 8,
     }(intro_start_xy)
 
     local current_phase_number = 0
 
-    local invincible_during_intro, flashing_from_damage, is_destroyed = true, false, false
+    local invincible_during_intro, is_destroyed = true, false, false
+
+    local flashing_after_damage_timer
+
+    local function collision_circles()
+        local ccs = {}
+        for _, cc_props in pairs(boss_properties.collision_circles_props) do
+            add(ccs, {
+                xy = movement.xy.plus(cc_props[2] or _xy(0, 0)),
+                r = cc_props[1],
+            })
+        end
+        return ccs
+    end
 
     --
 
@@ -38,9 +56,7 @@ function new_boss(params)
         invincible_during_intro = false
     end
 
-    function boss.collision_circles()
-        return boss_properties.collision_circles(movement.xy)
-    end
+    boss.collision_circles = collision_circles
 
     function boss.is_invincible_during_intro()
         return invincible_during_intro
@@ -49,11 +65,11 @@ function new_boss(params)
     function boss.take_damage(damage)
         boss.health = max(0, boss.health - damage)
         if boss.health > 0 then
-            flashing_from_damage = true
+            flashing_after_damage_timer = new_timer(4)
             on_damage()
         else
             is_destroyed = true
-            on_destroyed(boss_properties.collision_circles(movement.xy))
+            on_destroyed(collision_circles())
         end
     end
 
@@ -61,7 +77,7 @@ function new_boss(params)
         if current_phase_number > 0 and current_phase_number < #phases then
             if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
                 current_phase_number = current_phase_number + 1
-                on_entered_next_phase(boss_properties.collision_circles(movement.xy))
+                on_entered_next_phase(collision_circles())
                 movement = phases[current_phase_number].movement_factory(movement.xy)
             end
         end
@@ -70,20 +86,30 @@ function new_boss(params)
 
         if current_phase_number > 0 then
             local current_phase = phases[current_phase_number]
-            current_phase.bullet_fire_timer._update()
-            if current_phase.bullet_fire_timer.ttl <= 0 then
-                current_phase.bullet_fire_timer.restart()
+            local bullet_fire_timer = current_phase.bullet_fire_timer or new_fake_timer()
+            bullet_fire_timer._update()
+            if bullet_fire_timer.ttl <= 0 then
+                bullet_fire_timer.restart()
                 on_bullets_spawned(current_phase.spawn_bullets, movement)
             end
         end
 
-        flashing_from_damage = false
+        if flashing_after_damage_timer then
+            if flashing_after_damage_timer.ttl <= 0 then
+                flashing_after_damage_timer = nil
+            else
+                flashing_after_damage_timer._update()
+            end
+        end
     end
 
     function boss._draw()
-        boss_properties.sprite._draw(movement.xy.ceil(), {
-            flash_color = flashing_from_damage and _color_9_dark_orange or nil,
-        })
+        boss_sprite._draw(movement.xy.ceil())
+        -- DEBUG:
+        --if t() * 2 % 2 < 1 then
+        if flashing_after_damage_timer and flashing_after_damage_timer.ttl > 0 then
+            flash_sprite._draw(movement.xy)
+        end
     end
 
     return boss

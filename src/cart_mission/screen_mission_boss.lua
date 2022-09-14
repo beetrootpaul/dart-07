@@ -11,6 +11,10 @@ function new_screen_mission_boss(game, hud)
         slide_out_frames = boss_info_slide_frames,
         text_1 = "boss",
         text_2 = _m.boss_name,
+        -- DEBUG:
+        --slide_in_frames = 8,
+        --present_frames = 0,
+        --slide_out_frames = 8,
     }
 
     --

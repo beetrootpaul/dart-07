@@ -34,6 +34,12 @@ function _draw()
     _remap_display_colors()
 end
 
+-- TODO: tokens: replace pairs with all where possible
+
+-- TODO: export remaining sprite sheets
+
+-- TODO: consider removal of flash_color from animated_sprite
+
 -- TODO: API file: UNPACK
 -- TODO: API file: DGET
 -- TODO: API file: DSET

@@ -86,7 +86,7 @@ do
             _draw = function()
                 ship_sprite._draw(movement.xy)
                 -- DEBUG:
-                --if flr(.5 * sin(t())) == 0 then
+                --if t() * 2 % 2 < 1 then
                 if flashing_after_damage_timer and flashing_after_damage_timer.ttl > 0 then
                     flash_sprite._draw(movement.xy)
                 end
