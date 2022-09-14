@@ -9,10 +9,10 @@ function new_screen_mission_main(params)
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
         -- DEBUG:
-        health = 7,
-        shockwave_charges = 3,
-        triple_shot = true,
-        fast_shoot = true,
+        --health = 7,
+        --shockwave_charges = 3,
+        --triple_shot = true,
+        --fast_shoot = true,
     }
 
     local fade_in_frames, sliding_info_slide_frames, screen_frames = 30, 50, 200

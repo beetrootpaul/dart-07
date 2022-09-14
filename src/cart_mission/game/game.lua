@@ -329,11 +329,11 @@ function new_game(params)
         clip()
 
         -- DEBUG:
-        for _, enemy in pairs(enemies) do
-            for _, enemy_cc in pairs(enemy.collision_circles()) do
-                _collisions._debug_draw_collision_circle(enemy_cc)
-            end
-        end
+        --for _, enemy in pairs(enemies) do
+        --    for _, enemy_cc in pairs(enemy.collision_circles()) do
+        --        _collisions._debug_draw_collision_circle(enemy_cc)
+        --    end
+        --end
         --_flattened_for_each(
         --player_bullets,
         --enemy_bullets,

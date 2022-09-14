@@ -72,7 +72,7 @@ do
 
             -- enemy: fast and small
             [74] = {
-                health = 5,
+                health = 1,
                 sprites_props_txt = "8,8,0,88|6,6,22,79",
                 collision_circles_props = {
                     { 3, _xy(0, 1) },
@@ -83,12 +83,12 @@ do
                     -- DEBUG:
                     --frames = 123,
                 },
-                powerups_distribution = "h,f,t,s",
+                powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
             },
 
             -- enemy: sinusoidal
             [75] = {
-                health = 5,
+                health = 2,
                 sprites_props_txt = "10,10,22,86 |8,8,13,88",
                 collision_circles_props = {
                     { 4 },
@@ -112,12 +112,12 @@ do
                         )
                     }
                 end,
-                powerups_distribution = "h,f,t,s",
+                powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
             },
 
             -- enemy: wait and charge
             [76] = {
-                health = 5,
+                health = 7,
                 sprites_props_txt = "16,14,22,64|14,12,32,84",
                 collision_circles_props = {
                     { 7 },
@@ -138,12 +138,12 @@ do
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 234,
                 --},
-                powerups_distribution = "h,f,t,s",
+                powerups_distribution = "-,-,-,-,-,-,-,-,-,-,h,h,f,t,s,s",
             },
 
             -- enemy: big
             [77] = {
-                health = 5,
+                health = 30,
                 sprites_props_txt = "24,20,64,64|22,18,88,65",
                 collision_circles_props = {
                     { 10, _xy(0, 1) },
@@ -187,12 +187,12 @@ do
                     end
                     return bullets
                 end,
-                powerups_distribution = "h,f,t,s",
+                powerups_distribution = "h,s",
             },
 
             -- enemy: long, pausing, w/ aimed triple shot
             [78] = {
-                health = 5,
+                health = 4,
                 sprites_props_txt = "8,22,50,64|6,20,58,65",
                 collision_circles_props = {
                     { 4 },
@@ -244,12 +244,12 @@ do
                         ),
                     }
                 end,
-                powerups_distribution = "h,f,t,s",
+                powerups_distribution = "-,-,-,-,-,-,h,f,f,f,t,t,s",
             },
 
             -- enemy: stationary
             [79] = {
-                health = 15,
+                health = 10,
                 sprites_props_txt = "22,24,0,64|12,12,38,64",
                 collision_circles_props = {
                     { 6 },
@@ -274,7 +274,7 @@ do
                     end
                     return bullets
                 end,
-                powerups_distribution = "h,f,t,s",
+                powerups_distribution = "-,-,h,h,t,s,s,s",
             },
 
         })[enemy_map_marker]
