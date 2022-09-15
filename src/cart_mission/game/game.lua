@@ -111,7 +111,7 @@ function new_game(params)
                         end
                     end
                 end
-                for _player_bullet in all(player_bullets) do
+                for player_bullet in all(player_bullets) do
                     if not enemy.has_finished() and not player_bullet.has_finished() then
                         if _collisions.are_colliding(player_bullet, enemy_cc) then
                             enemy.take_damage(1)
@@ -143,7 +143,7 @@ function new_game(params)
                         end
                     end
                 end
-                for _player_bullet in all(player_bullets) do
+                for player_bullet in all(player_bullets) do
                     if not boss.has_finished() and not player_bullet.has_finished() then
                         if _collisions.are_colliding(player_bullet, boss_cc) then
                             boss.take_damage(1)
