@@ -23,7 +23,7 @@ function new_game(params)
     local player = new_player {
         on_bullets_spawned = function(bullets)
             _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot)
-            for _, b in pairs(bullets) do
+            for b in all(bullets) do
                 add(player_bullets, b)
             end
         end,
@@ -87,7 +87,7 @@ function new_game(params)
 
     local function handle_collisions()
         -- player vs powerups
-        for _, powerup in pairs(powerups) do
+        for powerup in all(powerups) do
             if not powerup.has_finished() then
                 if _collisions.are_colliding(player, powerup) then
                     powerup.pick()
@@ -97,9 +97,9 @@ function new_game(params)
         end
 
         -- shockwaves vs enemies + player bullets vs enemies + player vs enemies
-        for _, enemy in pairs(enemies) do
-            for _, enemy_cc in pairs(enemy.collision_circles()) do
-                for _, shockwave in pairs(shockwaves) do
+        for enemy in all(enemies) do
+            for enemy_cc in all(enemy.collision_circles()) do
+                for shockwave in all(shockwaves) do
                     local combined_id = shockwave.id .. "-" .. enemy.id
                     shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] or 0
                     if not enemy.has_finished() and not shockwave.has_finished() and shockwave_enemy_hits[combined_id] < 8 then
@@ -111,7 +111,7 @@ function new_game(params)
                         end
                     end
                 end
-                for __, player_bullet in pairs(player_bullets) do
+                for player_bullet in all(player_bullets) do
                     if not enemy.has_finished() and not player_bullet.has_finished() then
                         if _collisions.are_colliding(player_bullet, enemy_cc) then
                             enemy.take_damage(1)
@@ -130,8 +130,8 @@ function new_game(params)
 
         -- shockwaves vs boss + player bullets vs boss + player vs boss
         if boss and not boss.is_invincible_during_intro() then
-            for _, boss_cc in pairs(boss.collision_circles()) do
-                for _, shockwave in pairs(shockwaves) do
+            for boss_cc in all(boss.collision_circles()) do
+                for shockwave in all(shockwaves) do
                     local combined_id = shockwave.id .. "-boss"
                     shockwave_enemy_hits[combined_id] = shockwave_enemy_hits[combined_id] or 0
                     if not boss.has_finished() and not shockwave.has_finished() and shockwave_enemy_hits[combined_id] < 8 then
@@ -143,7 +143,7 @@ function new_game(params)
                         end
                     end
                 end
-                for __, player_bullet in pairs(player_bullets) do
+                for player_bullet in all(player_bullets) do
                     if not boss.has_finished() and not player_bullet.has_finished() then
                         if _collisions.are_colliding(player_bullet, boss_cc) then
                             boss.take_damage(1)
@@ -161,8 +161,8 @@ function new_game(params)
         end
 
         -- shockwaves vs enemy bullets + player vs enemy bullets
-        for _, enemy_bullet in pairs(enemy_bullets) do
-            for _, shockwave in pairs(shockwaves) do
+        for enemy_bullet in all(enemy_bullets) do
+            for shockwave in all(shockwaves) do
                 if not enemy_bullet.has_finished() and not shockwave.has_finished() then
                     if _collisions.are_colliding(shockwave, enemy_bullet) then
                         enemy_bullet.destroy()
@@ -194,7 +194,7 @@ function new_game(params)
             start_xy = _xy(_gaw / 2, 20, 20),
             on_bullets_spawned = function(bullets_fn, boss_movement)
                 if player then
-                    for _, b in pairs(bullets_fn(boss_movement, player.collision_circle())) do
+                    for b in all(bullets_fn(boss_movement, player.collision_circle())) do
                         add(enemy_bullets, b)
                     end
                 end
@@ -204,13 +204,13 @@ function new_game(params)
             end,
             on_entered_next_phase = function(collision_circles)
                 _sfx_play(_sfx_destroy_boss_phase)
-                for _, cc in pairs(collision_circles) do
+                for cc in all(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
             end,
             on_destroyed = function(collision_circles)
                 _sfx_play(_sfx_destroy_boss_final_1)
-                for _, cc in pairs(collision_circles) do
+                for cc in all(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     _add_all(
                         explosions,
@@ -278,13 +278,13 @@ function new_game(params)
         end
 
         local enemies_to_spawn = level.enemies_to_spawn()
-        for _, enemy_to_spawn in pairs(enemies_to_spawn) do
+        for enemy_to_spawn in all(enemies_to_spawn) do
             add(enemies, new_enemy {
                 enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker),
                 start_xy = enemy_to_spawn.xy,
                 on_bullets_spawned = function(spawned_enemy_bullets_fn, enemy_movement)
                     if player then
-                        for _, seb in pairs(spawned_enemy_bullets_fn(enemy_movement, player.collision_circle())) do
+                        for seb in all(spawned_enemy_bullets_fn(enemy_movement, player.collision_circle())) do
                             add(enemy_bullets, seb)
                         end
                     end
@@ -329,15 +329,15 @@ function new_game(params)
         clip()
 
         -- DEBUG:
-        for _, enemy in pairs(enemies) do
-            for _, enemy_cc in pairs(enemy.collision_circles()) do
-                _collisions._debug_draw_collision_circle(enemy_cc)
-            end
-        end
+        --for enemy in all(enemies) do
+        --    for enemy_cc in all(enemy.collision_circles()) do
+        --        _collisions._debug_draw_collision_circle(enemy_cc)
+        --    end
+        --end
         --_flattened_for_each(
         --player_bullets,
         --enemy_bullets,
-        --boss and boss.collision_circles() or nil,
+        --    boss and boss.collision_circles() or nil,
         --{ player },
         --powerups,
         --    function(game_object_or_collision_circle)

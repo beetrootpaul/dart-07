@@ -9,10 +9,10 @@ function new_screen_mission_main(params)
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
         -- DEBUG:
-        health = 7,
-        shockwave_charges = 3,
-        triple_shot = true,
-        fast_shoot = true,
+        --health = 7,
+        --shockwave_charges = 3,
+        --triple_shot = true,
+        --fast_shoot = true,
     }
 
     local fade_in_frames, sliding_info_slide_frames, screen_frames = 30, 50, 200
@@ -21,13 +21,17 @@ function new_screen_mission_main(params)
         wait_frames = screen_frames - 10,
         slide_in_frames = 40,
     }
-    local sliding_info = new_sliding_info {
+    local mission_info = new_sliding_info {
         wait_frames = fade_in_frames,
         slide_in_frames = sliding_info_slide_frames,
         present_frames = screen_frames - fade_in_frames - 2 * sliding_info_slide_frames,
         slide_out_frames = sliding_info_slide_frames,
         text_1 = "mission " .. _m.mission_number,
         text_2 = _m.mission_name,
+        -- DEBUG:
+        --slide_in_frames = 8,
+        --present_frames = 0,
+        --slide_out_frames = 8,
     }
     local fade_in = new_fade("in", fade_in_frames)
 
@@ -43,8 +47,8 @@ function new_screen_mission_main(params)
         game._update()
         hud._update()
 
-        if sliding_info then
-            sliding_info._update()
+        if mission_info then
+            mission_info._update()
         end
         if fade_in then
             fade_in._update()
@@ -59,8 +63,8 @@ function new_screen_mission_main(params)
             shockwave_charges = game.shockwave_charges,
         }
 
-        if sliding_info then
-            sliding_info._draw()
+        if mission_info then
+            mission_info._draw()
         end
         if fade_in then
             fade_in._draw()
@@ -74,8 +78,8 @@ function new_screen_mission_main(params)
             fade_in = nil
         end
 
-        if sliding_info and sliding_info.has_finished() then
-            sliding_info = nil
+        if mission_info and mission_info.has_finished() then
+            mission_info = nil
             game.enter_enemies_phase()
         end
 

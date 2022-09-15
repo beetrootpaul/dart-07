@@ -24,13 +24,13 @@ function _collisions.are_colliding(game_object_or_collision_circle_1, game_objec
 end
 
 -- DEBUG:
-function _collisions._debug_draw_collision_circle(game_object_or_collision_circle)
-    local cc = game_object_or_collision_circle.collision_circle and game_object_or_collision_circle.collision_circle() or game_object_or_collision_circle
-    oval(
-        ceil(_gaox + cc.xy.x - cc.r - .5),
-        ceil(cc.xy.y - cc.r - .5),
-        flr(_gaox + cc.xy.x + cc.r - .5),
-        flr(cc.xy.y + cc.r - .5),
-        _color_3_dark_green
-    )
-end
+--function _collisions._debug_draw_collision_circle(game_object_or_collision_circle)
+--    local cc = game_object_or_collision_circle.collision_circle and game_object_or_collision_circle.collision_circle() or game_object_or_collision_circle
+--    oval(
+--        ceil(_gaox + cc.xy.x - cc.r - .5),
+--        ceil(cc.xy.y - cc.r - .5),
+--        flr(_gaox + cc.xy.x + cc.r - .5),
+--        flr(cc.xy.y + cc.r - .5),
+--        _color_3_dark_green
+--    )
+--end

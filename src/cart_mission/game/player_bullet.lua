@@ -12,6 +12,7 @@ function new_player_bullet(start_xy)
         angled_speed = 2.5,
         -- DEBUG:
         --angled_speed = .5,
+        --frames = 10,
     }(start_xy)
 
     return {
@@ -21,7 +22,7 @@ function new_player_bullet(start_xy)
 
         collision_circle = function()
             return {
-                xy = movement.xy.minus(0, -.5),
+                xy = movement.xy.minus(0, .5),
                 r = 1.5,
             }
         end,

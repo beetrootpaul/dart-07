@@ -53,5 +53,14 @@ Development:
 Optionally, to build without minification: `npm run watch-and-build-as-is`
 
 To build dist packages:
+
 - remove cart data file from PICO-8 cart data folder (as set in `$HOME/Library/Application Support/pico-8/config.txt`)
 - then run `npm run dist`
+
+To update the sprite sheet of, for example, mission 1:
+
+- edit `spritesheet_mission_1.aseprite` in Aseprite (please remember you have to use official standard 16 PICO-8 colours
+  si they will match on import)
+- export to PNG with scale 100%
+- load cart and run `import graphics/spritesheet_mission_1.png` or `import shmup/graphics/spritesheet_mission_1.png` (
+  depends on what your current working directory is)

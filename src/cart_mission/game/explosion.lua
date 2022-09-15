@@ -19,7 +19,7 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
 
     return {
         has_finished = function()
-            for _, particle in pairs(particles) do
+            for particle in all(particles) do
                 if particle.r > 0 then
                     return false
                 end
@@ -31,7 +31,7 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
             wait_timer._update()
             if wait_timer.ttl <= 0 then
                 (on_started or _noop)()
-                for _, particle in pairs(particles) do
+                for particle in all(particles) do
                     if particle.r > 0 then
                         particle.angle = particle.angle + .1 * (rnd() - .5)
                         local speed = rnd()
@@ -48,7 +48,7 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
         _draw = function()
             if wait_timer.ttl <= 0 then
                 fillp(0xa5a5)
-                for _, particle in pairs(particles) do
+                for particle in all(particles) do
                     local r = particle.r
                     if r > 0 then
                         local c1, c2 = _color_9_dark_orange, _color_8_red

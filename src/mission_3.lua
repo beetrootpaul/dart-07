@@ -59,7 +59,7 @@ do
     end
 
     function _m.level_bg_update()
-        for _, particle in pairs(particles) do
+        for particle in all(particles) do
             if particle.xy.y >= _gah + _ts then
                 del(particles, particle)
             end
@@ -67,7 +67,7 @@ do
 
         tube_tiles_offset_y = (tube_tiles_offset_y + .5) % _ts
 
-        for _, particle in pairs(particles) do
+        for particle in all(particles) do
             particle.xy = particle.xy.plus(0, 1.5)
         end
 
@@ -92,7 +92,7 @@ do
         end
         palt()
 
-        for _, particle in pairs(particles) do
+        for particle in all(particles) do
             particle.sprite._draw(particle.xy)
         end
     end
@@ -105,9 +105,9 @@ do
     -- enemy property:
     --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
     --   - collision_circles_props = {
-    --                    { r }, -- put main/center circle first, since it will be source for explosions etc.
-    --                    { r, xy_offset },
-    --                    { r, xy_offset },
+    --                    { r, optional_xy_offset }, -- put main/center circle first, since it will be source for explosions etc.
+    --                    { r, optional_xy_offset },
+    --                    { r },
     --                },
     --   - spawn_bullets = function(enemy_movement, player_collision_circle)
     --                       return bullets_table
@@ -148,15 +148,24 @@ do
         })[enemy_map_marker]
     end
 
+    -- boss property:
+    --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
+    --   - collision_circles_props = {
+    --                    { r, optional_xy_offset }, -- put main/center circle first, since it will be source for explosions etc.
+    --                    { r, optional_xy_offset },
+    --                    { r },
+    --                },
+    --   - spawn_bullets = function(boss_movement, player_collision_circle)
+    --                       return bullets_table
+    --                     end
     function _m.boss_properties()
         return {
-            health = 20,
-            sprite = new_static_sprite(56, 26, 4, 98),
-            collision_circles = function(boss_xy)
-                return {
-                    { xy = boss_xy.plus(0, 3), r = 5 },
-                }
-            end,
+            health = 25,
+            -- TODO: draw and specify correct flash sprite
+            sprites_props_txt = "56,26,4,98|56,26,4,98",
+            collision_circles_props = {
+                { 15, _xy(0, 3) },
+            },
             phases = {
                 -- phase 1:
                 {

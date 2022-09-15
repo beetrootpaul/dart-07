@@ -2,19 +2,19 @@
 -- common/movement/movement_sinusoidal_factory.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_movement_sinusoidal_factory()
+function new_movement_sinusoidal_factory(params)
     return function(start_xy)
         local age = 0
 
         local function x()
-            return start_xy.x + 14 * sin(age / 120)
+            return start_xy.x + 14 * sin(age / (params.age_divisor or 120))
         end
 
         local movement = {
             xy = _xy(x(), start_xy.y),
             speed_xy = _xy(
                 x() - start_xy.x,
-                .75
+                params.speed_y or 1
             )
         }
 

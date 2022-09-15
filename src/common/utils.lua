@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- --
 
 function _add_all(table, ...)
-    for _, item in pairs({ ... }) do
+    for item in all({ ... }) do
         add(table, item)
     end
     return table
@@ -19,8 +19,8 @@ function _flattened_for_each(...)
     local callback = args[#args]
     del(args, callback)
 
-    for _, subarray in pairs(args) do
-        for __, value in pairs(subarray) do
+    for subarray in all(args) do
+        for value in all(subarray) do
             callback(value, subarray)
         end
     end

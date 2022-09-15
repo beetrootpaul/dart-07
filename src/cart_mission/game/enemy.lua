@@ -25,7 +25,7 @@ do
 
         local function collision_circles()
             local ccs = {}
-            for _, cc_props in pairs(enemy_properties.collision_circles_props) do
+            for cc_props in all(enemy_properties.collision_circles_props) do
                 add(ccs, {
                     xy = movement.xy.plus(cc_props[2] or _xy(0, 0)),
                     r = cc_props[1],
@@ -63,7 +63,7 @@ do
                 bullet_fire_timer._update()
                 if bullet_fire_timer.ttl <= 0 then
                     local can_spawn_bullets = false
-                    for _, cc in pairs(collision_circles()) do
+                    for cc in all(collision_circles()) do
                         if not _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc) then
                             can_spawn_bullets = can_spawn_bullets or true
                         end
@@ -86,7 +86,7 @@ do
             _draw = function()
                 ship_sprite._draw(movement.xy)
                 -- DEBUG:
-                --if flr(.5 * sin(t())) == 0 then
+                --if t() * 2 % 2 < 1 then
                 if flashing_after_damage_timer and flashing_after_damage_timer.ttl > 0 then
                     flash_sprite._draw(movement.xy)
                 end
