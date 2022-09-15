@@ -36,7 +36,7 @@ do
     end
 
     function _m.level_bg_update()
-        for _, star in pairs(stars) do
+        for star in all(stars) do
             star.y = star.y + star.speed
             if star.y >= _gah then
                 del(stars, star)
@@ -47,7 +47,7 @@ do
     end
 
     function _m.level_bg_draw()
-        for _, star in pairs(stars) do
+        for star in all(stars) do
             pset(
                 _gaox + star.x,
                 star.y,

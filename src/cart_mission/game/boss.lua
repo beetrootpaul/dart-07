@@ -30,7 +30,7 @@ function new_boss(params)
 
     local function collision_circles()
         local ccs = {}
-        for _, cc_props in pairs(boss_properties.collision_circles_props) do
+        for cc_props in all(boss_properties.collision_circles_props) do
             add(ccs, {
                 xy = movement.xy.plus(cc_props[2] or _xy(0, 0)),
                 r = cc_props[1],

@@ -59,7 +59,7 @@ do
     end
 
     function _m.level_bg_update()
-        for _, particle in pairs(particles) do
+        for particle in all(particles) do
             if particle.xy.y >= _gah + _ts then
                 del(particles, particle)
             end
@@ -67,7 +67,7 @@ do
 
         tube_tiles_offset_y = (tube_tiles_offset_y + .5) % _ts
 
-        for _, particle in pairs(particles) do
+        for particle in all(particles) do
             particle.xy = particle.xy.plus(0, 1.5)
         end
 
@@ -92,7 +92,7 @@ do
         end
         palt()
 
-        for _, particle in pairs(particles) do
+        for particle in all(particles) do
             particle.sprite._draw(particle.xy)
         end
     end
