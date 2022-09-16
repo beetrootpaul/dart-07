@@ -20,8 +20,13 @@ function _flattened_for_each(...)
     del(args, callback)
 
     for subarray in all(args) do
-        for value in all(subarray) do
-            callback(value, subarray)
+        -- Iterate from N to 1 instead of using ALL(…), because in some callbacks we DEL(…) items.
+        -- DEL(…) makes further table items shift one index down and ALL(…) is known for having issues
+        -- with that when more than one DEL(…) happens within same ALL(…) iteration.
+        -- Therefore, in general it would be better to iterate with an explicit control over the index
+        -- and to do it from N to 1 in order to not have to care about higher items' position being affected.
+        for i = #subarray, 1, -1 do
+            callback(subarray[i], subarray)
         end
     end
 end

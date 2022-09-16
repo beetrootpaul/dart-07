@@ -103,3 +103,5 @@ end
 -- TODO: GitHub repo: license other than MIT?
 -- TODO: GitHub repo: final name
 -- TODO: GitHub repo: description & website & topics
+
+-- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot

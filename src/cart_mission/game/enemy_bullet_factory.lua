@@ -22,9 +22,7 @@ function new_enemy_bullet_factory(bullet_properties)
                 is_destroyed = true
             end,
 
-            _update = function()
-                movement._update()
-            end,
+            _update = movement._update,
 
             _draw = function()
                 bullet_properties.bullet_sprite._draw(movement.xy)

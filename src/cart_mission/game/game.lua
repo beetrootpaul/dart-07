@@ -14,9 +14,7 @@ function new_game(params)
 
     local level = new_level(new_level_descriptor())
 
-    local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves = {}, {}, {}, {}, {}, {}
-
-    local shockwave_enemy_hits = {}
+    local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits = {}, {}, {}, {}, {}, {}, {}
 
     local boss
 
@@ -372,6 +370,15 @@ function new_game(params)
                 end
             end
         )
+
+        -- DEBUG:
+        --printh("  === #TABLES ===  ")
+        --printh(#player_bullets)
+        --printh(#enemy_bullets)
+        --printh(#enemies)
+        --printh(#powerups)
+        --printh(#explosions)
+        --printh(#shockwaves)
     end
 
     return game
