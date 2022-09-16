@@ -34,8 +34,6 @@ function _draw()
     _remap_display_colors()
 end
 
--- TODO: export remaining sprite sheets
-
 -- TODO: API file: UNPACK
 -- TODO: API file: DGET
 -- TODO: API file: DSET

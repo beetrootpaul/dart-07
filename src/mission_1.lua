@@ -48,13 +48,9 @@ do
         end
     end
 
-    local enemy_bullet_small_factory = new_enemy_bullet_factory {
+    local enemy_bullet_factory = new_enemy_bullet_factory {
         bullet_sprite = new_static_sprite(4, 4, 124, 64),
         collision_circle_r = 1.5,
-    }
-    local enemy_bullet_big_factory = new_enemy_bullet_factory {
-        bullet_sprite = new_static_sprite(6, 6, 118, 64),
-        collision_circle_r = 2.5,
     }
 
     -- enemy property:
@@ -106,7 +102,7 @@ do
                 spawn_bullets = function(enemy_movement)
                     _sfx_play(_sfx_enemy_shoot)
                     return {
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory({
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .75,
@@ -180,7 +176,7 @@ do
                      _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
-                        add(bullets, enemy_bullet_small_factory(
+                        add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = t() % 1 + i / 8,
@@ -229,17 +225,17 @@ do
                     local enemy_xy = enemy_movement.xy
                     local player_xy = player_collision_circle.xy
                     return {
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
                             }(enemy_xy.minus(0, 7))
                         ),
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
                             }(enemy_xy.minus(0, 1))
                         ),
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
                             }(enemy_xy.plus(0, 5))
@@ -267,7 +263,7 @@ do
                      _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
-                        add(bullets, enemy_bullet_small_factory(
+                        add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .0625 + i / 8,
@@ -310,7 +306,7 @@ do
                         if t() % 2 < 1 then return {} end
                         _sfx_play(_sfx_enemy_shoot)
                         return {
-                            enemy_bullet_small_factory(
+                            enemy_bullet_factory(
                                 new_movement_line_factory {
                                     angle = .75,
                                     angled_speed = 1.5,
@@ -328,7 +324,7 @@ do
                         if t() % 2 < 1 then return {} end
                         _sfx_play(_sfx_enemy_shoot)
                         return {
-                            enemy_bullet_small_factory(
+                            enemy_bullet_factory(
                                 new_movement_line_factory {
                                     angle = .75,
                                     angled_speed = 1.5,
@@ -365,12 +361,12 @@ do
                         if t() % 2 > 1.3 and t() % 2 < 1.6 then
                             -- aimed side bullets
                             return {
-                                enemy_bullet_small_factory(
+                                enemy_bullet_factory(
                                     new_movement_line_factory {
                                         target_xy = player_collision_circle.xy,
                                     }(boss_movement.xy.plus(-20, -3))
                                 ),
-                                enemy_bullet_small_factory(
+                                enemy_bullet_factory(
                                     new_movement_line_factory {
                                         target_xy = player_collision_circle.xy,
                                     }(boss_movement.xy.plus(20, -3))
@@ -379,7 +375,7 @@ do
                         elseif t() % 2 < 1 then
                             -- sinusoidal central bullets
                             return {
-                                enemy_bullet_small_factory(
+                                enemy_bullet_factory(
                                     new_movement_sinusoidal_factory {
                                         speed_y = 1.5,
                                         age_divisor = 60,
