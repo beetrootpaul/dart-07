@@ -6,13 +6,13 @@ function new_screen_mission_main(params)
     local game = new_game {
         health = params.health,
         shockwave_charges = params.shockwave_charges,
-        triple_shot = params.triple_shot,
-        fast_shoot = params.fast_shoot,
+        --triple_shot = params.triple_shot,
+        --fast_shoot = params.fast_shoot,
         -- DEBUG:
         --health = 7,
         --shockwave_charges = 3,
-        --triple_shot = true,
-        --fast_shoot = true,
+        triple_shot = true,
+        fast_shoot = true,
     }
 
     local fade_in_frames, sliding_info_slide_frames, screen_frames = 30, 50, 200

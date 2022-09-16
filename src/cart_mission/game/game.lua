@@ -48,9 +48,9 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.triple_shot, game.fast_shoot = false, false
-        game.health = game.health - 1
-        player.take_damage(game.health)
+        --game.triple_shot, game.fast_shoot = false, false
+        --game.health = game.health - 1
+        --player.take_damage(game.health)
     end
 
     local function handle_powerup(powerup)
@@ -114,14 +114,14 @@ function new_game(params)
                 for player_bullet in all(player_bullets) do
                     if not enemy.has_finished() and not player_bullet.has_finished() then
                         if _collisions.are_colliding(player_bullet, enemy_cc) then
-                            enemy.take_damage(1)
-                            player_bullet.destroy()
+                            --enemy.take_damage(1)
+                            --player_bullet.destroy()
                         end
                     end
                 end
                 if not enemy.has_finished() and not player.is_invincible_after_damage() then
                     if _collisions.are_colliding(player, enemy_cc) then
-                        enemy.take_damage(1)
+                        --enemy.take_damage(1)
                         handle_player_damage()
                     end
                 end
@@ -258,6 +258,15 @@ function new_game(params)
             end
         end
 
+        -- DEBUG:
+        printh("  === #TABLES ===  ")
+        printh(#player_bullets)
+        printh(#enemy_bullets)
+        printh(#enemies)
+        printh(#powerups)
+        printh(#explosions)
+        printh(#shockwaves)
+        
         _flattened_for_each(
             { level },
             shockwaves,
