@@ -21,10 +21,10 @@ function new_sliding_info(params)
         },
         new_movement_to_target_factory {
             frames = params.slide_out_frames,
-            target_y = _gah + 1,
+            target_y = _gah + 18,
             easing_fn = _easing_easeinquart,
         },
-    }(_xy(_gaox, -1))
+    }(_xy(_gaox, -18))
 
     return {
         has_finished = movement.has_finished,
@@ -32,14 +32,13 @@ function new_sliding_info(params)
         _update = movement._update,
 
         _draw = function()
-            clip(_gaox, 0, _gaw, _gah)
-
-            local x, y = movement.xy[rounding_fn]().x, movement.xy[rounding_fn]().y
-            _outlined_print(params.text_1, x + 10, y - 13, _m.bg_color, _color_8_red)
-            _outlined_print(params.text_2, x + 10, y - 7, _m.bg_color, _color_8_red)
-            line(x, y, x + _gaw - 1, y, _color_8_red)
-
-            clip()
+            local xy = movement.xy[rounding_fn]()
+            local x, y = xy.x, xy.y
+            if params.text_1 then
+                _outlined_centered_print(params.text_1, y - 17, _m.bg_color, params.main_color)
+            end
+            _outlined_centered_print(params.text_2, y - 8, _m.bg_color, params.main_color)
+            line(x, y, x + _gaw - 1, y, params.main_color)
         end,
     }
 end

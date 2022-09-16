@@ -30,7 +30,9 @@ function _noop()
     -- do nothing
 end
 
-function _outlined_print(text, x, y, text_color, outline_color)
+function _outlined_centered_print(text, y, text_color, outline_color)
+    local w = print(text, 0, -5)
+    local x = _gaox + (_gaw - w) / 2
     -- docs on control codes: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Control_Codes
     for control_code in all(split "\-f,\-h,\|f,\|h,\+ff,\+hh,\+fh,\+hf") do
         print(control_code .. text, x, y, outline_color)

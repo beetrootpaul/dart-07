@@ -70,9 +70,11 @@ end
 -- TODO: polishing: explosions: boss enters next phase
 -- TODO: polishing: explosions: boss destroyed
 
--- TODO: polishing: sliding info: 1a. mission names
--- TODO: polishing: sliding info: 1b. boss names
--- TODO: polishing: sliding info:  2. look&feel
+-- TODO: mission info + cart top-level comment: mission 2 name
+-- TODO: mission info + cart top-level comment: mission 3 name
+-- TODO: boss info: boss 1 name
+-- TODO: boss info: boss 2 name
+-- TODO: boss info: boss 3 name
 
 -- TODO: score and persisted high score
 
@@ -94,7 +96,6 @@ end
 
 -- TODO: consider angled triple-shot  
 
--- TODO: carts: title comments
 -- TODO: carts: labels
 
 -- TODO: final BBS IDs in LOAD

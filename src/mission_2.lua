@@ -5,8 +5,8 @@
 _m = {
     mission_number = 2,
     scroll_per_frame = 1,
-    mission_name = "death space",
-    boss_name = "cheerful death",
+    mission_name = "death \-espace",
+    boss_name = "cheerful \-edeath",
     bg_color = _color_1_darker_blue,
     mission_main_music = 0,
     mission_boss_music = 1,

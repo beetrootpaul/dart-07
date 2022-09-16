@@ -5,8 +5,8 @@
 _m = {
     mission_number = 1,
     scroll_per_frame = .5,
-    mission_name = "death islands",
-    boss_name = "painful death",
+    mission_name = "emerald \-eislands",
+    boss_name = "painful \-edeath",
     bg_color = _color_4_true_blue,
     mission_main_music = 0,
     mission_boss_music = 2,
@@ -173,7 +173,7 @@ do
                 --},
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement)
-                     _sfx_play(_sfx_enemy_multi_shoot)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
                         add(bullets, enemy_bullet_factory(
@@ -221,7 +221,7 @@ do
                 --},
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                     _sfx_play(_sfx_enemy_multi_shoot)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local enemy_xy = enemy_movement.xy
                     local player_xy = player_collision_circle.xy
                     return {
@@ -260,7 +260,7 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement)
-                     _sfx_play(_sfx_enemy_multi_shoot)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
                         add(bullets, enemy_bullet_factory(
@@ -357,7 +357,7 @@ do
                     triggering_health_fraction = .35,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement, player_collision_circle)
-                         _sfx_play(_sfx_enemy_multi_shoot)
+                        _sfx_play(_sfx_enemy_multi_shoot)
                         if t() % 2 > 1.3 and t() % 2 < 1.6 then
                             -- aimed side bullets
                             return {

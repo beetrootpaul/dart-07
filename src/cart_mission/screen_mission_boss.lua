@@ -6,11 +6,11 @@ function new_screen_mission_boss(game, hud)
     local boss_info_frames, boss_info_slide_frames = 180, 50
 
     local boss_info = new_sliding_info {
+        text_2 = _m.boss_name,
+        main_color = _color_8_red,
         slide_in_frames = boss_info_slide_frames,
         present_frames = boss_info_frames - 2 * boss_info_slide_frames,
         slide_out_frames = boss_info_slide_frames,
-        text_1 = "boss",
-        text_2 = _m.boss_name,
         -- DEBUG:
         --slide_in_frames = 8,
         --present_frames = 0,
