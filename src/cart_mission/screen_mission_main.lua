@@ -24,7 +24,7 @@ function new_screen_mission_main(params)
     local mission_info = new_sliding_info {
         text_1 = "mission \-e" .. _m.mission_number,
         text_2 = _m.mission_name,
-        main_color = _palette_negative[_m.bg_color],
+        main_color = _m.mission_info_color,
         wait_frames = fade_in_frames,
         slide_in_frames = sliding_info_slide_frames,
         present_frames = screen_frames - fade_in_frames - 2 * sliding_info_slide_frames,

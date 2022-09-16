@@ -5,9 +5,10 @@
 _m = {
     mission_number = 2,
     scroll_per_frame = 1,
-    mission_name = "death \-espace",
+    mission_name = "outpost \-ein \-espace",
     boss_name = "cheerful \-edeath",
     bg_color = _color_1_darker_blue,
+    mission_info_color = _color_6_light_grey,
     mission_main_music = 0,
     mission_boss_music = 1,
 }
@@ -89,7 +90,7 @@ do
                 },
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                     _sfx_play(_sfx_enemy_multi_shoot)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
                         add(bullets, enemy_bullet_factory(
@@ -150,7 +151,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                         _sfx_play(_sfx_enemy_multi_shoot)
+                        _sfx_play(_sfx_enemy_multi_shoot)
                         return {
                             enemy_bullet_factory(
                                 new_movement_line_factory {

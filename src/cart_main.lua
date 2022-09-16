@@ -70,8 +70,6 @@ end
 -- TODO: polishing: explosions: boss enters next phase
 -- TODO: polishing: explosions: boss destroyed
 
--- TODO: mission info + cart top-level comment: mission 2 name
--- TODO: mission info + cart top-level comment: mission 3 name
 -- TODO: boss info: boss 1 name
 -- TODO: boss info: boss 2 name
 -- TODO: boss info: boss 3 name
@@ -92,7 +90,7 @@ end
 -- TODO: balancing: powerup distributions 
 -- TODO: balancing: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 -- TODO: balancing: player speed, its bullets: speed 1, speed 2, throttle length, shockwave: throttle length 
--- TODO: balancing: shockwave damange time and amount 
+-- TODO: balancing: shockwave damage time and amount 
 
 -- TODO: consider angled triple-shot  
 

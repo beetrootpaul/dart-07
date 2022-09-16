@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 38
 __lua__
--- shmup mission 3 title
+-- mission 3: phoslar mine
 -- by beetroot paul
 
 #include build/src/third_party/easingcheatsheet.lua

@@ -5,9 +5,10 @@
 _m = {
     mission_number = 3,
     scroll_per_frame = 1,
-    mission_name = "rotfl",
+    mission_name = "phoslar \-emine",
     boss_name = "lol",
     bg_color = _color_2_darker_purple,
+    mission_info_color = _color_3_dark_green,
     mission_main_music = 0,
     mission_boss_music = 1,
 }
@@ -130,7 +131,7 @@ do
                 },
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                     _sfx_play(_sfx_enemy_multi_shoot)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
                         add(bullets, enemy_bullet_factory(
@@ -172,7 +173,7 @@ do
                     triggering_health_fraction = 1,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
-                         _sfx_play(_sfx_enemy_multi_shoot)
+                        _sfx_play(_sfx_enemy_multi_shoot)
                         return {
                             enemy_bullet_factory(
                                 new_movement_line_factory {
