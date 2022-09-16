@@ -48,8 +48,6 @@ end
 -- TODO: polishing: screen win; with info which button to press to progress
 -- TODO: polishing: screen over; with info which button to press to progress
 
--- TODO: polishing: boss health bar
-
 -- TODO: polishing: SFX: enemy bullets
 -- TODO: polishing: SFX: shared
 
@@ -61,17 +59,13 @@ end
 -- TODO: polishing: music: mission 3
 -- TODO: polishing: music: mission 3 boss
 
--- TODO: polishing: sprites: enemy 
--- TODO: polishing: sprites: enemy bullets
+-- TODO: polishing: sprites: mission 1: enemies 
 
 -- TODO: polishing: player invincibility
 
 -- TODO: polishing: explosions: player hit
 -- TODO: polishing: explosions: player destroyed
--- TODO: polishing: explosions: enemy hit
--- TODO: polishing: explosions: enemy hit with a shockwave
 -- TODO: polishing: explosions: enemy destroyed
--- TODO: polishing: explosions: boss hit
 -- TODO: polishing: explosions: boss hit with a shockwave
 -- TODO: polishing: explosions: boss enters next phase
 -- TODO: polishing: explosions: boss destroyed

@@ -31,6 +31,9 @@ function new_hud(params)
     local shockwave_bar_segment_full = new_static_sprite(8, 21, 48, 2, sprite_opts)
     local shockwave_bar_segment_empty = new_static_sprite(2, 21, 54, 2, sprite_opts)
 
+    local boss_health_bar_start = new_static_sprite(4, 4, 40, 0, sprite_opts)
+    local boss_health_bar_end = new_static_sprite(4, 4, 44, 0, sprite_opts)
+
     return {
         _update = function()
             slide_in_offset._update()
@@ -64,13 +67,24 @@ function new_hud(params)
 
             if p.boss_health and p.boss_health_max then
                 local health_fraction = p.boss_health / p.boss_health_max
-                rectfill(
-                    _gaox + boss_health_bar_margin,
-                    4,
-                    _gaox + boss_health_bar_margin + ceil(health_fraction * (_gaw - 2 * boss_health_bar_margin)) - 1,
-                    5,
-                    _color_8_red
+                boss_health_bar_start._draw(_xy(boss_health_bar_margin, boss_health_bar_margin))
+                boss_health_bar_end._draw(_xy(_gaw - boss_health_bar_margin - 4, boss_health_bar_margin))
+                line(
+                    _gaox + boss_health_bar_margin + 2,
+                    boss_health_bar_margin + 2,
+                    _gaox + _gaw - boss_health_bar_margin - 3,
+                    boss_health_bar_margin + 2,
+                    _color_14_mauve
                 )
+                if health_fraction > 0 then
+                    line(
+                        _gaox + boss_health_bar_margin + 2,
+                        boss_health_bar_margin + 1,
+                        _gaox + boss_health_bar_margin + 2 + flr(health_fraction * (_gaw - 2 * boss_health_bar_margin - 4)) - 1,
+                        boss_health_bar_margin + 1,
+                        _color_8_red
+                    )
+                end
             end
         end,
     }
