@@ -1,6 +1,6 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- -- --
--- cart_mission/sprites/static_sprite.lua --
--- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- -- -- -- -- -- --
+-- common/sprites/static_sprite.lua --
+-- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_static_sprite(sprite_w, sprite_h, sprite_x, sprite_y, params)
     params = params or {}

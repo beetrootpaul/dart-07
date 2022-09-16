@@ -34,6 +34,9 @@ function _draw()
     _remap_display_colors()
 end
 
+-- TODO: selection screen: game logo
+-- TODO: selection screen: what with locked missions? implement persisted high score instead of them? if yes, remove greyed out sprites of level samples
+
 -- TODO: API file: UNPACK
 -- TODO: API file: DGET
 -- TODO: API file: DSET

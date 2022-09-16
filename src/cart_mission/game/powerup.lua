@@ -5,14 +5,14 @@
 function new_powerup(start_xy, powerup_type)
     local is_picked = false
 
-    local function powerup_sprite(sprite_y)
-        return new_static_sprite(9, 8, 119, sprite_y)
+    local function powerup_sprite(sprite_x)
+        return new_static_sprite(9, 8, sprite_x, 24)
     end
     local sprites = {
         h = powerup_sprite(0),
-        t = powerup_sprite(8),
-        f = powerup_sprite(16),
-        s = powerup_sprite(24),
+        f = powerup_sprite(9),
+        t = powerup_sprite(18),
+        s = powerup_sprite(27),
     }
 
     local movement = new_movement_line_factory {

@@ -33,33 +33,35 @@ function new_screen_brp()
         cls(_color_0_black)
 
         local bg_pattern = 0xffff
-        local sx, sy = 0, 32
-
+        local sy = 72
         if fade_in_timer.passed_fraction() < .33 then
             bg_pattern = 0x0000
-            sx = 32
-            sy = 48
+            sy = 114
         elseif fade_in_timer.passed_fraction() < .66 then
             bg_pattern = 0x0f00
-            sx = 32
+            sy = 100
         elseif fade_in_timer.passed_fraction() < 1 then
             bg_pattern = 0x0f0f
-            sy = 48
+            sy = 86
         elseif present_timer.passed_fraction() < 1 then
         elseif fade_out_timer.passed_fraction() < .33 then
             bg_pattern = 0x0f0f
-            sy = 48
+            sy = 86
         elseif fade_out_timer.passed_fraction() < .66 then
             bg_pattern = 0x0f00
-            sx = 32
+            sy = 100
         else
             bg_pattern = 0x0000
-            sx = 32
-            sy = 48
+            sy = 114
         end
 
         if fade_out_timer.passed_fraction() < 1 then
-            sspr(sx, sy, 29, 14, 34, 49, 58, 28)
+            sspr(
+                99, sy,
+                29, 14,
+                (_vs - 29 * 2) / 2, (_vs - 14 * 2) / 2,
+                29 * 2, 14 * 2
+            )
         end
     end
 

@@ -119,7 +119,7 @@ do
             -- enemy: stationary
             [79] = {
                 health = 5,
-                sprites_props_txt = "18,16,0,64|18,16,18,64",
+                sprites_props_txt = "16,16,0,64|10,10,16,64",
                 collision_circles_props = {
                     { 5 },
                 },
