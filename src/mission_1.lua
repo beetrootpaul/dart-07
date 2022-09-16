@@ -104,7 +104,7 @@ do
                 --},
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement)
-                    _sfx_play(33)
+                    _sfx_play(_sfx_enemy_shoot)
                     return {
                         enemy_bullet_small_factory(
                             new_movement_line_factory({
@@ -177,7 +177,7 @@ do
                 --},
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement)
-                    _sfx_play(32)
+                     _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
                         add(bullets, enemy_bullet_small_factory(
@@ -225,7 +225,7 @@ do
                 --},
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    _sfx_play(32)
+                     _sfx_play(_sfx_enemy_multi_shoot)
                     local enemy_xy = enemy_movement.xy
                     local player_xy = player_collision_circle.xy
                     return {
@@ -264,7 +264,7 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement)
-                    _sfx_play(32)
+                     _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
                         add(bullets, enemy_bullet_small_factory(
@@ -308,7 +308,7 @@ do
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
                         if t() % 2 < 1 then return {} end
-                        _sfx_play(33)
+                        _sfx_play(_sfx_enemy_shoot)
                         return {
                             enemy_bullet_small_factory(
                                 new_movement_line_factory {
@@ -326,7 +326,7 @@ do
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
                         if t() % 2 < 1 then return {} end
-                        _sfx_play(33)
+                        _sfx_play(_sfx_enemy_shoot)
                         return {
                             enemy_bullet_small_factory(
                                 new_movement_line_factory {
@@ -361,7 +361,7 @@ do
                     triggering_health_fraction = .35,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement, player_collision_circle)
-                        _sfx_play(32)
+                         _sfx_play(_sfx_enemy_multi_shoot)
                         if t() % 2 > 1.3 and t() % 2 < 1.6 then
                             -- aimed side bullets
                             return {

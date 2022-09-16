@@ -3,8 +3,7 @@
 -- -- -- -- -- -- -- --
 
 -- SFXs shared between carts: 0 - 31
--- SFXs individual for a cart: 32 - 39 (i.e. various enemy shooting types or an extra SFX for a logo screen)
--- music individual for a cart: 40 - 64
+-- music and SFX individual for a cart: 32 - 64
 
 _sfx_options_change = 0
 --_sfx_options_prev = 1
@@ -21,13 +20,13 @@ _sfx_powerup_shockwave = 9
 _sfx_player_shoot = 10
 _sfx_player_triple_shoot = 11
 _sfx_player_shockwave = 12
---_sfx_player_cannot_shockwave = 13
+_sfx_enemy_shoot = 13
+_sfx_enemy_multi_shoot = 14
+ -- 15
 
-_sfx_damage_player = 14
-_sfx_damage_enemy = 15
---_sfx_damage_enemy_shockwave = 16
-_sfx_damage_boss = 17
---_sfx_damage_boss_shockwave = 18
+_sfx_damage_player = 16
+_sfx_damage_enemy = 17
+_sfx_damage_boss = 18
 
 _sfx_destroy_player = 19
 _sfx_destroy_enemy = 20
