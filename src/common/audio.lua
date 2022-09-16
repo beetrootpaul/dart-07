@@ -22,7 +22,7 @@ _sfx_player_triple_shoot = 11
 _sfx_player_shockwave = 12
 _sfx_enemy_shoot = 13
 _sfx_enemy_multi_shoot = 14
- -- 15
+-- 15
 
 _sfx_damage_player = 16
 _sfx_damage_enemy = 17
@@ -35,8 +35,10 @@ _sfx_destroy_boss_final_1 = 22
 _sfx_destroy_boss_final_2 = 23
 _sfx_destroy_boss_final_3 = 24
 
-function _sfx_play(sfx_id)
-    sfx(sfx_id, 3)
+-- 1) use channel 3 for very frequent sfx like player shooting, and try to not put any music there
+-- 2) use channel 0 for all other sfxs and keep music percussion there as well, so it will be least disturbing
+function _sfx_play(sfx_id, player_shooting_channel)
+    sfx(sfx_id, player_shooting_channel and 3 or 0)
 end
 
 function _music_fade_out()

@@ -22,20 +22,20 @@ function new_game(params)
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
-            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot)
+            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot, true)
             for b in all(bullets) do
                 add(player_bullets, b)
             end
         end,
         on_shockwave_triggered = function(shockwave)
-            _sfx_play(_sfx_player_shockwave)
+            _sfx_play(_sfx_player_shockwave, true)
             add(shockwaves, shockwave)
         end,
         on_damaged = function()
             _sfx_play(_sfx_damage_player)
         end,
         on_destroyed = function(collision_circle)
-            _sfx_play(_sfx_destroy_player)
+            _sfx_play(_sfx_destroy_player, true)
             _add_all(
                 explosions,
                 new_explosion(collision_circle.xy, collision_circle.r),
