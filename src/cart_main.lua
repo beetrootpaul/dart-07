@@ -33,12 +33,9 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: FIX boss destroyed with the last piece of health loads next mission for a brief moment!
-
 -- TODO: shockwave tends to destroy after it becomes invisible. Fix it!
 
--- TODO: selection screen: game logo
--- TODO: selection screen: what with locked missions? implement persisted high score instead of them? if yes, remove greyed out sprites of level samples
+-- TODO: selection screen: game logo OR separate title screen and selection+score screen
 
 -- TODO: API file: UNPACK
 -- TODO: API file: DGET

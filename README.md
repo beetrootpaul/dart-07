@@ -38,9 +38,13 @@ TODO link to #easingcheatsheet https://www.lexaloffle.com/bbs/?tid=40577
 
 TODO screenshots
 
----
+## Code style
 
-Development:
+That this game runs on PICO-8, which has a token count limit. 
+It means, in a lot of situations a code clarity had to be sacrificed
+in order to squeeze one more enemy or to implement a score display ¯\_(ツ)_/¯
+
+## Development
 
 1. (optional) Install [nvm](https://github.com/nvm-sh/nvm)
 2. (optional) Run `nvm install` to setup proper Node.js version

@@ -58,12 +58,12 @@ function new_screen_mission_boss(game, hud)
             game.start_boss_fight()
         end
 
-        if game.is_boss_defeated() then
-            return new_screen_mission_end(game, hud)
-        end
-
         if game.health <= 0 then
             return new_screen_defeat(game, hud)
+        end
+
+        if game.is_boss_defeated() then
+            return new_screen_mission_end(game, hud)
         end
     end
 

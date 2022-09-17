@@ -149,7 +149,7 @@ function new_screen_select_mission(selected_mission)
     end
 
     function screen._draw()
-        cls(_color_2_darker_purple)
+        cls(_color_1_darker_blue)
 
         print("shmup", 34, 10, _color_15_peach)
 
