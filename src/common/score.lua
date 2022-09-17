@@ -18,11 +18,11 @@ function new_score(initial)
             return current
         end,
         as_6_digits_text_with_extra_zero = function()
-            local text = tostr(current) .. "0"
-            while #text < 6 do
-                text = "_" .. text
+            local text = current > 0 and tostr(current) or ""
+            while #text < 5 do
+                text = " " .. text
             end
-            return text
+            return text .. "0"
         end,
     }
 end

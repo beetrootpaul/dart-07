@@ -33,6 +33,8 @@ function _draw()
     pal(_palette_display, 1)
 end
 
+-- TODO: FIX boss destroyed with the last piece of health loads next mission for a brief moment!
+
 -- TODO: shockwave tends to destroy after it becomes invisible. Fix it!
 
 -- TODO: selection screen: game logo

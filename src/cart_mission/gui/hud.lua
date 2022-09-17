@@ -22,8 +22,8 @@ function new_hud(params)
         return new_static_sprite(sprite_whxy_txt, { from_left_top_corner = true })
     end
 
-    local heart, health_bar_start, health_bar_segment_full, health_bar_segment_empty = new_hud_sprite "6,5,40,24", new_hud_sprite "8,5,40,19", new_hud_sprite "8,11,40,8", new_hud_sprite "1,11,40,8"
-    local shockwave, shockwave_bar_start, shockwave_bar_segment_full, shockwave_bar_segment_empty = new_hud_sprite "7,6,48,24", new_hud_sprite "8,1,48,23", new_hud_sprite "8,21,48,2", new_hud_sprite "2,21,54,2"
+    local heart, health_bar_start, health_bar_segment_full, health_bar_segment_empty = new_hud_sprite "6,5,40,24", new_hud_sprite "8,5,40,19", new_hud_sprite "8,9,40,10", new_hud_sprite "1,9,40,10"
+    local shockwave, shockwave_bar_start, shockwave_bar_segment_full, shockwave_bar_segment_empty = new_hud_sprite "7,6,48,24", new_hud_sprite "8,1,48,23", new_hud_sprite "8,16,48,7", new_hud_sprite "2,16,54,7"
     local boss_health_bar_start, boss_health_bar_end = new_hud_sprite "4,4,40,0", new_hud_sprite "4,4,44,0"
 
     return {
@@ -36,32 +36,47 @@ function new_hud(params)
             --rectfill(0, 0, bar_w - 1, _vs - 1, _color_5_blue_green)
             --rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_5_blue_green)
 
+            -- health bar
             local xy = _xy(-_gaox + 3, _vs - 16).plus(slide_in_offset.xy.ceil())
             heart._draw(xy.plus(1, 6))
             for segment = 1, _health_max do
-                (p.player_health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy.minus(0, 4 + segment * 8))
+                (p.player_health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy.minus(0, 4 + segment * 6))
             end
             -- we have to draw health_bar_start after health_bar_segment_full in order to cover 1st segment's joint with black pixels
             health_bar_start._draw(xy.minus(0, 4))
 
+            -- shockwave charges
             xy = _xy(_gaw + 5, _vs - 16).minus(slide_in_offset.xy.ceil())
             shockwave._draw(xy.plus(0, 6))
             shockwave_bar_start._draw(xy)
             for segment = 1, _shockwave_charges_max do
                 if p.shockwave_charges >= segment then
-                    shockwave_bar_segment_full._draw(xy.minus(0, segment * 21))
+                    shockwave_bar_segment_full._draw(xy.minus(0, segment * 16))
                 else
-                    shockwave_bar_segment_empty._draw(xy.minus(-6, segment * 21))
+                    shockwave_bar_segment_empty._draw(xy.minus(-6, segment * 16))
                 end
             end
 
-            print(
-                p.score.as_6_digits_text_with_extra_zero(),
-                _gaox + _gaw + 1,
-                1,
-                _color_6_light_grey
-            )
+            -- score
+            local score_text = p.score.as_6_digits_text_with_extra_zero()
+            local score_text_x = xy.x + 17
+            for i = 1, #score_text do
+                local score_text_y = -2 + i * 6
+                print(
+                    "8",
+                    score_text_x,
+                    score_text_y,
+                    _color_2_darker_purple
+                )
+                print(
+                    score_text[i],
+                    score_text_x,
+                    score_text_y,
+                    _color_6_light_grey
+                )
+            end
 
+            -- boss health
             if p.boss_health and p.boss_health_max then
                 local health_fraction = p.boss_health / p.boss_health_max
                 boss_health_bar_start._draw(_xy(boss_health_bar_margin, boss_health_bar_margin))
