@@ -183,6 +183,8 @@ function new_game(params)
 
     --
 
+    game.mission_progress_fraction = level.progress_fraction
+
     game.enter_enemies_phase = level.enter_phase_main
 
     function game.is_ready_to_enter_boss_phase()

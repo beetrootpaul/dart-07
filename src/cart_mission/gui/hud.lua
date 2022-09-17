@@ -6,11 +6,15 @@ function new_hud(params)
     local slide_in_offset = new_movement_sequence_factory {
         new_movement_fixed_factory {
             frames = params.wait_frames,
+            -- DEBUG:
+            --frames = 0,
         },
         new_movement_to_target_factory {
             frames = params.slide_in_frames,
             target_x = 0,
             easing_fn = _easing_easeoutquart,
+            -- DEBUG:
+            --frames = 0,
         },
     }(_xy(-20, 0))
 
@@ -22,6 +26,7 @@ function new_hud(params)
 
     local heart, health_bar_start, health_bar_segment_full, health_bar_segment_empty = new_hud_sprite "6,5,40,24", new_hud_sprite "8,5,40,19", new_hud_sprite "8,9,40,10", new_hud_sprite "1,9,40,10"
     local shockwave, shockwave_bar_start, shockwave_bar_segment_full, shockwave_bar_segment_empty = new_hud_sprite "7,6,48,24", new_hud_sprite "8,1,48,23", new_hud_sprite "8,16,48,7", new_hud_sprite "2,16,54,7"
+    local ship_indicator = new_hud_sprite "3,5,40,4"
     local boss_health_bar_start, boss_health_bar_end = new_hud_sprite "4,4,40,0", new_hud_sprite "4,4,44,0"
 
     return {
@@ -42,6 +47,22 @@ function new_hud(params)
             end
             -- we have to draw health_bar_start after health_bar_segment_full in order to cover 1st segment's joint with black pixels
             health_bar_start._draw(xy.minus(0, 4))
+
+            -- mission progress
+            local mission_progress_h = 35
+            local mission_progress_x = _gaox + xy.x + 5
+            line(
+                mission_progress_x,
+                4,
+                mission_progress_x,
+                3 + mission_progress_h,
+                _color_13_lavender
+            )
+            ship_indicator._draw(xy.minus(
+                -4,
+                77 + game.mission_progress_fraction() * (mission_progress_h - 3)
+            ))
+
 
             -- shockwave charges
             xy = _xy(_gaw + 5, _vs - 16).minus(slide_in_offset.xy.ceil())
