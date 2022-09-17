@@ -7,14 +7,16 @@ function _xy(x, y)
         x = x,
         y = y,
         plus = function(xy2_or_x2, y2)
-            return type(xy2_or_x2) == "number" and
-                _xy(x + xy2_or_x2, y + y2) or
-                _xy(x + xy2_or_x2.x, y + xy2_or_x2.y)
+            return _xy(
+                x + (y2 and xy2_or_x2 or xy2_or_x2.x),
+                y + (y2 or xy2_or_x2.y)
+            )
         end,
         minus = function(xy2_or_x2, y2)
-            return type(xy2_or_x2) == "number" and
-                _xy(x - xy2_or_x2, y - y2) or
-                _xy(x - xy2_or_x2.x, y - xy2_or_x2.y)
+            return _xy(
+                x - (y2 and xy2_or_x2 or xy2_or_x2.x),
+                y - (y2 or xy2_or_x2.y)
+            )
         end,
         flr = function()
             return _xy(flr(x), flr(y))

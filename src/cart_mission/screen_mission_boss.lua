@@ -3,14 +3,14 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_mission_boss(game, hud)
-    local boss_info_frames, boss_info_slide_frames = 180, 50
+    local boss_info_frames, boss_info_slide_frames, screen = 180, 50, {}
 
     local boss_info = new_sliding_info {
+        text_2 = _m.boss_name,
+        main_color = _color_8_red,
         slide_in_frames = boss_info_slide_frames,
         present_frames = boss_info_frames - 2 * boss_info_slide_frames,
         slide_out_frames = boss_info_slide_frames,
-        text_1 = "boss",
-        text_2 = _m.boss_name,
         -- DEBUG:
         --slide_in_frames = 8,
         --present_frames = 0,
@@ -18,8 +18,6 @@ function new_screen_mission_boss(game, hud)
     }
 
     --
-
-    local screen = {}
 
     function screen._init()
         _music_fade_out()
@@ -43,6 +41,7 @@ function new_screen_mission_boss(game, hud)
             shockwave_charges = game.shockwave_charges,
             boss_health = (not boss_info) and game.boss_health or nil,
             boss_health_max = (not boss_info) and game.boss_health_max or nil,
+            score = game.score,
         }
 
         if boss_info then
@@ -59,12 +58,12 @@ function new_screen_mission_boss(game, hud)
             game.start_boss_fight()
         end
 
-        if game.is_boss_defeated() then
-            return new_screen_mission_end(game, hud)
-        end
-
         if game.health <= 0 then
             return new_screen_defeat(game, hud)
+        end
+
+        if game.is_boss_defeated() then
+            return new_screen_mission_end(game, hud)
         end
     end
 

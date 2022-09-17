@@ -5,9 +5,10 @@
 _m = {
     mission_number = 1,
     scroll_per_frame = .5,
-    mission_name = "death islands",
-    boss_name = "painful death",
+    mission_name = "emerald \-fislands",
+    boss_name = "painful \-fdeath",
     bg_color = _color_4_true_blue,
+    mission_info_color = _color_9_dark_orange,
     mission_main_music = 0,
     mission_boss_music = 2,
 }
@@ -48,22 +49,22 @@ do
         end
     end
 
-    local enemy_bullet_small_factory = new_enemy_bullet_factory {
-        bullet_sprite = new_static_sprite(4, 4, 124, 64),
+    local enemy_bullet_factory = new_enemy_bullet_factory {
+        bullet_sprite = new_static_sprite "4,4,124,64",
         collision_circle_r = 1.5,
-    }
-    local enemy_bullet_big_factory = new_enemy_bullet_factory {
-        bullet_sprite = new_static_sprite(6, 6, 118, 64),
-        collision_circle_r = 2.5,
     }
 
     -- enemy property:
-    --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
-    --   - collision_circles_props = {
+    --   - [1] = health
+    --   - [2] = score
+    --   - [3] = sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
+    --   - [4] = collision_circles_props = {
     --                    { r, optional_xy_offset }, -- put main/center circle first, since it will be source for explosions etc.
     --                    { r, optional_xy_offset },
     --                    { r },
     --                },
+    --   - [5] = powerups_distribution
+    --   - [6] = movement_factory
     --   - spawn_bullets = function(enemy_movement, player_collision_circle)
     --                       return bullets_table
     --                     end
@@ -72,41 +73,44 @@ do
 
             -- enemy: fast and small
             [74] = {
-                health = 1,
-                sprites_props_txt = "8,8,0,88|6,6,22,79",
-                collision_circles_props = {
+                1,
+                2,
+                "8,8,0,88|6,6,22,79",
+                {
                     { 3, _xy(0, 1) },
                 },
-                movement_factory = new_movement_line_factory {
+                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
+                new_movement_line_factory {
                     angle = .75,
                     angled_speed = 1.5,
                     -- DEBUG:
                     --frames = 123,
                 },
-                powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
             },
 
             -- enemy: sinusoidal
             [75] = {
-                health = 2,
-                sprites_props_txt = "10,10,22,86 |8,8,13,88",
-                collision_circles_props = {
+                2,
+                5,
+                "10,10,22,86|8,8,13,88",
+                {
                     { 4 },
                 },
-                movement_factory = new_movement_sinusoidal_factory {
+                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
+                new_movement_sinusoidal_factory {
                     speed_y = .75,
                 },
                 -- DEBUG:
-                --movement_factory = new_movement_line_factory {
+                --new_movement_line_factory {
                 --    angle = .75,
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 234,
                 --},
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement)
-                    _sfx_play(33)
+                    _sfx_play(_sfx_enemy_shoot)
                     return {
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory({
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .75,
@@ -114,17 +118,18 @@ do
                         )
                     }
                 end,
-                powerups_distribution = "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
             },
 
             -- enemy: wait and charge
             [76] = {
-                health = 7,
-                sprites_props_txt = "16,14,22,64|14,12,32,84",
-                collision_circles_props = {
+                7,
+                20,
+                "16,14,22,64|14,12,32,84",
+                {
                     { 7 },
                 },
-                movement_factory = new_movement_sequence_factory {
+                "-,-,-,-,-,-,-,-,-,-,h,h,f,t,s,s",
+                new_movement_sequence_factory {
                     new_movement_line_factory {
                         frames = 80,
                         angle = .75,
@@ -135,25 +140,26 @@ do
                     },
                 },
                 -- DEBUG:
-                --movement_factory = new_movement_line_factory {
+                --new_movement_line_factory {
                 --    angle = .75,
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 234,
                 --},
-                powerups_distribution = "-,-,-,-,-,-,-,-,-,-,h,h,f,t,s,s",
             },
 
             -- enemy: big
             [77] = {
-                health = 30,
-                sprites_props_txt = "24,20,64,64|22,18,88,65",
-                collision_circles_props = {
+                30,
+                100,
+                "24,20,64,64|22,18,88,65",
+                {
                     { 10, _xy(0, 1) },
                     { 5, _xy(-7, 0) },
                     { 5, _xy(7, 0) },
                     { 5, _xy(0, -4) },
                 },
-                movement_factory = new_movement_sequence_factory {
+                "h,s",
+                new_movement_sequence_factory {
                     new_movement_to_target_factory {
                         target_y = 32,
                         frames = 120,
@@ -170,17 +176,17 @@ do
                     },
                 },
                 -- DEBUG:
-                --movement_factory = new_movement_line_factory {
+                --new_movement_line_factory {
                 --    angle = .75,
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 123,
                 --},
                 bullet_fire_timer = new_timer(40),
                 spawn_bullets = function(enemy_movement)
-                    _sfx_play(32)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
-                        add(bullets, enemy_bullet_small_factory(
+                        add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = t() % 1 + i / 8,
@@ -189,19 +195,20 @@ do
                     end
                     return bullets
                 end,
-                powerups_distribution = "h,s",
             },
 
             -- enemy: long, pausing, w/ aimed triple shot
             [78] = {
-                health = 4,
-                sprites_props_txt = "8,22,50,64|6,20,58,65",
-                collision_circles_props = {
+                4,
+                40,
+                "8,22,50,64|6,20,58,65",
+                {
                     { 4 },
                     { 4, _xy(0, 7) },
                     { 4, _xy(0, -7) },
                 },
-                movement_factory = new_movement_sequence_factory({
+                "-,-,-,-,-,-,h,f,f,f,t,t,s",
+                new_movement_sequence_factory({
                     new_movement_to_target_factory {
                         target_y = 80,
                         frames = 150,
@@ -218,45 +225,46 @@ do
                     },
                 }),
                 -- DEBUG:
-                --movement_factory = new_movement_line_factory {
+                --new_movement_line_factory {
                 --    angle = .75,
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 160,
                 --},
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    _sfx_play(32)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local enemy_xy = enemy_movement.xy
                     local player_xy = player_collision_circle.xy
                     return {
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
                             }(enemy_xy.minus(0, 7))
                         ),
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
                             }(enemy_xy.minus(0, 1))
                         ),
-                        enemy_bullet_small_factory(
+                        enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
                             }(enemy_xy.plus(0, 5))
                         ),
                     }
                 end,
-                powerups_distribution = "-,-,-,-,-,-,h,f,f,f,t,t,s",
             },
 
             -- enemy: stationary
             [79] = {
-                health = 10,
-                sprites_props_txt = "22,24,0,64|12,12,38,64",
-                collision_circles_props = {
+                10,
+                50,
+                "22,24,0,64|12,12,38,64",
+                {
                     { 6 },
                 },
-                movement_factory = new_movement_line_factory {
+                "-,-,h,h,t,s,s,s",
+                new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m.scroll_per_frame,
                     -- DEBUG:
@@ -264,10 +272,10 @@ do
                 },
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement)
-                    _sfx_play(32)
+                    _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
                     for i = 1, 8 do
-                        add(bullets, enemy_bullet_small_factory(
+                        add(bullets, enemy_bullet_factory(
                             new_movement_line_factory {
                                 base_speed_y = enemy_movement.speed_xy.y,
                                 angle = .0625 + i / 8,
@@ -276,7 +284,6 @@ do
                     end
                     return bullets
                 end,
-                powerups_distribution = "-,-,h,h,t,s,s,s",
             },
 
         })[enemy_map_marker]
@@ -305,12 +312,13 @@ do
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
+                    score = 50,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
                         if t() % 2 < 1 then return {} end
-                        _sfx_play(33)
+                        _sfx_play(_sfx_enemy_shoot)
                         return {
-                            enemy_bullet_small_factory(
+                            enemy_bullet_factory(
                                 new_movement_line_factory {
                                     angle = .75,
                                     angled_speed = 1.5,
@@ -323,12 +331,13 @@ do
                 -- phase 2:
                 {
                     triggering_health_fraction = .85,
+                    score = 300,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
                         if t() % 2 < 1 then return {} end
-                        _sfx_play(33)
+                        _sfx_play(_sfx_enemy_shoot)
                         return {
-                            enemy_bullet_small_factory(
+                            enemy_bullet_factory(
                                 new_movement_line_factory {
                                     angle = .75,
                                     angled_speed = 1.5,
@@ -359,27 +368,28 @@ do
                 -- phase 3:
                 {
                     triggering_health_fraction = .35,
+                    score = 650,
                     bullet_fire_timer = new_timer(8),
-                    spawn_bullets = function(boss_movement, player_collision_circle)
-                        _sfx_play(32)
+                    spawn_bullets = function(boss_movement)
+                        _sfx_play(_sfx_enemy_multi_shoot)
                         if t() % 2 > 1.3 and t() % 2 < 1.6 then
-                            -- aimed side bullets
+                            -- side bullets
                             return {
-                                enemy_bullet_small_factory(
+                                enemy_bullet_factory(
                                     new_movement_line_factory {
-                                        target_xy = player_collision_circle.xy,
+                                        angle = .75,
                                     }(boss_movement.xy.plus(-20, -3))
                                 ),
-                                enemy_bullet_small_factory(
+                                enemy_bullet_factory(
                                     new_movement_line_factory {
-                                        target_xy = player_collision_circle.xy,
+                                        angle = .75,
                                     }(boss_movement.xy.plus(20, -3))
                                 ),
                             }
                         elseif t() % 2 < 1 then
                             -- sinusoidal central bullets
                             return {
-                                enemy_bullet_small_factory(
+                                enemy_bullet_factory(
                                     new_movement_sinusoidal_factory {
                                         speed_y = 1.5,
                                         age_divisor = 60,

@@ -25,8 +25,7 @@ function new_level_descriptor()
     -- extra columns on both sides in -- order to make further computations easier
     local markers = {}
     do
-        local markers_per_screen_w = 8
-        local x = 1
+        local markers_per_screen_w, x = 8, 1
         for intro_infinite_scroll_x = 1, markers_per_screen_w + 1 do
             markers[x] = { nil, nil, nil, nil, nil, nil }
             x = x + 1
@@ -59,8 +58,7 @@ function new_level_descriptor()
     end
 
     -- conversion from markers to level descriptor
-    local structures_occupied = { [-1] = {}, [0] = {} }
-    local structures, enemies = {}, {}
+    local structures_occupied, structures, enemies = { [-1] = {}, [0] = {} }, {}, {}
     for x = 1, #markers do
         local distance = x * 2 - 1
         local distance2 = distance + 1

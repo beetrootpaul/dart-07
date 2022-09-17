@@ -3,12 +3,14 @@
 -- -- -- -- -- -- -- -- --
 
 function _get_cart_param(index)
-    local cart_params = split(stat(6), ",", false)
+    local cart_params = split(stat(6))
     if #cart_params < index then
         return nil
     end
     local p = cart_params[index]
-    return #p > 0 and p or nil
+    -- stat(6) returns an empty string, if there are no params provided,
+    -- therefore after split(…) we need to check if first extracted param isn't ""
+    return p ~= "" and p or nil
 end
 
 function _load_main_cart(params)
@@ -35,7 +37,8 @@ function _load_mission_cart(params)
     local cart_params = tostr(params.health) ..
         "," .. tostr(params.shockwave_charges) ..
         "," .. tostr(params.triple_shot) ..
-        "," .. tostr(params.fast_shoot)
+        "," .. tostr(params.fast_shoot) ..
+        "," .. tostr(params.score)
 
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
     -- of any further instruction if succeeded. This means we can safely

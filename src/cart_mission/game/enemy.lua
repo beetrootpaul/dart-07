@@ -8,16 +8,14 @@ do
     function new_enemy(params)
         next_id = next_id + 1
 
-        local enemy_properties = params.enemy_properties
-        local start_xy = params.start_xy
+        local enemy_properties, start_xy = params.enemy_properties, params.start_xy
         local on_bullets_spawned, on_damaged, on_destroyed = params.on_bullets_spawned, params.on_damaged, params.on_destroyed
 
-        local health = enemy_properties.health
-        local movement = enemy_properties.movement_factory(start_xy)
+        local health, movement = enemy_properties[1], enemy_properties[6](start_xy)
         local bullet_fire_timer = enemy_properties.bullet_fire_timer or new_fake_timer()
 
-        local ship_sprite_props_txt, flash_sprite_props_txt = unpack(split(enemy_properties.sprites_props_txt, "|"))
-        local ship_sprite, flash_sprite = new_static_sprite(unpack(split(ship_sprite_props_txt))), new_static_sprite(unpack(split(flash_sprite_props_txt)))
+        local ship_sprite_props_txt, flash_sprite_props_txt = unpack(split(enemy_properties[3], "|"))
+        local ship_sprite, flash_sprite = new_static_sprite(ship_sprite_props_txt), new_static_sprite(flash_sprite_props_txt)
 
         local flashing_after_damage_timer
 
@@ -25,7 +23,7 @@ do
 
         local function collision_circles()
             local ccs = {}
-            for cc_props in all(enemy_properties.collision_circles_props) do
+            for cc_props in all(enemy_properties[4]) do
                 add(ccs, {
                     xy = movement.xy.plus(cc_props[2] or _xy(0, 0)),
                     r = cc_props[1],
@@ -52,8 +50,8 @@ do
                     on_damaged(main_collision_circle)
                 else
                     is_destroyed = true
-                    local powerup_type = rnd(split(enemy_properties.powerups_distribution))
-                    on_destroyed(main_collision_circle, powerup_type)
+                    local powerup_type = rnd(split(enemy_properties[5]))
+                    on_destroyed(main_collision_circle, powerup_type, enemy_properties[2])
                 end
             end,
 

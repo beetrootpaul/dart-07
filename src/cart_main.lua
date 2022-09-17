@@ -11,8 +11,8 @@ function _init()
     -- and delete "todo-shmup.p8d.txt" file
     cartdata("todo-shmup")
 
-    current_screen = preselected_mission_number ~= nil and
-        new_screen_select_mission { preselected_mission_number = tonum(preselected_mission_number) } or
+    current_screen = preselected_mission_number and
+        new_screen_select_mission(preselected_mission_number) or
         new_screen_brp()
     current_screen._init()
 end
@@ -30,11 +30,10 @@ end
 
 function _draw()
     current_screen._draw()
-
-    _remap_display_colors()
+    pal(_palette_display, 1)
 end
 
--- TODO: export remaining sprite sheets
+-- TODO: selection screen: game logo OR separate title screen and selection+score screen
 
 -- TODO: API file: UNPACK
 -- TODO: API file: DGET
@@ -50,8 +49,6 @@ end
 -- TODO: polishing: screen win; with info which button to press to progress
 -- TODO: polishing: screen over; with info which button to press to progress
 
--- TODO: polishing: boss health bar
-
 -- TODO: polishing: SFX: enemy bullets
 -- TODO: polishing: SFX: shared
 
@@ -63,46 +60,31 @@ end
 -- TODO: polishing: music: mission 3
 -- TODO: polishing: music: mission 3 boss
 
--- TODO: polishing: sprites: enemy 
--- TODO: polishing: sprites: enemy bullets
-
--- TODO: polishing: player invincibility
+-- TODO: polishing: sprites: mission 2: enemies 
+-- TODO: polishing: sprites: mission 2: boss 
+-- TODO: polishing: sprites: mission 3: enemies 
+-- TODO: polishing: sprites: mission 3: boss 
 
 -- TODO: polishing: explosions: player hit
 -- TODO: polishing: explosions: player destroyed
--- TODO: polishing: explosions: enemy hit
--- TODO: polishing: explosions: enemy hit with a shockwave
 -- TODO: polishing: explosions: enemy destroyed
--- TODO: polishing: explosions: boss hit
 -- TODO: polishing: explosions: boss hit with a shockwave
 -- TODO: polishing: explosions: boss enters next phase
 -- TODO: polishing: explosions: boss destroyed
 
--- TODO: polishing: sliding info: 1a. mission names
--- TODO: polishing: sliding info: 1b. boss names
--- TODO: polishing: sliding info:  2. look&feel
-
--- TODO: score and persisted high score
+-- TODO: boss info: boss 1 name
+-- TODO: boss info: boss 2 name
+-- TODO: boss info: boss 3 name
 
 -- TODO: tutorial screen? press X to shoot, arrows to fly; X can be pressed long, C cannot
-
--- TODO: screen shake? and a menu item to disable screen shake?
-
--- TODO: "hit stop" on player damage?
-
--- TODO: push enemies and boss on damage?
-
--- TODO: powerup magnet?
--- TODO: powerup retrieval after damage?
 
 -- TODO: balancing: powerup distributions 
 -- TODO: balancing: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 -- TODO: balancing: player speed, its bullets: speed 1, speed 2, throttle length, shockwave: throttle length 
--- TODO: balancing: shockwave damange time and amount 
+-- TODO: balancing: shockwave damage time and amount 
 
 -- TODO: consider angled triple-shot  
 
--- TODO: carts: title comments
 -- TODO: carts: labels
 
 -- TODO: final BBS IDs in LOAD
@@ -112,3 +94,24 @@ end
 -- TODO: GitHub repo: license other than MIT?
 -- TODO: GitHub repo: final name
 -- TODO: GitHub repo: description & website & topics
+
+-- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot
+
+-- TODO: consider this left-right enemy type for mission 2
+-- enemy: left-right
+--[76] = {
+--    movement_factory = new_movement_loop_factory({
+--        new_movement_line_factory {
+--            base_speed_y = .25,
+--            frames = 160,
+--            angle = 0,
+--            angled_speed = .5,
+--        },
+--        new_movement_line_factory {
+--            base_speed_y = .25,
+--            frames = 160,
+--            angle = .5,
+--            angled_speed = .5,
+--        },
+--    }),
+--},

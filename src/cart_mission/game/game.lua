@@ -10,32 +10,31 @@ function new_game(params)
         boss_health_max = nil,
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
+        score = new_score(params.score),
     }
 
     local level = new_level(new_level_descriptor())
 
-    local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves = {}, {}, {}, {}, {}, {}
-
-    local shockwave_enemy_hits = {}
+    local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits = {}, {}, {}, {}, {}, {}, {}
 
     local boss
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
-            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot)
+            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot, true)
             for b in all(bullets) do
                 add(player_bullets, b)
             end
         end,
         on_shockwave_triggered = function(shockwave)
-            _sfx_play(_sfx_player_shockwave)
+            _sfx_play(_sfx_player_shockwave, true)
             add(shockwaves, shockwave)
         end,
         on_damaged = function()
             _sfx_play(_sfx_damage_player)
         end,
         on_destroyed = function(collision_circle)
-            _sfx_play(_sfx_destroy_player)
+            _sfx_play(_sfx_destroy_player, true)
             _add_all(
                 explosions,
                 new_explosion(collision_circle.xy, collision_circle.r),
@@ -60,10 +59,12 @@ function new_game(params)
                 game.health = game.health + 1
             else
                 _sfx_play(_sfx_powerup_no_effect)
+                game.score.add(10)
             end
         elseif powerup.powerup_type == "t" then
             if game.triple_shot then
                 _sfx_play(_sfx_powerup_no_effect)
+                game.score.add(10)
             else
                 _sfx_play(_sfx_powerup_triple_shot)
                 game.triple_shot = true
@@ -71,6 +72,7 @@ function new_game(params)
         elseif powerup.powerup_type == "f" then
             if game.fast_shoot then
                 _sfx_play(_sfx_powerup_no_effect)
+                game.score.add(10)
             else
                 _sfx_play(_sfx_powerup_fast_shot)
                 game.fast_shoot = true
@@ -81,6 +83,7 @@ function new_game(params)
                 game.shockwave_charges = game.shockwave_charges + 1
             else
                 _sfx_play(_sfx_powerup_no_effect)
+                game.score.add(10)
             end
         end
     end
@@ -202,14 +205,16 @@ function new_game(params)
             on_damage = function()
                 _sfx_play(_sfx_damage_boss)
             end,
-            on_entered_next_phase = function(collision_circles)
+            on_entered_next_phase = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_phase)
+                game.score.add(score_to_add)
                 for cc in all(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
             end,
-            on_destroyed = function(collision_circles)
+            on_destroyed = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_final_1)
+                game.score.add(score_to_add)
                 for cc in all(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     _add_all(
@@ -293,8 +298,9 @@ function new_game(params)
                     _sfx_play(_sfx_damage_enemy)
                     add(explosions, new_explosion(collision_circle.xy, .5 * collision_circle.r))
                 end,
-                on_destroyed = function(collision_circle, powerup_type)
+                on_destroyed = function(collision_circle, powerup_type, score_to_add)
                     _sfx_play(_sfx_destroy_enemy)
+                    game.score.add(score_to_add)
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
                         _sfx_play(_sfx_powerup_spawned)
@@ -372,6 +378,15 @@ function new_game(params)
                 end
             end
         )
+
+        -- DEBUG:
+        --printh("  === #TABLES ===  ")
+        --printh(#player_bullets)
+        --printh(#enemy_bullets)
+        --printh(#enemies)
+        --printh(#powerups)
+        --printh(#explosions)
+        --printh(#shockwaves)
     end
 
     return game

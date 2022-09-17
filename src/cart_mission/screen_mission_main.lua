@@ -8,6 +8,7 @@ function new_screen_mission_main(params)
         shockwave_charges = params.shockwave_charges,
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
+        score = params.score,
         -- DEBUG:
         --health = 7,
         --shockwave_charges = 3,
@@ -22,22 +23,21 @@ function new_screen_mission_main(params)
         slide_in_frames = 40,
     }
     local mission_info = new_sliding_info {
+        text_1 = "mission \-f" .. _m.mission_number,
+        text_2 = _m.mission_name,
+        main_color = _m.mission_info_color,
         wait_frames = fade_in_frames,
         slide_in_frames = sliding_info_slide_frames,
         present_frames = screen_frames - fade_in_frames - 2 * sliding_info_slide_frames,
         slide_out_frames = sliding_info_slide_frames,
-        text_1 = "mission " .. _m.mission_number,
-        text_2 = _m.mission_name,
         -- DEBUG:
         --slide_in_frames = 8,
         --present_frames = 0,
         --slide_out_frames = 8,
     }
-    local fade_in = new_fade("in", fade_in_frames)
+    local fade_in, screen = new_fade("in", fade_in_frames), {}
 
     --
-
-    local screen = {}
 
     function screen._init()
         music(_m.mission_main_music)
@@ -61,6 +61,7 @@ function new_screen_mission_main(params)
         hud._draw {
             player_health = game.health,
             shockwave_charges = game.shockwave_charges,
+            score = game.score,
         }
 
         if mission_info then

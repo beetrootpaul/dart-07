@@ -3,22 +3,12 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_mission_end(game, hud)
-    local fade_out = new_fade("out", 30, 90)
-    local screen_timer = new_timer(120)
-
-    local max_unlocked_mission
+    local fade_out, screen_timer, screen = new_fade("out", 30, 90), new_timer(120), {}
 
     --
 
-    local screen = {}
-
     function screen._init()
         _music_fade_out()
-        
-        max_unlocked_mission = max(dget(0), 1)
-        if max_unlocked_mission <= _m.mission_number then
-            dset(0, _m.mission_number + 1)
-        end
     end
 
     function screen._update()
@@ -34,6 +24,7 @@ function new_screen_mission_end(game, hud)
         hud._draw {
             player_health = game.health,
             shockwave_charges = game.shockwave_charges,
+            score = game.score,
         }
         fade_out._draw()
     end
@@ -49,9 +40,10 @@ function new_screen_mission_end(game, hud)
                     shockwave_charges = game.shockwave_charges,
                     triple_shot = game.triple_shot,
                     fast_shoot = game.fast_shoot,
+                    score = game.score.raw_value(),
                 }
             else
-                return new_screen_win()
+                return new_screen_win(game)
             end
         end
     end

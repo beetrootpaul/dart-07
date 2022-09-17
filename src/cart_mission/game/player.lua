@@ -3,15 +3,12 @@
 -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_player(params)
-    local on_bullets_spawned = new_throttle(params.on_bullets_spawned)
-    local on_shockwave_triggered = new_throttle(params.on_shockwave_triggered)
+    local on_bullets_spawned, on_shockwave_triggered = new_throttle(params.on_bullets_spawned), new_throttle(params.on_shockwave_triggered)
     local on_damaged, on_destroyed = params.on_damaged, params.on_destroyed
 
     local w, h, speed = 10, 12, 1
 
-    local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0)
-    local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0)
-    local ship_sprite_flying_right = new_static_sprite(10, 10, 28, 0)
+    local ship_sprite_neutral, ship_sprite_flying_left, ship_sprite_flying_right = new_static_sprite "10,10,18,0", new_static_sprite "10,10,8,0", new_static_sprite "10,10,28,0"
     local ship_sprite_current = ship_sprite_neutral
 
     local jet_sprite_visible = new_animated_sprite(
@@ -23,11 +20,9 @@ function new_player(params)
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
-    local invincible_after_damage_timer
+    local invincible_after_damage_timer, invincibility_flash_duration = nil, 6
 
-    local is_destroyed = false
-
-    local xy = _xy(_gaw / 2, _gah - 28)
+    local is_destroyed, xy = false, _xy(_gaw / 2, _gah - 28)
 
     local function collision_circle()
         return {
@@ -100,7 +95,8 @@ function new_player(params)
 
         take_damage = function(updated_health)
             if updated_health > 0 then
-                invincible_after_damage_timer = new_timer(30)
+                -- we start with "-1" in order to avoid 1 frame of non-flash due to how "%" works (see "_draw()")
+                invincible_after_damage_timer = new_timer(5 * invincibility_flash_duration - 1)
                 on_damaged()
             else
                 is_destroyed = true
@@ -124,16 +120,12 @@ function new_player(params)
         end,
 
         _draw = function()
-            local flash_color = invincible_after_damage_timer and
-                flr(invincible_after_damage_timer.ttl / 8) % 2 == 1 and
-                _color_6_light_grey or
-                nil
-            ship_sprite_current._draw(xy, {
-                flash_color = flash_color,
-            })
-            jet_sprite._draw(xy.plus(0, 8), {
-                flash_color = flash_color,
-            })
+            if invincible_after_damage_timer and invincible_after_damage_timer.ttl % (2 * invincibility_flash_duration) < invincibility_flash_duration then
+                pal(split "1,7,7,7,7,7,7,7,7,7,7,7,7,7,7")
+            end
+            ship_sprite_current._draw(xy)
+            jet_sprite._draw(xy.plus(0, 8))
+            pal()
         end,
 
     }
