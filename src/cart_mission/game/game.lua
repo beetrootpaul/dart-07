@@ -10,7 +10,7 @@ function new_game(params)
         boss_health_max = nil,
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
-        score = params.score,
+        score = new_score(params.score),
     }
 
     local level = new_level(new_level_descriptor())
@@ -59,12 +59,12 @@ function new_game(params)
                 game.health = game.health + 1
             else
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score = game.score + 100
+                game.score.add(100)
             end
         elseif powerup.powerup_type == "t" then
             if game.triple_shot then
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score = game.score + 100
+                game.score.add(100)
             else
                 _sfx_play(_sfx_powerup_triple_shot)
                 game.triple_shot = true
@@ -72,7 +72,7 @@ function new_game(params)
         elseif powerup.powerup_type == "f" then
             if game.fast_shoot then
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score = game.score + 100
+                game.score.add(100)
             else
                 _sfx_play(_sfx_powerup_fast_shot)
                 game.fast_shoot = true
@@ -83,7 +83,7 @@ function new_game(params)
                 game.shockwave_charges = game.shockwave_charges + 1
             else
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score = game.score + 100
+                game.score.add(100)
             end
         end
     end
@@ -207,14 +207,14 @@ function new_game(params)
             end,
             on_entered_next_phase = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_phase)
-                game.score = game.score + score_to_add
+                game.score.add(score_to_add)
                 for cc in all(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
             end,
             on_destroyed = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_final_1)
-                game.score = game.score + score_to_add
+                game.score.add(score_to_add)
                 for cc in all(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     _add_all(
@@ -300,7 +300,7 @@ function new_game(params)
                 end,
                 on_destroyed = function(collision_circle, powerup_type, score_to_add)
                     _sfx_play(_sfx_destroy_enemy)
-                    game.score = game.score + score_to_add
+                    game.score.add(score_to_add)
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
                         _sfx_play(_sfx_powerup_spawned)

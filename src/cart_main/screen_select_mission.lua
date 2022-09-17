@@ -156,7 +156,7 @@ function new_screen_select_mission(selected_mission)
         -- TODO: polish it
         if high_score > 0 then
             print("high score", 10, 25, _color_6_light_grey)
-            print(high_score, 40, 25, _color_9_dark_orange)
+            print(high_score, 70, 25, _color_9_dark_orange)
         end
 
         for i = 1, 3 do
