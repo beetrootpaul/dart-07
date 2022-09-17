@@ -119,16 +119,12 @@ function new_player(params)
         end,
 
         _draw = function()
-            local flash_color = invincible_after_damage_timer and
-                flr(invincible_after_damage_timer.ttl / 8) % 2 == 1 and
-                _color_6_light_grey or
-                nil
-            ship_sprite_current._draw(xy, {
-                flash_color = flash_color,
-            })
-            jet_sprite._draw(xy.plus(0, 8), {
-                flash_color = flash_color,
-            })
+            if invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 8) % 2 == 1 then
+                pal(split "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6")
+            end
+            ship_sprite_current._draw(xy)
+            jet_sprite._draw(xy.plus(0, 8))
+            pal()
         end,
 
     }

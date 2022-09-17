@@ -14,18 +14,12 @@ function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
             frame = _tni(frame, max_frame)
         end,
 
-        _draw = function(xy, opts)
-            opts = opts or {}
-
+        _draw = function(xy)
             xy = from_left_top_corner and xy or xy.minus(sprite_w / 2, sprite_h / 2)
             xy = _xy(_round(xy.x), _round(xy.y))
 
             palt(_color_0_black, false)
             palt(_color_11_transparent, true)
-
-            for c = 0, 15 do
-                pal(c, opts.flash_color or c, 0)
-            end
 
             sspr(
                 sprite_xs[frame],
@@ -36,7 +30,6 @@ function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
                 xy.y
             )
 
-            pal(0)
             palt()
         end,
     }
