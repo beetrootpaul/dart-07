@@ -11,7 +11,7 @@ function new_boss(params)
     local phases = boss_properties.phases
 
     local boss_sprite_props_txt, flash_sprite_props_txt = unpack(split(boss_properties.sprites_props_txt, "|"))
-    local boss_sprite, flash_sprite = new_static_sprite(unpack(split(boss_sprite_props_txt))), new_static_sprite(unpack(split(flash_sprite_props_txt)))
+    local boss_sprite, flash_sprite = new_static_sprite(boss_sprite_props_txt), new_static_sprite(flash_sprite_props_txt)
 
     local movement = new_movement_to_target_factory {
         target_x = start_xy.x,
@@ -22,11 +22,7 @@ function new_boss(params)
         --frames = 8,
     }(intro_start_xy)
 
-    local current_phase_number = 0
-
-    local invincible_during_intro, is_destroyed = true, false, false
-
-    local flashing_after_damage_timer
+    local current_phase_number, invincible_during_intro, is_destroyed, flashing_after_damage_timer = 0, true, false, nil
 
     local function collision_circles()
         local ccs = {}

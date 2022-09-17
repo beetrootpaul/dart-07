@@ -8,16 +8,14 @@ do
     function new_enemy(params)
         next_id = next_id + 1
 
-        local enemy_properties = params.enemy_properties
-        local start_xy = params.start_xy
+        local enemy_properties,start_xy = params.enemy_properties,params.start_xy
         local on_bullets_spawned, on_damaged, on_destroyed = params.on_bullets_spawned, params.on_damaged, params.on_destroyed
 
-        local health = enemy_properties.health
-        local movement = enemy_properties.movement_factory(start_xy)
+        local health,movement = enemy_properties.health,enemy_properties.movement_factory(start_xy)
         local bullet_fire_timer = enemy_properties.bullet_fire_timer or new_fake_timer()
 
         local ship_sprite_props_txt, flash_sprite_props_txt = unpack(split(enemy_properties.sprites_props_txt, "|"))
-        local ship_sprite, flash_sprite = new_static_sprite(unpack(split(ship_sprite_props_txt))), new_static_sprite(unpack(split(flash_sprite_props_txt)))
+        local ship_sprite, flash_sprite = new_static_sprite(ship_sprite_props_txt), new_static_sprite(flash_sprite_props_txt)
 
         local flashing_after_damage_timer
 

@@ -2,10 +2,9 @@
 -- common/sprites/static_sprite.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_static_sprite(sprite_w, sprite_h, sprite_x, sprite_y, params)
+function new_static_sprite(sprite_whxy_txt, params)
     params = params or {}
+    local w, h, x, y = unpack(split(sprite_whxy_txt))
     
-    return new_animated_sprite(sprite_w, sprite_h, { sprite_x }, sprite_y, {
-        from_left_top_corner = params.from_left_top_corner,
-    })
+    return new_animated_sprite(w, h, { x }, y, params)
 end

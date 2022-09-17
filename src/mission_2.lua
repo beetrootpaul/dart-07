@@ -5,8 +5,8 @@
 _m = {
     mission_number = 2,
     scroll_per_frame = 1,
-    mission_name = "outpost \-ein \-espace",
-    boss_name = "cheerful \-edeath",
+    mission_name = "outpost \-fin \-fspace",
+    boss_name = "cheerful \-fdeath",
     bg_color = _color_1_darker_blue,
     mission_info_color = _color_6_light_grey,
     mission_main_music = 0,
@@ -58,7 +58,7 @@ do
     end
 
     local enemy_bullet_factory = new_enemy_bullet_factory {
-        bullet_sprite = new_static_sprite(4, 4, 124, 64),
+        bullet_sprite = new_static_sprite "4,4,124,64",
         collision_circle_r = 1.5,
     }
 

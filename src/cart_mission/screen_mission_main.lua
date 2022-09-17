@@ -22,7 +22,7 @@ function new_screen_mission_main(params)
         slide_in_frames = 40,
     }
     local mission_info = new_sliding_info {
-        text_1 = "mission \-e" .. _m.mission_number,
+        text_1 = "mission \-f" .. _m.mission_number,
         text_2 = _m.mission_name,
         main_color = _m.mission_info_color,
         wait_frames = fade_in_frames,
@@ -34,11 +34,9 @@ function new_screen_mission_main(params)
         --present_frames = 0,
         --slide_out_frames = 8,
     }
-    local fade_in = new_fade("in", fade_in_frames)
+    local fade_in, screen = new_fade("in", fade_in_frames), {}
 
     --
-
-    local screen = {}
 
     function screen._init()
         music(_m.mission_main_music)

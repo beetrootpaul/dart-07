@@ -3,18 +3,13 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_mission_end(game, hud)
-    local fade_out = new_fade("out", 30, 90)
-    local screen_timer = new_timer(120)
-
-    local max_unlocked_mission
+    local fade_out, screen_timer, max_unlocked_mission, screen = new_fade("out", 30, 90), new_timer(120), nil, {}
 
     --
 
-    local screen = {}
-
     function screen._init()
         _music_fade_out()
-        
+
         max_unlocked_mission = max(dget(0), 1)
         if max_unlocked_mission <= _m.mission_number then
             dset(0, _m.mission_number + 1)

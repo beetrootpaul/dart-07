@@ -3,13 +3,9 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_win()
-    local fade_out = new_fade("out", 30)
-
-    local proceed = false
+    local fade_out, proceed, screen = new_fade("out", 30), false, {}
 
     --
-
-    local screen = {}
 
     function screen._init()
         -- this music is available on the last mission's cart only

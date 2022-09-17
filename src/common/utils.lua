@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- --
 
 function _add_all(table, ...)
-    for item in all({ ... }) do
+    for item in all { ... } do
         add(table, item)
     end
     return table

@@ -26,8 +26,8 @@ function _init()
     poke(0x5f5c, 255)
 
     current_screen = new_screen_mission_main {
-        health = health_param ~= nil and tonum(health_param) or _health_default,
-        shockwave_charges = shockwave_charges_param ~= nil and tonum(shockwave_charges_param) or _shockwave_charges_default,
+        health = health_param or _health_default,
+        shockwave_charges = shockwave_charges_param or _shockwave_charges_default,
         triple_shot = is_triple_shot_enabled_param == "true",
         fast_shoot = is_fast_shot_enabled_param == "true",
     }
@@ -47,6 +47,5 @@ end
 
 function _draw()
     current_screen._draw()
-
-    _remap_display_colors()
+    pal(_palette_display, 1)
 end

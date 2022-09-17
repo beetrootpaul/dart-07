@@ -3,15 +3,12 @@
 -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_player(params)
-    local on_bullets_spawned = new_throttle(params.on_bullets_spawned)
-    local on_shockwave_triggered = new_throttle(params.on_shockwave_triggered)
+    local on_bullets_spawned, on_shockwave_triggered = new_throttle(params.on_bullets_spawned), new_throttle(params.on_shockwave_triggered)
     local on_damaged, on_destroyed = params.on_damaged, params.on_destroyed
 
     local w, h, speed = 10, 12, 1
 
-    local ship_sprite_neutral = new_static_sprite(10, 10, 18, 0)
-    local ship_sprite_flying_left = new_static_sprite(10, 10, 8, 0)
-    local ship_sprite_flying_right = new_static_sprite(10, 10, 28, 0)
+    local ship_sprite_neutral, ship_sprite_flying_left, ship_sprite_flying_right = new_static_sprite "10,10,18,0", new_static_sprite "10,10,8,0", new_static_sprite "10,10,28,0"
     local ship_sprite_current = ship_sprite_neutral
 
     local jet_sprite_visible = new_animated_sprite(
@@ -25,9 +22,7 @@ function new_player(params)
 
     local invincible_after_damage_timer
 
-    local is_destroyed = false
-
-    local xy = _xy(_gaw / 2, _gah - 28)
+    local is_destroyed, xy = false, _xy(_gaw / 2, _gah - 28)
 
     local function collision_circle()
         return {

@@ -46,9 +46,7 @@ do
             pal(_palette_negative)
 
             for dy = -r_outer, r_outer do
-                local dx_outer = ceil(sqrt(r_outer * r_outer - dy * dy))
-                local dx_inner = ceil(sqrt(r_inner * r_inner - dy * dy))
-                local sy = y + dy
+                local sy, dx_outer, dx_inner = y + dy, ceil(sqrt(r_outer * r_outer - dy * dy)), ceil(sqrt(r_inner * r_inner - dy * dy))
                 sspr(
                     x - dx_outer, sy,
                     dx_outer - dx_inner, 1,

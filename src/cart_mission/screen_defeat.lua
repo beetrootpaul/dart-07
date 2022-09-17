@@ -5,12 +5,9 @@
 function new_screen_defeat(game, hud)
     local screen_frames, fade_out_frames = 120, 30
 
-    local fade_out = new_fade("out", fade_out_frames, screen_frames - fade_out_frames)
-    local screen_timer = new_timer(screen_frames)
+    local fade_out, screen_timer, screen = new_fade("out", fade_out_frames, screen_frames - fade_out_frames), new_timer(screen_frames), {}
 
     --
-
-    local screen = {}
 
     function screen._init()
     end

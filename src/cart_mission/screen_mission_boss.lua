@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_mission_boss(game, hud)
-    local boss_info_frames, boss_info_slide_frames = 180, 50
+    local boss_info_frames, boss_info_slide_frames, screen = 180, 50, {}
 
     local boss_info = new_sliding_info {
         text_2 = _m.boss_name,
@@ -18,8 +18,6 @@ function new_screen_mission_boss(game, hud)
     }
 
     --
-
-    local screen = {}
 
     function screen._init()
         _music_fade_out()

@@ -11,8 +11,8 @@ function _init()
     -- and delete "todo-shmup.p8d.txt" file
     cartdata("todo-shmup")
 
-    current_screen = preselected_mission_number ~= nil and
-        new_screen_select_mission { preselected_mission_number = tonum(preselected_mission_number) } or
+    current_screen = preselected_mission_number and
+        new_screen_select_mission(preselected_mission_number) or
         new_screen_brp()
     current_screen._init()
 end
@@ -30,9 +30,10 @@ end
 
 function _draw()
     current_screen._draw()
-
-    _remap_display_colors()
+    pal(_palette_display, 1)
 end
+
+-- TODO: shockwave tends to destroy after it becomes invisible. Fix it!
 
 -- TODO: selection screen: game logo
 -- TODO: selection screen: what with locked missions? implement persisted high score instead of them? if yes, remove greyed out sprites of level samples

@@ -2,9 +2,7 @@
 -- cart_main/screen_select_mission.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_select_mission(params)
-    local selected_mission = params.preselected_mission_number
-
+function new_screen_select_mission(selected_mission)
     local max_unlocked_mission
 
     local fade_in = new_fade("in", 30)
@@ -13,7 +11,7 @@ function new_screen_select_mission(params)
 
     local proceed = false
 
-    local ship_sprite = new_static_sprite(10, 10, 18, 0)
+    local ship_sprite = new_static_sprite "10,10,18,0"
     local jet_sprite = new_animated_sprite(
         4,
         4,

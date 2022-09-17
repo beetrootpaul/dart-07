@@ -2,11 +2,7 @@
 -- common/viewport.lua  --
 -- -- -- -- -- -- -- -- --
 
--- viewport size in pixels
-_vs = 128
-
--- viewport size in tiles
-_vst = 16
-
--- tile (sprite) size in pixels
-_ts = 8
+-- - viewport size in pixels
+-- - viewport size in tiles
+-- - tile (sprite) size in pixels
+_vs, _vst, _ts = 128, 16, 8

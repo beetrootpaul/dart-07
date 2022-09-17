@@ -5,7 +5,7 @@
 _m = {
     mission_number = 3,
     scroll_per_frame = 1,
-    mission_name = "phoslar \-emine",
+    mission_name = "phoslar \-fmine",
     boss_name = "lol",
     bg_color = _color_2_darker_purple,
     mission_info_color = _color_3_dark_green,
@@ -21,30 +21,30 @@ do
 
     local function maybe_add_particle(y)
         if rnd() < .4 then
-            local props = rnd {
+            local props_whxy = rnd {
                 -- particle 1
-                { sx = 24, sy = 56, w = 3, h = 4 },
-                { sx = 24, sy = 56, w = 3, h = 4 },
+                "3,4,24,56",
+                "3,4,24,56",
                 -- particle 2
-                { sx = 28, sy = 56, w = 4, h = 3 },
-                { sx = 28, sy = 56, w = 4, h = 3 },
+                "4,3,28,56",
+                "4,3,28,56",
                 -- particle 3
-                { sx = 33, sy = 56, w = 3, h = 3 },
-                { sx = 33, sy = 56, w = 3, h = 3 },
+                "3,3,33,56",
+                "3,3,33,56",
                 -- particle 4
-                { sx = 24, sy = 61, w = 3, h = 3 },
-                { sx = 24, sy = 61, w = 3, h = 3 },
+                "3,3,24,61",
+                "3,3,24,61",
                 -- particle 5
-                { sx = 28, sy = 60, w = 5, h = 4 },
+                "5,4,28,60",
                 -- particle 6
-                { sx = 34, sy = 60, w = 4, h = 4 },
+                "4,4,34,60",
             }
             add(particles, {
                 xy = _xy(
                     flr(4 + rnd(_gaw - 2 * 4)),
                     y
                 ),
-                sprite = new_static_sprite(props.w, props.h, props.sx, props.sy)
+                sprite = new_static_sprite(props_whxy)
             })
         end
     end
@@ -99,7 +99,7 @@ do
     end
 
     local enemy_bullet_factory = new_enemy_bullet_factory {
-        bullet_sprite = new_static_sprite(4, 4, 124, 64),
+        bullet_sprite = new_static_sprite "4,4,124,64",
         collision_circle_r = 1.5,
     }
 

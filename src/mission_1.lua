@@ -5,8 +5,8 @@
 _m = {
     mission_number = 1,
     scroll_per_frame = .5,
-    mission_name = "emerald \-eislands",
-    boss_name = "painful \-edeath",
+    mission_name = "emerald \-fislands",
+    boss_name = "painful \-fdeath",
     bg_color = _color_4_true_blue,
     mission_info_color = _color_9_dark_orange,
     mission_main_music = 0,
@@ -50,7 +50,7 @@ do
     end
 
     local enemy_bullet_factory = new_enemy_bullet_factory {
-        bullet_sprite = new_static_sprite(4, 4, 124, 64),
+        bullet_sprite = new_static_sprite "4,4,124,64",
         collision_circle_r = 1.5,
     }
 
@@ -86,7 +86,7 @@ do
             -- enemy: sinusoidal
             [75] = {
                 health = 2,
-                sprites_props_txt = "10,10,22,86 |8,8,13,88",
+                sprites_props_txt = "10,10,22,86|8,8,13,88",
                 collision_circles_props = {
                     { 4 },
                 },

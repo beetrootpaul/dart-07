@@ -67,9 +67,7 @@ function new_screen_brp()
 
     function screen._post_draw()
         if screen_timer.ttl <= 0 then
-            return new_screen_select_mission {
-                preselected_mission_number = 1,
-            }
+            return new_screen_select_mission(1)
         end
     end
 

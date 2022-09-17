@@ -16,28 +16,18 @@ function new_hud(params)
         },
     }(_xy(-20, 0))
 
-    local bar_w = 16
-    local boss_health_bar_margin = 2
+    local bar_w, boss_health_bar_margin = 16, 2
 
-    local sprite_opts = { from_left_top_corner = true }
+    local function new_hud_sprite(sprite_whxy_txt)
+        return new_static_sprite(sprite_whxy_txt, { from_left_top_corner = true })
+    end
 
-    local heart = new_static_sprite(6, 5, 40, 24, sprite_opts)
-    local health_bar_start = new_static_sprite(8, 5, 40, 19, sprite_opts)
-    local health_bar_segment_full = new_static_sprite(8, 11, 40, 8, sprite_opts)
-    local health_bar_segment_empty = new_static_sprite(1, 11, 40, 8, sprite_opts)
-
-    local shockwave = new_static_sprite(7, 6, 48, 24, sprite_opts)
-    local shockwave_bar_start = new_static_sprite(8, 1, 48, 23, sprite_opts)
-    local shockwave_bar_segment_full = new_static_sprite(8, 21, 48, 2, sprite_opts)
-    local shockwave_bar_segment_empty = new_static_sprite(2, 21, 54, 2, sprite_opts)
-
-    local boss_health_bar_start = new_static_sprite(4, 4, 40, 0, sprite_opts)
-    local boss_health_bar_end = new_static_sprite(4, 4, 44, 0, sprite_opts)
+    local heart, health_bar_start, health_bar_segment_full, health_bar_segment_empty = new_hud_sprite "6,5,40,24", new_hud_sprite "8,5,40,19", new_hud_sprite "8,11,40,8", new_hud_sprite "1,11,40,8"
+    local shockwave, shockwave_bar_start, shockwave_bar_segment_full, shockwave_bar_segment_empty = new_hud_sprite "7,6,48,24", new_hud_sprite "8,1,48,23", new_hud_sprite "8,21,48,2", new_hud_sprite "2,21,54,2"
+    local boss_health_bar_start, boss_health_bar_end = new_hud_sprite "4,4,40,0", new_hud_sprite "4,4,44,0"
 
     return {
-        _update = function()
-            slide_in_offset._update()
-        end,
+        _update = slide_in_offset._update,
 
         _draw = function(p)
             rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)

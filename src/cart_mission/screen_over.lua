@@ -3,13 +3,9 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_over()
-    local fade_out = new_fade("out", 30)
-
-    local retry, proceed = true, false
+    local fade_out, retry, proceed, screen = new_fade("out", 30), true, false, {}
 
     --
-
-    local screen = {}
 
     function screen._init()
     end
