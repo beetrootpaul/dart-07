@@ -9,8 +9,7 @@ function new_screen_defeat(game, hud)
 
     --
 
-    function screen._init()
-    end
+    screen._init = _noop
 
     function screen._update()
         game._update()
@@ -25,6 +24,7 @@ function new_screen_defeat(game, hud)
         hud._draw {
             player_health = game.health,
             shockwave_charges = game.shockwave_charges,
+            score = game.score,
         }
         fade_out._draw()
     end

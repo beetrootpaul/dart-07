@@ -65,15 +65,15 @@ function new_boss(params)
             on_damage()
         else
             is_destroyed = true
-            on_destroyed(collision_circles())
+            on_destroyed(collision_circles(), phases[#phases].score)
         end
     end
 
     function boss._update()
         if current_phase_number > 0 and current_phase_number < #phases then
             if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
+                on_entered_next_phase(collision_circles(), phases[current_phase_number].score)
                 current_phase_number = current_phase_number + 1
-                on_entered_next_phase(collision_circles())
                 movement = phases[current_phase_number].movement_factory(movement.xy)
             end
         end

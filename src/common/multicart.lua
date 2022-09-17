@@ -37,7 +37,8 @@ function _load_mission_cart(params)
     local cart_params = tostr(params.health) ..
         "," .. tostr(params.shockwave_charges) ..
         "," .. tostr(params.triple_shot) ..
-        "," .. tostr(params.fast_shoot)
+        "," .. tostr(params.fast_shoot) ..
+        "," .. tostr(params.score)
 
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
     -- of any further instruction if succeeded. This means we can safely

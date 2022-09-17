@@ -51,7 +51,7 @@ do
                 else
                     is_destroyed = true
                     local powerup_type = rnd(split(enemy_properties.powerups_distribution))
-                    on_destroyed(main_collision_circle, powerup_type)
+                    on_destroyed(main_collision_circle, powerup_type, enemy_properties.score)
                 end
             end,
 

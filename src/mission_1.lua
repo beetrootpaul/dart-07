@@ -70,6 +70,7 @@ do
             -- enemy: fast and small
             [74] = {
                 health = 1,
+                score = 20,
                 sprites_props_txt = "8,8,0,88|6,6,22,79",
                 collision_circles_props = {
                     { 3, _xy(0, 1) },
@@ -86,6 +87,7 @@ do
             -- enemy: sinusoidal
             [75] = {
                 health = 2,
+                score = 50,
                 sprites_props_txt = "10,10,22,86|8,8,13,88",
                 collision_circles_props = {
                     { 4 },
@@ -117,6 +119,7 @@ do
             -- enemy: wait and charge
             [76] = {
                 health = 7,
+                score = 200,
                 sprites_props_txt = "16,14,22,64|14,12,32,84",
                 collision_circles_props = {
                     { 7 },
@@ -143,6 +146,7 @@ do
             -- enemy: big
             [77] = {
                 health = 30,
+                score = 1000,
                 sprites_props_txt = "24,20,64,64|22,18,88,65",
                 collision_circles_props = {
                     { 10, _xy(0, 1) },
@@ -192,6 +196,7 @@ do
             -- enemy: long, pausing, w/ aimed triple shot
             [78] = {
                 health = 4,
+                score = 400,
                 sprites_props_txt = "8,22,50,64|6,20,58,65",
                 collision_circles_props = {
                     { 4 },
@@ -249,6 +254,7 @@ do
             -- enemy: stationary
             [79] = {
                 health = 10,
+                score = 500,
                 sprites_props_txt = "22,24,0,64|12,12,38,64",
                 collision_circles_props = {
                     { 6 },
@@ -302,6 +308,7 @@ do
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
+                    score = 500,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
                         if t() % 2 < 1 then return {} end
@@ -320,6 +327,7 @@ do
                 -- phase 2:
                 {
                     triggering_health_fraction = .85,
+                    score = 3000,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
                         if t() % 2 < 1 then return {} end
@@ -356,6 +364,7 @@ do
                 -- phase 3:
                 {
                     triggering_health_fraction = .35,
+                    score = 6500,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)

@@ -174,6 +174,7 @@ function new_screen_select_mission(selected_mission)
                 shockwave_charges = _shockwave_charges_default,
                 triple_shot = false,
                 fast_shoot = false,
+                score = 0,
             }
         end
     end

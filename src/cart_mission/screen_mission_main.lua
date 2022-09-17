@@ -8,6 +8,7 @@ function new_screen_mission_main(params)
         shockwave_charges = params.shockwave_charges,
         triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
+        score = params.score,
         -- DEBUG:
         --health = 7,
         --shockwave_charges = 3,
@@ -60,6 +61,7 @@ function new_screen_mission_main(params)
         hud._draw {
             player_health = game.health,
             shockwave_charges = game.shockwave_charges,
+            score = game.score,
         }
 
         if mission_info then

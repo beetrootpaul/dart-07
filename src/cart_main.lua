@@ -78,8 +78,6 @@ end
 -- TODO: boss info: boss 2 name
 -- TODO: boss info: boss 3 name
 
--- TODO: score and persisted high score
-
 -- TODO: tutorial screen? press X to shoot, arrows to fly; X can be pressed long, C cannot
 
 -- TODO: screen shake? and a menu item to disable screen shake?

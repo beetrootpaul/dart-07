@@ -55,6 +55,13 @@ function new_hud(params)
                 end
             end
 
+            print(
+                p.score,
+                _gaox + _gaw + 1,
+                1,
+                _color_6_light_grey
+            )
+
             if p.boss_health and p.boss_health_max then
                 local health_fraction = p.boss_health / p.boss_health_max
                 boss_health_bar_start._draw(_xy(boss_health_bar_margin, boss_health_bar_margin))

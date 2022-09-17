@@ -29,6 +29,7 @@ function new_screen_mission_end(game, hud)
         hud._draw {
             player_health = game.health,
             shockwave_charges = game.shockwave_charges,
+            score = game.score,
         }
         fade_out._draw()
     end
@@ -44,6 +45,7 @@ function new_screen_mission_end(game, hud)
                     shockwave_charges = game.shockwave_charges,
                     triple_shot = game.triple_shot,
                     fast_shoot = game.fast_shoot,
+                    score = game.score,
                 }
             else
                 return new_screen_win()

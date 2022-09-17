@@ -78,6 +78,7 @@ do
             -- enemy: stationary
             [79] = {
                 health = 5,
+                score = 500,
                 sprites_props_txt = "28,28,0,64|28,28,28,64",
                 collision_circles_props = {
                     { 5 },
@@ -149,6 +150,7 @@ do
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
+                    score = 2000,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)

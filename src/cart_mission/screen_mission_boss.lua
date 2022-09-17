@@ -41,6 +41,7 @@ function new_screen_mission_boss(game, hud)
             shockwave_charges = game.shockwave_charges,
             boss_health = (not boss_info) and game.boss_health or nil,
             boss_health_max = (not boss_info) and game.boss_health_max or nil,
+            score = game.score,
         }
 
         if boss_info then

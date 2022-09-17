@@ -7,8 +7,9 @@ local current_screen, next_screen
 function _init()
     local health_param = _get_cart_param(1)
     local shockwave_charges_param = _get_cart_param(2)
-    local is_triple_shot_enabled_param = _get_cart_param(3)
-    local is_fast_shot_enabled_param = _get_cart_param(4)
+    local triple_shot_param = _get_cart_param(3)
+    local fast_shot_param = _get_cart_param(4)
+    local score_param = _get_cart_param(5)
 
     _copy_shared_assets_to_transferable_ram()
 
@@ -28,8 +29,9 @@ function _init()
     current_screen = new_screen_mission_main {
         health = health_param or _health_default,
         shockwave_charges = shockwave_charges_param or _shockwave_charges_default,
-        triple_shot = is_triple_shot_enabled_param == "true",
-        fast_shoot = is_fast_shot_enabled_param == "true",
+        triple_shot = triple_shot_param == "true",
+        fast_shoot = fast_shot_param == "true",
+        score = score_param or 0,
     }
     current_screen._init()
 end
