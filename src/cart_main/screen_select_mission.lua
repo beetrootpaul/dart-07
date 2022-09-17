@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_select_mission(selected_mission)
-    local max_unlocked_mission
+    local max_unlocked_mission, high_score
 
     local fade_in = new_fade("in", 30)
     local fade_out = new_fade("out", 30)
@@ -111,7 +111,10 @@ function new_screen_select_mission(selected_mission)
 
     function screen._init()
         music(0)
+
         max_unlocked_mission = max(dget(0), 1)
+        high_score = dget(1)
+
         init_ship_movement()
     end
 
@@ -155,6 +158,12 @@ function new_screen_select_mission(selected_mission)
         cls(_color_2_darker_purple)
 
         print("shmup", 34, 10, _color_15_peach)
+
+        -- TODO: polish it
+        if high_score > 0 then
+            print("high score", 10, 25, _color_6_light_grey)
+            print(high_score, 40, 25, _color_9_dark_orange)
+        end
 
         for i = 1, 3 do
             draw_mission_button(i)

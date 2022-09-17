@@ -33,7 +33,7 @@ function new_screen_defeat(game, hud)
         game._post_draw()
 
         if screen_timer.ttl <= 0 then
-            return new_screen_over()
+            return new_screen_over(game)
         end
     end
 

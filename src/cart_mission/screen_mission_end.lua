@@ -48,7 +48,7 @@ function new_screen_mission_end(game, hud)
                     score = game.score,
                 }
             else
-                return new_screen_win()
+                return new_screen_win(game)
             end
         end
     end

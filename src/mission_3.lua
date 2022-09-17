@@ -173,6 +173,8 @@ do
                 {
                     triggering_health_fraction = 1,
                     score = 2000,
+                    -- DEBUG:
+                    --score = 32767,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)
