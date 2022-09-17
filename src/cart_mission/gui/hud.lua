@@ -2,8 +2,6 @@
 -- cart_mission/gui/hud.lua   --
 -- -- -- -- -- -- -- -- -- -- --
 
--- TODO NEXT: score
-
 function new_hud(params)
     local slide_in_offset = new_movement_sequence_factory {
         new_movement_fixed_factory {

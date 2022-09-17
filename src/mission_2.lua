@@ -110,25 +110,6 @@ do
                 end,
             },
 
-            -- TODO: ???
-            -- enemy: left-right
-            --[76] = {
-            --    movement_factory = new_movement_loop_factory({
-            --        new_movement_line_factory {
-            --            base_speed_y = .25,
-            --            frames = 160,
-            --            angle = 0,
-            --            angled_speed = .5,
-            --        },
-            --        new_movement_line_factory {
-            --            base_speed_y = .25,
-            --            frames = 160,
-            --            angle = .5,
-            --            angled_speed = .5,
-            --        },
-            --    }),
-            --},
-
         })[enemy_map_marker]
     end
 
@@ -145,7 +126,6 @@ do
     function _m.boss_properties()
         return {
             health = 25,
-            -- TODO: draw and specify correct flash sprite
             sprites_props_txt = "56,26,4,98|56,26,4,98",
             collision_circles_props = {
                 { 15, _xy(0, 3) },

@@ -62,9 +62,10 @@ end
 -- TODO: polishing: music: mission 3
 -- TODO: polishing: music: mission 3 boss
 
--- TODO: polishing: sprites: mission 1: enemies 
-
--- TODO: polishing: player invincibility
+-- TODO: polishing: sprites: mission 2: enemies 
+-- TODO: polishing: sprites: mission 2: boss 
+-- TODO: polishing: sprites: mission 3: enemies 
+-- TODO: polishing: sprites: mission 3: boss 
 
 -- TODO: polishing: explosions: player hit
 -- TODO: polishing: explosions: player destroyed
@@ -78,15 +79,6 @@ end
 -- TODO: boss info: boss 3 name
 
 -- TODO: tutorial screen? press X to shoot, arrows to fly; X can be pressed long, C cannot
-
--- TODO: screen shake? and a menu item to disable screen shake?
-
--- TODO: "hit stop" on player damage?
-
--- TODO: push enemies and boss on damage?
-
--- TODO: powerup magnet?
--- TODO: powerup retrieval after damage?
 
 -- TODO: balancing: powerup distributions 
 -- TODO: balancing: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
@@ -106,3 +98,22 @@ end
 -- TODO: GitHub repo: description & website & topics
 
 -- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot
+
+-- TODO: consider this left-right enemy type for mission 2
+-- enemy: left-right
+--[76] = {
+--    movement_factory = new_movement_loop_factory({
+--        new_movement_line_factory {
+--            base_speed_y = .25,
+--            frames = 160,
+--            angle = 0,
+--            angled_speed = .5,
+--        },
+--        new_movement_line_factory {
+--            base_speed_y = .25,
+--            frames = 160,
+--            angle = .5,
+--            angled_speed = .5,
+--        },
+--    }),
+--},

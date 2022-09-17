@@ -20,7 +20,7 @@ function new_player(params)
     local jet_sprite_hidden = new_fake_sprite()
     local jet_sprite = jet_sprite_visible
 
-    local invincible_after_damage_timer
+    local invincible_after_damage_timer, invincibility_flash_duration = nil, 6
 
     local is_destroyed, xy = false, _xy(_gaw / 2, _gah - 28)
 
@@ -95,7 +95,8 @@ function new_player(params)
 
         take_damage = function(updated_health)
             if updated_health > 0 then
-                invincible_after_damage_timer = new_timer(30)
+                -- we start with "-1" in order to avoid 1 frame of non-flash due to how "%" works (see "_draw()")
+                invincible_after_damage_timer = new_timer(5 * invincibility_flash_duration - 1)
                 on_damaged()
             else
                 is_destroyed = true
@@ -119,8 +120,8 @@ function new_player(params)
         end,
 
         _draw = function()
-            if invincible_after_damage_timer and flr(invincible_after_damage_timer.ttl / 8) % 2 == 1 then
-                pal(split "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6")
+            if invincible_after_damage_timer and invincible_after_damage_timer.ttl % (2 * invincibility_flash_duration) < invincibility_flash_duration then
+                pal(split "1,7,7,7,7,7,7,7,7,7,7,7,7,7,7")
             end
             ship_sprite_current._draw(xy)
             jet_sprite._draw(xy.plus(0, 8))
