@@ -27,7 +27,7 @@ function new_hud(params)
     return {
         _update = slide_in_offset._update,
 
-        _draw = function(p)
+        _draw = function(game)
             rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)
             rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
             -- DEBUG:
@@ -38,7 +38,7 @@ function new_hud(params)
             local xy = _xy(-_gaox + 3, _vs - 16).plus(slide_in_offset.xy.ceil())
             heart._draw(xy.plus(1, 6))
             for segment = 1, _health_max do
-                (p.player_health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy.minus(0, 4 + segment * 6))
+                (game.health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy.minus(0, 4 + segment * 6))
             end
             -- we have to draw health_bar_start after health_bar_segment_full in order to cover 1st segment's joint with black pixels
             health_bar_start._draw(xy.minus(0, 4))
@@ -48,7 +48,7 @@ function new_hud(params)
             shockwave._draw(xy.plus(0, 6))
             shockwave_bar_start._draw(xy)
             for segment = 1, _shockwave_charges_max do
-                if p.shockwave_charges >= segment then
+                if game.shockwave_charges >= segment then
                     shockwave_bar_segment_full._draw(xy.minus(0, segment * 16))
                 else
                     shockwave_bar_segment_empty._draw(xy.minus(-6, segment * 16))
@@ -56,7 +56,7 @@ function new_hud(params)
             end
 
             -- score
-            local score_text = p.score.as_6_digits_text_with_extra_zero()
+            local score_text = game.score.as_6_digits_text_with_extra_zero()
             local score_text_x = xy.x + 17
             for i = 1, #score_text do
                 local score_text_y = -2 + i * 6
@@ -75,8 +75,11 @@ function new_hud(params)
             end
 
             -- boss health
-            if p.boss_health and p.boss_health_max then
-                local health_fraction = p.boss_health / p.boss_health_max
+            -- (hack to optimize tokens: we set game.boss_health_max only when boss enters
+            -- fight phase, even if we update game.boss_health earlier on every frame;
+            -- thanks to that we can easily detect if it's time to show boss' health bar)
+            if game.boss_health_max then
+                local health_fraction = game.boss_health / game.boss_health_max
                 boss_health_bar_start._draw(_xy(boss_health_bar_margin, boss_health_bar_margin))
                 boss_health_bar_end._draw(_xy(_gaw - boss_health_bar_margin - 4, boss_health_bar_margin))
                 line(
