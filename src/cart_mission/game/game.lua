@@ -183,6 +183,8 @@ function new_game(params)
 
     --
 
+    game.mission_progress_fraction = level.progress_fraction
+
     game.enter_enemies_phase = level.enter_phase_main
 
     function game.is_ready_to_enter_boss_phase()
@@ -235,6 +237,10 @@ function new_game(params)
     end
 
     function game.start_boss_fight()
+        -- hack to optimize tokens: we set game.boss_health_max only when boss enters
+        -- fight phase, even if we update game.boss_health earlier on every frame;
+        -- thanks to that we can easily detect if it's time to show boss' health bar
+        game.boss_health_max = boss.health_max
         boss.start_first_phase()
     end
 
@@ -311,8 +317,10 @@ function new_game(params)
         end
 
         if boss then
+            -- hack to optimize tokens: we set game.boss_health_max only when boss enters
+            -- fight phase, even if we update game.boss_health earlier on every frame;
+            -- thanks to that we can easily detect if it's time to show boss' health bar
             game.boss_health = boss.health
-            game.boss_health_max = boss.health_max
         end
     end
 

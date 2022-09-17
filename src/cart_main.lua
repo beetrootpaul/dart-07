@@ -33,6 +33,9 @@ function _draw()
     pal(_palette_display, 1)
 end
 
+-- TODO: NEXT: TOKENS: polishing: screen win; with info which button to press to progress
+-- TODO: NEXT: TOKENS: polishing: screen over; with info which button to press to progress
+
 -- TODO: selection screen: game logo OR separate title screen and selection+score screen
 
 -- TODO: API file: UNPACK
@@ -46,8 +49,6 @@ end
 -- TODO: CARTDATA: update used ID to the final one, both in function calls as in the comments below them
 
 -- TODO: polishing: screen mission select; with info which button to press to progress 
--- TODO: polishing: screen win; with info which button to press to progress
--- TODO: polishing: screen over; with info which button to press to progress
 
 -- TODO: polishing: SFX: enemy bullets
 -- TODO: polishing: SFX: shared

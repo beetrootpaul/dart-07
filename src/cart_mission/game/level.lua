@@ -28,6 +28,12 @@ function new_level(descriptor)
             phase = "main"
         end,
 
+        progress_fraction = function()
+            -- We remove 17 from max_visible_distance in order to make sure progress_fraction is not above 0 during mission intro phase.
+            -- We remove 2 from max_defined_distance in order to make sure progress_fraction is not below 1 during mission boss phase.
+            return mid(0, (max_visible_distance - 17) / (max_defined_distance - 2), 1)
+        end,
+
         has_scrolled_to_end = function()
             return phase == "main" and max_visible_distance >= max_defined_distance + 1 or phase == "outro"
         end,

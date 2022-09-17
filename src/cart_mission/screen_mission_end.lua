@@ -21,11 +21,12 @@ function new_screen_mission_end(game, hud)
     function screen._draw()
         cls(_m.bg_color)
         game._draw()
-        hud._draw {
-            player_health = game.health,
-            shockwave_charges = game.shockwave_charges,
-            score = game.score,
-        }
+        hud._draw(game)
+        --hud._draw {
+        --    player_health = game.health,
+        --    shockwave_charges = game.shockwave_charges,
+        --    score = game.score,
+        --}
         fade_out._draw()
     end
 
