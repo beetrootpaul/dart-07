@@ -40,7 +40,7 @@ function new_screen_mission_end(game, hud)
                     shockwave_charges = game.shockwave_charges,
                     triple_shot = game.triple_shot,
                     fast_shoot = game.fast_shoot,
-                    score = game.score,
+                    score = game.score.raw_value(),
                 }
             else
                 return new_screen_win(game)

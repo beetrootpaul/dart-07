@@ -27,6 +27,7 @@ __lua__
 #include build/src/common/fade.lua
 #include build/src/common/gameplay_area.lua
 #include build/src/common/multicart.lua
+#include build/src/common/score.lua
 #include build/src/common/throttle.lua
 #include build/src/common/utils.lua
 #include build/src/common/viewport.lua
@@ -43,7 +44,6 @@ __lua__
 #include build/src/cart_mission/game/player.lua
 #include build/src/cart_mission/game/player_bullet.lua
 #include build/src/cart_mission/game/powerup.lua
-#include build/src/cart_mission/game/score.lua
 #include build/src/cart_mission/game/shockwave.lua
 
 #include build/src/cart_mission/gui/hud.lua

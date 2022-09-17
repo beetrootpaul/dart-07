@@ -56,7 +56,7 @@ function new_hud(params)
             end
 
             print(
-                p.score.value(),
+                p.score.as_6_digits_text_with_extra_zero(),
                 _gaox + _gaw + 1,
                 1,
                 _color_6_light_grey

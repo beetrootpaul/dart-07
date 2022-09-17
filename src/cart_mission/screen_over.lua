@@ -9,7 +9,7 @@ function new_screen_over(game)
 
     function screen._init()
         high_score_so_far = dget(0)
-        current_score = game.score.value()
+        current_score = game.score.raw_value()
         dset(0, max(high_score_so_far, current_score))
     end
 
@@ -39,10 +39,10 @@ function new_screen_over(game)
         -- TODO: polish it
         if current_score > high_score_so_far then
             print("new high score!", 10, 80, _color_6_light_grey)
-            print(current_score, 70, 80, _color_9_dark_orange)
+            print(new_score(current_score).as_6_digits_text_with_extra_zero(), 70, 80, _color_9_dark_orange)
         else
             print("score:", 10, 80, _color_6_light_grey)
-            print(current_score, 40, 80, _color_12_blue)
+            print(new_score(current_score).as_6_digits_text_with_extra_zero(), 40, 80, _color_12_blue)
         end
 
         fade_out._draw()

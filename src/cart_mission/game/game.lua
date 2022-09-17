@@ -59,12 +59,12 @@ function new_game(params)
                 game.health = game.health + 1
             else
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score.add(100)
+                game.score.add(10)
             end
         elseif powerup.powerup_type == "t" then
             if game.triple_shot then
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score.add(100)
+                game.score.add(10)
             else
                 _sfx_play(_sfx_powerup_triple_shot)
                 game.triple_shot = true
@@ -72,7 +72,7 @@ function new_game(params)
         elseif powerup.powerup_type == "f" then
             if game.fast_shoot then
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score.add(100)
+                game.score.add(10)
             else
                 _sfx_play(_sfx_powerup_fast_shot)
                 game.fast_shoot = true
@@ -83,7 +83,7 @@ function new_game(params)
                 game.shockwave_charges = game.shockwave_charges + 1
             else
                 _sfx_play(_sfx_powerup_no_effect)
-                game.score.add(100)
+                game.score.add(10)
             end
         end
     end

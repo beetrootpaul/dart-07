@@ -63,12 +63,16 @@ do
     }
 
     -- enemy property:
-    --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
-    --   - collision_circles_props = {
+    --   - [1] = health
+    --   - [2] = score
+    --   - [3] = sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
+    --   - [4] = collision_circles_props = {
     --                    { r, optional_xy_offset }, -- put main/center circle first, since it will be source for explosions etc.
     --                    { r, optional_xy_offset },
     --                    { r },
     --                },
+    --   - [5] = powerups_distribution
+    --   - [6] = movement_factory
     --   - spawn_bullets = function(enemy_movement, player_collision_circle)
     --                       return bullets_table
     --                     end
@@ -77,13 +81,14 @@ do
 
             -- enemy: stationary
             [79] = {
-                health = 5,
-                score = 500,
-                sprites_props_txt = "28,28,0,64|28,28,28,64",
-                collision_circles_props = {
+                5,
+                850,
+                "28,28,0,64|28,28,28,64",
+                {
                     { 5 },
                 },
-                movement_factory = new_movement_line_factory {
+                "h,f,t,s",
+                new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m.scroll_per_frame,
                     -- DEBUG:
@@ -103,7 +108,6 @@ do
                     end
                     return bullets
                 end,
-                powerups_distribution = "h,f,t,s",
             },
 
             -- TODO: ???
@@ -150,7 +154,7 @@ do
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
-                    score = 2000,
+                    score = 800,
                     bullet_fire_timer = new_timer(80),
                     spawn_bullets = function(enemy_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)
