@@ -16,6 +16,7 @@ do
         local r_progress = new_movement_line_factory {
             -- keep in sync: amount of steps to add to "r_max" here is taken from the smallest circle drawn in "_draw()"
             frames = ceil((r_max + 4 * r_step) / speed),
+            continue_after_finished = true,
             angle = 0,
             angled_speed = speed,
         }(_xy(0, 0))
@@ -72,14 +73,14 @@ do
             collision_circle = function()
                 return {
                     xy = center_xy,
-                    r = r_progress.xy.x,
+                    r = min(r_progress.xy.x, r_max),
                 }
             end,
 
             _update = r_progress._update,
 
             _draw = function()
-                local r = flr(r_progress.xy.x)
+                local r = ceil(r_progress.xy.x)
 
                 draw_negative_ring(r, r - 6)
 

@@ -33,8 +33,6 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: shockwave tends to destroy after it becomes invisible. Fix it!
-
 -- TODO: selection screen: game logo OR separate title screen and selection+score screen
 
 -- TODO: API file: UNPACK

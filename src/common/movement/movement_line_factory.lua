@@ -23,7 +23,7 @@ function new_movement_line_factory(params)
 
         function movement._update()
             timer._update()
-            if timer.ttl > 0 then
+            if timer.ttl > 0 or params.continue_after_finished then
                 movement.xy = movement.xy.plus(movement.speed_xy)
             end
         end
