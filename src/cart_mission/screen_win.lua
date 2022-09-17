@@ -11,9 +11,9 @@ function new_screen_win(game)
         -- this music is available on the last mission's cart only
         music(2)
 
-        high_score_so_far = dget(1)
+        high_score_so_far = dget(0)
         current_score = game.score
-        dset(1, max(high_score_so_far, current_score))
+        dset(0, max(high_score_so_far, current_score))
     end
 
     function screen._update()

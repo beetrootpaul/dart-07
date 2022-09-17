@@ -7,7 +7,8 @@
 
 _sfx_options_change = 0
 --_sfx_options_prev = 1
-_sfx_options_confirm, _sfx_options_cannot_confirm = 2, 3
+_sfx_options_confirm = 2
+--_sfx_options_cannot_confirm = 3
 
 _sfx_powerup_spawned, _sfx_powerup_no_effect, _sfx_powerup_heart, _sfx_powerup_triple_shot, _sfx_powerup_fast_shot, _sfx_powerup_shockwave = 4, 5, 6, 7, 8, 9
 

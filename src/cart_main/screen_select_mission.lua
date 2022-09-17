@@ -3,7 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_select_mission(selected_mission)
-    local max_unlocked_mission, high_score
+    local high_score
 
     local fade_in = new_fade("in", 30)
     local fade_out = new_fade("out", 30)
@@ -25,7 +25,6 @@ function new_screen_select_mission(selected_mission)
 
     local function draw_mission_button(mission_number)
         local selected = selected_mission == mission_number
-        local unlocked = max_unlocked_mission >= mission_number
 
         local button_xy1, button_wh = mission_button_xy_wh(mission_number)
         local button_xy2 = button_xy1.plus(button_wh)
@@ -34,7 +33,7 @@ function new_screen_select_mission(selected_mission)
         local sy = 80 + (mission_number - 1) * 16
         sspr(
             0,
-            unlocked and sy or (sy - 48),
+            selected and sy or (sy - 48),
             button_wh.x,
             button_wh.y,
             button_xy1.x,
@@ -112,8 +111,7 @@ function new_screen_select_mission(selected_mission)
     function screen._init()
         music(0)
 
-        max_unlocked_mission = max(dget(0), 1)
-        high_score = dget(1)
+        high_score = dget(0)
 
         init_ship_movement()
     end
@@ -131,13 +129,9 @@ function new_screen_select_mission(selected_mission)
         end
 
         if btnp(_button_x) then
-            if selected_mission <= max_unlocked_mission then
-                _music_fade_out()
-                _sfx_play(_sfx_options_confirm)
-                proceed = true
-            else
-                _sfx_play(_sfx_options_cannot_confirm)
-            end
+            _music_fade_out()
+            _sfx_play(_sfx_options_confirm)
+            proceed = true
         end
 
         ship_sprite._update()
