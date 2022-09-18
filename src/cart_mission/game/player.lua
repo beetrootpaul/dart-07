@@ -24,13 +24,6 @@ function new_player(params)
 
     local is_destroyed, xy = false, _xy(_gaw / 2, _gah - 28)
 
-    local function collision_circle()
-        return {
-            xy = xy.plus(0, 1),
-            r = 3,
-        }
-    end
-
     local function create_single_bullet()
         return {
             new_player_bullet(xy.plus(0, -4)),
@@ -51,82 +44,87 @@ function new_player(params)
 
     -- 
 
-    return {
-
-        has_finished = function()
-            return is_destroyed
-        end,
-
-        set_movement = function(left, right, up, down)
-            jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
-            ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
-            xy = _xy(
-                mid(
-                    w / 2 + 1,
-                    xy.x + (right and speed or (left and -speed or 0)),
-                    _gaw - w / 2 - 1
-                ),
-                mid(
-                    h / 2 + 1,
-                    xy.y + (down and speed or (up and -speed or 0)),
-                    _gah - h / 2 - 1
-                ))
-        end,
-
-        fire = function(p)
-            on_bullets_spawned.invoke_if_ready(
-                p.fast_shoot and 8 or 14,
-                p.triple_shot and create_triple_bullets or create_single_bullet
-            )
-        end,
-
-        trigger_shockwave = function()
-            on_shockwave_triggered.invoke_if_ready(
-                6,
-                create_shockwave
-            )
-        end,
-
-        collision_circle = collision_circle,
-
-        is_invincible_after_damage = function()
-            return invincible_after_damage_timer ~= nil
-        end,
-
-        take_damage = function(updated_health)
-            if updated_health > 0 then
-                -- we start with "-1" in order to avoid 1 frame of non-flash due to how "%" works (see "_draw()")
-                invincible_after_damage_timer = new_timer(5 * invincibility_flash_duration - 1)
-                on_damaged()
-            else
-                is_destroyed = true
-                on_destroyed(collision_circle())
-            end
-        end,
-
-        _update = function()
-            if invincible_after_damage_timer then
-                if invincible_after_damage_timer.ttl <= 0 then
-                    invincible_after_damage_timer = nil
-                else
-                    invincible_after_damage_timer._update()
-                end
-            end
-
-            on_bullets_spawned._update()
-            on_shockwave_triggered._update()
-
-            jet_sprite._update()
-        end,
-
-        _draw = function()
-            if invincible_after_damage_timer and invincible_after_damage_timer.ttl % (2 * invincibility_flash_duration) < invincibility_flash_duration then
-                pal(split "1,7,7,7,7,7,7,7,7,7,7,7,7,7,7")
-            end
-            ship_sprite_current._draw(xy)
-            jet_sprite._draw(xy.plus(0, 8))
-            pal()
-        end,
-
+    local player = {
+        is_invincible_after_damage = false,
     }
+
+    function player.has_finished()
+        return is_destroyed
+    end
+
+    function player.set_movement(left, right, up, down)
+        jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
+        ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
+        xy = _xy(
+            mid(
+                w / 2 + 1,
+                xy.x + (right and speed or (left and -speed or 0)),
+                _gaw - w / 2 - 1
+            ),
+            mid(
+                h / 2 + 1,
+                xy.y + (down and speed or (up and -speed or 0)),
+                _gah - h / 2 - 1
+            ))
+    end
+
+    function player.fire(p)
+        on_bullets_spawned.invoke_if_ready(
+            p.fast_shoot and 8 or 14,
+            p.triple_shot and create_triple_bullets or create_single_bullet
+        )
+    end
+
+    function player.trigger_shockwave()
+        on_shockwave_triggered.invoke_if_ready(
+            6,
+            create_shockwave
+        )
+    end
+
+    function player.collision_circle()
+        return {
+            xy = xy.plus(0, 1),
+            r = 3,
+        }
+    end
+
+    function player.take_damage(updated_health)
+        if updated_health > 0 then
+            -- we start with "-1" in order to avoid 1 frame of non-flash due to how "%" works (see "_draw()")
+            invincible_after_damage_timer = new_timer(5 * invincibility_flash_duration - 1, {
+                on_finished = function()
+                    player.is_invincible_after_damage = false
+                    invincible_after_damage_timer = nil
+                end
+            })
+            player.is_invincible_after_damage = true
+            on_damaged()
+        else
+            is_destroyed = true
+            on_destroyed(player.collision_circle())
+        end
+    end
+
+    function player._update()
+        if invincible_after_damage_timer then
+            invincible_after_damage_timer._update()
+        end
+
+        on_bullets_spawned._update()
+        on_shockwave_triggered._update()
+
+        jet_sprite._update()
+    end
+
+    function player._draw()
+        if invincible_after_damage_timer and invincible_after_damage_timer.ttl % (2 * invincibility_flash_duration) < invincibility_flash_duration then
+            pal(split "1,7,7,7,7,7,7,7,7,7,7,7,7,7,7")
+        end
+        ship_sprite_current._draw(xy)
+        jet_sprite._draw(xy.plus(0, 8))
+        pal()
+    end
+
+    return player
 end

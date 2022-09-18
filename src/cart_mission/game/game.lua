@@ -122,7 +122,7 @@ function new_game(params)
                         end
                     end
                 end
-                if not enemy.has_finished() and not player.is_invincible_after_damage() then
+                if not enemy.has_finished() and not player.is_invincible_after_damage then
                     if _collisions.are_colliding(player, enemy_cc) then
                         enemy.take_damage(1)
                         handle_player_damage()
@@ -154,7 +154,7 @@ function new_game(params)
                         end
                     end
                 end
-                if not boss.has_finished() and not player.is_invincible_after_damage() then
+                if not boss.has_finished() and not player.is_invincible_after_damage then
                     if _collisions.are_colliding(player, boss_cc) then
                         boss.take_damage(1)
                         handle_player_damage()
@@ -172,7 +172,7 @@ function new_game(params)
                     end
                 end
             end
-            if not enemy_bullet.finished and not player.is_invincible_after_damage() then
+            if not enemy_bullet.finished and not player.is_invincible_after_damage then
                 if _collisions.are_colliding(enemy_bullet, player) then
                     handle_player_damage()
                     enemy_bullet.destroy()
