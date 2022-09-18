@@ -77,23 +77,7 @@ function new_hud(params)
             end
 
             -- score
-            local score_text = game.score.as_6_digits_text_with_extra_zero()
-            local score_text_x = xy.x + 17
-            for i = 1, #score_text do
-                local score_text_y = -2 + i * 6
-                print(
-                    "8",
-                    score_text_x,
-                    score_text_y,
-                    _color_2_darker_purple
-                )
-                print(
-                    score_text[i],
-                    score_text_x,
-                    score_text_y,
-                    _color_6_light_grey
-                )
-            end
+            game.score._draw(xy.x + 17, 4, _color_6_light_grey, _color_2_darker_purple, true)
 
             -- boss health
             -- (hack to optimize tokens: we set game.boss_health_max only when boss enters

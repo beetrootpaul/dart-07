@@ -33,8 +33,7 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: NEXT: TOKENS: polishing: screen win; with info which button to press to progress
--- TODO: NEXT: TOKENS: polishing: screen over; with info which button to press to progress
+-- TODO: remove boss start condition of no enemy bullets since they might fly slowly straight up
 
 -- TODO: selection screen: game logo OR separate title screen and selection+score screen
 
@@ -84,9 +83,7 @@ end
 -- TODO: balancing: player speed, its bullets: speed 1, speed 2, throttle length, shockwave: throttle length 
 -- TODO: balancing: shockwave damage time and amount 
 
--- TODO: consider angled triple-shot  
-
--- TODO: carts: labels
+-- TODO: carts: label images
 
 -- TODO: final BBS IDs in LOAD
 
@@ -97,6 +94,10 @@ end
 -- TODO: GitHub repo: description & website & topics
 
 -- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot
+
+-- TODO: check if no DEBUG code is left uncommented
+
+-- TODO: title screen with logo and score and tutorial? and go to screen with only mission selection?
 
 -- TODO: consider this left-right enemy type for mission 2
 -- enemy: left-right

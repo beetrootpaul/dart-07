@@ -36,15 +36,7 @@ function new_screen_mission_boss(game, hud)
     function screen._draw()
         cls(_m.bg_color)
         game._draw()
-        -- 8177
         hud._draw(game)
-        --hud._draw {
-        --    player_health = game.health,
-        --    shockwave_charges = game.shockwave_charges,
-        --    boss_health = (not boss_info) and game.boss_health or nil,
-        --    boss_health_max = (not boss_info) and game.boss_health_max or nil,
-        --    score = game.score,
-        --}
 
         if boss_info then
             boss_info._draw()

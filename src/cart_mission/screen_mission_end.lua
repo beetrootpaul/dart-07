@@ -20,13 +20,10 @@ function new_screen_mission_end(game, hud)
 
     function screen._draw()
         cls(_m.bg_color)
+        
         game._draw()
         hud._draw(game)
-        --hud._draw {
-        --    player_health = game.health,
-        --    shockwave_charges = game.shockwave_charges,
-        --    score = game.score,
-        --}
+        
         fade_out._draw()
     end
 
@@ -44,7 +41,7 @@ function new_screen_mission_end(game, hud)
                     score = game.score.raw_value(),
                 }
             else
-                return new_screen_win(game)
+                return new_screen_over(game, true)
             end
         end
     end

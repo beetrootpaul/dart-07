@@ -54,7 +54,6 @@ __lua__
 #include build/src/cart_mission/screen_mission_end.lua
 #include build/src/cart_mission/screen_mission_main.lua
 #include build/src/cart_mission/screen_over.lua
-#include build/src/cart_mission/screen_win.lua
 
 #include build/src/cart_mission.lua
 #include build/src/mission_3.lua

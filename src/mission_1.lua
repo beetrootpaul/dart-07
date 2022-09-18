@@ -181,7 +181,7 @@ do
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 123,
                 --},
-                bullet_fire_timer = new_timer(40),
+                bullet_fire_timer = new_timer(33),
                 spawn_bullets = function(enemy_movement)
                     _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}

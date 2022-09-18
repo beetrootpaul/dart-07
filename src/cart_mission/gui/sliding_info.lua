@@ -35,9 +35,9 @@ function new_sliding_info(params)
             local xy = movement.xy[rounding_fn]()
             local x, y = xy.x, xy.y
             if params.text_1 then
-                _outlined_centered_print(params.text_1, y - 17, _m.bg_color, params.main_color)
+                _centered_print(params.text_1, y - 17, _m.bg_color, params.main_color)
             end
-            _outlined_centered_print(params.text_2, y - 8, _m.bg_color, params.main_color)
+            _centered_print(params.text_2, y - 8, _m.bg_color, params.main_color)
             line(x, y, x + _gaw - 1, y, params.main_color)
         end,
     }

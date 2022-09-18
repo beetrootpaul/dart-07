@@ -14,6 +14,20 @@ function _angle_between(xy1, xy2)
     return atan2(dxy.x, dxy.y)
 end
 
+function _centered_print(text, y, text_color, outline_color)
+    local w = print(text, 0, -5)
+    local x = _gaox + (_gaw - w) / 2
+
+    if outline_color then
+        -- docs on control codes: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Control_Codes
+        for control_code in all(split "\-f,\-h,\|f,\|h,\+ff,\+hh,\+fh,\+hf") do
+            print(control_code .. text, x, y, outline_color)
+        end
+    end
+    
+    print(text, x, y, text_color)
+end
+
 function _flattened_for_each(...)
     local args = { ... }
     local callback = args[#args]
@@ -33,16 +47,6 @@ end
 
 function _noop()
     -- do nothing
-end
-
-function _outlined_centered_print(text, y, text_color, outline_color)
-    local w = print(text, 0, -5)
-    local x = _gaox + (_gaw - w) / 2
-    -- docs on control codes: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Control_Codes
-    for control_code in all(split "\-f,\-h,\|f,\|h,\+ff,\+hh,\+fh,\+hf") do
-        print(control_code .. text, x, y, outline_color)
-    end
-    print(text, x, y, text_color)
 end
 
 function _round(value)
