@@ -62,7 +62,8 @@ do
                 if bullet_fire_timer.ttl <= 0 then
                     local can_spawn_bullets = false
                     for cc in all(collision_circles()) do
-                        if not _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc) then
+                        -- former "is_collision_circle_nearly_outside_top_edge_of_gameplay_area()"
+                        if not (cc.xy.y + cc.r < 3) then
                             can_spawn_bullets = can_spawn_bullets or true
                         end
                     end

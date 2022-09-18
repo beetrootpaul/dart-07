@@ -10,9 +10,8 @@ function _collisions.are_colliding(game_object_or_collision_circle_1, game_objec
     opts = opts or {}
 
     if not opts.ignore_gameplay_area_check then
-        if _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc1) or
-            _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc2)
-        then
+        -- former "is_collision_circle_nearly_outside_top_edge_of_gameplay_area()"
+        if cc1.xy.y + cc1.r < 3 or cc2.xy.y + cc2.r < 3 then
             return false
         end
     end
