@@ -78,9 +78,9 @@ function new_screen_over(game, is_win)
 
         -- buttons
         if not is_win then
-            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 92, 18, 80, retry)
+            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 80, 24, 80, retry)
         end
-        draw_button("go \-fto \-fthe \-ftitle \-fscreen", 92, 18, is_win and 84 or 102, not retry or is_win)
+        draw_button("go \-fto \-ftitle \-fscreen", 80, 24, is_win and 84 or 102, not retry or is_win)
 
         fade_in._draw()
         fade_out._draw()
