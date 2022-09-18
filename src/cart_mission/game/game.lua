@@ -47,9 +47,9 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.triple_shot, game.fast_shoot = false, false
-        game.health = game.health - 1
-        player.take_damage(game.health)
+        --game.triple_shot, game.fast_shoot = false, false
+        --game.health = game.health - 1
+        --player.take_damage(game.health)
     end
 
     local function handle_powerup(powerup)
@@ -380,9 +380,15 @@ function new_game(params)
             enemies,
             powerups,
             explosions,
-            function(game_object, game_objects)
-                if game_object.has_finished() then
-                    del(game_objects, game_object)
+            function(game_object, game_objects_array)
+                -- First, assign a value. Might be nil if not implemented for a given game object
+                local hf = game_object.finished
+                -- Then, if a function is implemented, call it and use it instead
+                if game_object.has_finished then
+                    hf = game_object.has_finished()
+                end
+                if hf then
+                    del(game_objects_array, game_object)
                 end
             end
         )
