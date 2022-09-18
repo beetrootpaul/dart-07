@@ -2,7 +2,7 @@
 -- cart_main/screen_title.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_title(preselected_mission, start_music_and_fade_in)
+function new_screen_title(preselected_mission, start_music_and_fade_in, select_controls)
     local high_score
 
     local fade_in = new_fade("in", 30)
@@ -10,7 +10,9 @@ function new_screen_title(preselected_mission, start_music_and_fade_in)
     local x_sprite = new_static_sprite("15,6,56,0", true)
     local x_pressed_sprite = new_static_sprite("15,6,56,6", true)
 
-    local proceed, play = false, true
+    local play = not select_controls
+    
+    local proceed = false
 
     local function draw_title(base_y)
         print("shmup", 34, base_y, _color_15_peach)
@@ -75,8 +77,8 @@ function new_screen_title(preselected_mission, start_music_and_fade_in)
         if high_score > 0 then
             draw_high_score(25)
         end
-        draw_button("play", 80, 24, 90, play)
-        draw_button("controls", 80, 24, 110, not play)
+        draw_button("play", 98, 15, 82, play)
+        draw_button("controls", 98, 15, 104, not play)
 
         if start_music_and_fade_in then
             fade_in._draw()

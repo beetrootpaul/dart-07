@@ -69,7 +69,7 @@ function new_screen_brp()
 
     function screen._post_draw()
         if screen_timer.ttl <= 0 then
-            return new_screen_title(1, true)
+            return new_screen_title(1, true, false)
         end
     end
 

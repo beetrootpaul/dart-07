@@ -10,52 +10,52 @@ function new_screen_controls(preselected_mission)
 
     local proceed = false
 
-    local function draw_controls(base_y)
+    local function draw_controls(base_x, base_y)
         local y = base_y
-        print("controls", 10, y, _color_7_white)
 
+        print("in \-fgame:", base_x, y, _color_15_peach)
         y = y + 10
-        print("in \-fgame:", 10, y, _color_7_white)
 
+        print("use \-farrows \-fto \-fmove", base_x, y, _color_6_light_grey)
         y = y + 10
-        print("use \-farrows \-fto \-fnavigate", 10, y, _color_6_light_grey)
 
+        print("press \-f& \-fhold", base_x, y, _color_6_light_grey)
+        x_sprite._draw(-_gaox + base_x + 49, y - 1)
+        print("to \-ffire", base_x + 67, y, _color_6_light_grey)
         y = y + 10
-        print("press \-fand \-fhold", 10, y, _color_6_light_grey)
-        x_sprite._draw(-_gaox + 68, y - 1)
-        print("to \-ffire", 84, y, _color_6_light_grey)
 
-        y = y + 10
-        print("press", 10, y, _color_6_light_grey)
-        c_o_sprite._draw(-_gaox + 34, y - 1)
-        print("to \-ftrigger", 50, y, _color_6_light_grey)
-        print("a \-fshockwave \-f(if \-favailable)", 10, y + 6, _color_6_light_grey)
-
-        y = y + 30
-        print("other:", 10, y, _color_7_white)
-
-        y = y + 10
-        print("press", 10, y, _color_6_light_grey)
-        pause_sprite._draw(-_gaox + 34, y - 1)
-        print("to \-fopen", 50, y, _color_6_light_grey)
-        print("a \-fpause \-fmenu", 10, y + 6, _color_6_light_grey)
-
+        print("press", base_x, y, _color_6_light_grey)
+        c_o_sprite._draw(-_gaox + base_x + 23, y - 1)
+        print("to \-ftrigger", base_x + 41, y, _color_6_light_grey)
+        print("a \-fshockwave", base_x, y + 7, _color_6_light_grey)
         y = y + 20
-        print("press", 10, y, _color_6_light_grey)
-        x_sprite._draw(-_gaox + 34, y - 1)
-        print("to \-fconfirm", 84, y, _color_6_light_grey)
+
+        print("other:", base_x, y, _color_15_peach)
+        y = y + 10
+
+        print("press", base_x, y, _color_6_light_grey)
+        pause_sprite._draw(-_gaox + base_x + 23, y - 1)
+        print("to \-fopen", base_x + 41, y, _color_6_light_grey)
+        print("the \-fpause \-fmenu", base_x, y + 6, _color_6_light_grey)
+        y = y + 16
+
+        print("press", base_x, y, _color_6_light_grey)
+        x_sprite._draw(-_gaox + base_x + 23, y - 1)
+        print("to \-fconfirm", base_x + 41, y, _color_6_light_grey)
     end
 
-    local function draw_back_button(base_y)
+    local function draw_back_button(base_x, base_y)
+        local w = _vs - 2 * base_x
+
         -- button shape
-        sspr(35, 12, 1, 12, 10, base_y, 50, 12)
+        sspr(35, 12, 1, 12, base_x, base_y, w, 12)
 
         -- button text
-        print("back", 14, base_y + 3, _color_14_mauve)
+        print("back", base_x + 4, base_y + 3, _color_14_mauve)
 
         -- "x" press incentive
         local sprite = _alternating_0_and_1() == 0 and x_sprite or x_pressed_sprite
-        sprite._draw(-_gaox + 44, base_y + 13)
+        sprite._draw(-_gaox + base_x + w - 16, base_y + 13)
     end
 
     --
@@ -74,13 +74,13 @@ function new_screen_controls(preselected_mission)
     function screen._draw()
         cls(_color_1_darker_blue)
 
-        draw_controls(10)
-        draw_back_button(90)
+        draw_controls(15, 12)
+        draw_back_button(15, 104)
     end
 
     function screen._post_draw()
         if proceed then
-            return new_screen_title(preselected_mission, false)
+            return new_screen_title(preselected_mission, false, true)
         end
     end
 
