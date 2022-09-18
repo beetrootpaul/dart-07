@@ -22,11 +22,6 @@ function new_screen_defeat(game, hud)
         cls(_m.bg_color)
         game._draw()
         hud._draw(game)
-        --hud._draw {
-        --    player_health = game.health,
-        --    shockwave_charges = game.shockwave_charges,
-        --    score = game.score,
-        --}
         fade_out._draw()
     end
 
@@ -34,7 +29,7 @@ function new_screen_defeat(game, hud)
         game._post_draw()
 
         if screen_timer.ttl <= 0 then
-            return new_screen_over(game)
+            return new_screen_over(game, false)
         end
     end
 

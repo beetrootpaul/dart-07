@@ -29,6 +29,18 @@ function new_screen_select_mission(selected_mission)
         local button_xy1, button_wh = mission_button_xy_wh(mission_number)
         local button_xy2 = button_xy1.plus(button_wh)
 
+        -- draw button shape
+        sspr(
+            selected and 56 or 57,
+            12,
+            1,
+            19,
+            button_xy1.x - 1,
+            button_xy1.y - 1,
+            button_wh.x + 2,
+            19
+        )
+
         -- draw level sample
         local sy = 80 + (mission_number - 1) * 16
         sspr(
@@ -40,22 +52,6 @@ function new_screen_select_mission(selected_mission)
             button_xy1.y
         )
 
-        -- draw button borders
-        rect(
-            button_xy1.x - 1,
-            button_xy1.y - 1,
-            button_xy2.x,
-            button_xy2.y,
-            selected and _color_7_white or _color_13_lavender
-        )
-        line(
-            button_xy1.x - 1,
-            button_xy2.y + 1,
-            button_xy2.x,
-            button_xy2.y + 1,
-            _color_14_mauve
-        )
-
         -- draw label
         print(
             "mission " .. mission_number,
@@ -64,7 +60,7 @@ function new_screen_select_mission(selected_mission)
             selected and _color_7_white or _color_13_lavender
         )
 
-        -- draw X button press incentive and its label
+        -- draw "x" button press incentive and its label
         if selected then
             print(
                 "start",
@@ -73,8 +69,8 @@ function new_screen_select_mission(selected_mission)
                 _color_7_white
             )
             sspr(
-                114 + 7 * flr(2 * t() % 2),
-                108,
+                56 + 7 * flr(3 * t() % 2),
+                0,
                 7,
                 6,
                 button_xy2.x - 7,
@@ -112,6 +108,8 @@ function new_screen_select_mission(selected_mission)
         music(0)
 
         high_score = dget(0)
+        -- DEBUG:
+        --high_score = 123
 
         init_ship_movement()
     end
@@ -156,7 +154,7 @@ function new_screen_select_mission(selected_mission)
         -- TODO: polish it
         if high_score > 0 then
             print("high score", 10, 25, _color_6_light_grey)
-            print(new_score(high_score).as_6_digits_text_with_extra_zero(), 70, 25, _color_9_dark_orange)
+            new_score(high_score)._draw(70, 25, _color_6_light_grey, _color_2_darker_purple)
         end
 
         for i = 1, 3 do
@@ -164,8 +162,8 @@ function new_screen_select_mission(selected_mission)
         end
         draw_ship()
 
-        fade_out._draw()
         fade_in._draw()
+        fade_out._draw()
     end
 
     function screen._post_draw()

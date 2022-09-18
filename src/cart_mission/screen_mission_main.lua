@@ -59,11 +59,6 @@ function new_screen_mission_main(params)
         cls(_m.bg_color)
         game._draw()
         hud._draw(game)
-        --hud._draw {
-        --    player_health = game.health,
-        --    shockwave_charges = game.shockwave_charges,
-        --    score = game.score,
-        --}
 
         if mission_info then
             mission_info._draw()
@@ -91,7 +86,13 @@ function new_screen_mission_main(params)
 
         if game.health <= 0 then
             return new_screen_defeat(game, hud)
+            -- DEBUG:
+            --return new_screen_over(game, game.shockwave_charges == 0)
         end
+
+        -- DEBUG:
+        --return new_screen_over(game, false)
+        --return new_screen_over(game, true)
     end
 
     return screen

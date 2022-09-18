@@ -2,21 +2,46 @@
 -- cart_main/screen_over.lua  --
 -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_over(game)
-    local high_score_so_far, current_score, fade_out, retry, proceed, screen = nil, nil, new_fade("out", 30), true, false, {}
+function new_screen_over(game, is_win)
+    local got_high_score, fade_in, fade_out, proceed, screen = false, new_fade("in", 30), new_fade("out", 30), false, {}
+
+    local retry = true
+
+    local function draw_button(text, w, x, y, selected)
+        -- button shape
+        sspr(selected and (is_win and 60 or 58) or 59, 12, 1, 12, x, y + 1, w, 12)
+
+        -- button text
+        print(text, x + 4, y + 4, is_win and _color_5_blue_green or _color_14_mauve)
+
+        -- "x" press incentive
+        if selected then
+            sspr(56 + 7 * flr(3 * t() % 2), is_win and 6 or 0, 7, 6, x + w - 8, y + 14)
+        end
+    end
 
     --
 
     function screen._init()
-        high_score_so_far = dget(0)
-        current_score = game.score.raw_value()
+        if is_win then
+            -- this music is available on the last mission's cart only
+            music(2)
+        end
+
+        local current_score = game.score.raw_value()
+        local high_score_so_far = dget(0)
+        got_high_score = current_score > high_score_so_far
         dset(0, max(high_score_so_far, current_score))
+        -- DEBUG:
+        --got_high_score = true
     end
 
     function screen._update()
-        if btnp(_button_up) or btnp(_button_down) then
-            _sfx_play(_sfx_options_change)
-            retry = not retry
+        if not is_win then
+            if btnp(_button_up) or btnp(_button_down) then
+                _sfx_play(_sfx_options_change)
+                retry = not retry
+            end
         end
 
         if btnp(_button_x) then
@@ -27,30 +52,43 @@ function new_screen_over(game)
 
         if proceed then
             fade_out._update()
+        else
+            fade_in._update()
         end
     end
 
     function screen._draw()
-        cls(_color_0_black)
+        cls(is_win and _color_3_dark_green or _color_2_darker_purple)
 
-        print("try again (mission " .. _m.mission_number .. ")", 10, 40, retry and _color_6_light_grey or _color_14_mauve)
-        print("back to title", 10, 60, retry and _color_14_mauve or _color_6_light_grey)
+        -- heading
+        _centered_print(
+            is_win and "you \-fmade \-fit!" or "game \-fover",
+            22,
+            _color_7_white,
+            is_win and _color_5_blue_green or _color_8_red
+        )
 
-        -- TODO: polish it
-        if current_score > high_score_so_far then
-            print("new high score!", 10, 80, _color_6_light_grey)
-            print(new_score(current_score).as_6_digits_text_with_extra_zero(), 70, 80, _color_9_dark_orange)
-        else
-            print("score:", 10, 80, _color_6_light_grey)
-            print(new_score(current_score).as_6_digits_text_with_extra_zero(), 40, 80, _color_12_blue)
+        -- score
+        local score_base_y = got_high_score and 42 or 47
+        _centered_print("your \-fscore", score_base_y, _color_7_white)
+        game.score._draw(52, score_base_y + 10, _color_7_white, is_win and _color_5_blue_green or _color_14_mauve)
+        if got_high_score then
+            _centered_print("new \-fhigh \-fscore!", score_base_y + 20, is_win and _color_15_peach or _color_9_dark_orange)
         end
 
+        -- buttons
+        if not is_win then
+            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 92, 18, 80, retry)
+        end
+        draw_button("go \-fto \-fthe \-ftitle \-fscreen", 92, 18, is_win and 84 or 102, not retry or is_win)
+
+        fade_in._draw()
         fade_out._draw()
     end
 
     function screen._post_draw()
         if fade_out.has_finished() then
-            if retry then
+            if not is_win and retry then
                 extcmd("reset")
             else
                 _load_main_cart {
