@@ -3,9 +3,6 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_select_mission(selected_mission)
-    local high_score
-
-    local fade_in = new_fade("in", 30)
     local fade_out = new_fade("out", 30)
     local ship_movement
 
@@ -105,12 +102,6 @@ function new_screen_select_mission(selected_mission)
     local screen = {}
 
     function screen._init()
-        music(0)
-
-        high_score = dget(0)
-        -- DEBUG:
-        --high_score = 123
-
         init_ship_movement()
     end
 
@@ -141,28 +132,17 @@ function new_screen_select_mission(selected_mission)
             else
                 ship_movement._update()
             end
-        else
-            fade_in._update()
         end
     end
 
     function screen._draw()
         cls(_color_1_darker_blue)
 
-        print("shmup", 34, 10, _color_15_peach)
-
-        -- TODO: polish it
-        if high_score > 0 then
-            print("high score", 10, 25, _color_6_light_grey)
-            new_score(high_score)._draw(70, 25, _color_6_light_grey, _color_2_darker_purple)
-        end
-
         for i = 1, 3 do
             draw_mission_button(i)
         end
         draw_ship()
 
-        fade_in._draw()
         fade_out._draw()
     end
 
