@@ -2,14 +2,10 @@
 -- cart_mission.lua  --
 -- -- -- -- -- -- -- --
 
-local current_screen, next_screen
+local fade_out, current_screen, next_screen = _noop_game_object
 
 function _init()
-    local health_param = _get_cart_param(1)
-    local shockwave_charges_param = _get_cart_param(2)
-    local triple_shot_param = _get_cart_param(3)
-    local fast_shot_param = _get_cart_param(4)
-    local score_param = _get_cart_param(5)
+    local health_param, shockwave_charges_param, triple_shot_param, fast_shot_param, score_param = _get_cart_param(1), _get_cart_param(2), _get_cart_param(3), _get_cart_param(4), _get_cart_param(5)
 
     _copy_shared_assets_to_transferable_ram()
 
@@ -18,9 +14,7 @@ function _init()
     cartdata("todo-shmup")
 
     menuitem(1, "exit to title", function()
-        _load_main_cart {
-            preselected_mission_number = _m.mission_number,
-        }
+        fade_out = new_fade("out", 30)
     end)
 
     -- disable btnp repeating
@@ -37,6 +31,12 @@ function _init()
 end
 
 function _update60()
+    if fade_out.has_finished() then
+        _load_main_cart {
+            preselected_mission_number = _m.mission_number,
+        }
+    end
+
     next_screen = current_screen._post_draw()
 
     if next_screen then
@@ -45,9 +45,14 @@ function _update60()
     end
 
     current_screen._update()
+
+    fade_out._update()
 end
 
 function _draw()
     current_screen._draw()
+
+    fade_out._draw()
+
     pal(_palette_display, 1)
 end

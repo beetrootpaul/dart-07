@@ -6,14 +6,20 @@ local current_screen, next_screen
 
 function _init()
     local preselected_mission_number = _get_cart_param(1)
+    -- DEBUG:
+    --preselected_mission_number = 2
 
     -- to clear cart data, go to cart data folder (defined as "root_path" in "$HOME/Library/Application Support/pico-8/config.txt")
     -- and delete "todo-shmup.p8d.txt" file
     cartdata("todo-shmup")
 
     current_screen = preselected_mission_number and
-        new_screen_select_mission(preselected_mission_number) or
+        new_screen_title(preselected_mission_number, true, false) or
         new_screen_brp()
+    -- DEBUG:
+    --current_screen = new_screen_controls(preselected_mission_number)
+    --current_screen = new_screen_title(preselected_mission_number, true, false)
+
     current_screen._init()
 end
 
@@ -33,10 +39,6 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: remove boss start condition of no enemy bullets since they might fly slowly straight up
-
--- TODO: selection screen: game logo OR separate title screen and selection+score screen
-
 -- TODO: API file: UNPACK
 -- TODO: API file: DGET
 -- TODO: API file: DSET
@@ -46,8 +48,6 @@ end
 -- TODO: API file: LOAD
 
 -- TODO: CARTDATA: update used ID to the final one, both in function calls as in the comments below them
-
--- TODO: polishing: screen mission select; with info which button to press to progress 
 
 -- TODO: polishing: SFX: enemy bullets
 -- TODO: polishing: SFX: shared
@@ -96,8 +96,6 @@ end
 -- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot
 
 -- TODO: check if no DEBUG code is left uncommented
-
--- TODO: title screen with logo and score and tutorial? and go to screen with only mission selection?
 
 -- TODO: consider this left-right enemy type for mission 2
 -- enemy: left-right

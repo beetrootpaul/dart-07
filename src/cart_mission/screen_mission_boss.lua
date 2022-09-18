@@ -27,27 +27,21 @@ function new_screen_mission_boss(game, hud)
     function screen._update()
         game._update()
         hud._update()
-
-        if boss_info then
-            boss_info._update()
-        end
+        boss_info._update()
     end
 
     function screen._draw()
         cls(_m.bg_color)
         game._draw()
         hud._draw(game)
-
-        if boss_info then
-            boss_info._draw()
-        end
+        boss_info._draw()
     end
 
     function screen._post_draw()
         game._post_draw()
 
-        if boss_info and boss_info.has_finished() then
-            boss_info = nil
+        if boss_info.has_finished() then
+            boss_info = _noop_game_object
             music(_m.mission_boss_music)
             game.start_boss_fight()
         end
