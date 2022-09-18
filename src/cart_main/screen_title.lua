@@ -11,16 +11,25 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
     local x_pressed_sprite = new_static_sprite("15,6,56,6", true)
 
     local play = not select_controls
-    
+
     local proceed = false
 
     local function draw_title(base_y)
-        print("shmup", 34, base_y, _color_15_peach)
+        sspr(
+            96, 32,
+            25, 21,
+            (_vs - 50) / 2, base_y
+        )
+        sspr(
+            96, 53,
+            25, 21,
+            (_vs - 50) / 2 + 25, base_y
+        )
     end
 
     local function draw_high_score(base_y)
-        print("high score", 10, base_y, _color_6_light_grey)
-        new_score(high_score)._draw(70, base_y, _color_6_light_grey, _color_2_darker_purple)
+        _centered_print("high \-fscore", base_y, _color_6_light_grey)
+        new_score(high_score)._draw(52, base_y + 10, _color_7_white, _color_14_mauve)
     end
 
     local function draw_button(text, w, base_x, base_y, selected)
@@ -73,9 +82,9 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
     function screen._draw()
         cls(_color_1_darker_blue)
 
-        draw_title(10)
+        draw_title(12)
         if high_score > 0 then
-            draw_high_score(25)
+            draw_high_score(54)
         end
         draw_button("play", 98, 15, 82, play)
         draw_button("controls", 98, 15, 104, not play)
