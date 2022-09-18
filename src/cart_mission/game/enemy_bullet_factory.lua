@@ -21,7 +21,9 @@ function new_enemy_bullet_factory(bullet_properties)
 
         function enemy_bullet._update()
             movement._update()
-            enemy_bullet.finished = enemy_bullet.finished or _is_safely_outside_gameplay_area(movement.xy)
+            local xy = movement.xy
+            local outside = xy.x < -_ts or xy.x > _gaw + _ts or xy.y < -_ts or xy.y > _gah + _ts
+            enemy_bullet.finished = enemy_bullet.finished or outside
         end
 
         function enemy_bullet._draw()

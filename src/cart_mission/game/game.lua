@@ -168,14 +168,16 @@ function new_game(params)
             for shockwave in all(shockwaves) do
                 if not enemy_bullet.finished and not shockwave.has_finished() then
                     if _collisions.are_colliding(shockwave, enemy_bullet) then
-                        enemy_bullet.destroy()
+                        --enemy_bullet.destroy()
+                        enemy_bullet.finished = true
                     end
                 end
             end
             if not enemy_bullet.finished and not player.is_invincible_after_damage then
                 if _collisions.are_colliding(enemy_bullet, player) then
                     handle_player_damage()
-                    enemy_bullet.destroy()
+                    --enemy_bullet.destroy()
+                    enemy_bullet.finished = true
                 end
             end
         end
