@@ -53,6 +53,14 @@ function _noop()
     -- do nothing
 end
 
+_noop_game_object = {
+    has_finished = function()
+        return false
+    end,
+    _update = _noop,
+    _draw = _noop,
+}
+
 function _round(value)
     return flr(value + .5)
 end

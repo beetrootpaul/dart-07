@@ -14,7 +14,6 @@ __lua__
 #include build/src/common/movement/movement_to_target_factory.lua
 
 #include build/src/common/sprites/animated_sprite.lua
-#include build/src/common/sprites/fake_sprite.lua
 #include build/src/common/sprites/static_sprite.lua
 
 #include build/src/common/timer/fake_timer.lua

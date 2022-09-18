@@ -47,12 +47,8 @@ function new_screen_mission_main(params)
         game._update()
         hud._update()
 
-        if mission_info then
-            mission_info._update()
-        end
-        if fade_in then
-            fade_in._update()
-        end
+        mission_info._update()
+        fade_in._update()
     end
 
     function screen._draw()
@@ -60,23 +56,19 @@ function new_screen_mission_main(params)
         game._draw()
         hud._draw(game)
 
-        if mission_info then
-            mission_info._draw()
-        end
-        if fade_in then
-            fade_in._draw()
-        end
+        mission_info._draw()
+        fade_in._draw()
     end
 
     function screen._post_draw()
         game._post_draw()
 
-        if fade_in and fade_in.has_finished() then
-            fade_in = nil
+        if fade_in.has_finished() then
+            fade_in = _noop_game_object
         end
 
-        if mission_info and mission_info.has_finished() then
-            mission_info = nil
+        if mission_info.has_finished() then
+            mission_info = _noop_game_object
             game.enter_enemies_phase()
         end
 

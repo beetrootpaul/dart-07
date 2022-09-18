@@ -33,8 +33,6 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: selection screen: game logo OR separate title screen and selection+score screen
-
 -- TODO: API file: UNPACK
 -- TODO: API file: DGET
 -- TODO: API file: DSET
@@ -44,8 +42,6 @@ end
 -- TODO: API file: LOAD
 
 -- TODO: CARTDATA: update used ID to the final one, both in function calls as in the comments below them
-
--- TODO: polishing: screen mission select; with info which button to press to progress 
 
 -- TODO: polishing: SFX: enemy bullets
 -- TODO: polishing: SFX: shared
@@ -94,8 +90,6 @@ end
 -- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot
 
 -- TODO: check if no DEBUG code is left uncommented
-
--- TODO: title screen with logo and score and tutorial? and go to screen with only mission selection?
 
 -- TODO: consider this left-right enemy type for mission 2
 -- enemy: left-right

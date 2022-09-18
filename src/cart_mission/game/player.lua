@@ -17,7 +17,7 @@ function new_player(params)
         split("0,0,0,0,4,4,4,4"),
         8
     )
-    local jet_sprite_hidden = new_fake_sprite()
+    local jet_sprite_hidden = _noop_game_object
     local jet_sprite = jet_sprite_visible
 
     local invincible_after_damage_timer, invincibility_flash_duration = nil, 6

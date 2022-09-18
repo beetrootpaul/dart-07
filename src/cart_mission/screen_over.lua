@@ -3,11 +3,11 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_over(game, is_win)
-    local got_high_score, fade_in, fade_out, proceed, screen = false, new_fade("in", 30), new_fade("out", 30), false, {}
+    local got_high_score, fade_in, fade_out, retry, proceed, screen = false, new_fade("in", 30), new_fade("out", 30), true, false, {}
 
-    local retry = true
+    local function draw_button(text, y, selected)
+        local w, x = 80, 24
 
-    local function draw_button(text, w, x, y, selected)
         -- button shape
         sspr(
             selected and (is_win and 37 or 35) or 36, 12,
@@ -90,9 +90,9 @@ function new_screen_over(game, is_win)
 
         -- buttons
         if not is_win then
-            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 80, 24, 81, retry)
+            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 81, retry)
         end
-        draw_button("go \-fto \-ftitle \-fscreen", 80, 24, is_win and 85 or 103, not retry or is_win)
+        draw_button("go \-fto \-ftitle \-fscreen", is_win and 85 or 103, not retry or is_win)
 
         fade_in._draw()
         fade_out._draw()
