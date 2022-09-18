@@ -2,7 +2,7 @@
 -- cart_main/screen_title.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_title(preselected_mission, start_music)
+function new_screen_title(preselected_mission, start_music_and_fade_in)
     local high_score
 
     local fade_in = new_fade("in", 30)
@@ -45,7 +45,7 @@ function new_screen_title(preselected_mission, start_music)
     local screen = {}
 
     function screen._init()
-        if start_music then
+        if start_music_and_fade_in then
             music(0)
         end
 
@@ -78,7 +78,9 @@ function new_screen_title(preselected_mission, start_music)
         draw_button("play", 80, 24, 90, play)
         draw_button("controls", 80, 24, 110, not play)
 
-        fade_in._draw()
+        if start_music_and_fade_in then
+            fade_in._draw()
+        end
     end
 
     function screen._post_draw()

@@ -22,7 +22,7 @@ function new_screen_select_mission(selected_mission)
     local function mission_button_xy_wh(mission_number)
         -- place missions 1..N at positions 0..N-1, then place back button (identified as mission 0) at position N
         local position = (mission_number - 1) % (_max_mission_number + 1)
-        return _xy(_gaox, 13 + position * 29), _xy(_gaw, 16)
+        return _xy(_gaox, 12 + position * 31), _xy(_gaw, 16)
     end
 
     local function draw_back_button()
@@ -56,32 +56,24 @@ function new_screen_select_mission(selected_mission)
 
         -- draw button shape
         sspr(
-            selected and 38 or 39,
-            12,
-            1,
-            19,
-            button_xy1.x - 1,
-            button_xy1.y - 1,
-            button_wh.x + 2,
-            19
+            selected and 38 or 39, 12,
+            1, 19,
+            button_xy1.x - 1, button_xy1.y - 1,
+            button_wh.x + 2, 19
         )
 
         -- draw level sample
         local sy = 80 + (mission_number - 1) * 16
         sspr(
-            0,
-            selected and sy or (sy - 48),
-            button_wh.x,
-            button_wh.y,
-            button_xy1.x,
-            button_xy1.y
+            0, selected and sy or (sy - 48),
+            button_wh.x, button_wh.y,
+            button_xy1.x, button_xy1.y
         )
 
         -- draw label
         print(
             "mission " .. mission_number,
-            button_xy1.x,
-            button_xy2.y + 4,
+            button_xy1.x, button_xy2.y + 4,
             selected and _color_7_white or _color_13_lavender
         )
 
@@ -89,12 +81,11 @@ function new_screen_select_mission(selected_mission)
         if selected then
             print(
                 "start",
-                button_xy2.x - 28,
-                button_xy2.y + 4,
+                button_xy2.x - 37, button_xy2.y + 4,
                 _color_7_white
             )
             local sprite = _alternating_0_and_1() == 0 and x_sprite or x_pressed_sprite
-            sprite._draw(-_gaox + button_xy2.x - 7, button_xy2.y + 3)
+            sprite._draw(-_gaox + button_xy2.x - 15, button_xy2.y + 3)
         end
     end
 

@@ -15,12 +15,9 @@ function new_screen_controls(preselected_mission)
         print("controls", 10, y, _color_7_white)
 
         y = y + 10
-        print("press", 10, y, _color_6_light_grey)
-        pause_sprite._draw(-_gaox + 34, y - 1)
-        print("to \-fopen", 50, y, _color_6_light_grey)
-        print("a \-fpause \-fmenu", 10, y + 6, _color_6_light_grey)
+        print("in \-fgame:", 10, y, _color_7_white)
 
-        y = y + 30
+        y = y + 10
         print("use \-farrows \-fto \-fnavigate", 10, y, _color_6_light_grey)
 
         y = y + 10
@@ -33,6 +30,20 @@ function new_screen_controls(preselected_mission)
         c_o_sprite._draw(-_gaox + 34, y - 1)
         print("to \-ftrigger", 50, y, _color_6_light_grey)
         print("a \-fshockwave \-f(if \-favailable)", 10, y + 6, _color_6_light_grey)
+
+        y = y + 30
+        print("other:", 10, y, _color_7_white)
+
+        y = y + 10
+        print("press", 10, y, _color_6_light_grey)
+        pause_sprite._draw(-_gaox + 34, y - 1)
+        print("to \-fopen", 50, y, _color_6_light_grey)
+        print("a \-fpause \-fmenu", 10, y + 6, _color_6_light_grey)
+
+        y = y + 20
+        print("press", 10, y, _color_6_light_grey)
+        x_sprite._draw(-_gaox + 34, y - 1)
+        print("to \-fconfirm", 84, y, _color_6_light_grey)
     end
 
     local function draw_back_button(base_y)
