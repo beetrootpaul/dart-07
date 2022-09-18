@@ -12,7 +12,7 @@ function _init()
     cartdata("todo-shmup")
 
     current_screen = preselected_mission_number and
-        new_screen_title(preselected_mission_number) or
+        new_screen_title(preselected_mission_number, true) or
         new_screen_brp()
     current_screen._init()
 end

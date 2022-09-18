@@ -9,6 +9,10 @@ function _add_all(table, ...)
     return table
 end
 
+function _alternating_0_and_1()
+    return flr(3 * t() % 2)
+end
+
 function _angle_between(xy1, xy2)
     local dxy = xy2.minus(xy1)
     return atan2(dxy.x, dxy.y)
@@ -24,7 +28,7 @@ function _centered_print(text, y, text_color, outline_color)
             print(control_code .. text, x, y, outline_color)
         end
     end
-    
+
     print(text, x, y, text_color)
 end
 

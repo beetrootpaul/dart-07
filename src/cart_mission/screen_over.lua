@@ -9,14 +9,26 @@ function new_screen_over(game, is_win)
 
     local function draw_button(text, w, x, y, selected)
         -- button shape
-        sspr(selected and (is_win and 60 or 58) or 59, 12, 1, 12, x, y + 1, w, 12)
+        sspr(
+            selected and (is_win and 37 or 35) or 36, 12,
+            1, 12,
+            x, y,
+            w, 12
+        )
 
         -- button text
-        print(text, x + 4, y + 4, is_win and _color_5_blue_green or _color_14_mauve)
+        print(
+            text,
+            x + 4, y + 3,
+            is_win and _color_5_blue_green or _color_14_mauve
+        )
 
         -- "x" press incentive
         if selected then
-            sspr(56 + 7 * flr(3 * t() % 2), is_win and 6 or 0, 7, 6, x + w - 8, y + 14)
+            new_static_sprite(
+                "15,6,56," .. (is_win and 12 or 0) + _alternating_0_and_1() * 6,
+                true
+            )._draw(x + w - 16 - _gaox, y + 13)
         end
     end
 
@@ -78,9 +90,9 @@ function new_screen_over(game, is_win)
 
         -- buttons
         if not is_win then
-            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 80, 24, 80, retry)
+            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 80, 24, 81, retry)
         end
-        draw_button("go \-fto \-ftitle \-fscreen", 80, 24, is_win and 84 or 102, not retry or is_win)
+        draw_button("go \-fto \-ftitle \-fscreen", 80, 24, is_win and 85 or 103, not retry or is_win)
 
         fade_in._draw()
         fade_out._draw()

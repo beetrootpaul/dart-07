@@ -2,10 +2,7 @@
 -- common/sprites/animated_sprite.lua  --
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
-    params = params or {}
-    local from_left_top_corner = params.from_left_top_corner
-
+function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, from_left_top_corner)
     local frame = 1
     local max_frame = #sprite_xs
 
@@ -14,7 +11,9 @@ function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, params)
             frame = _tni(frame, max_frame)
         end,
 
-        _draw = function(xy)
+        _draw = function(xy_or_x, y)
+            local xy = y and _xy(xy_or_x, y) or xy_or_x
+            
             xy = from_left_top_corner and xy or xy.minus(sprite_w / 2, sprite_h / 2)
             xy = _xy(_round(xy.x), _round(xy.y))
 

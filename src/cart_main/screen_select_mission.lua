@@ -8,6 +8,9 @@ function new_screen_select_mission(selected_mission)
 
     local proceed = false
 
+    local x_sprite = new_static_sprite("15,6,56,0", true)
+    local x_pressed_sprite = new_static_sprite("15,6,56,6", true)
+
     local ship_sprite = new_static_sprite "10,10,18,0"
     local jet_sprite = new_animated_sprite(
         4,
@@ -17,7 +20,32 @@ function new_screen_select_mission(selected_mission)
     )
 
     local function mission_button_xy_wh(mission_number)
-        return _xy(_gaox, 43 + (mission_number - 1) * 29), _xy(_gaw, 16)
+        -- place missions 1..N at positions 0..N-1, then place back button (identified as mission 0) at position N
+        local position = (mission_number - 1) % (_max_mission_number + 1)
+        return _xy(_gaox, 13 + position * 29), _xy(_gaw, 16)
+    end
+
+    local function draw_back_button()
+        local selected = selected_mission == 0
+
+        local button_xy1, button_wh = mission_button_xy_wh(0)
+
+        -- button shape
+        sspr(
+            selected and 35 or 36, 12,
+            1, 12,
+            button_xy1.x - 1, button_xy1.y - 1,
+            button_wh.x + 2, 12
+        )
+
+        -- button text
+        print("back", button_xy1.x + 3, button_xy1.y + 2, _color_14_mauve)
+
+        -- "x" press incentive
+        if selected then
+            local sprite = _alternating_0_and_1() == 0 and x_sprite or x_pressed_sprite
+            sprite._draw(-_gaox + button_xy1.x + button_wh.x - 16, button_xy1.y + 13)
+        end
     end
 
     local function draw_mission_button(mission_number)
@@ -28,7 +56,7 @@ function new_screen_select_mission(selected_mission)
 
         -- draw button shape
         sspr(
-            selected and 56 or 57,
+            selected and 38 or 39,
             12,
             1,
             19,
@@ -65,14 +93,8 @@ function new_screen_select_mission(selected_mission)
                 button_xy2.y + 4,
                 _color_7_white
             )
-            sspr(
-                56 + 7 * flr(3 * t() % 2),
-                0,
-                7,
-                6,
-                button_xy2.x - 7,
-                button_xy2.y + 3
-            )
+            local sprite = _alternating_0_and_1() == 0 and x_sprite or x_pressed_sprite
+            sprite._draw(-_gaox + button_xy2.x - 7, button_xy2.y + 3)
         end
     end
 
@@ -80,11 +102,8 @@ function new_screen_select_mission(selected_mission)
         local button_xy, button_wh = mission_button_xy_wh(selected_mission)
         clip(button_xy.x, button_xy.y, button_wh.x, button_wh.y)
 
-        palt(_color_0_black, false)
-        palt(_color_11_transparent, true)
         ship_sprite._draw(ship_movement.xy)
         jet_sprite._draw(ship_movement.xy.plus(0, 8))
-        palt()
 
         clip()
     end
@@ -108,18 +127,20 @@ function new_screen_select_mission(selected_mission)
     function screen._update()
         if btnp(_button_up) then
             _sfx_play(_sfx_options_change)
-            selected_mission = (selected_mission - 2) % _max_mission_number + 1
+            selected_mission = (selected_mission - 1) % (_max_mission_number + 1)
             init_ship_movement()
         end
         if btnp(_button_down) then
             _sfx_play(_sfx_options_change)
-            selected_mission = selected_mission % _max_mission_number + 1
+            selected_mission = (selected_mission + 1) % (_max_mission_number + 1)
             init_ship_movement()
         end
 
         if btnp(_button_x) then
-            _music_fade_out()
             _sfx_play(_sfx_options_confirm)
+            if selected_mission > 0 then
+                _music_fade_out()
+            end
             proceed = true
         end
 
@@ -141,12 +162,19 @@ function new_screen_select_mission(selected_mission)
         for i = 1, 3 do
             draw_mission_button(i)
         end
-        draw_ship()
+        draw_back_button()
+        if selected_mission > 0 then
+            draw_ship()
+        end
 
         fade_out._draw()
     end
 
     function screen._post_draw()
+        if proceed and selected_mission == 0 then
+            return new_screen_title(1, false)
+        end
+
         if fade_out.has_finished() then
             _copy_shared_assets_from_transferable_ram()
             _load_mission_cart {

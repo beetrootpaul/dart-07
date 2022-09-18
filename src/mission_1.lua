@@ -29,7 +29,7 @@ do
                     "48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48"
             ),
             56,
-            { from_left_top_corner = true }
+            true
         )
     end
 
@@ -41,10 +41,10 @@ do
     function _m.level_bg_draw()
         for distance = 0, 16 do
             for lane = 1, 12 do
-                waves_tile._draw(_xy(
+                waves_tile._draw(
                     (lane - 1) * _ts,
                     ceil((distance - 1) * _ts + waves_tile_offset_y)
-                ))
+                )
             end
         end
     end

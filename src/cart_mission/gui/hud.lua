@@ -21,13 +21,13 @@ function new_hud(params)
     local bar_w, boss_health_bar_margin = 16, 2
 
     local function new_hud_sprite(sprite_whxy_txt)
-        return new_static_sprite(sprite_whxy_txt, { from_left_top_corner = true })
+        return new_static_sprite(sprite_whxy_txt, true)
     end
 
     local heart, health_bar_start, health_bar_segment_full, health_bar_segment_empty = new_hud_sprite "6,5,40,24", new_hud_sprite "8,5,40,19", new_hud_sprite "8,9,40,10", new_hud_sprite "1,9,40,10"
     local shockwave, shockwave_bar_start, shockwave_bar_segment_full, shockwave_bar_segment_empty = new_hud_sprite "7,6,48,24", new_hud_sprite "8,1,48,23", new_hud_sprite "8,16,48,7", new_hud_sprite "2,16,54,7"
-    local ship_indicator = new_hud_sprite "3,5,40,4"
-    local boss_health_bar_start, boss_health_bar_end = new_hud_sprite "4,4,40,0", new_hud_sprite "4,4,44,0"
+    local ship_indicator = new_hud_sprite "3,5,32,15"
+    local boss_health_bar_start, boss_health_bar_end = new_hud_sprite "4,4,27,20", new_hud_sprite "4,4,31,20"
 
     return {
         _update = slide_in_offset._update,
@@ -85,8 +85,8 @@ function new_hud(params)
             -- thanks to that we can easily detect if it's time to show boss' health bar)
             if game.boss_health_max then
                 local health_fraction = game.boss_health / game.boss_health_max
-                boss_health_bar_start._draw(_xy(boss_health_bar_margin, boss_health_bar_margin))
-                boss_health_bar_end._draw(_xy(_gaw - boss_health_bar_margin - 4, boss_health_bar_margin))
+                boss_health_bar_start._draw(boss_health_bar_margin, boss_health_bar_margin)
+                boss_health_bar_end._draw(_gaw - boss_health_bar_margin - 4, boss_health_bar_margin)
                 line(
                     _gaox + boss_health_bar_margin + 2,
                     boss_health_bar_margin + 2,
