@@ -33,8 +33,6 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: remove boss start condition of no enemy bullets since they might fly slowly straight up
-
 -- TODO: selection screen: game logo OR separate title screen and selection+score screen
 
 -- TODO: API file: UNPACK

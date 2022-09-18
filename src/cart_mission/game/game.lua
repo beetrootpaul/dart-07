@@ -188,7 +188,7 @@ function new_game(params)
     game.enter_enemies_phase = level.enter_phase_main
 
     function game.is_ready_to_enter_boss_phase()
-        return level.has_scrolled_to_end() and #enemies <= 0 and #enemy_bullets <= 0 and #powerups <= 0
+        return level.has_scrolled_to_end() and #enemies <= 0 and #powerups <= 0
     end
 
     function game.enter_boss_phase()
