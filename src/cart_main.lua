@@ -39,16 +39,6 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: API file: UNPACK
--- TODO: API file: DGET
--- TODO: API file: DSET
--- TODO: API file: CARTDATA
--- TODO: API file: MUSIC
--- TODO: API file: MEMCPY
--- TODO: API file: LOAD
-
--- TODO: CARTDATA: update used ID to the final one, both in function calls as in the comments below them
-
 -- TODO: polishing: SFX: enemy bullets
 -- TODO: polishing: SFX: shared
 
@@ -76,8 +66,6 @@ end
 -- TODO: boss info: boss 2 name
 -- TODO: boss info: boss 3 name
 
--- TODO: tutorial screen? press X to shoot, arrows to fly; X can be pressed long, C cannot
-
 -- TODO: balancing: powerup distributions 
 -- TODO: balancing: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 -- TODO: balancing: player speed, its bullets: speed 1, speed 2, throttle length, shockwave: throttle length 
@@ -88,10 +76,6 @@ end
 -- TODO: final BBS IDs in LOAD
 
 -- TODO: itch.io: favicon
-
--- TODO: GitHub repo: license other than MIT?
-
--- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot
 
 -- TODO: check if no DEBUG code is left uncommented
 

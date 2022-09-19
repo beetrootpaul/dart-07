@@ -138,6 +138,18 @@ end
 function camera(x, y)
 end
 
+--- Opens a permanent data storage slot indexed by ID that can be used to store and retrieve up to
+--- 256 bytes (64 numbers) worth of data using DSET() and DGET().
+---
+---
+--- - API docs: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#CARTDATA
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Cartdata
+---
+--- @param id string
+function cartdata(id)
+end
+
 --- Returns the closest integer that is equal to or above x
 ---
 ---
@@ -242,6 +254,34 @@ end
 --- @param i number index, optional
 --- @return any deleted item
 function deli(tbl, i)
+end
+
+--- Get the number stored at INDEX (0..63)
+---
+--- Use this only after you have called CARTDATA()
+---
+---
+--- - API docs: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#DGET
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Dget
+---
+--- @param index number
+--- @return number
+function dget(index)
+end
+
+--- Set the number stored at index (0..63)
+---
+--- Use this only after you have called CARTDATA()
+---
+---
+--- - API docs: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#DSET
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Dset
+---
+--- @param index number
+--- @param value number
+function dset(index, value)
 end
 
 --- Special system command, where CMD_STR is a string:
@@ -355,6 +395,19 @@ end
 function line(x0, y0, x1, y1, col)
 end
 
+--- Load a cartridge
+---
+---
+--- - API docs: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#LOAD
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Load
+---
+--- @param filename string cartridge filename (relative to the current working directory) or a BBS cart ID
+--- @param breadcrumb string label of a menu item to go back to the previous cart, optional
+--- @param breadcrumb string string to be passed to the loaded cart, can be read there with STAT(6), optional
+function load(filename, breadcrumb, param_str)
+end
+
 --- Draw section of map (starting from CELL_X, CELL_Y) at screen position SX, SY (pixels).
 ---
 ---
@@ -383,6 +436,19 @@ end
 --- @param y number
 --- @return number
 function max(x, y)
+end
+
+--- Copy LEN bytes of base ram from source to dest. Sections can be overlapping
+---
+---
+--- - API docs: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#MEMCPY
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Memcpy
+---
+--- @param dest_addr number
+--- @param source_addr number
+--- @param len number
+function memcpy(dest_addr, source_addr, len)
 end
 
 --- Returns the middle value of parameters
@@ -435,6 +501,16 @@ end
 --- @param y number map cell Y
 --- @param val number map value (sprite)
 function mset(x, y, val)
+end
+
+--- Play music starting from pattern N (0..63)
+---
+---
+--- - API docs: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#MUSIC
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Music
+---
+function music(n, fade_len, channel_mask)
 end
 
 --- Draw an oval that is symmetrical in x and y (an ellipse), with the given bounding rectangle.
@@ -907,4 +983,15 @@ end
 --- @param val any
 --- @return string
 function type(val)
+end
+
+
+--- Returns the elements from the given table as a tuple.
+---
+--- - Wiki: https://pico-8.fandom.com/wiki/Unpack
+---
+--- @param tbl table he table to unpack
+--- @param i number first index to unpack, optional, default: 1
+--- @param j number last index to unpack, optional, default: #tbl 
+function unpack(tbl, i, j)
 end

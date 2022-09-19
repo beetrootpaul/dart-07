@@ -1,6 +1,9 @@
 # Dart-07
 
-> TODO short description
+> A scrolling shooter. As the Dart-07 you fight on Emerald Islands, Outpost in Space, and in the interstellar Phoslar
+> Mine
+
+Game made for [PICO-8 fantasy console](https://www.lexaloffle.com/pico-8.php).
 
 TODO project context: Lazy Devs' Shmup Showcase
 
@@ -22,10 +25,6 @@ TODO powerups and their meaning
 
 ---
 
-TODO any other info, i.e. about being a PICO-8 game
-
-PICO-8 version use to develop this game: `0.2.5c`
-
 TODO mention multi-cart setup and that it's maybe not necessary, but wanted to have it for learning purposes
 
 TODO mention cross-cart data graphics and SFX copying as well
@@ -36,13 +35,11 @@ TODO link to #easingcheatsheet https://www.lexaloffle.com/bbs/?tid=40577
 
 TODO screenshots
 
-## Code style
-
-That this game runs on PICO-8, which has a token count limit.
-It means, in a lot of situations a code clarity had to be sacrificed
-in order to squeeze one more enemy or to implement a score display ¯\_(ツ)_/¯
-
 ## Development
+
+PICO-8 version used to develop this game: `0.2.5c`
+
+Quick start:
 
 1. (optional) Install [nvm](https://github.com/nvm-sh/nvm)
 2. (optional) Run `nvm install` to setup proper Node.js version
@@ -66,3 +63,10 @@ To update the sprite sheet of, for example, mission 1:
 - export to PNG with scale 100%
 - load cart and run `import graphics/spritesheet_mission_1.png` or `import dart-07/graphics/spritesheet_mission_1.png` (
   depends on what your current working directory is)
+
+## Code style
+
+This game is made with PICO-8, which imposes a token count limit
+(which can be checked in console with `info` command).
+It means, in a lot of situations a code clarity had to be sacrificed
+in order to squeeze one more enemy or to implement a high score feature ¯\_(ツ)_/¯
