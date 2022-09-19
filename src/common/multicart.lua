@@ -26,9 +26,9 @@ function _load_main_cart(params)
     -- file paths, we use two variants here: one if we navigate in SPLORE to 
     -- inside of this game's directory and one if we started the game in 
     -- SPLORE from favorites tab (outside game's directory).
-    load("shmup.p8", nil, cart_params)
-    load("shmup/shmup.p8", nil, cart_params)
-    load("#tmp_multicart_main", nil, cart_params)
+    load("dart-07.p8", nil, cart_params)
+    load("dart-07/dart-07.p8", nil, cart_params)
+    load("#brp_dart07", nil, cart_params)
 end
 
 function _load_mission_cart(params)
@@ -48,9 +48,9 @@ function _load_mission_cart(params)
     -- file paths, we use two variants here: one if we navigate in SPLORE to 
     -- inside of this game's directory and one if we started the game in 
     -- SPLORE from favorites tab (outside game's directory).
-    load("shmup-mission-" .. mission_number .. ".p8", nil, cart_params)
-    load("shmup/shmup-mission-" .. mission_number .. ".p8", nil, cart_params)
-    load("#tmp_multicart_lvl" .. mission_number, nil, cart_params)
+    load("dart-07-mission-" .. mission_number .. ".p8", nil, cart_params)
+    load("dart-07/dart-07-mission-" .. mission_number .. ".p8", nil, cart_params)
+    load("#brp_dart07_mission" .. mission_number, nil, cart_params)
 end
 
 -- docs about memory space:

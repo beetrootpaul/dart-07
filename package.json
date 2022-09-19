@@ -1,11 +1,11 @@
 {
-  "name": "towers-of-survival",
-  "description": "a low-rez tower defense mini-game",
+  "name": "dart-07",
+  "description": "A scrolling shooter. As the Dart-07 you fight on Emerald Islands, Outpost in Space, and in the interstellar Phoslar Mine",
   "author": "Beetroot Paul <paul@beetrootpaul.com",
-  "homepage": "https://beetrootpaul.itch.io/towers-of-survival",
+  "homepage": "https://beetrootpaul.itch.io/dart-07",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/beetrootpaul/towers-of-survival.git"
+    "url": "git+https://github.com/beetrootpaul/dart-07.git"
   },
   "license": "MIT",
   "scripts": {
@@ -17,18 +17,18 @@
     "watch-and-build-as-is": "chokidar \"src/**/*.lua\" --initial --command \"npm run build-as-is\"",
     "watch-and-build-minified": "chokidar \"src/**/*.lua\" --initial --command \"npm run build-minified\"",
     "start": "npm run watch-and-build-minified",
-    "dist-bbs-main": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup.p8 -export dist/bbs/shmup.p8.png",
-    "dist-bbs-lvl1": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-mission-1.p8 -export \"dist/bbs/shmup-mission-1.p8.png\"",
-    "dist-bbs-lvl2": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-mission-2.p8 -export \"dist/bbs/shmup-mission-2.p8.png\"",
-    "dist-bbs-lvl3": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup-mission-3.p8 -export \"dist/bbs/shmup-mission-3.p8.png\"",
+    "dist-bbs-main": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07.p8 -export dist/bbs/dart-07.p8.png",
+    "dist-bbs-lvl1": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07-mission-1.p8 -export \"dist/bbs/dart-07-mission-1.p8.png\"",
+    "dist-bbs-lvl2": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07-mission-2.p8 -export \"dist/bbs/dart-07-mission-2.p8.png\"",
+    "dist-bbs-lvl3": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07-mission-3.p8 -export \"dist/bbs/dart-07-mission-3.p8.png\"",
     "predist-bbs": "rimraf dist/bbs/ && mkdirp dist/bbs/",
     "predist-bin": "rimraf dist/bin/",
     "predist-itch": "rimraf dist/itch/ && mkdirp dist/itch/",
     "dist-bbs": "run-s --print-label dist-bbs-main dist-bbs-lvl*",
-    "dist-bin": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup.p8 -export \"dist/shmup.bin shmup-mission-1.p8 shmup-mission-2.p8 shmup-mission-3.p8\"",
-    "dist-itch": "/Applications/PICO-8.app/Contents/MacOS/pico8 shmup.p8 -export \"dist/itch/shmup.html shmup-mission-1.p8 shmup-mission-2.p8 shmup-mission-3.p8\"",
-    "postdist-bin": "mv dist/shmup.bin dist/bin",
-    "postdist-itch": "mv dist/itch/shmup.html dist/itch/index.html && cd dist/itch/ && zip shmup-itch.zip index.html shmup.js",
+    "dist-bin": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07.p8 -export \"dist/dart-07.bin dart-07-mission-1.p8 dart-07-mission-2.p8 dart-07-mission-3.p8\"",
+    "dist-itch": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07.p8 -export \"dist/itch/dart-07.html dart-07-mission-1.p8 dart-07-mission-2.p8 dart-07-mission-3.p8\"",
+    "postdist-bin": "mv dist/dart-07.bin dist/bin",
+    "postdist-itch": "mv dist/itch/dart-07.html dist/itch/index.html && cd dist/itch/ && zip dart-07-itch.zip index.html dart-07.js",
     "dist": "run-s --print-label clear build-minified dist-bbs dist-bin dist-itch"
   },
   "devDependencies": {

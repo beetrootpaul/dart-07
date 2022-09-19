@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 38
 __lua__
--- shmup game title
+-- dart-07
 -- by beetroot paul
 
 #include build/src/third_party/easingcheatsheet.lua

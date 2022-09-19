@@ -10,8 +10,8 @@ function _init()
     --preselected_mission_number = 2
 
     -- to clear cart data, go to cart data folder (defined as "root_path" in "$HOME/Library/Application Support/pico-8/config.txt")
-    -- and delete "todo-shmup.p8d.txt" file
-    cartdata("todo-shmup")
+    -- and delete "brp_dart-07.p8d.txt" file
+    cartdata("brp_dart-07")
 
     current_screen = preselected_mission_number and
         new_screen_title(preselected_mission_number, true, false) or
@@ -90,8 +90,6 @@ end
 -- TODO: itch.io: favicon
 
 -- TODO: GitHub repo: license other than MIT?
--- TODO: GitHub repo: final name
--- TODO: GitHub repo: description & website & topics
 
 -- TODO: continue performance_check git branch for 4+ stationary enemies at the same time + fast shot + triple shot
 

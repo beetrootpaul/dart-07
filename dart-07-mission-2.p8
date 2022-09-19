@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 38
 __lua__
--- mission 2: outpost in space
+-- dart-07: mission 2: outpost in space
 -- by beetroot paul
 
 #include build/src/third_party/easingcheatsheet.lua
