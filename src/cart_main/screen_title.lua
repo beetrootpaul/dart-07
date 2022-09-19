@@ -14,16 +14,35 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
 
     local proceed = false
 
+    local stars = {}
+
+    local function maybe_add_star(y)
+        if rnd() < .1 then
+            local star = {
+                x = ceil(1 + rnd(_vs - 3)),
+                y = y,
+                speed = rnd { .25, .5, .75 }
+            }
+            star.color = star.speed == .75 and _color_6_light_grey or (star.speed == .5 and _color_13_lavender or _color_14_mauve)
+            add(stars, star)
+        end
+    end
+
     local function draw_title(base_y)
         sspr(
             96, 32,
-            25, 21,
-            (_vs - 50) / 2, base_y
+            32, 26,
+            (_vs - 96) / 2, base_y
         )
         sspr(
-            96, 53,
-            25, 21,
-            (_vs - 50) / 2 + 25, base_y
+            96, 58,
+            32, 26,
+            (_vs - 96) / 2 + 32, base_y
+        )
+        sspr(
+            96, 84,
+            32, 26,
+            (_vs - 96) / 2 + 64, base_y
         )
     end
 
@@ -63,6 +82,10 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
         high_score = dget(0)
         -- DEBUG:
         --high_score = 123
+
+        for y = 0, _vs - 1 do
+            maybe_add_star(y)
+        end
     end
 
     function screen._update()
@@ -76,14 +99,28 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
             proceed = true
         end
 
+        for star in all(stars) do
+            star.y = star.y + star.speed
+            if star.y >= _vs then
+                del(stars, star)
+            end
+        end
+        maybe_add_star(0)
+
         fade_in._update()
     end
 
     function screen._draw()
         cls(_color_1_darker_blue)
 
-        draw_title(12)
-        draw_high_score(54)
+        for star in all(stars) do
+            pset(star.x, star.y, star.color)
+        end
+
+        map(0, 0, 0, 0, 16, 16)
+
+        draw_title(15)
+        draw_high_score(57)
         draw_button("play", 98, 15, 82, play)
         draw_button("controls", 98, 15, 104, not play)
 

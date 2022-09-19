@@ -6,7 +6,7 @@ _m = {
     mission_number = 1,
     scroll_per_frame = .5,
     mission_name = "emerald \-fislands",
-    boss_name = "painful \-fdeath",
+    boss_name = "sentinel \-fzx300",
     bg_color = _color_4_true_blue,
     mission_info_color = _color_9_dark_orange,
     mission_main_music = 0,
@@ -408,7 +408,7 @@ do
                         },
                         -- wait …
                         new_movement_fixed_factory {
-                            frames = 100,
+                            frames = 30,
                         },
                         -- … and charge!
                         new_movement_to_target_factory {
