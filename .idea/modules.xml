@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/shmup.iml" filepath="$PROJECT_DIR$/.idea/shmup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/dart-07.iml" filepath="$PROJECT_DIR$/.idea/dart-07.iml" />
     </modules>
   </component>
 </project>
