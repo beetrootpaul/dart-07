@@ -83,9 +83,7 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
         cls(_color_1_darker_blue)
 
         draw_title(12)
-        if high_score > 0 then
-            draw_high_score(54)
-        end
+        draw_high_score(54)
         draw_button("play", 98, 15, 82, play)
         draw_button("controls", 98, 15, 104, not play)
 
