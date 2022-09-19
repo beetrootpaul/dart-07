@@ -10,8 +10,8 @@ function _init()
     _copy_shared_assets_to_transferable_ram()
 
     -- to clear cart data, go to cart data folder (defined as "root_path" in "$HOME/Library/Application Support/pico-8/config.txt")
-    -- and delete "todo-shmup.p8d.txt" file
-    cartdata("todo-shmup")
+    -- and delete "brp_dart-07.p8d.txt" file
+    cartdata("brp_dart-07")
 
     menuitem(1, "exit to title", function()
         fade_out = new_fade("out", 30)

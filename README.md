@@ -1,12 +1,10 @@
-# WIP Shmup
-
-TODO better title
+# Dart-07
 
 > TODO short description
 
 TODO project context: Lazy Devs' Shmup Showcase
 
-TODO itch.io link
+Published on: https://beetrootpaul.itch.io/dart-07
 
 **Controls**
 
@@ -40,7 +38,7 @@ TODO screenshots
 
 ## Code style
 
-That this game runs on PICO-8, which has a token count limit. 
+That this game runs on PICO-8, which has a token count limit.
 It means, in a lot of situations a code clarity had to be sacrificed
 in order to squeeze one more enemy or to implement a score display ¯\_(ツ)_/¯
 
@@ -49,10 +47,10 @@ in order to squeeze one more enemy or to implement a score display ¯\_(ツ)_/¯
 1. (optional) Install [nvm](https://github.com/nvm-sh/nvm)
 2. (optional) Run `nvm install` to setup proper Node.js version
 3. (once) Run `npm install` to download dependencies
-4. Start PICO-8 and load [shmup.p8](shmup.p8) cart
-5. Run `npm start` to start a watcher which generates minified Lua sources for
+4. Run `npm start` to start a watcher which generates minified Lua sources for
    the game every time a file is changed. Please be aware all files has to be
    included (`#include`) manually in the cart's Lua itself.
+5. Start PICO-8 and load [dart-07.p8](dart-07.p8) cart
 
 Optionally, to build without minification: `npm run watch-and-build-as-is`
 
@@ -63,8 +61,8 @@ To build dist packages:
 
 To update the sprite sheet of, for example, mission 1:
 
-- edit `spritesheet_mission_1.aseprite` in Aseprite (please remember you have to use official standard 16 PICO-8 colours
-  si they will match on import)
+- edit `graphics/spritesheet_mission_1.aseprite` in Aseprite (please remember you have to use official standard 16
+  PICO-8 colours so they will match on import)
 - export to PNG with scale 100%
-- load cart and run `import graphics/spritesheet_mission_1.png` or `import shmup/graphics/spritesheet_mission_1.png` (
+- load cart and run `import graphics/spritesheet_mission_1.png` or `import dart-07/graphics/spritesheet_mission_1.png` (
   depends on what your current working directory is)
