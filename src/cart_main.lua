@@ -43,7 +43,6 @@ end
 -- TODO: polishing: SFX: shared
 
 -- TODO: polishing: music: mission selection
--- TODO: polishing: music: mission 1
 -- TODO: polishing: music: mission 1 boss
 -- TODO: polishing: music: mission 2
 -- TODO: polishing: music: mission 2 boss
