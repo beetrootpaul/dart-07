@@ -17,17 +17,17 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
     local function draw_title(base_y)
         sspr(
             96, 32,
-            32, 24,
+            32, 26,
             (_vs - 96) / 2, base_y
         )
         sspr(
-            96, 56,
-            32, 24,
+            96, 58,
+            32, 26,
             (_vs - 96) / 2 + 32, base_y
         )
         sspr(
-            96, 80,
-            32, 24,
+            96, 84,
+            32, 26,
             (_vs - 96) / 2 + 64, base_y
         )
     end
@@ -88,7 +88,7 @@ function new_screen_title(preselected_mission, start_music_and_fade_in, select_c
         cls(_color_1_darker_blue)
         map(0, 0, 0, 0, 16, 16)
 
-        draw_title(16)
+        draw_title(15)
         draw_high_score(57)
         draw_button("play", 98, 15, 82, play)
         draw_button("controls", 98, 15, 104, not play)
