@@ -408,7 +408,7 @@ do
                         },
                         -- wait …
                         new_movement_fixed_factory {
-                            frames = 100,
+                            frames = 30,
                         },
                         -- … and charge!
                         new_movement_to_target_factory {
