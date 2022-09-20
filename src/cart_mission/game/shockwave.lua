@@ -82,13 +82,13 @@ do
             _draw = function()
                 local r = ceil(r_progress.xy.x)
 
-                draw_negative_ring(r, r - 6)
+                draw_negative_ring(r, r - 13)
 
-                draw_circle(r - 2 * r_step)
+                draw_circle(r - 3 * r_step)
 
                 local r_stepped = flr(r / r_step) * r_step
-                draw_circle(r_stepped - 2 * r_step)
                 draw_circle(r_stepped - 3 * r_step)
+                draw_circle(r_stepped - 4 * r_step)
                 -- keep in sync: smallest circle drawn above determines amount of steps to add to "r_max" when calculating "frames" for "r_progress"
             end,
         }

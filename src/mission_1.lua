@@ -99,6 +99,8 @@ do
                 "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
                 new_movement_sinusoidal_factory {
                     speed_y = .75,
+                    age_divisor = 120,
+                    magnitude = 14,
                 },
                 -- DEBUG:
                 --new_movement_line_factory {
@@ -263,7 +265,7 @@ do
                 {
                     { 6 },
                 },
-                "-,-,h,h,t,s,s,s",
+                "-,-,-,h,h,f,t,t,s,s,s",
                 new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m.scroll_per_frame,
@@ -305,7 +307,7 @@ do
     --                     end
     function _m.boss_properties()
         return {
-            health = 80,
+            health = 100,
             sprites_props_txt = "54,20,0,96|52,18,54,97",
             collision_circles_props = {
                 { 11 },
@@ -334,7 +336,7 @@ do
                 },
                 -- phase 2:
                 {
-                    triggering_health_fraction = .85,
+                    triggering_health_fraction = .8,
                     score = 300,
                     bullet_fire_timer = new_timer(28),
                     spawn_bullets = function(enemy_movement)
@@ -374,7 +376,7 @@ do
                 },
                 -- phase 3:
                 {
-                    triggering_health_fraction = .35,
+                    triggering_health_fraction = .4,
                     score = 650,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
@@ -402,6 +404,7 @@ do
                                     new_movement_sinusoidal_factory {
                                         speed_y = 1.5,
                                         age_divisor = 60,
+                                        magnitude = 9,
                                     }(boss_movement.xy.plus(0, 3))
                                 ),
                             }

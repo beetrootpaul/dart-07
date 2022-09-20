@@ -25,10 +25,13 @@ _sfx_damage_player, _sfx_damage_enemy = 16, 17
 
 _sfx_destroy_player, _sfx_destroy_enemy, _sfx_destroy_boss_phase, _sfx_destroy_boss_final_1, _sfx_destroy_boss_final_2, _sfx_destroy_boss_final_3 = 19, 20, 21, 22, 23, 24
 
--- 1) use channel 3 for very frequent sfx like player shooting, and try to not put any music there
--- 2) use channel 0 for all other sfxs and keep music percussion there as well, so it will be least disturbing
-function _sfx_play(sfx_id, player_shooting_channel)
-    sfx(sfx_id, player_shooting_channel and 3 or 0)
+-- channels in music tracks of this game:
+--  - 0 = percussion
+--  - 1 = main
+--  - 2 = bass line
+--  - 3 = extra melody
+function _sfx_play(sfx_id, non_zero_channel)
+    sfx(sfx_id, non_zero_channel or 0)
 end
 
 function _music_fade_out()

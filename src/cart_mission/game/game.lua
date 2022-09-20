@@ -24,20 +24,20 @@ function new_game(params)
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
-            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot, true)
+            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot, 3)
             for b in all(bullets) do
                 add(player_bullets, b)
             end
         end,
         on_shockwave_triggered = function(shockwave)
-            _sfx_play(_sfx_player_shockwave, true)
+            _sfx_play(_sfx_player_shockwave, 2)
             add(shockwaves, shockwave)
         end,
         on_damaged = function()
-            _sfx_play(_sfx_damage_player)
+            _sfx_play(_sfx_damage_player, 2)
         end,
         on_destroyed = function(collision_circle)
-            _sfx_play(_sfx_destroy_player, true)
+            _sfx_play(_sfx_destroy_player, 3)
             _add_all(
                 explosions,
                 new_explosion(collision_circle.xy, collision_circle.r),
@@ -55,40 +55,42 @@ function new_game(params)
         player.take_damage(game.health)
     end
 
-    local function handle_powerup(powerup)
-        if powerup.powerup_type == "h" then
+    local function handle_powerup(powerup_type)
+        local has_effect = false
+        if powerup_type == "h" then
             if game.health < _health_max then
-                _sfx_play(_sfx_powerup_picked)
+                has_effect = true
                 game.health = game.health + 1
             else
-                _sfx_play(_sfx_powerup_no_effect)
                 game.score.add(10)
             end
-        elseif powerup.powerup_type == "t" then
+        elseif powerup_type == "t" then
             if game.triple_shot then
-                _sfx_play(_sfx_powerup_no_effect)
                 game.score.add(10)
             else
-                _sfx_play(_sfx_powerup_picked)
+                has_effect = true
                 game.triple_shot = true
             end
-        elseif powerup.powerup_type == "f" then
+        elseif powerup_type == "f" then
             if game.fast_shoot then
-                _sfx_play(_sfx_powerup_no_effect)
                 game.score.add(10)
             else
-                _sfx_play(_sfx_powerup_picked)
+                has_effect = true
                 game.fast_shoot = true
             end
-        elseif powerup.powerup_type == "s" then
+        elseif powerup_type == "s" then
             if game.shockwave_charges < _shockwave_charges_max then
-                _sfx_play(_sfx_powerup_picked)
+                has_effect = true
                 game.shockwave_charges = game.shockwave_charges + 1
             else
-                _sfx_play(_sfx_powerup_no_effect)
                 game.score.add(10)
             end
         end
+        _sfx_play(
+            has_effect and _sfx_powerup_picked or _sfx_powerup_no_effect,
+            has_effect and 2 or nil
+        )
+
     end
 
     local function handle_collisions()
@@ -97,7 +99,7 @@ function new_game(params)
             if not powerup.has_finished() then
                 if _collisions.are_colliding(player, powerup) then
                     powerup.pick()
-                    handle_powerup(powerup)
+                    handle_powerup(powerup.powerup_type)
                 end
             end
         end
@@ -208,7 +210,7 @@ function new_game(params)
                 end
             end,
             on_damage = function()
-                _sfx_play(_sfx_damage_enemy)
+                _sfx_play(_sfx_damage_enemy, 3)
             end,
             on_entered_next_phase = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_phase)

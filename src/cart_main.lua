@@ -19,7 +19,7 @@ function _init()
     -- DEBUG:
     --current_screen = new_screen_controls(preselected_mission_number)
     --current_screen = new_screen_title(preselected_mission_number, true, false)
-    current_screen = new_screen_select_mission(preselected_mission_number)
+    --current_screen = new_screen_select_mission(preselected_mission_number)
 
     current_screen._init()
 end
@@ -40,11 +40,7 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: polishing: SFX: enemy bullets
--- TODO: polishing: SFX: shared
-
 -- TODO: polishing: music: mission selection
--- TODO: polishing: music: mission 1 boss
 -- TODO: polishing: music: mission 2
 -- TODO: polishing: music: mission 2 boss
 -- TODO: polishing: music: mission 3
@@ -55,19 +51,15 @@ end
 -- TODO: polishing: sprites: mission 3: enemies 
 -- TODO: polishing: sprites: mission 3: boss 
 
--- TODO: polishing: explosions: player hit
--- TODO: polishing: explosions: player destroyed
--- TODO: polishing: explosions: enemy destroyed
--- TODO: polishing: explosions: boss hit with a shockwave
--- TODO: polishing: explosions: boss enters next phase
--- TODO: polishing: explosions: boss destroyed
+-- TODO: balancing: powerup distributions: mission 2
+-- TODO: balancing: powerup distributions: mission 3
+-- TODO: balancing: mission 2: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
+-- TODO: balancing: mission 3: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 
--- TODO: balancing: powerup distributions 
--- TODO: balancing: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
--- TODO: balancing: player speed, its bullets: speed 1, speed 2, throttle length, shockwave: throttle length 
--- TODO: balancing: shockwave damage time and amount 
-
--- TODO: carts: label images
+-- TODO: carts: label images: main
+-- TODO: carts: label images: mission 1
+-- TODO: carts: label images: mission 2
+-- TODO: carts: label images: mission 3
 
 -- TODO: itch.io: favicon
 
