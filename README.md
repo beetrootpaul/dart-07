@@ -85,6 +85,7 @@ resources I found super useful and used some of them I used in the codebase as w
   functions. See: https://www.lexaloffle.com/bbs/?tid=40577
 - [Circular Clipping Masks tutorial](https://www.lexaloffle.com/bbs/?tid=46286)
   by [Krystman](https://www.lexaloffle.com/bbs/?uid=16423)
+- [Lua minification tool `luamin`](https://github.com/mathiasbynens/luamin) by [Mathias Bynens](https://github.com/mathiasbynens)
 - [Pico-8 Music Tutorials](https://www.youtube.com/watch?v=nwFcitLtCsA&list=PLur95ujyAigsqZR1aNTrVGAvXD7EqywdS)
   by [Gruber](https://www.youtube.com/c/Gruber_Music)
 
