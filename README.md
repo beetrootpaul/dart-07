@@ -146,7 +146,7 @@ To update the sprite sheet of, for example, mission 1:
 This game is made with PICO-8, which imposes a token count limit
 (which can be checked in console with `info` command).
 It means, in a lot of situations a code clarity had to be sacrificed
-in order to squeeze one more enemy or to implement a high score feature ¯\_(ツ)_/¯
+in order to squeeze one more enemy or to implement a high score feature `¯\_(ツ)_/¯`
 
 ## License
 

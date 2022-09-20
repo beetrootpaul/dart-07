@@ -55,11 +55,8 @@ end
 -- TODO: balancing: mission 2: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 -- TODO: balancing: mission 3: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 
--- TODO: carts: label images: mission 1
 -- TODO: carts: label images: mission 2
 -- TODO: carts: label images: mission 3
-
--- TODO: itch.io: favicon
 
 -- TODO: check if no DEBUG code is left uncommented
 
