@@ -40,7 +40,6 @@ function _draw()
     pal(_palette_display, 1)
 end
 
--- TODO: polishing: music: mission selection
 -- TODO: polishing: music: mission 2
 -- TODO: polishing: music: mission 2 boss
 -- TODO: polishing: music: mission 3
