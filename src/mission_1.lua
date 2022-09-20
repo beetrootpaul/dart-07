@@ -108,7 +108,7 @@ do
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 234,
                 --},
-                bullet_fire_timer = new_timer(40),
+                bullet_fire_timer = new_timer "40",
                 spawn_bullets = function(enemy_movement)
                     _sfx_play(_sfx_enemy_shoot)
                     return {
@@ -183,7 +183,7 @@ do
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 123,
                 --},
-                bullet_fire_timer = new_timer(33),
+                bullet_fire_timer = new_timer "33",
                 spawn_bullets = function(enemy_movement)
                     _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
@@ -232,7 +232,7 @@ do
                 --    angled_speed = _m.scroll_per_frame,
                 --    frames = 160,
                 --},
-                bullet_fire_timer = new_timer(60),
+                bullet_fire_timer = new_timer "60",
                 spawn_bullets = function(enemy_movement, player_collision_circle)
                     _sfx_play(_sfx_enemy_shoot)
                     local enemy_xy = enemy_movement.xy
@@ -272,7 +272,7 @@ do
                     -- DEBUG:
                     --frames = 100,
                 },
-                bullet_fire_timer = new_timer(60),
+                bullet_fire_timer = new_timer "60",
                 spawn_bullets = function(enemy_movement)
                     _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
@@ -319,7 +319,7 @@ do
                 {
                     triggering_health_fraction = 1,
                     score = 50,
-                    bullet_fire_timer = new_timer(8),
+                    bullet_fire_timer = new_timer "8",
                     spawn_bullets = function(boss_movement)
                         if t_mod_2() < 1 then return {} end
                         _sfx_play(_sfx_enemy_shoot)
@@ -338,7 +338,7 @@ do
                 {
                     triggering_health_fraction = .8,
                     score = 300,
-                    bullet_fire_timer = new_timer(28),
+                    bullet_fire_timer = new_timer "28",
                     spawn_bullets = function(enemy_movement)
                         local bullets = {}
                         if t_mod_2() > .6 then
@@ -378,7 +378,7 @@ do
                 {
                     triggering_health_fraction = .4,
                     score = 650,
-                    bullet_fire_timer = new_timer(8),
+                    bullet_fire_timer = new_timer "8",
                     spawn_bullets = function(boss_movement)
                         _sfx_play(_sfx_enemy_shoot)
                         if t_mod_2() > 1.5 then

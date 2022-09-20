@@ -33,8 +33,9 @@ function new_hud(params)
         _update = slide_in_offset._update,
 
         _draw = function(game)
-            rectfill(0, 0, bar_w - 1, _vs - 1, _color_0_black)
-            rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_0_black)
+            -- we draw HUD area 20 px bigger on the outside in order to compensate for a player damage camera shake
+            rectfill(-20, -20, bar_w - 1, _vs + 19, _color_0_black)
+            rectfill(_vs - bar_w, -20, _vs + 19, _vs + 19, _color_0_black)
             -- DEBUG:
             --rectfill(0, 0, bar_w - 1, _vs - 1, _color_5_blue_green)
             --rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_5_blue_green)
@@ -49,8 +50,7 @@ function new_hud(params)
             health_bar_start._draw(xy.minus(0, 4))
 
             -- mission progress
-            local mission_progress_h = 35
-            local mission_progress_x = _gaox + xy.x + 5
+            local mission_progress_h, mission_progress_x = 35, _gaox + xy.x + 5
             line(
                 mission_progress_x,
                 4,

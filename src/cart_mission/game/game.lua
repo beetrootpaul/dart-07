@@ -16,11 +16,9 @@ function new_game(params)
         --triple_shot = true,
     }
 
-    local level = new_level(new_level_descriptor())
+    local level, freeze_timer, boss = new_level(new_level_descriptor()), new_timer(0)
 
     local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits = {}, {}, {}, {}, {}, {}, {}
-
-    local boss
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
@@ -50,7 +48,7 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.triple_shot, game.fast_shoot = false, false
+        game.triple_shot, game.fast_shoot, freeze_timer = false, false, new_timer(6)
         game.health = game.health - 1
         player.take_damage(game.health)
     end
@@ -68,15 +66,13 @@ function new_game(params)
             if game.triple_shot then
                 game.score.add(10)
             else
-                has_effect = true
-                game.triple_shot = true
+                has_effect, game.triple_shot = true, true
             end
         elseif powerup_type == "f" then
             if game.fast_shoot then
                 game.score.add(10)
             else
-                has_effect = true
-                game.fast_shoot = true
+                has_effect, game.fast_shoot = true, true
             end
         elseif powerup_type == "s" then
             if game.shockwave_charges < _shockwave_charges_max then
@@ -198,10 +194,6 @@ function new_game(params)
 
     function game.enter_boss_phase()
         boss = new_boss {
-            boss_properties = _m.boss_properties(),
-            intro_frames = 180,
-            intro_start_xy = _xy(_gaw / 2, -120),
-            start_xy = _xy(_gaw / 2, 20, 20),
             on_bullets_spawned = function(bullets_fn, boss_movement)
                 if player then
                     for b in all(bullets_fn(boss_movement, player.collision_circle())) do
@@ -284,6 +276,7 @@ function new_game(params)
             { boss },
             powerups,
             explosions,
+            { freeze_timer },
             function(game_object)
                 game_object._update()
             end
@@ -362,6 +355,14 @@ function new_game(params)
         --        _collisions._debug_draw_collision_circle(game_object_or_collision_circle)
         --    end
         --)
+        
+        if freeze_timer.ttl > 0 then
+            local factor = freeze_timer.ttl - 1
+            camera(
+                rnd(factor) - .5 * factor,
+                rnd(factor) - .5 * factor
+            )
+        end
     end
 
     function game._post_draw()
@@ -371,10 +372,9 @@ function new_game(params)
         end
 
         if boss and boss.has_finished() then
-            boss = nil
             -- we assume here there are no enemies on a screen at the same time as boss is,
             -- therefore we can just remove all enemy bullets when boss is destroyed
-            enemy_bullets = {}
+            boss, enemy_bullets = nil, {}
         end
 
         _flattened_for_each(
