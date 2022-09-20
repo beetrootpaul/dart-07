@@ -175,6 +175,9 @@ function new_screen_select_mission(selected_mission)
                 triple_shot = false,
                 fast_shoot = false,
                 score = 0,
+                -- DEBUG:
+                triple_shot = true,
+                fast_shoot = true,
             }
         end
     end

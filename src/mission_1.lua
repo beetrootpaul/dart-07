@@ -232,7 +232,7 @@ do
                 --},
                 bullet_fire_timer = new_timer(60),
                 spawn_bullets = function(enemy_movement, player_collision_circle)
-                    _sfx_play(_sfx_enemy_multi_shoot)
+                    _sfx_play(_sfx_enemy_shoot)
                     local enemy_xy = enemy_movement.xy
                     local player_xy = player_collision_circle.xy
                     return {
@@ -289,6 +289,10 @@ do
         })[enemy_map_marker]
     end
 
+    local function t_mod_2()
+        return t() % 2
+    end
+
     -- boss property:
     --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
     --   - collision_circles_props = {
@@ -301,7 +305,7 @@ do
     --                     end
     function _m.boss_properties()
         return {
-            health = 50,
+            health = 80,
             sprites_props_txt = "54,20,0,96|52,18,54,97",
             collision_circles_props = {
                 { 11 },
@@ -315,7 +319,7 @@ do
                     score = 50,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
-                        if t() % 2 < 1 then return {} end
+                        if t_mod_2() < 1 then return {} end
                         _sfx_play(_sfx_enemy_shoot)
                         return {
                             enemy_bullet_factory(
@@ -332,18 +336,21 @@ do
                 {
                     triggering_health_fraction = .85,
                     score = 300,
-                    bullet_fire_timer = new_timer(8),
-                    spawn_bullets = function(boss_movement)
-                        if t() % 2 < 1 then return {} end
-                        _sfx_play(_sfx_enemy_shoot)
-                        return {
-                            enemy_bullet_factory(
-                                new_movement_line_factory {
-                                    angle = .75,
-                                    angled_speed = 1.5,
-                                }(boss_movement.xy.plus(0, 3))
-                            ),
-                        }
+                    bullet_fire_timer = new_timer(28),
+                    spawn_bullets = function(enemy_movement)
+                        local bullets = {}
+                        if t_mod_2() > .6 then
+                            _sfx_play(_sfx_enemy_multi_shoot)
+                            for i = 1, 8 do
+                                add(bullets, enemy_bullet_factory(
+                                    new_movement_line_factory {
+                                        base_speed_y = enemy_movement.speed_xy.y,
+                                        angle = t() % 1 + i / 8,
+                                    }(enemy_movement.xy)
+                                ))
+                            end
+                        end
+                        return bullets
                     end,
                     movement_factory = new_movement_sequence_factory {
                         new_movement_to_target_factory {
@@ -371,22 +378,24 @@ do
                     score = 650,
                     bullet_fire_timer = new_timer(8),
                     spawn_bullets = function(boss_movement)
-                        _sfx_play(_sfx_enemy_multi_shoot)
-                        if t() % 2 > 1.3 and t() % 2 < 1.6 then
+                        _sfx_play(_sfx_enemy_shoot)
+                        if t_mod_2() > 1.5 then
                             -- side bullets
                             return {
                                 enemy_bullet_factory(
                                     new_movement_line_factory {
                                         angle = .75,
+                                        angled_speed = 1.5,
                                     }(boss_movement.xy.plus(-20, -3))
                                 ),
                                 enemy_bullet_factory(
                                     new_movement_line_factory {
                                         angle = .75,
+                                        angled_speed = 1.5,
                                     }(boss_movement.xy.plus(20, -3))
                                 ),
                             }
-                        elseif t() % 2 < 1 then
+                        elseif t_mod_2() < .9 then
                             -- sinusoidal central bullets
                             return {
                                 enemy_bullet_factory(
@@ -421,10 +430,6 @@ do
                             target_y = 20,
                             frames = 120,
                             easing_fn = _easing_linear(),
-                        },
-                        -- wait again a little bit
-                        new_movement_fixed_factory {
-                            frames = 50,
                         },
                         -- go left and right
                         new_movement_to_target_factory {
