@@ -7,18 +7,18 @@ local current_screen, next_screen
 function _init()
     local preselected_mission_number = _get_cart_param(1)
     -- DEBUG:
-    preselected_mission_number = 1
+    --preselected_mission_number = 1
 
     -- to clear cart data, go to cart data folder (defined as "root_path" in "$HOME/Library/Application Support/pico-8/config.txt")
     -- and delete "brp_dart-07.p8d.txt" file
     cartdata("brp_dart-07")
 
     current_screen = preselected_mission_number and
-        new_screen_title(preselected_mission_number, true, false) or
+        new_screen_title(preselected_mission_number, true, false, false) or
         new_screen_brp()
     -- DEBUG:
     --current_screen = new_screen_controls(preselected_mission_number)
-    --current_screen = new_screen_title(preselected_mission_number, true, false)
+    --current_screen = new_screen_title(preselected_mission_number, false, true, false)
     --current_screen = new_screen_select_mission(preselected_mission_number)
 
     current_screen._init()

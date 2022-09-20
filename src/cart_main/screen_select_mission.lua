@@ -163,7 +163,7 @@ function new_screen_select_mission(selected_mission)
 
     function screen._post_draw()
         if proceed and selected_mission == 0 then
-            return new_screen_title(1, false, false)
+            return new_screen_title(1, false, false, false)
         end
 
         if fade_out.has_finished() then

@@ -80,7 +80,7 @@ function new_screen_controls(preselected_mission)
 
     function screen._post_draw()
         if proceed then
-            return new_screen_title(preselected_mission, false, true)
+            return new_screen_title(preselected_mission, false, false, true)
         end
     end
 

@@ -15,6 +15,7 @@ function new_screen_brp()
     local screen = {}
 
     function screen._init()
+        music(0)
     end
 
     function screen._update()
@@ -69,7 +70,7 @@ function new_screen_brp()
 
     function screen._post_draw()
         if screen_timer.ttl <= 0 then
-            return new_screen_title(1, true, false)
+            return new_screen_title(1, false, true, false)
         end
     end
 
