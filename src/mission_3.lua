@@ -5,7 +5,7 @@
 _m = {
     mission_number = 3,
     scroll_per_frame = 1,
-    mission_name = "phoslar \-fmine",
+    mission_name = "(wip) \-fphoslar \-fmine",
     boss_name = "? \-f? \-f?",
     bg_color = _color_2_darker_purple,
     mission_info_color = _color_3_dark_green,
@@ -123,7 +123,7 @@ do
             -- enemy: stationary
             [79] = {
                 5,
-                50,
+                1,
                 "16,16,0,64|10,10,16,64",
                 {
                     { 5 },
@@ -135,7 +135,7 @@ do
                     -- DEBUG:
                     --frames = 89,
                 },
-                bullet_fire_timer = new_timer(40),
+                bullet_fire_timer = new_timer "40",
                 spawn_bullets = function(enemy_movement, player_collision_circle)
                     _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
@@ -169,16 +169,16 @@ do
             health = 25,
             sprites_props_txt = "56,26,4,98|56,26,4,98",
             collision_circles_props = {
-                { 15, _xy(0, 3) },
+                { 15, _xy(0, -3) },
             },
             phases = {
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
-                    score = 2000,
+                    score = 1,
                     -- DEBUG:
                     --score = 32767,
-                    bullet_fire_timer = new_timer(80),
+                    bullet_fire_timer = new_timer "80",
                     spawn_bullets = function(enemy_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)
                         return {

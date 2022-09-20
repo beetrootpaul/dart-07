@@ -5,7 +5,7 @@
 _m = {
     mission_number = 2,
     scroll_per_frame = 1,
-    mission_name = "outpost \-fin \-fspace",
+    mission_name = "(wip) \-foutpost \-fin \-fspace",
     boss_name = "cargo \-fguardian",
     bg_color = _color_1_darker_blue,
     mission_info_color = _color_6_light_grey,
@@ -82,7 +82,7 @@ do
             -- enemy: stationary
             [79] = {
                 5,
-                850,
+                1,
                 "28,28,0,64|28,28,28,64",
                 {
                     { 5 },
@@ -94,7 +94,7 @@ do
                     -- DEBUG:
                     --frames = 89,
                 },
-                bullet_fire_timer = new_timer(40),
+                bullet_fire_timer = new_timer "40",
                 spawn_bullets = function(enemy_movement, player_collision_circle)
                     _sfx_play(_sfx_enemy_multi_shoot)
                     local bullets = {}
@@ -128,14 +128,16 @@ do
             health = 25,
             sprites_props_txt = "56,26,4,98|56,26,4,98",
             collision_circles_props = {
-                { 15, _xy(0, 3) },
+                { 15, _xy(0, -3) },
             },
             phases = {
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
-                    score = 800,
-                    bullet_fire_timer = new_timer(80),
+                    score = 1,
+                    -- DEBUG:
+                    --score = 32767,
+                    bullet_fire_timer = new_timer "80",
                     spawn_bullets = function(enemy_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)
                         return {

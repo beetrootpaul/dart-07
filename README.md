@@ -3,37 +3,115 @@
 > A scrolling shooter. As the Dart-07 you fight on Emerald Islands, Outpost in Space, and in the interstellar Phoslar
 > Mine
 
-Game made for [PICO-8 fantasy console](https://www.lexaloffle.com/pico-8.php).
+This is a [PICO-8](https://www.lexaloffle.com/pico-8.php) game, which I made
+during [Basic Shmup Showcase event](https://itch.io/jam/basic-shmup) organised
+by [Lazy Devs Academy](https://www.youtube.com/c/LazyDevs).
 
-TODO project context: Lazy Devs' Shmup Showcase
+You can play it on https://beetrootpaul.itch.io/dart-07 .
 
-Published on: https://beetrootpaul.itch.io/dart-07
+⚠️ Please be aware **this game is under development**. Mission 1 is complete and ready to play, but you enter missions 2
+and 3 on your own risk 😄
 
-**Controls**
+If you want to take a look at the codebase, please visit https://github.com/beetrootpaul/dart-07 (the code inside PICO-8
+carts of this game is minified, therefore not suitable for
+reading).
 
-- TODO
-- TODO
+<img src="dist/screenshots_and_recordings/mission_1_a.gif" width="384" title="gif 1 of mission 1 gameplay"></img>
+<img src="dist/screenshots_and_recordings/mission_1_b.gif" width="384" title="gif 2 of mission 1 gameplay"></img>
+<img src="dist/screenshots_and_recordings/boss_1.gif" width="384" title="gif mission 1's boss fight"></img>
 
----
+## Controls
 
+Keyboard:
 
-TODO longer description
+- press & hold `x` to fire
+- press `c` to trigger a shockwave (if available)
+- press `p` to open the pause menu
 
-TODO player ship
-TODO sample enemies
-TODO powerups and their meaning
+Virtual controller (in browser, on a mobile device):
 
----
+- press & hold `❎` to fire
+- press `🅾️` to trigger a shockwave (if available)
+- press `➖` to open the pause menu
 
-TODO mention multi-cart setup and that it's maybe not necessary, but wanted to have it for learning purposes
+Physical game controllers are supposed to work as well, even in a browser. Button mapping varies between models.
 
-TODO mention cross-cart data graphics and SFX copying as well
+## Gameplay
 
-TODO link to #easingcheatsheet https://www.lexaloffle.com/bbs/?tid=40577
+Your task is to pilot Dart-07 unit in a set of secret missions:
 
----
+- first, you mess with the enemy on **Emerald Islands**
+- then you continue to the **Outpost in Space** (⚠️ under development ⚠️)
+- in order to reach the interstellar **Phoslar Mine** (⚠️ under development ⚠️) and prevent the enemy from utilizing
+  that precious resource
 
-TODO screenshots
+Destroy enemies along the way to increase your score, grab power-ups left by them and survive a boss fight in order to
+complete a mission.
+
+### HUD
+
+In your HUD you see:
+
+- left-top: **mission progression** (the higher the ship's icon is placed, the close to the boss you are)
+- right-top: **your score**, which you gain by destroying enemies and grabbing power-ups in case they cannot bring any
+  improvement
+- left-bottom: **hearts left**; you die when all hearts are gone
+- right-bottom: **shockwave charges left**; you can trigger a shockwave if you have at least 1 charge left
+- top-middle, during boss fight: **boss' health** (yes, you are supposed to bring it down to zero 😉)
+
+### Power-ups
+
+There are 4 types of power-ups you can grab, each of them either makes your life easier or, if cannot improve further,
+increases your score:
+
+- <img src="dist/readme_assets/powerup_heart.png" width="27" style="vertical-align: middle;" title="fast shot powerup"></img>
+  **+1 heart** – you can have max 10 hearts; you lose one whenever you take damage
+- <img src="dist/readme_assets/powerup_fast_shoot.png" width="27" style="vertical-align: middle;" title="fast shoot powerup"></img>
+  **fast shoot** – increases shooting speed; does not accumulate, but can be combined with the triple shoot; lost on a
+  damage
+- <img src="dist/readme_assets/powerup_triple_shoot.png" width="27" style="vertical-align: middle;" title="triple shoot powerup"></img>
+  **triple shoot** – you shoot 3 bullets instead of 1, but on a little but slower rate; does not accumulate, but can be
+  combined with the fast shoot; lost on a damage
+- <img src="dist/readme_assets/powerup_shockwave.png" width="27" style="vertical-align: middle;" title="shockwave charge powerup"></img>
+  **shockwave charge** – allows you to trigger a destructive shockwave around you (with use of "c" / "🅾️" button); you
+  can have max 4 shockwave charges
+
+## Credits
+
+I implemented this game on my own, as well as drawn all sprites and composed all SFXs and music. But there are some
+resources I found super useful and used some of them I used in the codebase as well. With huge thanks, here are those:
+
+- `#easingcheatsheet` cart by [ValerADHD](https://www.lexaloffle.com/bbs/?uid=47278) with copy-paste ready easing
+  functions. See: https://www.lexaloffle.com/bbs/?tid=40577
+- [Circular Clipping Masks tutorial](https://www.lexaloffle.com/bbs/?tid=46286)
+  by [Krystman](https://www.lexaloffle.com/bbs/?uid=16423)
+- [Lua minification tool `luamin`](https://github.com/mathiasbynens/luamin) by [Mathias Bynens](https://github.com/mathiasbynens)
+- [Pico-8 Music Tutorials](https://www.youtube.com/watch?v=nwFcitLtCsA&list=PLur95ujyAigsqZR1aNTrVGAvXD7EqywdS)
+  by [Gruber](https://www.youtube.com/c/Gruber_Music)
+
+## Technical challenges
+
+In this game I focused on learning various bits of [PICO-8 API](https://www.lexaloffle.com/dl/docs/pico-8_manual.html).
+
+Some of the topics I tackled in this game are:
+
+- **multi-cart setup**: this game consists of many carts – 1 main cart for the title screen etc., and 1 cart for each
+  mission. Each
+  mission has its own sprites and music, as well as a code responsible for available enemy types, including their attack
+  and movement patterns. Common SFXs and sprites are copied from the main cart to missions carts with use
+  of [MEMCPY](https://www.lexaloffle.com/dl/docs/pico-8_manual.html#MEMCPY) and a user data memory
+  area (`0x4300-0x55ff`), preserved
+  across loaded carts). Moreover, I implemented this in a way which allows me to use same codebase to load both locally
+  developed carts as well as those published
+  to [Lexaloffle BBS](https://www.lexaloffle.com/bbs/?cat=7&carts_tab=1#mode=carts&sub=2).
+- **circular clipping**: during shockwave a ring of inverted colors propagates from the player. To achieve that I had to
+  learn how to implement [circular clipping masks](https://www.lexaloffle.com/bbs/?tid=46286) in a CPU-performant way.
+- **dithered fade-in/out transition**: basically a set of rectangles filled
+  with [FILLP](https://www.lexaloffle.com/dl/docs/pico-8_manual.html#FILLP) patterns, moving over screen.
+- **high score**: usage of PICO-8's API to read and store data persisted on a host machine
+- **code minification**: with my code style (full of spaces and long names), I found it easy to hit PICO-8's characters'
+  count limit. Therefore [I forked and modified luamin tool](https://github.com/beetrootpaul/luamin) and incorporated it
+  into this game's build flow, resulting with characters' count reduced by around 50%.
 
 ## Development
 
@@ -69,4 +147,12 @@ To update the sprite sheet of, for example, mission 1:
 This game is made with PICO-8, which imposes a token count limit
 (which can be checked in console with `info` command).
 It means, in a lot of situations a code clarity had to be sacrificed
-in order to squeeze one more enemy or to implement a high score feature ¯\_(ツ)_/¯
+in order to squeeze one more enemy or to implement a high score feature `¯\_(ツ)_/¯`
+
+## License
+
+I release this game under MIT license for sake of simplicity and to allow people learn from it.
+
+But, aside from that (therefore I cannot enforce it on you 🙃), if you find this repository useful or use it publicly in
+any way, I would be happy to see myself credited. You can found my social media profiles etc. on http://beetrootpaul.com
+, or just link to that webpage 🙂

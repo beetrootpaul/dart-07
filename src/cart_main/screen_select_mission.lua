@@ -70,6 +70,16 @@ function new_screen_select_mission(selected_mission)
             button_xy1.x, button_xy1.y
         )
 
+        if mission_number > 1 then
+            -- draw WIP info
+            _centered_print(
+                "under \-fdevelopment",
+                button_xy1.y + 2,
+                selected and _color_7_white or _color_6_light_grey,
+                selected and _color_9_dark_orange or _color_13_lavender
+            )
+        end
+
         -- draw label
         print(
             "mission " .. mission_number,
@@ -163,7 +173,7 @@ function new_screen_select_mission(selected_mission)
 
     function screen._post_draw()
         if proceed and selected_mission == 0 then
-            return new_screen_title(1, false, false)
+            return new_screen_title(1, false, false, false)
         end
 
         if fade_out.has_finished() then
@@ -172,9 +182,12 @@ function new_screen_select_mission(selected_mission)
                 mission_number = selected_mission,
                 health = _health_default,
                 shockwave_charges = _shockwave_charges_default,
-                triple_shot = false,
+                triple_shoot = false,
                 fast_shoot = false,
                 score = 0,
+                -- DEBUG:
+                --triple_shoot = true,
+                --fast_shoot = true,
             }
         end
     end

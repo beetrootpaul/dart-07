@@ -7,7 +7,7 @@ function new_movement_sinusoidal_factory(params)
         local age = 0
 
         local function x()
-            return start_xy.x + 14 * sin(age / (params.age_divisor or 120))
+            return start_xy.x + params.magnitude * sin(age / (params.age_divisor))
         end
 
         local movement = {

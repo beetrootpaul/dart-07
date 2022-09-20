@@ -65,7 +65,7 @@ function new_level(descriptor)
         _update = function()
             _m.level_bg_update()
 
-            if phase ~= "outro" and min_visible_distance >= max_defined_distance + 1 then
+            if phase ~= "outro" and min_visible_distance >= max_defined_distance + 3 then
                 phase = "outro"
             end
 

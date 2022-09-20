@@ -8,33 +8,34 @@ function new_game(params)
         shockwave_charges = params.shockwave_charges,
         boss_health = nil,
         boss_health_max = nil,
-        triple_shot = params.triple_shot,
         fast_shoot = params.fast_shoot,
+        triple_shoot = params.triple_shoot,
         score = new_score(params.score),
+        -- DEBUG:
+        --fast_shoot = true,
+        --triple_shoot = true,
     }
 
-    local level = new_level(new_level_descriptor())
+    local level, freeze_timer, boss = new_level(new_level_descriptor()), new_timer(0)
 
     local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits = {}, {}, {}, {}, {}, {}, {}
 
-    local boss
-
     local player = new_player {
         on_bullets_spawned = function(bullets)
-            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot, true)
+            _sfx_play(game.triple_shoot and _sfx_player_triple_shoot or _sfx_player_shoot, 3)
             for b in all(bullets) do
                 add(player_bullets, b)
             end
         end,
         on_shockwave_triggered = function(shockwave)
-            _sfx_play(_sfx_player_shockwave, true)
+            _sfx_play(_sfx_player_shockwave, 2)
             add(shockwaves, shockwave)
         end,
         on_damaged = function()
-            _sfx_play(_sfx_damage_player)
+            _sfx_play(_sfx_damage_player, 2)
         end,
         on_destroyed = function(collision_circle)
-            _sfx_play(_sfx_destroy_player, true)
+            _sfx_play(_sfx_destroy_player, 3)
             _add_all(
                 explosions,
                 new_explosion(collision_circle.xy, collision_circle.r),
@@ -47,45 +48,45 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.triple_shot, game.fast_shoot = false, false
+        game.triple_shoot, game.fast_shoot, freeze_timer = false, false, new_timer(6)
         game.health = game.health - 1
         player.take_damage(game.health)
     end
 
-    local function handle_powerup(powerup)
-        if powerup.powerup_type == "h" then
+    local function handle_powerup(powerup_type)
+        local has_effect = false
+        if powerup_type == "h" then
             if game.health < _health_max then
-                _sfx_play(_sfx_powerup_heart)
+                has_effect = true
                 game.health = game.health + 1
             else
-                _sfx_play(_sfx_powerup_no_effect)
                 game.score.add(10)
             end
-        elseif powerup.powerup_type == "t" then
-            if game.triple_shot then
-                _sfx_play(_sfx_powerup_no_effect)
+        elseif powerup_type == "t" then
+            if game.triple_shoot then
                 game.score.add(10)
             else
-                _sfx_play(_sfx_powerup_triple_shot)
-                game.triple_shot = true
+                has_effect, game.triple_shoot = true, true
             end
-        elseif powerup.powerup_type == "f" then
+        elseif powerup_type == "f" then
             if game.fast_shoot then
-                _sfx_play(_sfx_powerup_no_effect)
                 game.score.add(10)
             else
-                _sfx_play(_sfx_powerup_fast_shot)
-                game.fast_shoot = true
+                has_effect, game.fast_shoot = true, true
             end
-        elseif powerup.powerup_type == "s" then
+        elseif powerup_type == "s" then
             if game.shockwave_charges < _shockwave_charges_max then
-                _sfx_play(_sfx_powerup_shockwave)
+                has_effect = true
                 game.shockwave_charges = game.shockwave_charges + 1
             else
-                _sfx_play(_sfx_powerup_no_effect)
                 game.score.add(10)
             end
         end
+        _sfx_play(
+            has_effect and _sfx_powerup_picked or _sfx_powerup_no_effect,
+            has_effect and 2 or nil
+        )
+
     end
 
     local function handle_collisions()
@@ -94,7 +95,7 @@ function new_game(params)
             if not powerup.has_finished() then
                 if _collisions.are_colliding(player, powerup) then
                     powerup.pick()
-                    handle_powerup(powerup)
+                    handle_powerup(powerup.powerup_type)
                 end
             end
         end
@@ -193,10 +194,6 @@ function new_game(params)
 
     function game.enter_boss_phase()
         boss = new_boss {
-            boss_properties = _m.boss_properties(),
-            intro_frames = 180,
-            intro_start_xy = _xy(_gaw / 2, -120),
-            start_xy = _xy(_gaw / 2, 20, 20),
             on_bullets_spawned = function(bullets_fn, boss_movement)
                 if player then
                     for b in all(bullets_fn(boss_movement, player.collision_circle())) do
@@ -205,7 +202,7 @@ function new_game(params)
                 end
             end,
             on_damage = function()
-                _sfx_play(_sfx_damage_boss)
+                _sfx_play(_sfx_damage_enemy, 3)
             end,
             on_entered_next_phase = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_phase)
@@ -222,14 +219,14 @@ function new_game(params)
                     _add_all(
                         explosions,
                         new_explosion(xy, .8 * r),
-                        new_explosion(xy, 1.4 * r, 4 + flr(rnd(44))),
-                        new_explosion(xy, 1.8 * r, 12 + flr(rnd(36)), function()
+                        new_explosion(xy, 1.4 * r, 4 + flr(rnd(44)), function()
                             _sfx_play(_sfx_destroy_boss_final_2)
                         end),
-                        new_explosion(xy, 3.5 * r, 30 + flr(rnd(18))),
-                        new_explosion(xy, 5 * r, 50 + flr(rnd(6)), function()
+                        new_explosion(xy, 1.8 * r, 12 + flr(rnd(36)), function()
                             _sfx_play(_sfx_destroy_boss_final_3)
-                        end)
+                        end),
+                        new_explosion(xy, 3.5 * r, 30 + flr(rnd(18))),
+                        new_explosion(xy, 5 * r, 50 + flr(rnd(6)))
                     )
                 end
             end,
@@ -256,7 +253,7 @@ function new_game(params)
             player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
             if btn(_button_x) then
                 player.fire {
-                    triple_shot = game.triple_shot,
+                    triple_shoot = game.triple_shoot,
                     fast_shoot = game.fast_shoot,
                 }
             end
@@ -279,6 +276,7 @@ function new_game(params)
             { boss },
             powerups,
             explosions,
+            { freeze_timer },
             function(game_object)
                 game_object._update()
             end
@@ -309,7 +307,6 @@ function new_game(params)
                     game.score.add(score_to_add)
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
-                        _sfx_play(_sfx_powerup_spawned)
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
                     end
                 end,
@@ -358,6 +355,14 @@ function new_game(params)
         --        _collisions._debug_draw_collision_circle(game_object_or_collision_circle)
         --    end
         --)
+        
+        if freeze_timer.ttl > 0 then
+            local factor = freeze_timer.ttl - 1
+            camera(
+                rnd(factor) - .5 * factor,
+                rnd(factor) - .5 * factor
+            )
+        end
     end
 
     function game._post_draw()
@@ -367,10 +372,9 @@ function new_game(params)
         end
 
         if boss and boss.has_finished() then
-            boss = nil
             -- we assume here there are no enemies on a screen at the same time as boss is,
             -- therefore we can just remove all enemy bullets when boss is destroyed
-            enemy_bullets = {}
+            boss, enemy_bullets = nil, {}
         end
 
         _flattened_for_each(
