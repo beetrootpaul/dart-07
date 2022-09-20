@@ -10,7 +10,7 @@ _m = {
     bg_color = _color_4_true_blue,
     mission_info_color = _color_9_dark_orange,
     mission_main_music = 0,
-    mission_boss_music = 2,
+    mission_boss_music = 13,
 }
 
 do

@@ -2,9 +2,8 @@
 -- common/timer/timer.lua  --
 -- -- -- -- -- -- -- -- -- --
 
-function new_timer(frames, params)
+function new_timer(frames, on_finished)
     params = params or {}
-    local on_finished = params.on_finished or nil
 
     local timer = {
         ttl = frames,
