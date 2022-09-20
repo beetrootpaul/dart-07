@@ -5,7 +5,7 @@
 _m = {
     mission_number = 2,
     scroll_per_frame = 1,
-    mission_name = "outpost \-fin \-fspace",
+    mission_name = "(wip) \-foutpost \-fin \-fspace",
     boss_name = "cargo \-fguardian",
     bg_color = _color_1_darker_blue,
     mission_info_color = _color_6_light_grey,
@@ -128,7 +128,7 @@ do
             health = 25,
             sprites_props_txt = "56,26,4,98|56,26,4,98",
             collision_circles_props = {
-                { 15, _xy(0, 3) },
+                { 15, _xy(0, -3) },
             },
             phases = {
                 -- phase 1:

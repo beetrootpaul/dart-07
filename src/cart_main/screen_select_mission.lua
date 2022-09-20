@@ -70,6 +70,16 @@ function new_screen_select_mission(selected_mission)
             button_xy1.x, button_xy1.y
         )
 
+        if mission_number > 1 then
+            -- draw WIP info
+            _centered_print(
+                "under \-fdevelopment",
+                button_xy1.y + 2,
+                selected and _color_7_white or _color_6_light_grey,
+                selected and _color_9_dark_orange or _color_13_lavender
+            )
+        end
+
         -- draw label
         print(
             "mission " .. mission_number,
