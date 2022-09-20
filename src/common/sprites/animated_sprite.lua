@@ -17,8 +17,7 @@ function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, from_left_
             xy = from_left_top_corner and xy or xy.minus(sprite_w / 2, sprite_h / 2)
             xy = _xy(_round(xy.x), _round(xy.y))
 
-            -- we turn on new transparent color only, and do not turn off black transparency, 
-            -- because we don't use black on sprites
+            palt(_color_0_black, false)
             palt(_color_11_transparent, true)
 
             sspr(
