@@ -13,8 +13,8 @@ _sfx_options_confirm = 2
 -- _sfx_powerup_spawned = 4
 _sfx_powerup_no_effect, _sfx_powerup_picked = 5, 6
 -- _sfx_powerup_heart = 6
--- _sfx_powerup_triple_shot = 7
--- _sfx_powerup_fast_shot = 8
+-- _sfx_powerup_triple_shoot = 7
+-- _sfx_powerup_fast_shoot = 8
 -- _sfx_powerup_shockwave = 9
 
 _sfx_player_shoot, _sfx_player_triple_shoot, _sfx_player_shockwave, _sfx_enemy_shoot, _sfx_enemy_multi_shoot = 10, 11, 12, 13, 14

@@ -9,11 +9,11 @@ function new_game(params)
         boss_health = nil,
         boss_health_max = nil,
         fast_shoot = params.fast_shoot,
-        triple_shot = params.triple_shot,
+        triple_shoot = params.triple_shoot,
         score = new_score(params.score),
         -- DEBUG:
         --fast_shoot = true,
-        --triple_shot = true,
+        --triple_shoot = true,
     }
 
     local level, freeze_timer, boss = new_level(new_level_descriptor()), new_timer(0)
@@ -22,7 +22,7 @@ function new_game(params)
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
-            _sfx_play(game.triple_shot and _sfx_player_triple_shoot or _sfx_player_shoot, 3)
+            _sfx_play(game.triple_shoot and _sfx_player_triple_shoot or _sfx_player_shoot, 3)
             for b in all(bullets) do
                 add(player_bullets, b)
             end
@@ -48,7 +48,7 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.triple_shot, game.fast_shoot, freeze_timer = false, false, new_timer(6)
+        game.triple_shoot, game.fast_shoot, freeze_timer = false, false, new_timer(6)
         game.health = game.health - 1
         player.take_damage(game.health)
     end
@@ -63,10 +63,10 @@ function new_game(params)
                 game.score.add(10)
             end
         elseif powerup_type == "t" then
-            if game.triple_shot then
+            if game.triple_shoot then
                 game.score.add(10)
             else
-                has_effect, game.triple_shot = true, true
+                has_effect, game.triple_shoot = true, true
             end
         elseif powerup_type == "f" then
             if game.fast_shoot then
@@ -253,7 +253,7 @@ function new_game(params)
             player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
             if btn(_button_x) then
                 player.fire {
-                    triple_shot = game.triple_shot,
+                    triple_shoot = game.triple_shoot,
                     fast_shoot = game.fast_shoot,
                 }
             end

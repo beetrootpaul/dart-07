@@ -36,7 +36,7 @@ function _load_mission_cart(params)
 
     local cart_params = tostr(params.health) ..
         "," .. tostr(params.shockwave_charges) ..
-        "," .. tostr(params.triple_shot) ..
+        "," .. tostr(params.triple_shoot) ..
         "," .. tostr(params.fast_shoot) ..
         "," .. tostr(params.score)
 
