@@ -82,7 +82,7 @@ do
             -- enemy: stationary
             [79] = {
                 5,
-                850,
+                1,
                 "28,28,0,64|28,28,28,64",
                 {
                     { 5 },
@@ -134,7 +134,9 @@ do
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
-                    score = 800,
+                    score = 1,
+                    -- DEBUG:
+                    --score = 32767,
                     bullet_fire_timer = new_timer "80",
                     spawn_bullets = function(enemy_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)

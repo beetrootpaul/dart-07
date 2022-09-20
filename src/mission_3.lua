@@ -123,7 +123,7 @@ do
             -- enemy: stationary
             [79] = {
                 5,
-                50,
+                1,
                 "16,16,0,64|10,10,16,64",
                 {
                     { 5 },
@@ -175,7 +175,7 @@ do
                 -- phase 1:
                 {
                     triggering_health_fraction = 1,
-                    score = 2000,
+                    score = 1,
                     -- DEBUG:
                     --score = 32767,
                     bullet_fire_timer = new_timer "80",
