@@ -3,6 +3,10 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 function new_screen_title(preselected_mission, start_music, start_fade_in, select_controls)
+    local cart_label_mode = false
+    -- DEBUG: enable this to show an image to create a cart label image from it
+    --cart_label_mode = true
+
     local high_score
 
     local fade_in = new_fade("in", 30)
@@ -117,14 +121,34 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
             pset(star.x, star.y, star.color)
         end
 
-        map(0, 0, 0, 0, 16, 16)
+        map(cart_label_mode and 16 or 0, 0, 0, 0, 16, 16)
 
-        draw_title(15)
-        draw_high_score(57)
-        draw_button("play", 98, 15, 82, play)
-        draw_button("controls", 98, 15, 104, not play)
+        if cart_label_mode then
+            map(16, 0, 0, 0, 16, 16)
 
-        if start_fade_in then
+            -- brp
+            pal(_color_10_unused, _color_14_mauve)
+            sspr(
+                99, 114,
+                29, 14,
+                (_vs - 29 * 2) / 2, 6,
+                29 * 2, 14 * 2
+            )
+            pal(1)
+
+            draw_title(55)
+
+            -- ship
+            new_static_sprite("10,10,18,0")._draw(_gaw / 2, 110)
+        else
+            map(0, 0, 0, 0, 16, 16)
+            draw_title(15)
+            draw_high_score(57)
+            draw_button("play", 98, 15, 82, play)
+            draw_button("controls", 98, 15, 104, not play)
+        end
+
+        if not cart_label_mode and start_fade_in then
             fade_in._draw()
         end
     end

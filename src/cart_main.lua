@@ -7,7 +7,7 @@ local current_screen, next_screen
 function _init()
     local preselected_mission_number = _get_cart_param(1)
     -- DEBUG:
-    --preselected_mission_number = 1
+    preselected_mission_number = 1
 
     -- to clear cart data, go to cart data folder (defined as "root_path" in "$HOME/Library/Application Support/pico-8/config.txt")
     -- and delete "brp_dart-07.p8d.txt" file
@@ -55,7 +55,6 @@ end
 -- TODO: balancing: mission 2: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 -- TODO: balancing: mission 3: enemy types, health, speed, their bullets: timer, speed, amount, angles, timer, SFX or not 
 
--- TODO: carts: label images: main
 -- TODO: carts: label images: mission 1
 -- TODO: carts: label images: mission 2
 -- TODO: carts: label images: mission 3
