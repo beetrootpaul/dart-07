@@ -12,12 +12,12 @@ function new_level_descriptor()
     local en_over_st_min, en_over_st_max = 89, 95
     -- * structure tiles (cw = clockwise, ccw = counterclockwise)
     local st_center = 85
-    local st_edge_left, st_edge_right, st_edge_top, st_edge_bottom = 84, 86, 69, 101
-    local st_convex_left_top, st_convex_left_bottom, st_convex_right_top, st_convex_right_bottom = 68, 100, 70, 102
-    local st_concave_left_top_ccw, st_concave_left_top, st_concave_left_top_cw = 80, 81, 65
-    local st_concave_left_bottom_ccw, st_concave_left_bottom, st_concave_left_bottom_cw = 113, 97, 96
-    local st_concave_right_top_ccw, st_concave_right_top, st_concave_right_top_cw = 66, 82, 83
-    local st_concave_right_bottom_ccw, st_concave_right_bottom, st_concave_right_bottom_cw = 99, 98, 114
+    local st_edge_left, st_edge_right, st_edge_top, st_edge_bottom = _unpack_split "84,86,69,101"
+    local st_convex_left_top, st_convex_left_bottom, st_convex_right_top, st_convex_right_bottom = _unpack_split "68,100,70,102"
+    local st_concave_left_top_ccw, st_concave_left_top, st_concave_left_top_cw = _unpack_split "80,81,65"
+    local st_concave_left_bottom_ccw, st_concave_left_bottom, st_concave_left_bottom_cw = _unpack_split "113,97,96"
+    local st_concave_right_top_ccw, st_concave_right_top, st_concave_right_top_cw = _unpack_split "66,82,83"
+    local st_concave_right_bottom_ccw, st_concave_right_bottom, st_concave_right_bottom_cw = _unpack_split "99,98,114"
 
     local max_defined_distance
 

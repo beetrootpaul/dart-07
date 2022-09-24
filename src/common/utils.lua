@@ -66,3 +66,8 @@ _noop_game_object = {
 function _tni(current_index, table_length)
     return current_index % table_length + 1
 end
+
+function _unpack_split(values_as_text, separator)
+    -- passing nil separator down to split(…) will make it deafult to ","
+    return unpack(split(values_as_text, separator))
+end

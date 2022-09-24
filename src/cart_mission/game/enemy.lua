@@ -14,7 +14,7 @@ do
         local health, movement = enemy_properties[1], enemy_properties[6](start_xy)
         local bullet_fire_timer = enemy_properties.bullet_fire_timer or new_fake_timer()
 
-        local ship_sprite_props_txt, flash_sprite_props_txt = unpack(split(enemy_properties[3], "|"))
+        local ship_sprite_props_txt, flash_sprite_props_txt = _unpack_split(enemy_properties[3], "|")
         local ship_sprite, flash_sprite = new_static_sprite(ship_sprite_props_txt), new_static_sprite(flash_sprite_props_txt)
 
         local flashing_after_damage_timer

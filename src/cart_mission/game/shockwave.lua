@@ -11,7 +11,7 @@ do
         local x = center_xy.x + _gaox
         local y = center_xy.y
 
-        local r_min, r_max, r_step = 11, 88, 7
+        local r_min, r_max, r_step = _unpack_split "11,88,7"
 
         local r_progress = new_movement_line_factory {
             -- keep in sync: amount of steps to add to "r_max" here is taken from the smallest circle drawn in "_draw()"

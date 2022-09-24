@@ -9,7 +9,7 @@ function new_boss(params)
     
     local phases = boss_properties.phases
 
-    local boss_sprite_props_txt, flash_sprite_props_txt = unpack(split(boss_properties.sprites_props_txt, "|"))
+    local boss_sprite_props_txt, flash_sprite_props_txt = _unpack_split(boss_properties.sprites_props_txt, "|")
     local boss_sprite, flash_sprite = new_static_sprite(boss_sprite_props_txt), new_static_sprite(flash_sprite_props_txt)
 
     local movement = new_movement_to_target_factory {

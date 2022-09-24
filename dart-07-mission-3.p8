@@ -6,6 +6,9 @@ __lua__
 
 #include build/src/third_party/easingcheatsheet.lua
 
+-- keep utils before other files since some helpers from utils are used in top-level code of other files
+#include build/src/common/utils.lua
+
 #include build/src/common/movement/movement_fixed_factory.lua
 #include build/src/common/movement/movement_line_factory.lua
 #include build/src/common/movement/movement_loop_factory.lua
@@ -28,7 +31,6 @@ __lua__
 #include build/src/common/multicart.lua
 #include build/src/common/score.lua
 #include build/src/common/throttle.lua
-#include build/src/common/utils.lua
 #include build/src/common/viewport.lua
 #include build/src/common/xy.lua
 

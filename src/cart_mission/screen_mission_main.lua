@@ -18,7 +18,7 @@ function new_screen_mission_main(params)
         --fast_shoot = true,
     }
 
-    local fade_in_frames, sliding_info_slide_frames, screen_frames = 30, 50, 200
+    local fade_in_frames, sliding_info_slide_frames, screen_frames = _unpack_split "30,50,200"
 
     local hud = new_hud {
         wait_frames = screen_frames - 10,
