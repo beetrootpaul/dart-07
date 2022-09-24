@@ -27,7 +27,7 @@ function new_boss(params)
         local ccs = {}
         for cc_props in all(boss_properties.collision_circles_props) do
             add(ccs, {
-                xy = movement.xy.plus(cc_props[2] or _xy(0, 0)),
+                xy = movement.xy.plus(cc_props[2] or _xy_0_0),
                 r = cc_props[1],
             })
         end
@@ -47,7 +47,7 @@ function new_boss(params)
 
     function boss.start_first_phase()
         current_phase_number = 1
-        movement = phases[current_phase_number].movement_factory(movement.xy)
+        movement = phases[current_phase_number][5](movement.xy)
         invincible_during_intro = false
     end
 
@@ -64,16 +64,16 @@ function new_boss(params)
             on_damage()
         else
             is_destroyed = true
-            on_destroyed(collision_circles(), phases[#phases].score)
+            on_destroyed(collision_circles(), phases[#phases][2])
         end
     end
 
     function boss._update()
         if current_phase_number > 0 and current_phase_number < #phases then
-            if phases[current_phase_number + 1].triggering_health_fraction >= boss.health / boss.health_max then
-                on_entered_next_phase(collision_circles(), phases[current_phase_number].score)
+            if phases[current_phase_number + 1][1] >= boss.health / boss.health_max then
+                on_entered_next_phase(collision_circles(), phases[current_phase_number][2])
                 current_phase_number = current_phase_number + 1
-                movement = phases[current_phase_number].movement_factory(movement.xy)
+                movement = phases[current_phase_number][5](movement.xy)
             end
         end
 
@@ -85,7 +85,7 @@ function new_boss(params)
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
-                on_bullets_spawned(current_phase.spawn_bullets, movement)
+                on_bullets_spawned(current_phase[4], movement)
             end
         end
 

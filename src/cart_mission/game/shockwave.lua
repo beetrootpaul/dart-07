@@ -19,7 +19,7 @@ do
             continue_after_finished = true,
             angle = 0,
             angled_speed = speed,
-        }(_xy(0, 0))
+        }(_xy_0_0)
 
         local function draw_circle(r)
             if r == mid(r_min, r, r_max) then

@@ -26,3 +26,5 @@ function _xy(x, y)
         end,
     }
 end
+
+_xy_0_0 = _xy(0, 0)

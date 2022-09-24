@@ -4,25 +4,20 @@
 
 function new_player(params)
     local on_bullets_spawned, on_shockwave_triggered = new_throttle(params.on_bullets_spawned), new_throttle(params.on_shockwave_triggered)
-    local on_damaged, on_destroyed = params.on_damaged, params.on_destroyed
+    local w, h, on_damaged, on_destroyed = 10, 12, params.on_damaged, params.on_destroyed
 
-    local w, h = 10, 12
-
-    local ship_sprite_neutral, ship_sprite_flying_left, ship_sprite_flying_right = new_static_sprite "10,10,18,0", new_static_sprite "10,10,8,0", new_static_sprite "10,10,28,0"
-    local ship_sprite_current = ship_sprite_neutral
-
+    local ship_sprite_neutral, ship_sprite_flying_left, ship_sprite_flying_right = new_static_sprite "10,10,19,0", new_static_sprite "10,10,9,0", new_static_sprite "10,10,29,0"
     local jet_sprite_visible = new_animated_sprite(
         4,
-        4,
+        14,
         split("0,0,0,0,4,4,4,4"),
-        8
+        9
     )
     local jet_sprite_hidden = _noop_game_object
-    local jet_sprite = jet_sprite_visible
 
-    local invincible_after_damage_timer, invincibility_flash_duration = nil, 6
+    local ship_sprite_current, jet_sprite = ship_sprite_neutral, jet_sprite_visible
 
-    local is_destroyed, xy = false, _xy(_gaw / 2, _gah - 28)
+    local invincible_after_damage_timer, invincibility_flash_duration, is_destroyed, xy = nil, 6, false, _xy(_gaw / 2, _gah - 28)
 
     local function collision_circle()
         return {
@@ -124,7 +119,7 @@ function new_player(params)
                 pal(split "1,7,7,7,7,7,7,7,7,7,7,7,7,7,7")
             end
             ship_sprite_current._draw(xy)
-            jet_sprite._draw(xy.plus(0, 8))
+            jet_sprite._draw(xy)
             pal()
         end,
 

@@ -52,7 +52,7 @@ do
         collision_circle_r = 1.5,
     }
 
-    -- enemy property:
+    -- enemy properties:
     --   - [1] = health
     --   - [2] = score
     --   - [3] = sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
@@ -293,16 +293,22 @@ do
         return t() % 2
     end
 
-    -- boss property:
+    -- boss properties:
     --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
     --   - collision_circles_props = {
     --                    { r, optional_xy_offset }, -- put main/center circle first, since it will be source for explosions etc.
     --                    { r, optional_xy_offset },
     --                    { r },
     --                },
-    --   - spawn_bullets = function(boss_movement, player_collision_circle)
-    --                       return bullets_table
-    --                     end
+    --   - phases = {
+    --       - [1] = triggering_health_fraction
+    --       - [2] = score
+    --       - [3] = bullet_fire_timer
+    --       - [4] = spawn_bullets = function(boss_movement, player_collision_circle)
+    --                                 return bullets_table
+    --                               end
+    --       - [5] = movement_factory
+    --     }
     function _m_boss_properties()
         return {
             health = 150,
@@ -315,10 +321,10 @@ do
             phases = {
                 -- phase 1:
                 {
-                    triggering_health_fraction = 1,
-                    score = 50,
-                    bullet_fire_timer = new_timer "8",
-                    spawn_bullets = function(boss_movement)
+                    1,
+                    50,
+                    new_timer "8",
+                    function(boss_movement)
                         if t_mod_2() < 1 then return {} end
                         _sfx_play(_sfx_enemy_shoot)
                         return {
@@ -330,14 +336,14 @@ do
                             ),
                         }
                     end,
-                    movement_factory = new_movement_fixed_factory(),
+                    new_movement_fixed_factory(),
                 },
                 -- phase 2:
                 {
-                    triggering_health_fraction = .8,
-                    score = 300,
-                    bullet_fire_timer = new_timer "28",
-                    spawn_bullets = function(enemy_movement)
+                    .8,
+                    300,
+                    new_timer "28",
+                    function(enemy_movement)
                         local bullets = {}
                         if t_mod_2() > .6 then
                             _sfx_play(_sfx_enemy_multi_shoot)
@@ -352,7 +358,7 @@ do
                         end
                         return bullets
                     end,
-                    movement_factory = new_movement_sequence_factory {
+                    new_movement_sequence_factory {
                         new_movement_to_target_factory {
                             target_x = 30,
                             frames = 40,
@@ -374,10 +380,10 @@ do
                 },
                 -- phase 3:
                 {
-                    triggering_health_fraction = .4,
-                    score = 650,
-                    bullet_fire_timer = new_timer "8",
-                    spawn_bullets = function(boss_movement)
+                    .4,
+                    650,
+                    new_timer "8",
+                    function(boss_movement)
                         _sfx_play(_sfx_enemy_shoot)
                         if t_mod_2() > 1.5 then
                             -- side bullets
@@ -408,7 +414,7 @@ do
                             }
                         end
                     end,
-                    movement_factory = new_movement_loop_factory {
+                    new_movement_loop_factory {
                         -- center it
                         new_movement_to_target_factory {
                             target_x = _gaw / 2,

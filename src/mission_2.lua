@@ -60,7 +60,7 @@ do
         collision_circle_r = 1.5,
     }
 
-    -- enemy property:
+    -- enemy properties:
     --   - [1] = health
     --   - [2] = score
     --   - [3] = sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
@@ -111,16 +111,22 @@ do
         })[enemy_map_marker]
     end
 
-    -- boss property:
+    -- boss properties:
     --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
     --   - collision_circles_props = {
     --                    { r, optional_xy_offset }, -- put main/center circle first, since it will be source for explosions etc.
     --                    { r, optional_xy_offset },
     --                    { r },
     --                },
-    --   - spawn_bullets = function(boss_movement, player_collision_circle)
-    --                       return bullets_table
-    --                     end
+    --   - phases = {
+    --       - [1] = triggering_health_fraction
+    --       - [2] = score
+    --       - [3] = bullet_fire_timer
+    --       - [4] = spawn_bullets = function(boss_movement, player_collision_circle)
+    --                                 return bullets_table
+    --                               end
+    --       - [5] = movement_factory
+    --     }
     function _m_boss_properties()
         return {
             health = 25,
@@ -131,12 +137,12 @@ do
             phases = {
                 -- phase 1:
                 {
-                    triggering_health_fraction = 1,
-                    score = 1,
+                    1,
+                    1,
                     -- DEBUG:
-                    --score = 32767,
-                    bullet_fire_timer = new_timer "80",
-                    spawn_bullets = function(enemy_movement, player_collision_circle)
+                    --32767,
+                    new_timer "80",
+                    function(enemy_movement, player_collision_circle)
                         _sfx_play(_sfx_enemy_multi_shoot)
                         return {
                             enemy_bullet_factory(
@@ -148,7 +154,7 @@ do
                             ),
                         }
                     end,
-                    movement_factory = new_movement_fixed_factory(),
+                    new_movement_fixed_factory(),
                 },
             },
         }
