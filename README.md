@@ -49,7 +49,7 @@ Physical game controllers are supposed to work as well, even in a browser. Butto
 
 ## Gameplay
 
-Your task is to pilot Dart-07 unit in a set of secret missions:
+Your task is to pilot Dart-07 unit in a set of secret missions of increasing difficulty:
 
 - first, you mess with the enemy on **Emerald Islands**
 - then you continue to the **Outpost in Space** (⚠️ under development ⚠️)
