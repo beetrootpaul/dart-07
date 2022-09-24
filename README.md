@@ -181,6 +181,7 @@ resources I found super useful and used some of them I used in the codebase as w
 ### v0.1.1
 
 - fixed diagonal speed of a player's ship by dividing it by `1.41`
+- more health for mission 1 boss and mission 1 big enemy
 
 ### v0.1.0
 

@@ -149,7 +149,7 @@ do
 
             -- enemy: big
             [77] = {
-                30,
+                50,
                 100,
                 "24,20,64,64|22,18,88,65",
                 {
@@ -305,7 +305,7 @@ do
     --                     end
     function _m_boss_properties()
         return {
-            health = 100,
+            health = 150,
             sprites_props_txt = "54,20,0,96|52,18,54,97",
             collision_circles_props = {
                 { 11 },
