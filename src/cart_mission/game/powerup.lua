@@ -6,7 +6,7 @@ function new_powerup(start_xy, powerup_type)
     local is_picked = false
 
     local sprites = {
-        h = new_static_sprite "9,8,0,24",
+        h = new_static_sprite "9,8,18,16",
         m = new_static_sprite "9,8,9,16",
         f = new_static_sprite "9,8,9,24",
         t = new_static_sprite "9,8,18,24",

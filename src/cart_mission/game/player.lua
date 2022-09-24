@@ -9,7 +9,7 @@ function new_player(params)
     local ship_sprite_neutral, ship_sprite_flying_left, ship_sprite_flying_right = new_static_sprite "10,10,19,0", new_static_sprite "10,10,9,0", new_static_sprite "10,10,29,0"
     local jet_sprite_visible = new_animated_sprite(
         4,
-        14,
+        20,
         split("0,0,0,0,4,4,4,4"),
         9
     )
