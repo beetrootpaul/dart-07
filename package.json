@@ -27,7 +27,6 @@
     "dist-bbs": "run-s --print-label dist-bbs-main dist-bbs-lvl*",
     "dist-bin": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07.p8 -export \"dist/dart-07.bin dart-07-mission-1.p8 dart-07-mission-2.p8 dart-07-mission-3.p8\"",
     "dist-itch": "/Applications/PICO-8.app/Contents/MacOS/pico8 dart-07.p8 -export \"dist/itch/dart-07.html dart-07-mission-1.p8 dart-07-mission-2.p8 dart-07-mission-3.p8\"",
-    "qwe": "sed -i '' \"s/background-color:#222/background-color:#111d35/g\" dist/itch/index.html",
     "postdist-bin": "mv dist/dart-07.bin dist/bin",
     "postdist-itch": "mv dist/itch/dart-07.html dist/itch/index.html && sed -i '' \"s/background-color:#222/background-color:#111d35/g\" dist/itch/index.html && cd dist/itch/ && zip dart-07-itch.zip index.html dart-07.js",
     "dist": "run-s --print-label clear build-minified dist-bbs dist-bin dist-itch"
