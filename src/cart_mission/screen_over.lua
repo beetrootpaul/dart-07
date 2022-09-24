@@ -36,8 +36,7 @@ function new_screen_over(game, is_win)
 
     function screen._init()
         if is_win then
-            -- this music is available on the last mission's cart only
-            music(2)
+            _sfx_play(_sfx_game_win)
         end
 
         local current_score = game.score.raw_value()

@@ -192,6 +192,7 @@ resources I found super useful and used some of them I used in the codebase as w
 - more health for mission 1 boss and mission 1 big enemy
 - shake camera on a shockwave trigger
 - lower volume of player shooting and enemy being destroyed
+- show a win screen after first mission (the completed one)
 - print version number on a title screen
 
 ### v0.1.0

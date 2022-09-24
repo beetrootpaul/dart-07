@@ -7,9 +7,9 @@ function new_screen_defeat(game, hud)
 
     local fade_out, screen_timer, screen = new_fade("out", fade_out_frames, screen_frames - fade_out_frames), new_timer(screen_frames), {}
 
-    --
-
-    screen._init = _noop
+    function screen._init()
+        _music_fade_out()
+    end
 
     function screen._update()
         game._update()
