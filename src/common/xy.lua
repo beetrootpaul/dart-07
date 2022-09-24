@@ -18,11 +18,12 @@ function _xy(x, y)
                 y - (y2 or xy2_or_x2.y)
             )
         end,
-        flr = function()
-            return _xy(flr(x), flr(y))
-        end,
         ceil = function()
             return _xy(ceil(x), ceil(y))
+        end,
+        -- if you want to delete this function, please be aware it is used at least in one place where it's accessed but a property name as a string
+        flr = function()
+            return _xy(flr(x), flr(y))
         end,
     }
 end

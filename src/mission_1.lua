@@ -4,12 +4,9 @@
 
 _m_mission_number = 1
 _m_scroll_per_frame = .5
-_m_mission_name = "emerald \-fislands"
-_m_boss_name = "sentinel \-fzx300"
-_m_bg_color = _color_4_true_blue
-_m_mission_info_color = _color_9_dark_orange
-_m_mission_main_music = 0
-_m_mission_boss_music = 13
+_m_mission_name, _m_boss_name = "emerald \-fislands", "sentinel \-fzx300"
+_m_bg_color, _m_mission_info_color = _color_4_true_blue, _color_9_dark_orange
+_m_mission_main_music, _m_mission_boss_music = 0, 13
 
 do
     local waves_tile

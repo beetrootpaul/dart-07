@@ -4,12 +4,9 @@
 
 _m_mission_number = 2
 _m_scroll_per_frame = 1
-_m_mission_name = "(wip) \-foutpost \-fin \-fspace"
-_m_boss_name = "cargo \-fguardian"
-_m_bg_color = _color_1_darker_blue
-_m_mission_info_color = _color_6_light_grey
-_m_mission_main_music = 0
-_m_mission_boss_music = 1
+_m_mission_name, _m_boss_name = "(wip) \-foutpost \-fin \-fspace", "cargo \-fguardian"
+_m_bg_color, _m_mission_info_color = _color_1_darker_blue, _color_6_light_grey
+_m_mission_main_music, _m_mission_boss_music = 0, 1
 
 do
     local stars

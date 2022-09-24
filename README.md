@@ -86,15 +86,18 @@ In your HUD you see:
 - left-top: **mission progression** (the higher the ship's icon is placed, the close to the boss you are)
 - right-top: **your score**, which you gain by destroying enemies and grabbing power-ups in case they cannot bring any
   improvement
+- right-middle: **power-ups** you gathered (excluding hearts and shockwave charges)
 - left-bottom: **hearts left**; you die when all hearts are gone
 - right-bottom: **shockwave charges left**; you can trigger a shockwave if you have at least 1 charge left
 - top-middle, during boss fight: **boss' health** (yes, you are supposed to bring it down to zero 😉)
+
+<img src="dist/readme_assets/hud_info.png" width="384" title="gif 1 of mission 1 gameplay"></img>
 
 ### Recordings
 
 <img src="dist/screenshots_and_recordings/mission_1_a.gif" width="384" title="gif 1 of mission 1 gameplay"></img>
 <img src="dist/screenshots_and_recordings/mission_1_b.gif" width="384" title="gif 2 of mission 1 gameplay"></img>
-<img src="dist/screenshots_and_recordings/boss_1.gif" width="384" title="gif mission 1's boss fight"></img>
+<img src="dist/screenshots_and_recordings/boss_1.gif" width="384" title="info about HUD elements"></img>
 
 ## Development
 
@@ -189,6 +192,7 @@ resources I found super useful and used some of them I used in the codebase as w
 
 - new powerup type: fast movement
 - fixed diagonal speed of a player's ship by dividing it by `1.41`
+- fast movement, fast shoot, and triple shoot have their status visible in a HUD
 - more health for mission 1 boss and mission 1 big enemy
 - shake camera on a shockwave trigger
 - lower volume of player shooting

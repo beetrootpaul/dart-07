@@ -16,6 +16,7 @@ function new_game(params)
         --fast_movement = true,
         --fast_shoot = true,
         --triple_shoot = true,
+        --score = new_score(123),
     }
 
     local level, camera_shake_timer, boss = new_level(new_level_descriptor()), new_timer(0)

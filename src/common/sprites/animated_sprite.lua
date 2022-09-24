@@ -3,8 +3,7 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function new_animated_sprite(sprite_w, sprite_h, sprite_xs, sprite_y, from_left_top_corner)
-    local frame = 1
-    local max_frame = #sprite_xs
+    local frame, max_frame = 1, #sprite_xs
 
     return {
         _update = function()

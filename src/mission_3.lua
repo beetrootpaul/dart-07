@@ -4,12 +4,9 @@
 
 _m_mission_number = 3
 _m_scroll_per_frame = 1
-_m_mission_name = "(wip) \-fphoslar \-fmine"
-_m_boss_name = "? \-f? \-f?"
-_m_bg_color = _color_2_darker_purple
-_m_mission_info_color = _color_3_dark_green
-_m_mission_main_music = 0
-_m_mission_boss_music = 1
+_m_mission_name, _m_boss_name = "(wip) \-fphoslar \-fmine", "? \-f? \-f?"
+_m_bg_color, _m_mission_info_color = _color_2_darker_purple, _color_3_dark_green
+_m_mission_main_music, _m_mission_boss_music = 0, 1
 
 do
     local tube_tiles = split "71,72,87,88,118,118,118,118,103,104,119,120"
