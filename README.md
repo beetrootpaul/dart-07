@@ -16,9 +16,20 @@ If you want to take a look at the codebase, please visit https://github.com/beet
 carts of this game is minified, therefore not suitable for
 reading).
 
-<img src="dist/screenshots_and_recordings/mission_1_a.gif" width="384" title="gif 1 of mission 1 gameplay"></img>
-<img src="dist/screenshots_and_recordings/mission_1_b.gif" width="384" title="gif 2 of mission 1 gameplay"></img>
-<img src="dist/screenshots_and_recordings/boss_1.gif" width="384" title="gif mission 1's boss fight"></img>
+1. [Controls](#controls)
+1. [Gameplay](#gameplay)
+   1. [Power-ups](#power-ups)
+   1. [HUD](#hud)
+   1. [Recordings](#recordings)
+1. [Development](#development)
+   1. [Technical Challenges Tackled In This Game](#technical-challenges-tackled-in-this-game)
+   1. [How To Develop Further](#how-to-develop-further)
+   1. [Code Style](#code-style)
+1. [License](#license)
+1. [Credits](#credits)
+1. [Version History](#version-history)
+   1. [v0.1.1](#v011)
+   1. [v0.1.0](#v010)
 
 ## Controls
 
@@ -48,17 +59,6 @@ Your task is to pilot Dart-07 unit in a set of secret missions:
 Destroy enemies along the way to increase your score, grab power-ups left by them and survive a boss fight in order to
 complete a mission.
 
-### HUD
-
-In your HUD you see:
-
-- left-top: **mission progression** (the higher the ship's icon is placed, the close to the boss you are)
-- right-top: **your score**, which you gain by destroying enemies and grabbing power-ups in case they cannot bring any
-  improvement
-- left-bottom: **hearts left**; you die when all hearts are gone
-- right-bottom: **shockwave charges left**; you can trigger a shockwave if you have at least 1 charge left
-- top-middle, during boss fight: **boss' health** (yes, you are supposed to bring it down to zero 😉)
-
 ### Power-ups
 
 There are 4 types of power-ups you can grab, each of them either makes your life easier or, if cannot improve further,
@@ -76,7 +76,26 @@ increases your score:
   **shockwave charge** – allows you to trigger a destructive shockwave around you (with use of "c" / "🅾️" button); you
   can have max 4 shockwave charges
 
-## Technical Challenges During Implementation
+### HUD
+
+In your HUD you see:
+
+- left-top: **mission progression** (the higher the ship's icon is placed, the close to the boss you are)
+- right-top: **your score**, which you gain by destroying enemies and grabbing power-ups in case they cannot bring any
+  improvement
+- left-bottom: **hearts left**; you die when all hearts are gone
+- right-bottom: **shockwave charges left**; you can trigger a shockwave if you have at least 1 charge left
+- top-middle, during boss fight: **boss' health** (yes, you are supposed to bring it down to zero 😉)
+
+### Recordings
+
+<img src="dist/screenshots_and_recordings/mission_1_a.gif" width="384" title="gif 1 of mission 1 gameplay"></img>
+<img src="dist/screenshots_and_recordings/mission_1_b.gif" width="384" title="gif 2 of mission 1 gameplay"></img>
+<img src="dist/screenshots_and_recordings/boss_1.gif" width="384" title="gif mission 1's boss fight"></img>
+
+## Development
+
+### Technical Challenges Tackled In This Game
 
 In this game I focused on learning various bits of [PICO-8 API](https://www.lexaloffle.com/dl/docs/pico-8_manual.html).
 
@@ -100,7 +119,7 @@ Some of the topics I tackled in this game are:
   count limit. Therefore [I forked and modified luamin tool](https://github.com/beetrootpaul/luamin) and incorporated it
   into this game's build flow, resulting with characters' count reduced by around 50%.
 
-## Development
+### How To Develop Further
 
 PICO-8 version used to develop this game: `0.2.5c`
 
@@ -129,7 +148,7 @@ To update the sprite sheet of, for example, mission 1:
 - load cart and run `import graphics/spritesheet_mission_1.png` or `import dart-07/graphics/spritesheet_mission_1.png` (
   depends on what your current working directory is)
 
-## Code Style
+### Code Style
 
 This game is made with PICO-8, which imposes a token count limit
 (which can be checked in console with `info` command).
@@ -159,7 +178,7 @@ resources I found super useful and used some of them I used in the codebase as w
 
 ## Version History
 
-### v0.1.1 (to be released)
+### v0.1.1
 
 - fixed diagonal speed of a player's ship by dividing it by `1.41`
 
