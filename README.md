@@ -18,18 +18,18 @@ reading).
 
 1. [Controls](#controls)
 1. [Gameplay](#gameplay)
-   1. [Power-ups](#power-ups)
-   1. [HUD](#hud)
-   1. [Recordings](#recordings)
+    1. [Power-ups](#power-ups)
+    1. [HUD](#hud)
+    1. [Recordings](#recordings)
 1. [Development](#development)
-   1. [Technical Challenges Tackled In This Game](#technical-challenges-tackled-in-this-game)
-   1. [How To Develop Further](#how-to-develop-further)
-   1. [Code Style](#code-style)
+    1. [Technical Challenges Tackled In This Game](#technical-challenges-tackled-in-this-game)
+    1. [How To Develop Further](#how-to-develop-further)
+    1. [Code Style](#code-style)
 1. [License](#license)
 1. [Credits](#credits)
 1. [Version History](#version-history)
-   1. [v0.1.1](#v011)
-   1. [v0.1.0](#v010)
+    1. [v0.1.1](#v011)
+    1. [v0.1.0](#v010)
 
 ## Controls
 
@@ -110,6 +110,9 @@ Some of the topics I tackled in this game are:
   across loaded carts). Moreover, I implemented this in a way which allows me to use same codebase to load both locally
   developed carts as well as those published
   to [Lexaloffle BBS](https://www.lexaloffle.com/bbs/?cat=7&carts_tab=1#mode=carts&sub=2).
+- **missions defined as a map** – level shape and enemy pattern are defined as sprites in a PICO-8 map, but in a
+  simplified form (in order to fit all needed data there). Dedicated piece of code is responsible for translating
+  sprites from map into a mission gameplay, including proper placement of edge land/structure tiles.
 - **circular clipping**: during shockwave a ring of inverted colors propagates from the player. To achieve that I had to
   learn how to implement [circular clipping masks](https://www.lexaloffle.com/bbs/?tid=46286) in a CPU-performant way.
 - **dithered fade-in/out transition**: basically a set of rectangles filled
@@ -172,7 +175,8 @@ resources I found super useful and used some of them I used in the codebase as w
   functions. See: https://www.lexaloffle.com/bbs/?tid=40577
 - [Circular Clipping Masks tutorial](https://www.lexaloffle.com/bbs/?tid=46286)
   by [Krystman](https://www.lexaloffle.com/bbs/?uid=16423)
-- [Lua minification tool `luamin`](https://github.com/mathiasbynens/luamin) by [Mathias Bynens](https://github.com/mathiasbynens)
+- [Lua minification tool `luamin`](https://github.com/mathiasbynens/luamin)
+  by [Mathias Bynens](https://github.com/mathiasbynens)
 - [Pico-8 Music Tutorials](https://www.youtube.com/watch?v=nwFcitLtCsA&list=PLur95ujyAigsqZR1aNTrVGAvXD7EqywdS)
   by [Gruber](https://www.youtube.com/c/Gruber_Music)
 
