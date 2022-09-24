@@ -18,7 +18,7 @@ function new_game(params)
         --triple_shoot = true,
     }
 
-    local level, freeze_timer, boss = new_level(new_level_descriptor()), new_timer(0)
+    local level, camera_shake_timer, boss = new_level(new_level_descriptor()), new_timer(0)
 
     local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits = {}, {}, {}, {}, {}, {}, {}
 
@@ -50,7 +50,7 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.fast_movement, game.triple_shoot, game.fast_shoot, freeze_timer = false, false, false, new_timer(6)
+        game.fast_movement, game.triple_shoot, game.fast_shoot, camera_shake_timer = false, false, false, new_timer(6)
         game.health = game.health - 1
         player.take_damage(game.health)
     end
@@ -266,6 +266,7 @@ function new_game(params)
                 if game.shockwave_charges > 0 then
                     game.shockwave_charges = game.shockwave_charges - 1
                     player.trigger_shockwave()
+                    camera_shake_timer = new_timer(12)
                 else
                 end
             end
@@ -281,7 +282,7 @@ function new_game(params)
             { boss },
             powerups,
             explosions,
-            { freeze_timer },
+            { camera_shake_timer },
             function(game_object)
                 game_object._update()
             end
@@ -361,8 +362,8 @@ function new_game(params)
         --    end
         --)
 
-        if freeze_timer.ttl > 0 then
-            local factor = freeze_timer.ttl - 1
+        if camera_shake_timer.ttl > 0 then
+            local factor = camera_shake_timer.ttl - 1
             camera(
                 rnd(factor) - .5 * factor,
                 rnd(factor) - .5 * factor
