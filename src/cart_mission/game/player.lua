@@ -56,7 +56,7 @@ function new_player(params)
             jet_sprite = down and jet_sprite_hidden or jet_sprite_visible
             ship_sprite_current = left and ship_sprite_flying_left or (right and ship_sprite_flying_right or ship_sprite_neutral)
 
-            local speed = fast_movement and 2 or 1
+            local speed = fast_movement and 1.5 or 1
             local x_diff, y_diff = (right and speed or (left and -speed or 0)), (down and speed or (up and -speed or 0))
             if x_diff ~= 0 and y_diff ~= 0 then
                 -- speed fix for a diagonal movement
