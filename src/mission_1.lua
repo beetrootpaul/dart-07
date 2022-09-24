@@ -77,7 +77,7 @@ do
                 {
                     { 3, _xy(0, 1) },
                 },
-                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
+                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,m,m,f,f,t,s",
                 new_movement_line_factory {
                     angle = .75,
                     angled_speed = 1.5,
@@ -94,7 +94,7 @@ do
                 {
                     { 4 },
                 },
-                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
+                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,m,m,m,f,f,t,t,s",
                 new_movement_sinusoidal_factory {
                     speed_y = .75,
                     age_divisor = 120,
@@ -128,7 +128,7 @@ do
                 {
                     { 7 },
                 },
-                "-,-,-,-,-,-,-,-,-,-,h,h,f,t,s,s",
+                "-,-,-,-,-,-,-,-,-,-,h,h,m,f,t,s,s",
                 new_movement_sequence_factory {
                     new_movement_line_factory {
                         frames = 80,
@@ -207,7 +207,7 @@ do
                     { 4, _xy(0, 7) },
                     { 4, _xy(0, -7) },
                 },
-                "-,-,-,-,-,-,h,f,f,f,t,t,s",
+                "-,-,-,-,-,-,h,m,m,f,f,f,t,t,s",
                 new_movement_sequence_factory({
                     new_movement_to_target_factory {
                         target_y = 80,
@@ -263,7 +263,7 @@ do
                 {
                     { 6 },
                 },
-                "-,-,-,h,h,f,t,t,s,s,s",
+                "-,-,-,h,h,m,f,t,t,s,s,s",
                 new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m_scroll_per_frame,

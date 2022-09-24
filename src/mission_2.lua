@@ -85,7 +85,7 @@ do
                 {
                     { 5 },
                 },
-                "h,f,t,s",
+                "h,m,f,t,s",
                 new_movement_line_factory {
                     angle = .75,
                     angled_speed = _m_scroll_per_frame,

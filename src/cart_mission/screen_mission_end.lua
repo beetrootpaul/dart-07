@@ -36,6 +36,7 @@ function new_screen_mission_end(game, hud)
                     mission_number = _m_mission_number + 1,
                     health = game.health,
                     shockwave_charges = game.shockwave_charges,
+                    fast_movement = game.fast_movement,
                     triple_shoot = game.triple_shoot,
                     fast_shoot = game.fast_shoot,
                     score = game.score.raw_value(),

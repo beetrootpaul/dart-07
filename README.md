@@ -66,6 +66,9 @@ increases your score:
 
 - <img src="dist/readme_assets/powerup_heart.png" width="27" style="vertical-align: middle;" title="fast shot powerup"></img>
   **+1 heart** – you can have max 10 hearts; you lose one whenever you take damage
+- <img src="dist/readme_assets/powerup_fast_movement.png" width="27" style="vertical-align: middle;" title="fast shoot powerup"></img>
+  **fast movement** – increases player's movement speed; does not accumulate; lost on a
+  damage
 - <img src="dist/readme_assets/powerup_fast_shoot.png" width="27" style="vertical-align: middle;" title="fast shoot powerup"></img>
   **fast shoot** – increases shooting speed; does not accumulate, but can be combined with the triple shoot; lost on a
   damage
@@ -184,6 +187,7 @@ resources I found super useful and used some of them I used in the codebase as w
 
 ### v0.2.0
 
+- new powerup type: fast movement
 - fixed diagonal speed of a player's ship by dividing it by `1.41`
 - more health for mission 1 boss and mission 1 big enemy
 - lower volume of player shooting and enemy being destroyed

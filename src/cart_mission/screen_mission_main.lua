@@ -6,12 +6,14 @@ function new_screen_mission_main(params)
     local game = new_game {
         health = params.health,
         shockwave_charges = params.shockwave_charges,
+        fast_movement = params.fast_movement,
         triple_shoot = params.triple_shoot,
         fast_shoot = params.fast_shoot,
         score = params.score,
         -- DEBUG:
         --health = 7,
         --shockwave_charges = 3,
+        --fast_movement = true,
         --triple_shoot = true,
         --fast_shoot = true,
     }

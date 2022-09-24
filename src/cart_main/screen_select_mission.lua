@@ -182,10 +182,12 @@ function new_screen_select_mission(selected_mission)
                 mission_number = selected_mission,
                 health = _health_default,
                 shockwave_charges = _shockwave_charges_default,
+                fast_movement = false,
                 triple_shoot = false,
                 fast_shoot = false,
                 score = 0,
                 -- DEBUG:
+                --fast_movement = true,
                 --triple_shoot = true,
                 --fast_shoot = true,
             }
