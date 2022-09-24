@@ -2,16 +2,14 @@
 -- mission_3.lua  --
 -- -- -- -- -- -- --
 
-_m = {
-    mission_number = 3,
-    scroll_per_frame = 1,
-    mission_name = "(wip) \-fphoslar \-fmine",
-    boss_name = "? \-f? \-f?",
-    bg_color = _color_2_darker_purple,
-    mission_info_color = _color_3_dark_green,
-    mission_main_music = 0,
-    mission_boss_music = 1,
-}
+_m_mission_number = 3
+_m_scroll_per_frame = 1
+_m_mission_name = "(wip) \-fphoslar \-fmine"
+_m_boss_name = "? \-f? \-f?"
+_m_bg_color = _color_2_darker_purple
+_m_mission_info_color = _color_3_dark_green
+_m_mission_main_music = 0
+_m_mission_boss_music = 1
 
 do
     local tube_tiles = split "71,72,87,88,118,118,118,118,103,104,119,120"
@@ -49,7 +47,7 @@ do
         end
     end
 
-    function _m.level_bg_init()
+    function _m_level_bg_init()
         tube_tiles_offset_y = 0
         particles = {}
         particle_step_counter = 0
@@ -59,7 +57,7 @@ do
         end
     end
 
-    function _m.level_bg_update()
+    function _m_level_bg_update()
         for particle in all(particles) do
             if particle.xy.y >= _gah + _ts then
                 del(particles, particle)
@@ -78,7 +76,7 @@ do
         end
     end
 
-    function _m.level_bg_draw()
+    function _m_level_bg_draw()
         palt(_color_0_black, false)
         palt(_color_11_transparent, true)
         for lane = 1, 12 do
@@ -117,7 +115,7 @@ do
     --   - spawn_bullets = function(enemy_movement, player_collision_circle)
     --                       return bullets_table
     --                     end
-    function _m.enemy_properties_for(enemy_map_marker)
+    function _m_enemy_properties_for(enemy_map_marker)
         return ({
 
             -- enemy: stationary
@@ -131,7 +129,7 @@ do
                 "h,f,t,s",
                 new_movement_line_factory {
                     angle = .75,
-                    angled_speed = _m.scroll_per_frame,
+                    angled_speed = _m_scroll_per_frame,
                     -- DEBUG:
                     --frames = 89,
                 },
@@ -164,7 +162,7 @@ do
     --   - spawn_bullets = function(boss_movement, player_collision_circle)
     --                       return bullets_table
     --                     end
-    function _m.boss_properties()
+    function _m_boss_properties()
         return {
             health = 25,
             sprites_props_txt = "56,26,4,98|56,26,4,98",

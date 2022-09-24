@@ -19,7 +19,7 @@ function new_screen_defeat(game, hud)
     end
 
     function screen._draw()
-        cls(_m.bg_color)
+        cls(_m_bg_color)
         game._draw()
         hud._draw(game)
         fade_out._draw()

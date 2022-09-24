@@ -23,9 +23,9 @@ function new_screen_mission_main(params)
         slide_in_frames = 40,
     }
     local mission_info = new_sliding_info {
-        text_1 = "mission \-f" .. _m.mission_number,
-        text_2 = _m.mission_name,
-        main_color = _m.mission_info_color,
+        text_1 = "mission \-f" .. _m_mission_number,
+        text_2 = _m_mission_name,
+        main_color = _m_mission_info_color,
         wait_frames = fade_in_frames,
         slide_in_frames = sliding_info_slide_frames,
         present_frames = screen_frames - fade_in_frames - 2 * sliding_info_slide_frames,
@@ -40,7 +40,7 @@ function new_screen_mission_main(params)
     --
 
     function screen._init()
-        music(_m.mission_main_music)
+        music(_m_mission_main_music)
     end
 
     function screen._update()
@@ -52,7 +52,7 @@ function new_screen_mission_main(params)
     end
 
     function screen._draw()
-        cls(_m.bg_color)
+        cls(_m_bg_color)
         game._draw()
         hud._draw(game)
 

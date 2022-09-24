@@ -19,7 +19,7 @@ function new_screen_mission_end(game, hud)
     end
 
     function screen._draw()
-        cls(_m.bg_color)
+        cls(_m_bg_color)
         
         game._draw()
         hud._draw(game)
@@ -31,9 +31,9 @@ function new_screen_mission_end(game, hud)
         game._post_draw()
 
         if screen_timer.ttl <= 0 then
-            if _m.mission_number < _max_mission_number then
+            if _m_mission_number < _max_mission_number then
                 _load_mission_cart {
-                    mission_number = _m.mission_number + 1,
+                    mission_number = _m_mission_number + 1,
                     health = game.health,
                     shockwave_charges = game.shockwave_charges,
                     triple_shoot = game.triple_shoot,

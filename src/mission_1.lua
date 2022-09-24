@@ -2,22 +2,20 @@
 -- mission_1.lua  --
 -- -- -- -- -- -- --
 
-_m = {
-    mission_number = 1,
-    scroll_per_frame = .5,
-    mission_name = "emerald \-fislands",
-    boss_name = "sentinel \-fzx300",
-    bg_color = _color_4_true_blue,
-    mission_info_color = _color_9_dark_orange,
-    mission_main_music = 0,
-    mission_boss_music = 13,
-}
+_m_mission_number = 1
+_m_scroll_per_frame = .5
+_m_mission_name = "emerald \-fislands"
+_m_boss_name = "sentinel \-fzx300"
+_m_bg_color = _color_4_true_blue
+_m_mission_info_color = _color_9_dark_orange
+_m_mission_main_music = 0
+_m_mission_boss_music = 13
 
 do
     local waves_tile
     local waves_tile_offset_y
 
-    function _m.level_bg_init()
+    function _m_level_bg_init()
         waves_tile_offset_y = 0
         waves_tile = new_animated_sprite(
             8,
@@ -33,12 +31,12 @@ do
         )
     end
 
-    function _m.level_bg_update()
-        waves_tile_offset_y = (waves_tile_offset_y + _m.scroll_per_frame) % _ts
+    function _m_level_bg_update()
+        waves_tile_offset_y = (waves_tile_offset_y + _m_scroll_per_frame) % _ts
         waves_tile._update()
     end
 
-    function _m.level_bg_draw()
+    function _m_level_bg_draw()
         for distance = 0, 16 do
             for lane = 1, 12 do
                 waves_tile._draw(
@@ -68,7 +66,7 @@ do
     --   - spawn_bullets = function(enemy_movement, player_collision_circle)
     --                       return bullets_table
     --                     end
-    function _m.enemy_properties_for(enemy_map_marker)
+    function _m_enemy_properties_for(enemy_map_marker)
         return ({
 
             -- enemy: fast and small
@@ -105,7 +103,7 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 234,
                 --},
                 bullet_fire_timer = new_timer "40",
@@ -144,7 +142,7 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 234,
                 --},
             },
@@ -180,7 +178,7 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 123,
                 --},
                 bullet_fire_timer = new_timer "33",
@@ -229,7 +227,7 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 160,
                 --},
                 bullet_fire_timer = new_timer "60",
@@ -268,7 +266,7 @@ do
                 "-,-,-,h,h,f,t,t,s,s,s",
                 new_movement_line_factory {
                     angle = .75,
-                    angled_speed = _m.scroll_per_frame,
+                    angled_speed = _m_scroll_per_frame,
                     -- DEBUG:
                     --frames = 100,
                 },
@@ -305,7 +303,7 @@ do
     --   - spawn_bullets = function(boss_movement, player_collision_circle)
     --                       return bullets_table
     --                     end
-    function _m.boss_properties()
+    function _m_boss_properties()
         return {
             health = 100,
             sprites_props_txt = "54,20,0,96|52,18,54,97",

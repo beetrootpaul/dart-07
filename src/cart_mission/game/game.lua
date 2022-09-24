@@ -289,7 +289,7 @@ function new_game(params)
         local enemies_to_spawn = level.enemies_to_spawn()
         for enemy_to_spawn in all(enemies_to_spawn) do
             add(enemies, new_enemy {
-                enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker),
+                enemy_properties = _m_enemy_properties_for(enemy_to_spawn.enemy_map_marker),
                 start_xy = enemy_to_spawn.xy,
                 on_bullets_spawned = function(spawned_enemy_bullets_fn, enemy_movement)
                     if player then

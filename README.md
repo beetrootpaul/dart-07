@@ -76,20 +76,7 @@ increases your score:
   **shockwave charge** – allows you to trigger a destructive shockwave around you (with use of "c" / "🅾️" button); you
   can have max 4 shockwave charges
 
-## Credits
-
-I implemented this game on my own, as well as drawn all sprites and composed all SFXs and music. But there are some
-resources I found super useful and used some of them I used in the codebase as well. With huge thanks, here are those:
-
-- `#easingcheatsheet` cart by [ValerADHD](https://www.lexaloffle.com/bbs/?uid=47278) with copy-paste ready easing
-  functions. See: https://www.lexaloffle.com/bbs/?tid=40577
-- [Circular Clipping Masks tutorial](https://www.lexaloffle.com/bbs/?tid=46286)
-  by [Krystman](https://www.lexaloffle.com/bbs/?uid=16423)
-- [Lua minification tool `luamin`](https://github.com/mathiasbynens/luamin) by [Mathias Bynens](https://github.com/mathiasbynens)
-- [Pico-8 Music Tutorials](https://www.youtube.com/watch?v=nwFcitLtCsA&list=PLur95ujyAigsqZR1aNTrVGAvXD7EqywdS)
-  by [Gruber](https://www.youtube.com/c/Gruber_Music)
-
-## Technical challenges
+## Technical Challenges During Implementation
 
 In this game I focused on learning various bits of [PICO-8 API](https://www.lexaloffle.com/dl/docs/pico-8_manual.html).
 
@@ -142,7 +129,7 @@ To update the sprite sheet of, for example, mission 1:
 - load cart and run `import graphics/spritesheet_mission_1.png` or `import dart-07/graphics/spritesheet_mission_1.png` (
   depends on what your current working directory is)
 
-## Code style
+## Code Style
 
 This game is made with PICO-8, which imposes a token count limit
 (which can be checked in console with `info` command).
@@ -156,3 +143,29 @@ I release this game under MIT license for sake of simplicity and to allow people
 But, aside from that (therefore I cannot enforce it on you 🙃), if you find this repository useful or use it publicly in
 any way, I would be happy to see myself credited. You can found my social media profiles etc. on http://beetrootpaul.com
 , or just link to that webpage 🙂
+
+## Credits
+
+I implemented this game on my own, as well as drawn all sprites and composed all SFXs and music. But there are some
+resources I found super useful and used some of them I used in the codebase as well. With huge thanks, here are those:
+
+- `#easingcheatsheet` cart by [ValerADHD](https://www.lexaloffle.com/bbs/?uid=47278) with copy-paste ready easing
+  functions. See: https://www.lexaloffle.com/bbs/?tid=40577
+- [Circular Clipping Masks tutorial](https://www.lexaloffle.com/bbs/?tid=46286)
+  by [Krystman](https://www.lexaloffle.com/bbs/?uid=16423)
+- [Lua minification tool `luamin`](https://github.com/mathiasbynens/luamin) by [Mathias Bynens](https://github.com/mathiasbynens)
+- [Pico-8 Music Tutorials](https://www.youtube.com/watch?v=nwFcitLtCsA&list=PLur95ujyAigsqZR1aNTrVGAvXD7EqywdS)
+  by [Gruber](https://www.youtube.com/c/Gruber_Music)
+
+## Version History
+
+### v0.1.1 (to be released)
+
+- fixed diagonal speed of a player's ship by dividing it by `1.41`
+
+### v0.1.0
+
+- complete game mechanics
+- complete mission 1
+- complete screens outside missions (but without music for the win screen after mission 3)
+- implemented persisted high score

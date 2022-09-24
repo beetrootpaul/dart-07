@@ -33,7 +33,7 @@ end
 function _update60()
     if fade_out.has_finished() then
         _load_main_cart {
-            preselected_mission_number = _m.mission_number,
+            preselected_mission_number = _m_mission_number,
         }
     end
 

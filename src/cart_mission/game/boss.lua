@@ -5,7 +5,7 @@
 function new_boss(params)
     local on_bullets_spawned, on_entered_next_phase, on_damage, on_destroyed = params.on_bullets_spawned, params.on_entered_next_phase, params.on_damage, params.on_destroyed
 
-    local boss_properties = _m.boss_properties()
+    local boss_properties = _m_boss_properties()
     
     local phases = boss_properties.phases
 
