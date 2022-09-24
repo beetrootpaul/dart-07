@@ -14,8 +14,12 @@ function _easing_easeinquad(t)
 end
 
 function _easing_easeoutquad(t)
-    t = t - 1
-    return 1 - t * t
+    -- original implementation:
+    --t = t - 1
+    --return 1 - t * t
+
+    -- implementation optimised for tokens: 
+    return 1 - (t-1)^2
 end
 
 --function _easing_easeinoutquad(t)
@@ -38,12 +42,20 @@ end
 --end
 
 function _easing_easeinquart(t)
-    return t * t * t * t
+    -- original implementation:
+    --return t * t * t * t
+    
+    -- implementation optimised for tokens: 
+    return t^4
 end
 
 function _easing_easeoutquart(t)
-    t = t - 1
-    return 1 - t * t * t * t
+    -- original implementation:
+    --t = t - 1
+    --return 1 - t * t * t * t
+
+    -- implementation optimised for tokens: 
+    return 1 - (t-1)^4
 end
 
 --function _easing_easeinoutquart(t)
