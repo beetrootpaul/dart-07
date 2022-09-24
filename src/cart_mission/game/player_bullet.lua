@@ -5,7 +5,7 @@
 function new_player_bullet(start_xy)
     local is_destroyed = false
 
-    local bullet_sprite = new_static_sprite "4,5,0,16"
+    local bullet_sprite = new_static_sprite "4,5,9,11"
 
     local movement = new_movement_line_factory {
         angle = .25,

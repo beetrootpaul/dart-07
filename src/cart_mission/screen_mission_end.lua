@@ -19,11 +19,11 @@ function new_screen_mission_end(game, hud)
     end
 
     function screen._draw()
-        cls(_m.bg_color)
-        
+        cls(_m_bg_color)
+
         game._draw()
         hud._draw(game)
-        
+
         fade_out._draw()
     end
 
@@ -31,11 +31,13 @@ function new_screen_mission_end(game, hud)
         game._post_draw()
 
         if screen_timer.ttl <= 0 then
-            if _m.mission_number < _max_mission_number then
+            -- TODO: change 1 to 2 once mission is ready and 2 to 3 when mission 3 is ready as well 
+            if _m_mission_number < 1 then
                 _load_mission_cart {
-                    mission_number = _m.mission_number + 1,
+                    mission_number = _m_mission_number + 1,
                     health = game.health,
                     shockwave_charges = game.shockwave_charges,
+                    fast_movement = game.fast_movement,
                     triple_shoot = game.triple_shoot,
                     fast_shoot = game.fast_shoot,
                     score = game.score.raw_value(),

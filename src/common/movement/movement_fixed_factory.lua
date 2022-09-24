@@ -10,7 +10,7 @@ function new_movement_fixed_factory(params)
 
         local movement = {
             xy = start_xy,
-            speed_xy = _xy(0, 0),
+            speed_xy = _xy_0_0,
             _update = timer._update,
         }
 

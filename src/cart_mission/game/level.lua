@@ -21,7 +21,7 @@ function new_level(descriptor)
     -- phase: intro -> main -> outro 
     local phase = "intro"
 
-    _m.level_bg_init()
+    _m_level_bg_init()
 
     return {
         enter_phase_main = function()
@@ -63,13 +63,13 @@ function new_level(descriptor)
         end,
 
         _update = function()
-            _m.level_bg_update()
+            _m_level_bg_update()
 
             if phase ~= "outro" and min_visible_distance >= max_defined_distance + 3 then
                 phase = "outro"
             end
 
-            min_visible_distance = min_visible_distance + _m.scroll_per_frame / _ts
+            min_visible_distance = min_visible_distance + _m_scroll_per_frame / _ts
             if phase == "intro" then
                 -- loop infinitely
                 min_visible_distance = min_visible_distance % 1 + 1
@@ -84,7 +84,7 @@ function new_level(descriptor)
         end,
 
         _draw = function()
-            _m.level_bg_draw()
+            _m_level_bg_draw()
 
             if phase == "main" then
                 for distance = flr(min_visible_distance), ceil(max_visible_distance) do

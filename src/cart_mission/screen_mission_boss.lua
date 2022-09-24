@@ -6,7 +6,7 @@ function new_screen_mission_boss(game, hud)
     local boss_info_frames, boss_info_slide_frames, music_start_timer, screen = 180, 50, _noop_game_object, {}
 
     local boss_info = new_sliding_info {
-        text_2 = _m.boss_name,
+        text_2 = _m_boss_name,
         main_color = _color_8_red,
         slide_in_frames = boss_info_slide_frames,
         present_frames = boss_info_frames - 2 * boss_info_slide_frames,
@@ -22,7 +22,7 @@ function new_screen_mission_boss(game, hud)
     function screen._init()
         _music_fade_out()
         music_start_timer = new_timer(60, function()
-            music(_m.mission_boss_music)
+            music(_m_mission_boss_music)
         end)
         game.enter_boss_phase()
     end
@@ -35,7 +35,7 @@ function new_screen_mission_boss(game, hud)
     end
 
     function screen._draw()
-        cls(_m.bg_color)
+        cls(_m_bg_color)
         game._draw()
         hud._draw(game)
         boss_info._draw()
@@ -46,7 +46,6 @@ function new_screen_mission_boss(game, hud)
 
         if boss_info.has_finished() then
             boss_info = _noop_game_object
-            --music(_m.mission_boss_music)
             game.start_boss_fight()
         end
 

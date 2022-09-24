@@ -2,22 +2,17 @@
 -- mission_1.lua  --
 -- -- -- -- -- -- --
 
-_m = {
-    mission_number = 1,
-    scroll_per_frame = .5,
-    mission_name = "emerald \-fislands",
-    boss_name = "sentinel \-fzx300",
-    bg_color = _color_4_true_blue,
-    mission_info_color = _color_9_dark_orange,
-    mission_main_music = 0,
-    mission_boss_music = 13,
-}
+_m_mission_number = 1
+_m_scroll_per_frame = .5
+_m_mission_name, _m_boss_name = "emerald \-fislands", "sentinel \-fzx300"
+_m_bg_color, _m_mission_info_color = _color_4_true_blue, _color_9_dark_orange
+_m_mission_main_music, _m_mission_boss_music = 0, 13
 
 do
     local waves_tile
     local waves_tile_offset_y
 
-    function _m.level_bg_init()
+    function _m_level_bg_init()
         waves_tile_offset_y = 0
         waves_tile = new_animated_sprite(
             8,
@@ -33,12 +28,12 @@ do
         )
     end
 
-    function _m.level_bg_update()
-        waves_tile_offset_y = (waves_tile_offset_y + _m.scroll_per_frame) % _ts
+    function _m_level_bg_update()
+        waves_tile_offset_y = (waves_tile_offset_y + _m_scroll_per_frame) % _ts
         waves_tile._update()
     end
 
-    function _m.level_bg_draw()
+    function _m_level_bg_draw()
         for distance = 0, 16 do
             for lane = 1, 12 do
                 waves_tile._draw(
@@ -54,7 +49,7 @@ do
         collision_circle_r = 1.5,
     }
 
-    -- enemy property:
+    -- enemy properties:
     --   - [1] = health
     --   - [2] = score
     --   - [3] = sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
@@ -68,7 +63,7 @@ do
     --   - spawn_bullets = function(enemy_movement, player_collision_circle)
     --                       return bullets_table
     --                     end
-    function _m.enemy_properties_for(enemy_map_marker)
+    function _m_enemy_properties_for(enemy_map_marker)
         return ({
 
             -- enemy: fast and small
@@ -79,7 +74,7 @@ do
                 {
                     { 3, _xy(0, 1) },
                 },
-                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
+                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,m,m,f,f,t,s",
                 new_movement_line_factory {
                     angle = .75,
                     angled_speed = 1.5,
@@ -96,7 +91,7 @@ do
                 {
                     { 4 },
                 },
-                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,f,f,f,t,t,s",
+                "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,h,m,m,m,f,f,t,t,s",
                 new_movement_sinusoidal_factory {
                     speed_y = .75,
                     age_divisor = 120,
@@ -105,7 +100,7 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 234,
                 --},
                 bullet_fire_timer = new_timer "40",
@@ -130,7 +125,7 @@ do
                 {
                     { 7 },
                 },
-                "-,-,-,-,-,-,-,-,-,-,h,h,f,t,s,s",
+                "-,-,-,-,-,-,-,-,-,-,h,h,m,f,t,s,s",
                 new_movement_sequence_factory {
                     new_movement_line_factory {
                         frames = 80,
@@ -144,14 +139,14 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 234,
                 --},
             },
 
             -- enemy: big
             [77] = {
-                30,
+                40,
                 100,
                 "24,20,64,64|22,18,88,65",
                 {
@@ -180,7 +175,7 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 123,
                 --},
                 bullet_fire_timer = new_timer "33",
@@ -209,7 +204,7 @@ do
                     { 4, _xy(0, 7) },
                     { 4, _xy(0, -7) },
                 },
-                "-,-,-,-,-,-,h,f,f,f,t,t,s",
+                "-,-,-,-,-,-,h,m,m,f,f,f,t,t,s",
                 new_movement_sequence_factory({
                     new_movement_to_target_factory {
                         target_y = 80,
@@ -229,7 +224,7 @@ do
                 -- DEBUG:
                 --new_movement_line_factory {
                 --    angle = .75,
-                --    angled_speed = _m.scroll_per_frame,
+                --    angled_speed = _m_scroll_per_frame,
                 --    frames = 160,
                 --},
                 bullet_fire_timer = new_timer "60",
@@ -265,10 +260,10 @@ do
                 {
                     { 6 },
                 },
-                "-,-,-,h,h,f,t,t,s,s,s",
+                "-,-,-,h,h,m,f,t,t,s,s,s",
                 new_movement_line_factory {
                     angle = .75,
-                    angled_speed = _m.scroll_per_frame,
+                    angled_speed = _m_scroll_per_frame,
                     -- DEBUG:
                     --frames = 100,
                 },
@@ -295,19 +290,25 @@ do
         return t() % 2
     end
 
-    -- boss property:
+    -- boss properties:
     --   - sprites_props_txt = "w,h,x,y|w,h,x,y" -- where 1st set is for a ship sprite, and 2nd – for a damage flash overlay
     --   - collision_circles_props = {
     --                    { r, optional_xy_offset }, -- put main/center circle first, since it will be source for explosions etc.
     --                    { r, optional_xy_offset },
     --                    { r },
     --                },
-    --   - spawn_bullets = function(boss_movement, player_collision_circle)
-    --                       return bullets_table
-    --                     end
-    function _m.boss_properties()
+    --   - phases = {
+    --       - [1] = triggering_health_fraction
+    --       - [2] = score
+    --       - [3] = bullet_fire_timer
+    --       - [4] = spawn_bullets = function(boss_movement, player_collision_circle)
+    --                                 return bullets_table
+    --                               end
+    --       - [5] = movement_factory
+    --     }
+    function _m_boss_properties()
         return {
-            health = 100,
+            health = 130,
             sprites_props_txt = "54,20,0,96|52,18,54,97",
             collision_circles_props = {
                 { 11 },
@@ -317,10 +318,10 @@ do
             phases = {
                 -- phase 1:
                 {
-                    triggering_health_fraction = 1,
-                    score = 50,
-                    bullet_fire_timer = new_timer "8",
-                    spawn_bullets = function(boss_movement)
+                    1,
+                    50,
+                    new_timer "8",
+                    function(boss_movement)
                         if t_mod_2() < 1 then return {} end
                         _sfx_play(_sfx_enemy_shoot)
                         return {
@@ -332,14 +333,14 @@ do
                             ),
                         }
                     end,
-                    movement_factory = new_movement_fixed_factory(),
+                    new_movement_fixed_factory(),
                 },
                 -- phase 2:
                 {
-                    triggering_health_fraction = .8,
-                    score = 300,
-                    bullet_fire_timer = new_timer "28",
-                    spawn_bullets = function(enemy_movement)
+                    .8,
+                    300,
+                    new_timer "28",
+                    function(enemy_movement)
                         local bullets = {}
                         if t_mod_2() > .6 then
                             _sfx_play(_sfx_enemy_multi_shoot)
@@ -354,7 +355,7 @@ do
                         end
                         return bullets
                     end,
-                    movement_factory = new_movement_sequence_factory {
+                    new_movement_sequence_factory {
                         new_movement_to_target_factory {
                             target_x = 30,
                             frames = 40,
@@ -376,10 +377,10 @@ do
                 },
                 -- phase 3:
                 {
-                    triggering_health_fraction = .4,
-                    score = 650,
-                    bullet_fire_timer = new_timer "8",
-                    spawn_bullets = function(boss_movement)
+                    .4,
+                    650,
+                    new_timer "8",
+                    function(boss_movement)
                         _sfx_play(_sfx_enemy_shoot)
                         if t_mod_2() > 1.5 then
                             -- side bullets
@@ -410,7 +411,7 @@ do
                             }
                         end
                     end,
-                    movement_factory = new_movement_loop_factory {
+                    new_movement_loop_factory {
                         -- center it
                         new_movement_to_target_factory {
                             target_x = _gaw / 2,

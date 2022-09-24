@@ -2,6 +2,8 @@
 -- cart_main.lua  --
 -- -- -- -- -- -- --
 
+_game_version = "V0.2.0"
+
 local current_screen, next_screen
 
 function _init()

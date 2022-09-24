@@ -36,8 +36,7 @@ function new_screen_over(game, is_win)
 
     function screen._init()
         if is_win then
-            -- this music is available on the last mission's cart only
-            music(2)
+            _sfx_play(_sfx_game_win)
         end
 
         local current_score = game.score.raw_value()
@@ -90,7 +89,7 @@ function new_screen_over(game, is_win)
 
         -- buttons
         if not is_win then
-            draw_button("try \-fmission \-f" .. _m.mission_number .. " \-fagain", 81, retry)
+            draw_button("try \-fmission \-f" .. _m_mission_number .. " \-fagain", 81, retry)
         end
         draw_button("go \-fto \-ftitle \-fscreen", is_win and 85 or 103, not retry or is_win)
 
@@ -104,7 +103,7 @@ function new_screen_over(game, is_win)
                 extcmd("reset")
             else
                 _load_main_cart {
-                    preselected_mission_number = _m.mission_number,
+                    preselected_mission_number = _m_mission_number,
                 }
             end
         end

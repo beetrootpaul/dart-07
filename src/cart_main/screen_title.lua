@@ -31,6 +31,10 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
             add(stars, star)
         end
     end
+    
+    local function draw_version(base_y)
+        _centered_print(_game_version, base_y, _color_14_mauve)
+    end
 
     local function draw_title(base_y)
         sspr(
@@ -142,6 +146,7 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
             new_static_sprite("10,10,18,0")._draw(_gaw / 2, 110)
         else
             map(0, 0, 0, 0, 16, 16)
+            draw_version(1)
             draw_title(15)
             draw_high_score(57)
             draw_button("play", 98, 15, 82, play)

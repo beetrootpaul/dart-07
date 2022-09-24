@@ -61,12 +61,13 @@ _noop_game_object = {
     _draw = _noop,
 }
 
-function _round(value)
-    return flr(value + .5)
-end
-
 -- next table index, where table is indexed from 1 and 
 -- we want to go back to 1 after table length is reached 
 function _tni(current_index, table_length)
     return current_index % table_length + 1
+end
+
+function _unpack_split(values_as_text, separator)
+    -- passing nil separator down to split(…) will make it deafult to ","
+    return unpack(split(values_as_text, separator))
 end

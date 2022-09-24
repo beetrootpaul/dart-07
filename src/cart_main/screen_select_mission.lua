@@ -21,7 +21,7 @@ function new_screen_select_mission(selected_mission)
 
     local function mission_button_xy_wh(mission_number)
         -- place missions 1..N at positions 0..N-1, then place back button (identified as mission 0) at position N
-        local position = (mission_number - 1) % (_max_mission_number + 1)
+        local position = (mission_number - 1) % 4
         return _xy(_gaox, 12 + position * 31), _xy(_gaw, 16)
     end
 
@@ -128,12 +128,12 @@ function new_screen_select_mission(selected_mission)
     function screen._update()
         if btnp(_button_up) then
             _sfx_play(_sfx_options_change)
-            selected_mission = (selected_mission - 1) % (_max_mission_number + 1)
+            selected_mission = (selected_mission - 1) % 4
             init_ship_movement()
         end
         if btnp(_button_down) then
             _sfx_play(_sfx_options_change)
-            selected_mission = (selected_mission + 1) % (_max_mission_number + 1)
+            selected_mission = (selected_mission + 1) % 4
             init_ship_movement()
         end
 
@@ -182,10 +182,12 @@ function new_screen_select_mission(selected_mission)
                 mission_number = selected_mission,
                 health = _health_default,
                 shockwave_charges = _shockwave_charges_default,
+                fast_movement = false,
                 triple_shoot = false,
                 fast_shoot = false,
                 score = 0,
                 -- DEBUG:
+                --fast_movement = true,
                 --triple_shoot = true,
                 --fast_shoot = true,
             }

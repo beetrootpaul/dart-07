@@ -5,18 +5,21 @@
 function new_game(params)
     local game = {
         health = params.health,
-        shockwave_charges = params.shockwave_charges,
         boss_health = nil,
         boss_health_max = nil,
+        shockwave_charges = params.shockwave_charges,
+        fast_movement = params.fast_movement,
         fast_shoot = params.fast_shoot,
         triple_shoot = params.triple_shoot,
         score = new_score(params.score),
         -- DEBUG:
+        --fast_movement = true,
         --fast_shoot = true,
         --triple_shoot = true,
+        --score = new_score(123),
     }
 
-    local level, freeze_timer, boss = new_level(new_level_descriptor()), new_timer(0)
+    local level, camera_shake_timer, boss = new_level(new_level_descriptor()), new_timer(0)
 
     local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits = {}, {}, {}, {}, {}, {}, {}
 
@@ -48,7 +51,7 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.triple_shoot, game.fast_shoot, freeze_timer = false, false, new_timer(6)
+        game.fast_movement, game.triple_shoot, game.fast_shoot, camera_shake_timer = false, false, false, new_timer(6)
         game.health = game.health - 1
         player.take_damage(game.health)
     end
@@ -61,6 +64,12 @@ function new_game(params)
                 game.health = game.health + 1
             else
                 game.score.add(10)
+            end
+        elseif powerup_type == "m" then
+            if game.fast_movement then
+                game.score.add(10)
+            else
+                has_effect, game.fast_movement = true, true
             end
         elseif powerup_type == "t" then
             if game.triple_shoot then
@@ -250,17 +259,15 @@ function new_game(params)
 
     function game._update()
         if player then
-            player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down))
+            player.set_movement(btn(_button_left), btn(_button_right), btn(_button_up), btn(_button_down), game.fast_movement)
             if btn(_button_x) then
-                player.fire {
-                    triple_shoot = game.triple_shoot,
-                    fast_shoot = game.fast_shoot,
-                }
+                player.fire(game.fast_shoot, game.triple_shoot)
             end
             if btnp(_button_o) then
                 if game.shockwave_charges > 0 then
                     game.shockwave_charges = game.shockwave_charges - 1
                     player.trigger_shockwave()
+                    camera_shake_timer = new_timer(12)
                 else
                 end
             end
@@ -276,7 +283,7 @@ function new_game(params)
             { boss },
             powerups,
             explosions,
-            { freeze_timer },
+            { camera_shake_timer },
             function(game_object)
                 game_object._update()
             end
@@ -289,7 +296,7 @@ function new_game(params)
         local enemies_to_spawn = level.enemies_to_spawn()
         for enemy_to_spawn in all(enemies_to_spawn) do
             add(enemies, new_enemy {
-                enemy_properties = _m.enemy_properties_for(enemy_to_spawn.enemy_map_marker),
+                enemy_properties = _m_enemy_properties_for(enemy_to_spawn.enemy_map_marker),
                 start_xy = enemy_to_spawn.xy,
                 on_bullets_spawned = function(spawned_enemy_bullets_fn, enemy_movement)
                     if player then
@@ -355,9 +362,9 @@ function new_game(params)
         --        _collisions._debug_draw_collision_circle(game_object_or_collision_circle)
         --    end
         --)
-        
-        if freeze_timer.ttl > 0 then
-            local factor = freeze_timer.ttl - 1
+
+        if camera_shake_timer.ttl > 0 then
+            local factor = camera_shake_timer.ttl - 1
             camera(
                 rnd(factor) - .5 * factor,
                 rnd(factor) - .5 * factor
