@@ -81,7 +81,7 @@ function new_boss(params)
 
         if current_phase_number > 0 then
             local current_phase = phases[current_phase_number]
-            local bullet_fire_timer = current_phase.bullet_fire_timer or new_fake_timer()
+            local bullet_fire_timer = current_phase[3] or new_fake_timer()
             bullet_fire_timer._update()
             if bullet_fire_timer.ttl <= 0 then
                 bullet_fire_timer.restart()
