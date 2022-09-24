@@ -28,7 +28,7 @@ reading).
 1. [License](#license)
 1. [Credits](#credits)
 1. [Version History](#version-history)
-    1. [v0.1.1](#v011)
+    1. [v0.2.0](#v020)
     1. [v0.1.0](#v010)
 
 ## Controls
@@ -182,14 +182,15 @@ resources I found super useful and used some of them I used in the codebase as w
 
 ## Version History
 
-### v0.1.1
+### v0.2.0
 
 - fixed diagonal speed of a player's ship by dividing it by `1.41`
 - more health for mission 1 boss and mission 1 big enemy
+- print version number on a title screen
 
 ### v0.1.0
 
 - complete game mechanics
 - complete mission 1
-- complete screens outside missions (but without music for the win screen after mission 3)
+- complete screens outside missions (but without music for a win screen after mission 3)
 - implemented persisted high score
