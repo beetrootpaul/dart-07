@@ -311,7 +311,7 @@ do
     --     }
     function _m_boss_properties()
         return {
-            health = 150,
+            health = 130,
             sprites_props_txt = "54,20,0,96|52,18,54,97",
             collision_circles_props = {
                 { 11 },
