@@ -53,7 +53,7 @@ Your task is to pilot Dart-07 unit in a set of secret missions of increasing dif
 
 - first, you mess with the enemy on **Emerald Islands**
 - then you continue to the **Outpost in Space** (⚠️ under development ⚠️)
-- in order to reach the interstellar **Phoslar Mine** (⚠️ under development ⚠️) and prevent the enemy from utilizing
+- in order to reach the interstellar **Phoslar Mine** (⚠️ under development ⚠️) and prevent the enemy from utilising
   that precious resource
 
 Destroy enemies along the way to increase your score, grab power-ups left by them and survive a boss fight in order to
@@ -61,12 +61,12 @@ complete a mission.
 
 ### Power-ups
 
-There are 4 types of power-ups you can grab, each of them either makes your life easier or, if cannot improve further,
+There are 5 types of power-ups you can grab, each of them either makes your life easier or, if cannot improve further,
 increases your score:
 
-- <img src="dist/readme_assets/powerup_heart.png" width="27" style="vertical-align: middle;" title="fast shot powerup"></img>
+- <img src="dist/readme_assets/powerup_heart.png" width="27" style="vertical-align: middle;" title="heart powerup"></img>
   **+1 heart** – you can have max 10 hearts; you lose one whenever you take damage
-- <img src="dist/readme_assets/powerup_fast_movement.png" width="27" style="vertical-align: middle;" title="fast shoot powerup"></img>
+- <img src="dist/readme_assets/powerup_fast_movement.png" width="27" style="vertical-align: middle;" title="fast movement powerup"></img>
   **fast movement** – increases player's movement speed; does not accumulate; lost on a
   damage
 - <img src="dist/readme_assets/powerup_fast_shoot.png" width="27" style="vertical-align: middle;" title="fast shoot powerup"></img>
@@ -91,13 +91,13 @@ In your HUD you see:
 - right-bottom: **shockwave charges left**; you can trigger a shockwave if you have at least 1 charge left
 - top-middle, during boss fight: **boss' health** (yes, you are supposed to bring it down to zero 😉)
 
-<img src="dist/readme_assets/hud_info.png" width="384" title="gif 1 of mission 1 gameplay"></img>
+<img src="dist/readme_assets/hud_info.png" width="384" title="info about HUD elements"></img>
 
 ### Recordings
 
 <img src="dist/screenshots_and_recordings/mission_1_a.gif" width="384" title="gif 1 of mission 1 gameplay"></img>
 <img src="dist/screenshots_and_recordings/mission_1_b.gif" width="384" title="gif 2 of mission 1 gameplay"></img>
-<img src="dist/screenshots_and_recordings/boss_1.gif" width="384" title="info about HUD elements"></img>
+<img src="dist/screenshots_and_recordings/boss_1.gif" width="384" title="gif of boss 1 fight"></img>
 
 ## Development
 
