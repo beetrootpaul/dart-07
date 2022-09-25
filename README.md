@@ -7,7 +7,7 @@ This is a [PICO-8](https://www.lexaloffle.com/pico-8.php) game, which I made
 during [Basic Shmup Showcase event](https://itch.io/jam/basic-shmup) organised
 by [Lazy Devs Academy](https://www.youtube.com/c/LazyDevs).
 
-You can play it on https://beetrootpaul.itch.io/dart-07 .
+You can play it on https://beetrootpaul.itch.io/dart-07 and on https://www.lexaloffle.com/bbs/?tid=49480 .
 
 ⚠️ Please be aware **this game is under development**. Mission 1 is complete and ready to play, but you enter missions 2
 and 3 on your own risk 😄
