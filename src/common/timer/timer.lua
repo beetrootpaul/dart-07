@@ -3,8 +3,6 @@
 -- -- -- -- -- -- -- -- -- --
 
 function new_timer(frames, on_finished)
-    params = params or {}
-
     local timer = {
         ttl = frames,
     }
