@@ -174,7 +174,7 @@ any way, I would be happy to see myself credited. You can found my social media 
 
 ## Credits
 
-I implemented this game on my own, as well as drawn all sprites and composed all SFXs and music. But there are some
+I implemented this game on my own, as well as drew all sprites and composed all SFXs and music. But there are some
 resources I found super useful and used some of them I used in the codebase as well. With huge thanks, here are those:
 
 - `#easingcheatsheet` cart by [ValerADHD](https://www.lexaloffle.com/bbs/?uid=47278) with copy-paste ready easing
