@@ -11,7 +11,7 @@ function new_screen_select_mission(selected_mission)
     local x_sprite = new_static_sprite("15,6,56,0", true)
     local x_pressed_sprite = new_static_sprite("15,6,56,6", true)
 
-    local ship_sprite = new_static_sprite "10,10,18,0"
+    local ship_sprite = new_static_sprite "10,10,19,0"
     local jet_sprite = new_animated_sprite(
         4,
         4,
