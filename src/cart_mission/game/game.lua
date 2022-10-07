@@ -51,7 +51,7 @@ function new_game(params)
     --
 
     local function handle_player_damage()
-        game.fast_movement, game.triple_shoot, game.fast_shoot, camera_shake_timer = false, false, false, new_timer(6)
+        game.fast_movement, game.triple_shoot, game.fast_shoot, camera_shake_timer = false, false, false, new_timer(12)
         game.health = game.health - 1
         player.take_damage(game.health)
     end
@@ -267,7 +267,6 @@ function new_game(params)
                 if game.shockwave_charges > 0 then
                     game.shockwave_charges = game.shockwave_charges - 1
                     player.trigger_shockwave()
-                    camera_shake_timer = new_timer(12)
                 else
                 end
             end
