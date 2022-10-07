@@ -21,7 +21,7 @@ function new_game(params)
 
     local level, camera_shake_timer, boss = new_level(new_level_descriptor()), new_timer(0)
 
-    local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits = {}, {}, {}, {}, {}, {}, {}
+    local player_bullets, enemy_bullets, enemies, powerups, explosions, shockwaves, shockwave_enemy_hits, floats = {}, {}, {}, {}, {}, {}, {}, {}
 
     local player = new_player {
         on_bullets_spawned = function(bullets)
@@ -56,40 +56,34 @@ function new_game(params)
         player.take_damage(game.health)
     end
 
-    local function handle_powerup(powerup_type)
+    local function handle_powerup(powerup_type, powerup_xy)
         local has_effect = false
         if powerup_type == "h" then
             if game.health < _health_max then
                 has_effect = true
                 game.health = game.health + 1
-            else
-                game.score.add(10)
             end
         elseif powerup_type == "m" then
-            if game.fast_movement then
-                game.score.add(10)
-            else
+            if not game.fast_movement then
                 has_effect, game.fast_movement = true, true
             end
         elseif powerup_type == "t" then
-            if game.triple_shoot then
-                game.score.add(10)
-            else
+            if not game.triple_shoot then
                 has_effect, game.triple_shoot = true, true
             end
         elseif powerup_type == "f" then
-            if game.fast_shoot then
-                game.score.add(10)
-            else
+            if not game.fast_shoot then
                 has_effect, game.fast_shoot = true, true
             end
         elseif powerup_type == "s" then
             if game.shockwave_charges < _shockwave_charges_max then
                 has_effect = true
                 game.shockwave_charges = game.shockwave_charges + 1
-            else
-                game.score.add(10)
             end
+        end
+        if not has_effect then
+            game.score.add(10)
+            add(floats, new_float(powerup_xy, 10))
         end
         _sfx_play(
             has_effect and _sfx_powerup_picked or _sfx_powerup_no_effect,
@@ -104,7 +98,7 @@ function new_game(params)
             if not powerup.has_finished() then
                 if _collisions.are_colliding(player, powerup) then
                     powerup.pick()
-                    handle_powerup(powerup.powerup_type)
+                    handle_powerup(powerup.powerup_type, powerup.collision_circle().xy)
                 end
             end
         end
@@ -216,6 +210,7 @@ function new_game(params)
             on_entered_next_phase = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_phase)
                 game.score.add(score_to_add)
+                add(floats, new_float(collision_circles[1].xy, score_to_add))
                 for cc in all(collision_circles) do
                     add(explosions, new_explosion(cc.xy, .75 * cc.r))
                 end
@@ -223,6 +218,7 @@ function new_game(params)
             on_destroyed = function(collision_circles, score_to_add)
                 _sfx_play(_sfx_destroy_boss_final_1)
                 game.score.add(score_to_add)
+                add(floats, new_float(collision_circles[1].xy, score_to_add))
                 for cc in all(collision_circles) do
                     local xy, r = cc.xy, cc.r
                     _add_all(
@@ -283,6 +279,7 @@ function new_game(params)
             powerups,
             explosions,
             { camera_shake_timer },
+            floats,
             function(game_object)
                 game_object._update()
             end
@@ -311,6 +308,7 @@ function new_game(params)
                 on_destroyed = function(collision_circle, powerup_type, score_to_add)
                     _sfx_play(_sfx_destroy_enemy)
                     game.score.add(score_to_add)
+                    add(floats, new_float(collision_circle.xy, score_to_add))
                     add(explosions, new_explosion(collision_circle.xy, 2.5 * collision_circle.r))
                     if powerup_type ~= "-" then
                         add(powerups, new_powerup(collision_circle.xy, powerup_type))
@@ -338,6 +336,7 @@ function new_game(params)
             { player },
             powerups,
             explosions,
+            floats,
             shockwaves, -- draw shockwaves on top of everything since they are supposed to affect the final game image
             function(game_object)
                 game_object._draw()
@@ -390,6 +389,7 @@ function new_game(params)
             enemies,
             powerups,
             explosions,
+            floats,
             function(game_object, game_objects)
                 if game_object.has_finished() then
                     del(game_objects, game_object)
