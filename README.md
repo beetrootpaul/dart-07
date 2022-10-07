@@ -190,7 +190,10 @@ resources I found super useful and used some of them I used in the codebase as w
 
 ### v0.3.0
 
-- increase screen shake player on damage to make it easier to realized the damage happened; remove screen shake on shockwave trigger
+- increase shooting speed for a combination of triple shoot and fast shoot powerups (to make it easier to notice the
+  change in the speed)
+- increase screen shake player on damage to make it easier to realized the damage happened; remove screen shake on
+  shockwave trigger
 - fix ship sprite on the mission selection screen
 - HTML5: place PICO-8 game controls closer to the game itself in order to allow narrower iframe size
 

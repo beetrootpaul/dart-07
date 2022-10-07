@@ -70,7 +70,7 @@ function new_player(params)
 
         fire = function(fast_shoot, triple_shoot)
             on_bullets_spawned.invoke_if_ready(
-                triple_shoot and (fast_shoot and 12 or 16) or (fast_shoot and 8 or 12),
+                triple_shoot and (fast_shoot and 10 or 16) or (fast_shoot and 8 or 12),
                 triple_shoot and create_triple_bullets or create_single_bullet
             )
         end,
