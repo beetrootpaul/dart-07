@@ -31,8 +31,8 @@ __lua__
 #include build/src/common/multicart.lua
 #include build/src/common/score.lua
 #include build/src/common/throttle.lua
+#include build/src/common/vec2d.lua
 #include build/src/common/viewport.lua
-#include build/src/common/xy.lua
 
 #include build/src/cart_mission/game/boss.lua
 #include build/src/cart_mission/game/collisions.lua

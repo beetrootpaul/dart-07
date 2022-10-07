@@ -1,7 +1,9 @@
--- -- -- -- -- -- --
--- common/xy.lua  --
--- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+-- common/vec2d.lua  --
+-- -- -- -- -- -- -- --
 
+-- TODO: REMOVE
+--[[
 function _xy(x, y)
     return {
         x = x,
@@ -29,3 +31,4 @@ function _xy(x, y)
 end
 
 _xy_0_0 = _xy(0, 0)
+]]--
