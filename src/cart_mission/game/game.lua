@@ -125,10 +125,11 @@ function new_game(params)
                     end
                 end
                 for player_bullet in all(player_bullets) do
-                    if not enemy.has_finished() and not player_bullet.has_finished() then
-                        if _collisions.are_colliding(player_bullet, enemy_cc) then
+                    if not enemy.has_finished() and not player_bullet.to_be_removed then
+                        -- TODO: not nice access by guessed index
+                        if _collisions.are_colliding(player_bullet.collision_circles()[1], enemy_cc) then
                             enemy.take_damage(1)
-                            player_bullet.destroy()
+                            player_bullet.to_be_removed = true
                         end
                     end
                 end
@@ -157,10 +158,10 @@ function new_game(params)
                     end
                 end
                 for player_bullet in all(player_bullets) do
-                    if not boss.has_finished() and not player_bullet.has_finished() then
-                        if _collisions.are_colliding(player_bullet, boss_cc) then
+                    if not boss.has_finished() and not player_bullet.to_be_removed then
+                        if _collisions.are_colliding(player_bullet.collision_circles()[1], boss_cc) then
                             boss.take_damage(1)
-                            player_bullet.destroy()
+                            player_bullet.to_be_removed = true
                         end
                     end
                 end
@@ -285,7 +286,8 @@ function new_game(params)
             explosions,
             { camera_shake_timer },
             function(game_object)
-                game_object._update()
+                -- TODO: use ":"
+                game_object._update(game_object)
             end
         )
 
@@ -341,7 +343,8 @@ function new_game(params)
             explosions,
             shockwaves, -- draw shockwaves on top of everything since they are supposed to affect the final game image
             function(game_object)
-                game_object._draw()
+                -- TODO: use ":"
+                game_object._draw(game_object)
             end
         )
         clip()
@@ -392,7 +395,11 @@ function new_game(params)
             powerups,
             explosions,
             function(game_object, game_objects)
-                if game_object.has_finished() then
+                if game_object.has_finished then
+                    if game_object.has_finished() then
+                        del(game_objects, game_object)
+                    end
+                elseif game_object.to_be_removed then
                     del(game_objects, game_object)
                 end
             end

@@ -53,6 +53,7 @@ function _noop()
     -- do nothing
 end
 
+-- TODO: REMOVE
 _noop_game_object = {
     has_finished = function()
         return false

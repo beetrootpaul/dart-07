@@ -40,6 +40,7 @@ __lua__
 #include build/src/cart_mission/game/enemy_bullet_factory.lua
 #include build/src/cart_mission/game/explosion.lua
 #include build/src/cart_mission/game/game.lua
+#include build/src/cart_mission/game/game_object.lua
 #include build/src/cart_mission/game/level.lua
 #include build/src/cart_mission/game/level_descriptor.lua
 #include build/src/cart_mission/game/player.lua
