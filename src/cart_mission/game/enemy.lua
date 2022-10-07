@@ -25,7 +25,7 @@ do
             local ccs = {}
             for cc_props in all(enemy_properties[4]) do
                 add(ccs, {
-                    xy = movement.xy.plus(cc_props[2] or _xy_0_0),
+                    xy = movement.xy + _xy(cc_props[2] or _xy_0_0),
                     r = cc_props[1],
                 })
             end

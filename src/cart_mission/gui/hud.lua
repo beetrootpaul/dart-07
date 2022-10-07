@@ -45,13 +45,13 @@ do
                 --rectfill(_vs - bar_w, 0, _vs - 1, _vs - 1, _color_5_blue_green)
 
                 -- health bar
-                local xy = _xy(-_gaox + 3, _vs - 16).plus(slide_in_offset.xy.ceil())
-                heart._draw(xy.plus(1, 6))
+                local xy = _xy(-_gaox + 3, _vs - 16):plus(slide_in_offset.xy.ceil())
+                heart._draw(xy:plus(1, 6))
                 for segment = 1, _health_max do
-                    (game.health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy.minus(0, 4 + segment * 6))
+                    (game.health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy - _xy(0, 4 + segment * 6))
                 end
                 -- we have to draw health_bar_start after health_bar_segment_full in order to cover 1st segment's joint with black pixels
-                health_bar_start._draw(xy.minus(0, 4))
+                health_bar_start._draw(xy - _xy(0, 4))
 
                 -- mission progress
                 local mission_progress_h, mission_progress_x = 35, _gaox + xy.x + 5
@@ -62,7 +62,7 @@ do
                     3 + mission_progress_h,
                     _color_13_lavender
                 )
-                ship_indicator._draw(xy.minus(
+                ship_indicator._draw(xy - _xy(
                     -4,
                     77 + game.mission_progress_fraction() * (mission_progress_h - 3)
                 -- DEBUG:
@@ -71,14 +71,14 @@ do
 
 
                 -- shockwave charges
-                xy = _xy(_gaw + 5, _vs - 16).minus(slide_in_offset.xy.ceil())
-                shockwave._draw(xy.plus(0, 6))
+                xy = _xy(_gaw + 5, _vs - 16) - slide_in_offset.xy.ceil()
+                shockwave._draw(xy:plus(0, 6))
                 shockwave_bar_start._draw(xy)
                 for segment = 1, _shockwave_charges_max do
                     if game.shockwave_charges >= segment then
-                        shockwave_bar_segment_full._draw(xy.minus(0, segment * 11))
+                        shockwave_bar_segment_full._draw(xy - _xy(0, segment * 11))
                     else
-                        shockwave_bar_segment_empty._draw(xy.minus(-6, segment * 11))
+                        shockwave_bar_segment_empty._draw(xy - _xy(-6, segment * 11))
                     end
                 end
 

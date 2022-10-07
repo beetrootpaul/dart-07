@@ -22,7 +22,7 @@ function new_player_bullet(start_xy)
 
         collision_circle = function()
             return {
-                xy = movement.xy.minus(0, .5),
+                xy = movement.xy - _xy(0, .5),
                 r = 1.5,
             }
         end,

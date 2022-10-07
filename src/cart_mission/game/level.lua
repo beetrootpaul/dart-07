@@ -54,7 +54,7 @@ function new_level(descriptor)
                             xy = _xy(
                                 (lane - .5) * _ts,
                                 _vs - _ts - (spawn_distance - min_visible_distance + .5) * _ts
-                            ).plus(enemy_offset),
+                            ):plus(enemy_offset),
                         })
                     end
                 end

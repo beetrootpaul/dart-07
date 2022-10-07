@@ -18,7 +18,7 @@ function _collisions.are_colliding(game_object_or_collision_circle_1, game_objec
     end
 
     -- actual collision check
-    local distance = cc2.xy.minus(cc1.xy)
+    local distance = cc2.xy - cc1.xy
     local r1r2 = cc1.r + cc2.r
     return distance.x * distance.x + distance.y * distance.y <= r1r2 * r1r2
 end

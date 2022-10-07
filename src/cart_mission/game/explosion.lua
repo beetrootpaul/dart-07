@@ -7,7 +7,7 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
     for _ = 1, 9 do
         add(particles, {
             angle = .25 + .5 * (rnd() - .5),
-            xy = start_xy.plus(
+            xy = start_xy + _xy(
                 magnitude * (rnd() - .5),
                 magnitude * (rnd() - .5)
             ),
@@ -35,7 +35,7 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
                     if particle.r > 0 then
                         particle.angle = particle.angle + .1 * (rnd() - .5)
                         local speed = rnd()
-                        particle.xy = particle.xy.plus(
+                        particle.xy = particle.xy:plus(
                             speed * cos(particle.angle),
                             speed * sin(particle.angle)
                         )

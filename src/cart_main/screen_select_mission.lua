@@ -52,7 +52,7 @@ function new_screen_select_mission(selected_mission)
         local selected = selected_mission == mission_number
 
         local button_xy1, button_wh = mission_button_xy_wh(mission_number)
-        local button_xy2 = button_xy1.plus(button_wh)
+        local button_xy2 = button_xy1:plus(button_wh)
 
         -- draw button shape
         sspr(
@@ -104,7 +104,7 @@ function new_screen_select_mission(selected_mission)
         clip(button_xy.x, button_xy.y, button_wh.x, button_wh.y)
 
         ship_sprite._draw(ship_movement.xy)
-        jet_sprite._draw(ship_movement.xy.plus(0, 8))
+        jet_sprite._draw(ship_movement.xy:plus(0, 8))
 
         clip()
     end
@@ -112,9 +112,9 @@ function new_screen_select_mission(selected_mission)
     local function init_ship_movement()
         local button_xy, button_wh = mission_button_xy_wh(selected_mission)
         ship_movement = new_movement_to_target_factory {
-            target_y = button_xy.minus(0, 10).y,
+            target_y = button_xy.y - 10,
             frames = 20,
-        }(button_xy.plus(-_gaox + button_wh.x / 2, button_wh.y - 6))
+        }(button_xy:plus(-_gaox + button_wh.x / 2, button_wh.y - 6))
     end
 
     --

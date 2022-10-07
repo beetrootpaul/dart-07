@@ -25,7 +25,7 @@ function new_movement_to_target_factory(params)
 
         local movement = {
             xy = start_xy,
-            speed_xy = xy().minus(start_xy),
+            speed_xy = xy() - start_xy,
         }
 
         function movement.has_finished()
@@ -34,8 +34,8 @@ function new_movement_to_target_factory(params)
 
         function movement._update()
             timer._update()
-            movement.speed_xy = xy().minus(movement.xy)
-            movement.xy = movement.xy.plus(movement.speed_xy)
+            movement.speed_xy = xy() - movement.xy
+            movement.xy = movement.xy:plus(movement.speed_xy)
         end
 
         return movement

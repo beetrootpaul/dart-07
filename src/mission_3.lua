@@ -64,7 +64,7 @@ do
         tube_tiles_offset_y = (tube_tiles_offset_y + .5) % _ts
 
         for particle in all(particles) do
-            particle.xy = particle.xy.plus(0, 1.5)
+            particle.xy = particle.xy:plus(0, 1.5)
         end
 
         particle_step_counter = (particle_step_counter + 1) % 8
@@ -188,7 +188,7 @@ do
                                     base_speed_y = enemy_movement.speed_xy.y,
                                     angle = .75,
                                     angled_speed = .5,
-                                }(enemy_movement.xy.plus(0, 3))
+                                }(enemy_movement.xy:plus(0, 3))
                             ),
                         }
                     end,

@@ -236,17 +236,17 @@ do
                         enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
-                            }(enemy_xy.minus(0, 7))
+                            }(enemy_xy - _xy(0, 7))
                         ),
                         enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
-                            }(enemy_xy.minus(0, 1))
+                            }(enemy_xy - _xy(0, 1))
                         ),
                         enemy_bullet_factory(
                             new_movement_line_factory {
                                 target_xy = player_xy,
-                            }(enemy_xy.plus(0, 5))
+                            }(enemy_xy:plus(0, 5))
                         ),
                     }
                 end,
@@ -329,7 +329,7 @@ do
                                 new_movement_line_factory {
                                     angle = .75,
                                     angled_speed = 1.5,
-                                }(boss_movement.xy.plus(0, 3))
+                                }(boss_movement.xy:plus(0, 3))
                             ),
                         }
                     end,
@@ -389,13 +389,13 @@ do
                                     new_movement_line_factory {
                                         angle = .75,
                                         angled_speed = 1.5,
-                                    }(boss_movement.xy.plus(-20, -3))
+                                    }(boss_movement.xy:plus(-20, -3))
                                 ),
                                 enemy_bullet_factory(
                                     new_movement_line_factory {
                                         angle = .75,
                                         angled_speed = 1.5,
-                                    }(boss_movement.xy.plus(20, -3))
+                                    }(boss_movement.xy:plus(20, -3))
                                 ),
                             }
                         elseif t_mod_2() < .9 then
@@ -406,7 +406,7 @@ do
                                         speed_y = 1.5,
                                         age_divisor = 60,
                                         magnitude = 9,
-                                    }(boss_movement.xy.plus(0, 3))
+                                    }(boss_movement.xy:plus(0, 3))
                                 ),
                             }
                         end

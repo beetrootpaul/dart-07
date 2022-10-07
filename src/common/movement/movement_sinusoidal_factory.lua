@@ -24,7 +24,7 @@ function new_movement_sinusoidal_factory(params)
 
         function movement._update()
             movement.speed_xy = _xy(x() - movement.xy.x, movement.speed_xy.y)
-            movement.xy = movement.xy.plus(movement.speed_xy)
+            movement.xy = movement.xy:plus(movement.speed_xy)
             age = age + 1
         end
 

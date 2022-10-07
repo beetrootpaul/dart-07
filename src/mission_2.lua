@@ -147,7 +147,7 @@ do
                                     base_speed_y = enemy_movement.speed_xy.y,
                                     angle = .75,
                                     angled_speed = .5,
-                                }(enemy_movement.xy.plus(0, 3))
+                                }(enemy_movement.xy:plus(0, 3))
                             ),
                         }
                     end,

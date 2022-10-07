@@ -21,22 +21,22 @@ function new_player(params)
 
     local function collision_circle()
         return {
-            xy = xy.plus(0, 1),
+            xy = xy:plus(0, 1),
             r = 3,
         }
     end
 
     local function create_single_bullet()
         return {
-            new_player_bullet(xy.plus(0, -4)),
+            new_player_bullet(xy:plus(0, -4)),
         }
     end
 
     local function create_triple_bullets()
         return {
-            new_player_bullet(xy.plus(0, -4)),
-            new_player_bullet(xy.plus(-5, -2)),
-            new_player_bullet(xy.plus(5, -2)),
+            new_player_bullet(xy:plus(0, -4)),
+            new_player_bullet(xy:plus(-5, -2)),
+            new_player_bullet(xy:plus(5, -2)),
         }
     end
 
