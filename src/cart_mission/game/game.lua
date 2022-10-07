@@ -2,16 +2,16 @@
 -- cart_mission/game/game.lua --
 -- -- -- -- -- -- -- -- -- -- --
 
-function new_game(params)
+function new_game(health, shockwave_charges, fast_movement, fast_shoot, triple_shoot, score)
     local game = {
-        health = params.health,
+        health = health,
         boss_health = nil,
         boss_health_max = nil,
-        shockwave_charges = params.shockwave_charges,
-        fast_movement = params.fast_movement,
-        fast_shoot = params.fast_shoot,
-        triple_shoot = params.triple_shoot,
-        score = new_score(params.score),
+        shockwave_charges = shockwave_charges,
+        fast_movement = fast_movement,
+        fast_shoot = fast_shoot,
+        triple_shoot = triple_shoot,
+        score = new_score(score),
         -- DEBUG:
         --fast_movement = true,
         --fast_shoot = true,
@@ -136,7 +136,7 @@ function new_game(params)
         end
 
         -- shockwaves vs boss + player bullets vs boss + player vs boss
-        if boss and not boss.is_invincible_during_intro() then
+        if boss and not boss.invincible_during_intro then
             for boss_cc in all(boss.collision_circles()) do
                 for shockwave in all(shockwaves) do
                     local combined_id = shockwave.id .. "-boss"

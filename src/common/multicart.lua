@@ -13,9 +13,7 @@ function _get_cart_param(index)
     return p ~= "" and p or nil
 end
 
-function _load_main_cart(params)
-    local preselected_mission_number = params.preselected_mission_number
-
+function _load_main_cart(preselected_mission_number)
     local cart_params = tostr(preselected_mission_number)
 
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
@@ -31,15 +29,13 @@ function _load_main_cart(params)
     load("#brp_dart07", nil, cart_params)
 end
 
-function _load_mission_cart(params)
-    local mission_number = params.mission_number
-
-    local cart_params = tostr(params.health) ..
-        "," .. tostr(params.shockwave_charges) ..
-        "," .. tostr(params.fast_movement) ..
-        "," .. tostr(params.fast_shoot) ..
-        "," .. tostr(params.triple_shoot) ..
-        "," .. tostr(params.score)
+function _load_mission_cart(mission_number, health, shockwave_charges, fast_movement, fast_shoot, triple_shoot, score)
+    local cart_params = tostr(health) ..
+        "," .. tostr(shockwave_charges) ..
+        "," .. tostr(fast_movement) ..
+        "," .. tostr(fast_shoot) ..
+        "," .. tostr(triple_shoot) ..
+        "," .. tostr(score)
 
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
     -- of any further instruction if succeeded. This means we can safely

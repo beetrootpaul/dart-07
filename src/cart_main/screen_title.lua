@@ -143,7 +143,7 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
             draw_title(55)
 
             -- ship
-            new_static_sprite("10,10,18,0")._draw(_gaw / 2, 110)
+            new_static_sprite("10,10,18,0")._draw(_gawdb2, 110)
         else
             map(0, 0, 0, 0, 16, 16)
             draw_version(1)

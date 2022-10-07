@@ -6,22 +6,22 @@ function new_boss(params)
     local on_bullets_spawned, on_entered_next_phase, on_damage, on_destroyed = params.on_bullets_spawned, params.on_entered_next_phase, params.on_damage, params.on_destroyed
 
     local boss_properties = _m_boss_properties()
-    
+
     local phases = boss_properties.phases
 
     local boss_sprite_props_txt, flash_sprite_props_txt = _unpack_split(boss_properties.sprites_props_txt, "|")
     local boss_sprite, flash_sprite = new_static_sprite(boss_sprite_props_txt), new_static_sprite(flash_sprite_props_txt)
 
     local movement = new_movement_to_target_factory {
-        target_x = _gaw / 2,
+        target_x = _gawdb2,
         target_y = 20,
         frames = 180,
         easing_fn = _easing_easeoutquart,
         -- DEBUG:
         --frames = 8,
-    }(_xy(_gaw / 2, -120))
+    }(_xy(_gawdb2, -120))
 
-    local current_phase_number, invincible_during_intro, is_destroyed, flashing_after_damage_timer = 0, true, false, nil
+    local current_phase_number, is_destroyed, flashing_after_damage_timer = 0, false, nil
 
     local function collision_circles()
         local ccs = {}
@@ -37,6 +37,7 @@ function new_boss(params)
     --
 
     local boss = {
+        invincible_during_intro = true,
         health_max = boss_properties.health,
         health = boss_properties.health,
     }
@@ -48,14 +49,10 @@ function new_boss(params)
     function boss.start_first_phase()
         current_phase_number = 1
         movement = phases[current_phase_number][5](movement.xy)
-        invincible_during_intro = false
+        boss.invincible_during_intro = false
     end
 
     boss.collision_circles = collision_circles
-
-    function boss.is_invincible_during_intro()
-        return invincible_during_intro
-    end
 
     function boss.take_damage(damage)
         boss.health = max(0, boss.health - damage)
@@ -99,7 +96,7 @@ function new_boss(params)
     end
 
     function boss._draw()
-        boss_sprite._draw(movement.xy.ceil())
+        boss_sprite._draw(ceil(movement.xy.x), ceil(movement.xy.y))
         -- DEBUG:
         --if t() * 2 % 2 < 1 then
         if flashing_after_damage_timer and flashing_after_damage_timer.ttl > 0 then

@@ -14,7 +14,7 @@ function new_float(start_xy, score)
         _update = movement._update,
         _draw = function()
             local xy = movement.xy
-            print(score .. "0", _gaox + xy.x, xy.y, _color_7_white)
+            _centered_print(score .. "0", xy.y, _color_7_white, nil, xy.x)
         end,
     }
 end

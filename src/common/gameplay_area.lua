@@ -3,9 +3,10 @@
 -- -- -- -- -- -- -- -- -- -- --
 
 -- - gameplay area width (whole screen minus gui areas on the left and on the right)
+-- - gameplay area width divided by 2
 -- - gameplay area height (whole screen)
 -- - gameplay area offset x (left part of the gui)
-_gaw, _gah, _gaox = _unpack_split "96,128,16"
+_gaw, _gawdb2, _gah, _gaox = _unpack_split "96,48,128,16"
 
 -- calculations below assume xy is in relation to (_gaox, 0) point
 function _is_safely_outside_gameplay_area(xy)

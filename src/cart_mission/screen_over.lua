@@ -102,9 +102,7 @@ function new_screen_over(game, is_win)
             if not is_win and retry then
                 extcmd("reset")
             else
-                _load_main_cart {
-                    preselected_mission_number = _m_mission_number,
-                }
+                _load_main_cart(_m_mission_number)
             end
         end
     end

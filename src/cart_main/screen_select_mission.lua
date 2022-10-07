@@ -178,19 +178,15 @@ function new_screen_select_mission(selected_mission)
 
         if fade_out.has_finished() then
             _copy_shared_assets_from_transferable_ram()
-            _load_mission_cart {
-                mission_number = selected_mission,
-                health = _health_default,
-                shockwave_charges = _shockwave_charges_default,
-                fast_movement = false,
-                triple_shoot = false,
-                fast_shoot = false,
-                score = 0,
-                -- DEBUG:
-                --fast_movement = true,
-                --triple_shoot = true,
-                --fast_shoot = true,
-            }
+            _load_mission_cart(
+                selected_mission,
+                _health_default,
+                _shockwave_charges_default,
+                false,
+                false,
+                false,
+                0
+            )
         end
     end
 

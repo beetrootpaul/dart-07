@@ -33,15 +33,15 @@ function new_screen_mission_end(game, hud)
         if screen_timer.ttl <= 0 then
             -- TODO: change 1 to 2 once mission is ready and 2 to 3 when mission 3 is ready as well 
             if _m_mission_number < 1 then
-                _load_mission_cart {
-                    mission_number = _m_mission_number + 1,
-                    health = game.health,
-                    shockwave_charges = game.shockwave_charges,
-                    fast_movement = game.fast_movement,
-                    triple_shoot = game.triple_shoot,
-                    fast_shoot = game.fast_shoot,
-                    score = game.score.raw_value(),
-                }
+                _load_mission_cart(
+                    _m_mission_number + 1,
+                    game.health,
+                    game.shockwave_charges,
+                    game.fast_movement,
+                    game.fast_shoot,
+                    game.triple_shoot,
+                    game.score.raw_value()
+                )
             else
                 return new_screen_over(game, true)
             end

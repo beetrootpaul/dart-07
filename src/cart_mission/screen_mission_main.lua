@@ -2,21 +2,8 @@
 -- cart_mission/screen_mission_main.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function new_screen_mission_main(params)
-    local game = new_game {
-        health = params.health,
-        shockwave_charges = params.shockwave_charges,
-        fast_movement = params.fast_movement,
-        triple_shoot = params.triple_shoot,
-        fast_shoot = params.fast_shoot,
-        score = params.score,
-        -- DEBUG:
-        --health = 7,
-        --shockwave_charges = 3,
-        --fast_movement = true,
-        --triple_shoot = true,
-        --fast_shoot = true,
-    }
+function new_screen_mission_main(health, shockwave_charges, fast_movement, fast_shoot, triple_shoot, score)
+    local game = new_game(health, shockwave_charges, fast_movement, fast_shoot, triple_shoot, score)
 
     local fade_in_frames, sliding_info_slide_frames, screen_frames = _unpack_split "30,50,200"
 

@@ -20,22 +20,20 @@ function _init()
     -- disable btnp repeating
     poke(0x5f5c, 255)
 
-    current_screen = new_screen_mission_main {
-        health = health_param or _health_default,
-        shockwave_charges = shockwave_charges_param or _shockwave_charges_default,
-        fast_movement = fast_movement_param == "true",
-        fast_shoot = fast_shoot_param == "true",
-        triple_shoot = triple_shoot_param == "true",
-        score = score_param or 0,
-    }
+    current_screen = new_screen_mission_main(
+        health_param or _health_default,
+        shockwave_charges_param or _shockwave_charges_default,
+        fast_movement_param == "true",
+        fast_shoot_param == "true",
+        triple_shoot_param == "true",
+        score_param or 0
+    )
     current_screen._init()
 end
 
 function _update60()
     if fade_out.has_finished() then
-        _load_main_cart {
-            preselected_mission_number = _m_mission_number,
-        }
+        _load_main_cart(_m_mission_number)
     end
 
     next_screen = current_screen._post_draw()

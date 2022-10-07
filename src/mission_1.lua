@@ -414,7 +414,7 @@ do
                     new_movement_loop_factory {
                         -- center it
                         new_movement_to_target_factory {
-                            target_x = _gaw / 2,
+                            target_x = _gawdb2,
                             target_y = 20,
                             frames = 60,
                             easing_fn = _easing_easeoutquad,
@@ -433,7 +433,7 @@ do
                         new_movement_to_target_factory {
                             target_y = 20,
                             frames = 120,
-                            easing_fn = _easing_linear(),
+                            easing_fn = _easing_linear,
                         },
                         -- go left and right
                         new_movement_to_target_factory {

@@ -18,9 +18,9 @@ function _angle_between(xy1, xy2)
     return atan2(dxy.x, dxy.y)
 end
 
-function _centered_print(text, y, text_color, outline_color)
+function _centered_print(text, y, text_color, outline_color, forced_x)
     local w = print(text, 0, -5)
-    local x = _gaox + (_gaw - w) / 2
+    local x = _gaox + (forced_x or _gawdb2) - w / 2
 
     if outline_color then
         -- docs on control codes: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#Control_Codes
