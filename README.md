@@ -190,7 +190,7 @@ resources I found super useful and used some of them I used in the codebase as w
 
 ### v0.3.0
 
-- introduce floats to make scoring easier to understand
+- added score is shown in place of destroyed enemy and picked powerup (in case it won't have any other effect) 
 - increase shooting speed for a combination of triple shoot and fast shoot powerups (to make it easier to notice the
   change in the speed)
 - increase screen shake player on damage to make it easier to realized the damage happened; remove screen shake on
