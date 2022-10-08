@@ -109,6 +109,7 @@ function new_level_descriptor()
     -- conversion from occupied or not occupied structure tiles to specific structure tile variants 
     for distance = 2, #structures_occupied - 1 do
         for lane = 1, 12 do
+
             -- we are comparing here tiles around the middle chosen one:
             --  - l = left
             --  - r = right
@@ -124,61 +125,59 @@ function new_level_descriptor()
             local slt, smt, srt = structures_occupied[dist_t][lane_l], structures_occupied[dist_t][lane_m], structures_occupied[dist_t][lane_r]
             local slm, smm, srm = structures_occupied[dist_m][lane_l], structures_occupied[dist_m][lane_m], structures_occupied[dist_m][lane_r]
             local slb, smb, srb = structures_occupied[dist_b][lane_l], structures_occupied[dist_b][lane_m], structures_occupied[dist_b][lane_r]
-            local tile_to_set
-            if smm then
-                if not slm and not smt then
-                    tile_to_set = st_convex_left_top
-                elseif not slm and not smb then
-                    tile_to_set = st_convex_left_bottom
-                elseif not srm and not smt then
-                    tile_to_set = st_convex_right_top
-                elseif not srm and not smb then
-                    tile_to_set = st_convex_right_bottom
-                elseif not slm and not slt and not slb then
-                    tile_to_set = st_edge_left
-                elseif not srm and not srt and not srb then
-                    tile_to_set = st_edge_right
-                elseif not smt and not slt and not srt then
-                    tile_to_set = st_edge_top
-                elseif not smb and not slb and not srb then
-                    tile_to_set = st_edge_bottom
-                elseif smb and not srm and srt then
-                    tile_to_set = st_concave_left_top_ccw
-                elseif srm and not smb and slb then
-                    tile_to_set = st_concave_left_top_cw
-                elseif slm and not smb and srb then
-                    tile_to_set = st_concave_right_top_ccw
-                elseif smb and not slm and slt then
-                    tile_to_set = st_concave_right_top_cw
-                elseif smt and not slm and slb then
-                    tile_to_set = st_concave_right_bottom_ccw
-                elseif slm and not smt and srt then
-                    tile_to_set = st_concave_right_bottom_cw
-                elseif srm and not smt and slt then
-                    tile_to_set = st_concave_left_bottom_ccw
-                elseif smt and not srm and srb then
-                    tile_to_set = st_concave_left_bottom_cw
+
+            structures[dist_m][lane_m] = (function()
+                if smm then
+                    if not slm and not smt then
+                        return st_convex_left_top
+                    elseif not slm and not smb then
+                        return st_convex_left_bottom
+                    elseif not srm and not smt then
+                        return st_convex_right_top
+                    elseif not srm and not smb then
+                        return st_convex_right_bottom
+                    elseif not slm and not slt and not slb then
+                        return st_edge_left
+                    elseif not srm and not srt and not srb then
+                        return st_edge_right
+                    elseif not smt and not slt and not srt then
+                        return st_edge_top
+                    elseif not smb and not slb and not srb then
+                        return st_edge_bottom
+                    elseif smb and not srm and srt then
+                        return st_concave_left_top_ccw
+                    elseif srm and not smb and slb then
+                        return st_concave_left_top_cw
+                    elseif slm and not smb and srb then
+                        return st_concave_right_top_ccw
+                    elseif smb and not slm and slt then
+                        return st_concave_right_top_cw
+                    elseif smt and not slm and slb then
+                        return st_concave_right_bottom_ccw
+                    elseif slm and not smt and srt then
+                        return st_concave_right_bottom_cw
+                    elseif srm and not smt and slt then
+                        return st_concave_left_bottom_ccw
+                    elseif smt and not srm and srb then
+                        return st_concave_left_bottom_cw
+                    else
+                        return st_center
+                    end
                 else
-                    tile_to_set = st_center
+                    if slm and slt and smt then
+                        return st_concave_left_top
+                    elseif slm and slb and smb then
+                        return st_concave_left_bottom
+                    elseif srm and srt and smt then
+                        return st_concave_right_top
+                    elseif srm and srb and smb then
+                        return st_concave_right_bottom
+                    end
                 end
-            else
-                if slm and slt and smt then
-                    tile_to_set = st_concave_left_top
-                elseif slm and slb and smb then
-                    tile_to_set = st_concave_left_bottom
-                elseif srm and srt and smt then
-                    tile_to_set = st_concave_right_top
-                elseif srm and srb and smb then
-                    tile_to_set = st_concave_right_bottom
-                end
-            end
-            structures[dist_m][lane_m] = tile_to_set
+            end)()
+
         end
     end
 
-    return {
-        structures = structures,
-        enemies = enemies,
-        max_defined_distance = max_defined_distance,
-    }
+    return structures, enemies, max_defined_distance
 end 

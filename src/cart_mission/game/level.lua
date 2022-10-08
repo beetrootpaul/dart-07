@@ -5,9 +5,7 @@
 -- to avoid thinking in x and y we talk here about
 --   - distance = how many tiles we have scrolled forward (can be fraction)
 --   - lane     = which row of tiles are we talking about, perpendicular to distance 
-function new_level(descriptor)
-    local max_defined_distance, structures, enemies = descriptor.max_defined_distance, descriptor.structures, descriptor.enemies
-
+function new_level(structures, enemies, max_defined_distance)
     -- we draw enemy in center of block of 4 tiles, but store them in the top-left tile's position
     local enemy_offset = _xy(_ts / 2, _ts / 2)
 
