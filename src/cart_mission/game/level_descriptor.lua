@@ -141,7 +141,7 @@ function new_level_descriptor()
             local slt, smt, srt = structures_occupied[dist_t][lane_l], structures_occupied[dist_t][lane_m], structures_occupied[dist_t][lane_r]
             local slm, smm, srm = structures_occupied[dist_m][lane_l], structures_occupied[dist_m][lane_m], structures_occupied[dist_m][lane_r]
             local slb, smb, srb = structures_occupied[dist_b][lane_l], structures_occupied[dist_b][lane_m], structures_occupied[dist_b][lane_r]
-            structures[dist_m][lane_m] = function()
+            structures[dist_m][lane_m] = (function()
                 if smm then
                     if not slm and not smt then
                         return st_convex_left_top
@@ -189,7 +189,7 @@ function new_level_descriptor()
                         return st_concave_right_bottom
                     end
                 end
-            end()
+            end)()
         end
     end
     return structures, enemies, max_defined_distance

@@ -34,7 +34,7 @@ do
                 local xy = _xy(ceil(-_gaox + 3 + slide_in_offset.xy.x), ceil(_vs - 16 + slide_in_offset.xy.y))
                 heart._draw(xy.plus(1, 6))
                 for segment = 1, _health_max do
-                    game.health >= segment and health_bar_segment_full or health_bar_segment_empty._draw(xy.minus(0, 4 + segment * 6))
+                    (game.health >= segment and health_bar_segment_full or health_bar_segment_empty)._draw(xy.minus(0, 4 + segment * 6))
                 end
                 health_bar_start._draw(xy.minus(0, 4))
                 local mission_progress_h, mission_progress_x = 35, _gaox + xy.x + 5

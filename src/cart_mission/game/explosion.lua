@@ -23,7 +23,7 @@ function new_explosion(start_xy, magnitude, wait_frames, on_started)
         _update = function()
             wait_timer._update()
             if wait_timer.ttl <= 0 then
-                on_started or _noop()
+                (on_started or _noop)()
                 for particle in all(particles) do
                     if particle.r > 0 then
                         particle.angle = particle.angle + .1 * rnd() - .5
