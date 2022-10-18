@@ -1,22 +1,16 @@
 -- -- -- -- -- -- -- -- -- -- -- -- --
 -- cart_mission/game/collisions.lua --
 -- -- -- -- -- -- -- -- -- -- -- -- --
-
 _collisions = {}
-
 function _collisions.are_colliding(game_object_or_collision_circle_1, game_object_or_collision_circle_2, opts)
     local cc1 = game_object_or_collision_circle_1.collision_circle and game_object_or_collision_circle_1.collision_circle() or game_object_or_collision_circle_1
     local cc2 = game_object_or_collision_circle_2.collision_circle and game_object_or_collision_circle_2.collision_circle() or game_object_or_collision_circle_2
     opts = opts or {}
-
     if not opts.ignore_gameplay_area_check then
-        if _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc1) or
-            _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc2)
-        then
+        if _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc1) or _is_collision_circle_nearly_outside_top_edge_of_gameplay_area(cc2) then
             return false
         end
     end
-
     -- actual collision check
     local distance = cc2.xy.minus(cc1.xy)
     local r1r2 = cc1.r + cc2.r
