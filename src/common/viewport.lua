@@ -1,7 +1,6 @@
 -- -- -- -- -- -- -- -- --
 -- common/viewport.lua  --
 -- -- -- -- -- -- -- -- --
-
 -- - viewport size in pixels
 -- - viewport size in tiles
 -- - tile (sprite) size in pixels
