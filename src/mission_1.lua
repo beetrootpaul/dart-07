@@ -46,7 +46,7 @@ do
     --                       return bullets_table
     --                     end
     function _m_enemy_properties_for(enemy_map_marker)
-        return ({
+        return {
             [74] = {
                 1,
                 2,
@@ -215,7 +215,7 @@ do
                     return bullets
                 end
             }
-        })[enemy_map_marker]
+        }[enemy_map_marker]
         -- enemy: fast and small
         -- DEBUG:
         --frames = 123,

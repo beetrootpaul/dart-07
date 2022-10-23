@@ -66,7 +66,7 @@ do
     --                       return bullets_table
     --                     end
     function _m_enemy_properties_for(enemy_map_marker)
-        return ({[79] = {
+        return {[79] = {
             5,
             1,
             "28,28,0,64|28,28,28,64",
@@ -88,7 +88,7 @@ do
                 end
                 return bullets
             end
-        }})[enemy_map_marker]
+        }}[enemy_map_marker]
         -- enemy: stationary
         -- DEBUG:
         --frames = 89,
