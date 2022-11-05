@@ -1,44 +1,25 @@
 -- -- -- -- -- -- -- -- -- -- --
 -- cart_main/screen_over.lua  --
 -- -- -- -- -- -- -- -- -- -- --
-
 function new_screen_over(game, is_win)
     local got_high_score, fade_in, fade_out, retry, proceed, screen = false, new_fade("in", 30), new_fade("out", 30), true, false, {}
-
     local function draw_button(text, y, selected)
         local w, x = 80, 24
-
         -- button shape
-        sspr(
-            selected and (is_win and 37 or 35) or 36, 12,
-            1, 12,
-            x, y,
-            w, 12
-        )
-
+        sspr(selected and (is_win and 37 or 35) or 36, 12, 1, 12, x, y, w, 12)
         -- button text
-        print(
-            text,
-            x + 4, y + 3,
-            is_win and _color_5_blue_green or _color_14_mauve
-        )
-
+        print(text, x + 4, y + 3, is_win and _color_5_blue_green or _color_14_mauve)
         -- "x" press incentive
         if selected then
-            new_static_sprite(
-                "15,6,56," .. (is_win and 12 or 0) + _alternating_0_and_1() * 6,
-                true
-            )._draw(x + w - 16 - _gaox, y + 13)
+            new_static_sprite("15,6,56," .. (is_win and 12 or 0) + _alternating_0_and_1() * 6, true)._draw(x + w - 16 - _gaox, y + 13)
         end
     end
 
     --
-
     function screen._init()
         if is_win then
             _sfx_play(_sfx_game_win)
         end
-
         local current_score = game.score.raw_value()
         local high_score_so_far = dget(0)
         got_high_score = current_score > high_score_so_far
@@ -54,13 +35,11 @@ function new_screen_over(game, is_win)
                 retry = not retry
             end
         end
-
         if btnp(_button_x) then
             _music_fade_out()
             _sfx_play(_sfx_options_confirm)
             proceed = true
         end
-
         if proceed then
             fade_out._update()
         else
@@ -70,15 +49,8 @@ function new_screen_over(game, is_win)
 
     function screen._draw()
         cls(is_win and _color_3_dark_green or _color_2_darker_purple)
-
         -- heading
-        _centered_print(
-            is_win and "you \-fmade \-fit!" or "game \-fover",
-            22,
-            _color_7_white,
-            is_win and _color_5_blue_green or _color_8_red
-        )
-
+        _centered_print(is_win and "you \-fmade \-fit!" or "game \-fover", 22, _color_7_white, is_win and _color_5_blue_green or _color_8_red)
         -- score
         local score_base_y = got_high_score and 42 or 47
         _centered_print("your \-fscore", score_base_y, _color_7_white)
@@ -86,13 +58,11 @@ function new_screen_over(game, is_win)
         if got_high_score then
             _centered_print("new \-fhigh \-fscore!", score_base_y + 20, is_win and _color_15_peach or _color_9_dark_orange)
         end
-
         -- buttons
         if not is_win then
             draw_button("try \-fmission \-f" .. _m_mission_number .. " \-fagain", 81, retry)
         end
         draw_button("go \-fto \-ftitle \-fscreen", is_win and 85 or 103, not retry or is_win)
-
         fade_in._draw()
         fade_out._draw()
     end

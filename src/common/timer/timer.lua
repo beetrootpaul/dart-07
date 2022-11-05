@@ -1,12 +1,8 @@
 -- -- -- -- -- -- -- -- -- --
 -- common/timer/timer.lua  --
 -- -- -- -- -- -- -- -- -- --
-
 function new_timer(frames, on_finished)
-    local timer = {
-        ttl = frames,
-    }
-
+    local timer = {ttl = frames}
     function timer._update()
         timer.ttl = max(timer.ttl - 1, 0)
         if on_finished and timer.ttl <= 0 then

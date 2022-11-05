@@ -1,12 +1,9 @@
 -- -- -- -- -- -- -- -- -- -- -- -- --
 -- cart_mission/screen_defeat.lua   --
 -- -- -- -- -- -- -- -- -- -- -- -- --
-
 function new_screen_defeat(game, hud)
     local screen_frames, fade_out_frames = 120, 30
-
     local fade_out, screen_timer, screen = new_fade("out", fade_out_frames, screen_frames - fade_out_frames), new_timer(screen_frames), {}
-
     function screen._init()
         _music_fade_out()
     end
@@ -27,7 +24,6 @@ function new_screen_defeat(game, hud)
 
     function screen._post_draw()
         game._post_draw()
-
         if screen_timer.ttl <= 0 then
             return new_screen_over(game, false)
         end
