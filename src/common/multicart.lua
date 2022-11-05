@@ -1,6 +1,7 @@
 -- -- -- -- -- -- -- -- --
 -- common/multicart.lua --
 -- -- -- -- -- -- -- -- --
+
 function _get_cart_param(index)
     local cart_params = split(stat(6))
     if #cart_params < index then
@@ -14,6 +15,7 @@ end
 
 function _load_main_cart(preselected_mission_number)
     local cart_params = tostr(preselected_mission_number)
+
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
     -- of any further instruction if succeeded. This means we can safely
     -- try to load a cart under one of many possible file paths or BBS IDs.
@@ -28,7 +30,13 @@ function _load_main_cart(preselected_mission_number)
 end
 
 function _load_mission_cart(mission_number, health, shockwave_charges, fast_movement, fast_shoot, triple_shoot, score)
-    local cart_params = tostr(health) .. "," .. tostr(shockwave_charges) .. "," .. tostr(fast_movement) .. "," .. tostr(fast_shoot) .. "," .. tostr(triple_shoot) .. "," .. tostr(score)
+    local cart_params = tostr(health) ..
+        "," .. tostr(shockwave_charges) ..
+        "," .. tostr(fast_movement) ..
+        "," .. tostr(fast_shoot) ..
+        "," .. tostr(triple_shoot) ..
+        "," .. tostr(score)
+
     -- "load(…)" returns "false" if not failed and doesn't allow execution 
     -- of any further instruction if succeeded. This means we can safely
     -- try to load a cart under one of many possible file paths or BBS IDs.
@@ -51,6 +59,7 @@ function _copy_shared_assets_to_transferable_ram()
     -- 0x3200 = start of 64 SFXs (therefore length of 32 SFXs = (0x4300-0x3200)/2 = 0x880
     -- 0x4300 = user data start (transferable between carts), just after end of SFXs
     -- 0x5600 = custom font, just after end of user data
+
     -- copy first tab of the sprite sheet
     memcpy(0x0000, 0x4300, 0x0800)
     -- copy first 32 SFXs
@@ -67,6 +76,7 @@ function _copy_shared_assets_from_transferable_ram()
     -- 0x3200 = start of 64 SFXs (therefore length of 32 SFXs = (0x4300-0x3200)/2 = 0x880
     -- 0x4300 = user data start (transferable between carts), just after end of SFXs
     -- 0x5600 = custom font, just after end of user data
+
     -- copy first tab of the sprite sheet
     memcpy(0x4300, 0x0000, 0x0800)
     -- copy first 32 SFXs
