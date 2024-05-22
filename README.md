@@ -1,7 +1,6 @@
 # Dart-07
 
-> A scrolling shooter. As the Dart-07 you fight on Emerald Islands, Outpost in Space, and in the interstellar Phoslar
-> Mine
+> A scrolling shooter, built with PICO-8
 
 This is a [PICO-8](https://www.lexaloffle.com/pico-8.php) game, which I made
 during [Basic Shmup Showcase event](https://itch.io/jam/basic-shmup) organised
