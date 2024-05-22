@@ -36,7 +36,8 @@ function new_screen_over(game, is_win)
 
     function screen._init()
         if is_win then
-            _sfx_play(_sfx_game_win)
+            -- TODO: this music is not ready yet
+            --_sfx_play(_sfx_game_win)
         end
 
         local current_score = game.score.raw_value()
@@ -89,7 +90,9 @@ function new_screen_over(game, is_win)
 
         -- buttons
         if not is_win then
-            draw_button("try \-fmission \-f" .. _m_mission_number .. " \-fagain", 81, retry)
+            -- TODO: implement more missions and bring back the "mission <number>" part
+            --draw_button("try \-fmission \-f" .. _m_mission_number .. " \-fagain", 81, retry)
+            draw_button("try \-fagain", 81, retry)
         end
         draw_button("go \-fto \-ftitle \-fscreen", is_win and 85 or 103, not retry or is_win)
 

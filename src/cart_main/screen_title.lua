@@ -10,6 +10,9 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
     local high_score
 
     local fade_in = new_fade("in", 30)
+    -- TODO: fade out temporarily copied from the mission select screen.
+    --       To be removed when we bring mission selection back.
+    local fade_out = new_fade("out", 30)
 
     local x_sprite = new_static_sprite("15,6,56,0", true)
     local x_pressed_sprite = new_static_sprite("15,6,56,6", true)
@@ -105,6 +108,12 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
         if btnp(_button_x) then
             _sfx_play(_sfx_options_confirm)
             proceed = true
+            if play then
+                -- TODO: this music fade out is here only because
+                --       we temporarily moved the fade out animation
+                --       here from the mission selection screen
+                _music_fade_out()
+            end
         end
 
         for star in all(stars) do
@@ -116,6 +125,10 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
         maybe_add_star(0)
 
         fade_in._update()
+
+        if proceed and play then
+            fade_out._update()
+        end
     end
 
     function screen._draw()
@@ -156,12 +169,29 @@ function new_screen_title(preselected_mission, start_music, start_fade_in, selec
         if not cart_label_mode and start_fade_in then
             fade_in._draw()
         end
+        if proceed and play then
+            fade_out._draw()
+        end
     end
 
     function screen._post_draw()
         if proceed then
             if play then
-                return new_screen_select_mission(preselected_mission)
+                if fade_out.has_finished() then
+                    -- TODO: implement more missions and bring back the line below
+                    --       instead of jumping immediately to mission 1
+                    --return new_screen_select_mission(preselected_mission)
+                    _copy_shared_assets_from_transferable_ram()
+                    _load_mission_cart(
+                        1,
+                        _health_default,
+                        _shockwave_charges_default,
+                        false,
+                        false,
+                        false,
+                        0
+                    )
+                end
             else
                 return new_screen_controls(preselected_mission)
             end

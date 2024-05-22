@@ -9,9 +9,6 @@ by [Lazy Devs Academy](https://www.youtube.com/c/LazyDevs).
 
 You can play it on https://beetrootpaul.itch.io/dart-07 and on https://www.lexaloffle.com/bbs/?tid=49480 .
 
-⚠️ Please be aware **this game is under development**. Mission 1 is complete and ready to play, but you enter missions 2
-and 3 on your own risk 😄
-
 If you want to take a look at the codebase, please visit https://github.com/beetrootpaul/dart-07 (the code inside PICO-8
 carts of this game is minified, therefore not suitable for
 reading).
@@ -28,6 +25,8 @@ reading).
 1. [License](#license)
 1. [Credits](#credits)
 1. [Version History](#version-history)
+    1. [v0.4.0](#v040)
+    1. [v0.3.0](#v030)
     1. [v0.2.0](#v020)
     1. [v0.1.0](#v010)
 
@@ -49,12 +48,7 @@ Physical game controllers are supposed to work as well, even in a browser. Butto
 
 ## Gameplay
 
-Your task is to pilot Dart-07 unit in a set of secret missions of increasing difficulty:
-
-- first, you mess with the enemy on **Emerald Islands**
-- then you continue to the **Outpost in Space** (⚠️ under development ⚠️)
-- in order to reach the interstellar **Phoslar Mine** (⚠️ under development ⚠️) and prevent the enemy from utilising
-  that precious resource
+Your task is to pilot Dart-07 unit on a secret missions on **Emerald Islands**.
 
 Destroy enemies along the way to increase your score, grab power-ups left by them and survive a boss fight in order to
 complete a mission.
@@ -108,7 +102,7 @@ In this game I focused on learning various bits of [PICO-8 API](https://www.lexa
 Some of the topics I tackled in this game are:
 
 - **multi-cart setup**: this game consists of many carts – 1 main cart for the title screen etc., and 1 cart for each
-  mission. Each
+  mission (the game contains only a single mission, but the code architecture is ready to have more of them). Each
   mission has its own sprites and music, as well as a code responsible for available enemy types, including their attack
   and movement patterns. Common SFXs and sprites are copied from the main cart to missions carts with use
   of [MEMCPY](https://www.lexaloffle.com/dl/docs/pico-8_manual.html#MEMCPY) and a user data memory
@@ -187,6 +181,10 @@ resources I found super useful and used some of them I used in the codebase as w
   by [Gruber](https://www.youtube.com/c/Gruber_Music)
 
 ## Version History
+
+### v0.4.0
+
+- Mission selection screen is now hidden in order to not expose an unfinished work 
 
 ### v0.3.0
 

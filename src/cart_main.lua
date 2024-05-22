@@ -2,7 +2,7 @@
 -- cart_main.lua  --
 -- -- -- -- -- -- --
 
-_game_version = "V0.3.0"
+_game_version = "V0.4.0"
 
 local current_screen, next_screen
 

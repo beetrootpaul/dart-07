@@ -12,7 +12,8 @@ function new_screen_mission_main(health, shockwave_charges, fast_movement, fast_
         slide_in_frames = 40,
     }
     local mission_info = new_sliding_info {
-        text_1 = "mission \-f" .. _m_mission_number,
+        -- TODO: Bring back the mission name once we have more than one mission implemented
+        --text_1 = "mission \-f" .. _m_mission_number,
         text_2 = _m_mission_name,
         main_color = _m_mission_info_color,
         wait_frames = fade_in_frames,
