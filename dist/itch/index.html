@@ -960,7 +960,7 @@
 
 @media screen and (min-width:512px) {
 	.p8_menu_button{
-		width:24px; margin-left:12px; margin-bottom:8px;
+		width:24px;  margin-bottom:8px;
 	}
 }
 .p8_menu_button:hover{
@@ -1046,7 +1046,7 @@ canvas{
 				<!-- pointer-events turned off for mobile in p8_update_layout because need for desktop mouse -->
 				<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault();" >
 				</canvas>
-				<div class=p8_menu_buttons id="p8_menu_buttons" style="margin-left:10px;">
+				<div class=p8_menu_buttons id="p8_menu_buttons" style="margin-left:6px;">
 					<div class="p8_menu_button" style="position:absolute; bottom:125px" id="p8b_controls" onClick="p8_give_focus(); Module.pico8ToggleControlMenu();"></div>					
 					<div class="p8_menu_button" style="position:absolute; bottom:90px" id="p8b_pause" onClick="p8_give_focus(); Module.pico8TogglePaused(); p8_update_layout_hash = -22;"></div>
 					<div class="p8_menu_button" style="position:absolute; bottom:55px" id="p8b_sound" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
